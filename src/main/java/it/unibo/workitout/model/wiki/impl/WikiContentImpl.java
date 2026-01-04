@@ -1,6 +1,6 @@
 package it.unibo.workitout.model.wiki.impl;
 
-import it.unibo.workitout.model.wiki.WikiContent;
+import it.unibo.workitout.model.wiki.api.WikiContent;
 
 /**
  * Implementation of WikiContent.

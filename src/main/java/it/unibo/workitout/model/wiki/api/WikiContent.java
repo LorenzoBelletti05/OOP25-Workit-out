@@ -1,4 +1,4 @@
-package it.unibo.workitout.model.wiki;
+package it.unibo.workitout.model.wiki.api;
 
 /**
  * Generic content of the wiki.
