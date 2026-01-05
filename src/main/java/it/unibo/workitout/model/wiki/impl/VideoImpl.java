@@ -2,7 +2,7 @@ package it.unibo.workitout.model.wiki.impl;
 
 import java.net.URL;
 
-import it.unibo.workitout.model.wiki.api.Video;
+import it.unibo.workitout.model.wiki.contracts.Video;
 
 /**
  * Implementation of Video.
