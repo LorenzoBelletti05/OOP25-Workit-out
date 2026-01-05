@@ -1,4 +1,4 @@
-package it.unibo.workitout.model.wiki.api;
+package it.unibo.workitout.controller.wiki.contracts;
 
 /**
  * Interface for Wiki Controller.

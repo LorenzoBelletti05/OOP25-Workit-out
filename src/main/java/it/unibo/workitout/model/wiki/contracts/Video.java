@@ -1,4 +1,4 @@
-package it.unibo.workitout.model.wiki.api;
+package it.unibo.workitout.model.wiki.contracts;
 
 import java.net.URL;
 

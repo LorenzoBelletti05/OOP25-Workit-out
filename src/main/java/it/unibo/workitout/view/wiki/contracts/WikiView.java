@@ -1,6 +1,7 @@
-package it.unibo.workitout.model.wiki.api;
+package it.unibo.workitout.view.wiki.contracts;
 
 import java.util.Set;
+import it.unibo.workitout.model.wiki.contracts.WikiContent;
 
 /**
  * Interface for the Wikiview.
