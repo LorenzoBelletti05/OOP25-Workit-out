@@ -1,7 +1,7 @@
-package it.unibo.workitout.model.wiki.view;
+package it.unibo.workitout.view.wiki.impl;
 
-import it.unibo.workitout.model.wiki.api.WikiView;
-import it.unibo.workitout.model.wiki.api.WikiContent;
+import it.unibo.workitout.view.wiki.contracts.WikiView;
+import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;

@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
-import it.unibo.workitout.model.wiki.api.Article;
-import it.unibo.workitout.model.wiki.api.Wiki;
+import it.unibo.workitout.model.wiki.contracts.Article;
+import it.unibo.workitout.model.wiki.contracts.Wiki;
 import it.unibo.workitout.model.wiki.impl.ArticleImpl;
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
 

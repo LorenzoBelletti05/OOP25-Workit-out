@@ -1,8 +1,8 @@
-package it.unibo.workitout.model.wiki.impl;
+package it.unibo.workitout.controller.wiki.impl;
 
-import it.unibo.workitout.model.wiki.api.Wiki;
-import it.unibo.workitout.model.wiki.api.WikiController;
-import it.unibo.workitout.model.wiki.api.WikiView;
+import it.unibo.workitout.controller.wiki.contracts.WikiController; 
+import it.unibo.workitout.view.wiki.contracts.WikiView; 
+import it.unibo.workitout.model.wiki.contracts.Wiki;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**

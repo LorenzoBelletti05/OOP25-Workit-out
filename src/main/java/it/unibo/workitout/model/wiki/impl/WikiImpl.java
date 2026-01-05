@@ -2,8 +2,8 @@ package it.unibo.workitout.model.wiki.impl;
 
 import java.util.HashSet;
 import java.util.Set;
-import it.unibo.workitout.model.wiki.api.Wiki;
-import it.unibo.workitout.model.wiki.api.WikiContent;
+import it.unibo.workitout.model.wiki.contracts.Wiki;
+import it.unibo.workitout.model.wiki.contracts.WikiContent;
 
 /**
  * Implementation of Wiki.

@@ -1,6 +1,6 @@
 package it.unibo.workitout.model.wiki.impl;
 
-import it.unibo.workitout.model.wiki.api.Article;
+import it.unibo.workitout.model.wiki.contracts.Article;
 
 /**
  * Implementation of Article.
