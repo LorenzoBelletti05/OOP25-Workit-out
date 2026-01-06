@@ -1,21 +1,11 @@
 package it.unibo.workitout.model.food.api;
-import java.util.List;
 
 //interfaccia Food
 public interface Food {
-    double getCalories();
-    String getNutrients();
     String getName();
+    double getKcalPer100g();
+    double getProteins();
+    double getCarbs();
+    double getFats();
 }
 
-//interfaccia Meal
-interface Meal {
-    String getTime();
-    List<Food> getFood();
-}
-
-//interfaccia DailyLog
-interface DailyLog {
-    String getDate();
-    double getTotalCalories();
-}
