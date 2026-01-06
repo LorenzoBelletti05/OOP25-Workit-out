@@ -2,8 +2,6 @@ package it.unibo.workitout.model.workout.impl;
 
 import java.util.Set;
 
-import it.unibo.workitout.model.workout.contracts.PlannedExercise;
-
 public class Exercise{
 
     private final String name;
