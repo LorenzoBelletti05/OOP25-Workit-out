@@ -1,4 +1,4 @@
-package it.unibo.workitout.model.user.model;
+package it.unibo.workitout.model.user.model.impl;
 
 /**
  * Represent the primary objective of the user.
