@@ -7,9 +7,8 @@ public class Exercise{
     private final String name;
     private final double calorieBurned;
     private final Set<AttitudeExercise> exerciseMission;
-    
 
-    public Exercise(String name, double calorieBurned, Set<AttitudeExercise> exerMission) {
+    public Exercise(final String name, final  double calorieBurned, final  Set<AttitudeExercise> exerMission) {
         this.name = name;
         this.calorieBurned = calorieBurned;
         this.exerciseMission = exerMission;
@@ -19,8 +18,8 @@ public class Exercise{
         return name;
     }
 
-    public double calorieBurned(int minutes) {
+    public double calorieBurned(final int minutes) {
         return this.calorieBurned * minutes;
     }
-    
+
 }
