@@ -53,8 +53,37 @@ public class DailyLogImpl implements DailyLog {
             .sum();
     }
 
+    //Calcolo delle percentuali dei nutrienti, seguendo le proporzioni: P: 4kcal/g, C: 4kcal/g, G: 9kcal/g
+
+    //Calcola che percentuale di calorie proviene dalle proteine
+    public double getProteinPercentage() {
+        double totalKcal = getTotalKcal();
+        if (totalKcal <= 0) return 0;
+        return (getTotalProteins() * 4) / totalKcal * 100;
+    }
+
+    //calcola che percentuale di calorie proviene dai carboidrati
+    public double getCarbsPercentage() {
+        double totalKcal = getTotalKcal();
+        if (totalKcal <= 0) return 0;
+        return (getTotalCarbs() * 4) / totalKcal * 100;
+    }
+
+    //calcola che percentuale di calorie proviene dai grassi
+    public double getFatPercentage() {
+        double totalKcal = getTotalKcal();
+        if (totalKcal <= 0) return 0;
+        return (getTotalFats() * 9) / totalKcal * 100;
+    }
+
     @Override
     public Map<Food, Integer> getFoodsConsumed() {
         return new HashMap<>(consumedFoods);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Log del %s: %.1f kcal [P: %.1f%%, C: %.1f%%, G: %.1f%%]",
+            date.toString(), getTotalKcal(), getProteinPercentage(), getCarbsPercentage(), getFatPercentage());
     }
 }
