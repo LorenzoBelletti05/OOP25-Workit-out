@@ -1,4 +1,4 @@
-package it.unibo.workitout.model.user.model;
+package it.unibo.workitout.model.user.model.impl;
 
 /**
  * Represents the user's physical activity level.
