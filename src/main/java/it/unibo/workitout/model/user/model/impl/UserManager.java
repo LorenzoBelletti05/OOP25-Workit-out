@@ -7,7 +7,7 @@ import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
  */
 public final class UserManager {
 
-    private final BMRCalculatorStrategy strategy;
+    private BMRCalculatorStrategy strategy;
     private final UserProfile currentUser;
 
     /**
@@ -22,9 +22,23 @@ public final class UserManager {
     }
 
     /**
+     * @param strategy set the strategy of the BMR calculator.
+     */
+    public void setStrategy(final BMRCalculatorStrategy strategy){
+        this.strategy = strategy;
+    }
+
+    /**
      * @return the BMR.
      */
     public double getBMR() {
         return strategy.calculateBMR(currentUser);
+    }
+
+    /**
+     * @return the TDEE, Total Daily Energy Expenditure.
+     */
+    public double getTDEEE() {
+        return getBMR() * currentUser.getActivityLevel().getMultiplier();
     }
 }

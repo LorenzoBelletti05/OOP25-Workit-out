@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
+import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
+import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 
 /**
@@ -23,8 +25,6 @@ class UserProfileTest {
     private static final ActivityLevel AL = ActivityLevel.HIGH;
     private static final UserGoal UG = UserGoal.MAINTAIN_WEIGHT;
 
-    @Test
-    void testUserProfile() {
     final UserProfile us = new UserProfile(
         NAME, 
         SURNAME,
@@ -35,6 +35,10 @@ class UserProfileTest {
         AL,
         UG
     );
+    
+
+    @Test
+    void testUserProfile() {
 
         assertEquals(NAME, us.getName());
         assertEquals(SURNAME, us.getSurname());
@@ -45,5 +49,17 @@ class UserProfileTest {
         assertEquals(AL, us.getActivityLevel());
         assertEquals(UG, us.getGoal());
 
+    }
+
+    @Test
+    void testBmrAndTdee() {
+        final UserManager manager = new UserManager(new MifflinStJeorStrategy(), us);
+        final double bmr = manager.getBMR();
+        final double tdee = manager.getTDEEE();
+        final double exprectedBmr = 1717.5;
+        final double exprectedTdee = exprectedBmr * 1.725;
+
+        assertEquals(exprectedBmr, bmr );
+        assertEquals(exprectedTdee, tdee);
     }
 }
