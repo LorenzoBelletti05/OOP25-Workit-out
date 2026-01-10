@@ -17,10 +17,10 @@ public class NutritionTestLauncher {
 
         System.out.println("=== TEST INIZIALE NUTRITION DOMAIN ===\n");
 
-        // 2. Test caricamento Database
+        // 2. Test caricamento database
         System.out.println("1. Caricamento foods.csv...");
         // Assicurati che il percorso sia quello corretto nel tuo progetto
-        repo.loadFromFile("Workit-out/resources/data/food/foods.csv");
+        repo.loadFromFile("Workit-out/src/main/resources/data/food/foods.csv");
         
         List<Food> allFoods = repo.getAllFoods();
         System.out.println("   Alimenti caricati totali: " + allFoods.size());
@@ -30,12 +30,12 @@ public class NutritionTestLauncher {
             return;
         }
 
-        // 3. Test Ricerca
+        // 3. Test ricerca
         System.out.println("\n2. Test Ricerca 'Banana'...");
         repo.sortByName("Banana").forEach(f -> 
             System.out.println("   Trovato: " + f.getName() + " (" + f.getKcalPer100g() + " kcal)"));
 
-        // 4. Test Diario Alimentare (Simulazione pasto)
+        // 4. Test diario alimentare
         System.out.println("\n3. Creazione Log Giornaliero...");
         DailyLog today = manager.getCurrentLog();
         
@@ -49,15 +49,15 @@ public class NutritionTestLauncher {
         System.out.println("   Pasto aggiunto correttamente.");
         System.out.println("   Riepilogo: " + today.toString());
 
-        // 5. Test Salvataggio Storico
+        // 5. Test salvataggio storico
         System.out.println("\n4. Salvataggio su history.csv...");
-        manager.saveHistory("Workit-out/resources/data/food/history.csv");
+        manager.saveHistory("Workit-out/src/main/resources/data/food/history.csv");
         System.out.println("   File salvato.");
 
-        // 6. Test Ricaricamento Storico
+        // 6. Test ricaricamento storico
         System.out.println("\n5. Test Ricaricamento Storico...");
         DailyLogManager newManager = new DailyLogManager(); // Nuovo manager vuoto
-        newManager.loadHistory("Workit-out/resources/data/food/history.csv", repo);
+        newManager.loadHistory("Workit-out/src/main/resources/data/food/history.csv", repo);
         
         if (newManager.getFullHistory().containsKey(LocalDate.now())) {
             System.out.println("   SUCCESSO: Lo storico è stato ricaricato correttamente!");
