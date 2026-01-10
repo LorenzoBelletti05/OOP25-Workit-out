@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -30,11 +32,12 @@ public class WikiViewImpl implements WikiView {
     private final JFrame frame = new JFrame(FRAME_NAME);
     private final DefaultListModel<WikiContent> listModel = new DefaultListModel<>();
     private final JList<WikiContent> contentList = new JList<>(listModel);
+    private final JTextField searchField = new JTextField(10);
 
     /**
      * Builds a new wiki interactive view.
      */
-    public WikiViewImpl() {
+    public WikiViewImpl() { 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JPanel canvas = new JPanel(new BorderLayout(10, 10));
@@ -44,6 +47,8 @@ public class WikiViewImpl implements WikiView {
         final JLabel titleLabel = new JLabel("Wiki - Contenuti Formativi");
         titleLabel.setFont(new Font("Arial", Font.BOLD, TEXT_SIZE));
         panelNorth.add(titleLabel);
+        panelNorth.add(new JLabel(" Cerca: "));
+        panelNorth.add(searchField);
 
         final JScrollPane jScrollCenter = new JScrollPane(contentList);
 
