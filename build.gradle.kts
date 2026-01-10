@@ -24,6 +24,7 @@ dependencies {
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.9.8")
 
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
+    implementation("com.google.code.gson:gson:2.13.2")
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
 

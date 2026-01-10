@@ -24,6 +24,7 @@ public class WikiControllerImpl implements WikiController {
     public WikiControllerImpl(final Wiki model, final WikiView view) {
         this.model = model;
         this.view = view;
+        new it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl().loadAll(model);
         this.setFakeData();
     }
 

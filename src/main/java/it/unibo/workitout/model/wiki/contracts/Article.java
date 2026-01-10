@@ -8,5 +8,6 @@ public interface Article extends WikiContent {
     /**
      * @return Text.
      */
+    @Override
     String getText();
 }
