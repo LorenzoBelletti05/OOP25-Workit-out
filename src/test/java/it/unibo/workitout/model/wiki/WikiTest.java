@@ -19,7 +19,7 @@ class WikiTest {
     void testWikiContent() {
         final Wiki wiki = new WikiImpl();
         final Set<String> tags = Set.of("Spalle", "Petto", "Forza");
-        final Article art = new ArticleImpl("Allenmaneto Petto", "Descrizione", "Test", tags);
+        final Article art = new ArticleImpl("Allenmaneto Petto", "Test", tags);
         wiki.addContent(art);
 
         assertNotNull(wiki.getContents());

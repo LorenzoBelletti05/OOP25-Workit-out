@@ -12,9 +12,9 @@ public interface WikiContent {
     String getTitle();
 
     /**
-     * @return the description of the content
+     * @return the text of the content
      */
-    String getDescription();
+    String getText();
 
     /**
      * @return tags for filtering
