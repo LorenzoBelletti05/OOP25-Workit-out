@@ -61,6 +61,27 @@ public class FoodRepository {
             .sorted(Comparator.comparingDouble(Food::getKcalPer100g).reversed())
             .collect(Collectors.toList());
     }
+    //Mostra solo i cibi con più del 15% di proteine
+    public List<Food> getHighProteinFoods() {
+        return database.stream()
+            .filter(f -> f.getProteins() > 15.0)
+            .sorted(Comparator.comparingDouble(Food::getProteins).reversed())
+            .collect(Collectors.toList());
+    }
+    //Mostra solo i cibi con pochi grassi, ordinandoli dal più al meno magro
+    public List<Food> getLowFatFoods() {
+        return database.stream()
+            .filter(f -> f.getFats() < 3.0)
+            .sorted(Comparator.comparingDouble(Food::getFats))
+            .collect(Collectors.toList());
+    }
+    //Mostra solo i cibi con pochi carboidrati, ordinati dal minor contenuto di carboidrati in su
+    public List<Food> getLowCarbsFoods() {
+        return database.stream()
+            .filter(f -> f.getCarbs() < 5.0)
+            .sorted(Comparator.comparingDouble(Food::getCarbs))
+            .collect(Collectors.toList());
+    }
 
     public List<Food> getAllFoods() {
         //restituisce una copia del database
