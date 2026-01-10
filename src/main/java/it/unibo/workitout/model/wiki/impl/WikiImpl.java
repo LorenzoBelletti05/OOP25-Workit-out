@@ -2,6 +2,9 @@ package it.unibo.workitout.model.wiki.impl;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.Locale;
+
 import it.unibo.workitout.model.wiki.contracts.Wiki;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
 
@@ -25,6 +28,21 @@ public final class WikiImpl implements Wiki {
     @Override
     public void addContent(final WikiContent content) {
         this.contents.add(content);
+    }
+
+    /**
+     * New search system for titles and tags.
+     */
+    @Override
+    public Set<WikiContent> search(final String query) {
+        if (query == null || query.isBlank()) {
+            return getContents();
+        }
+        final String lowerQuery = query.toLowerCase(Locale.ROOT);
+        return this.contents.stream()
+            .filter(c -> c.getTitle().toLowerCase(Locale.ROOT).contains(lowerQuery)
+            || c.getTags().stream().anyMatch(t -> t.toLowerCase(Locale.ROOT).contains(lowerQuery)))
+            .collect(Collectors.toSet());
     }
 
 }
