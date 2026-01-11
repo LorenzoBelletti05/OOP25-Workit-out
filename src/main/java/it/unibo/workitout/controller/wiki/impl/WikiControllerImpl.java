@@ -2,9 +2,15 @@ package it.unibo.workitout.controller.wiki.impl;
 
 import it.unibo.workitout.controller.wiki.contracts.WikiController; 
 import it.unibo.workitout.view.wiki.contracts.WikiView;
+import it.unibo.workitout.model.food.api.Meal;
+import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
-import it.unibo.workitout.model.wiki.impl.ArticleImpl;
-import java.util.Set;
+import it.unibo.workitout.model.wiki.impl.SmartSuggestionImpl;
+import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
+import it.unibo.workitout.model.workout.impl.Exercise;
+
+import java.util.List;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -13,6 +19,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class WikiControllerImpl implements WikiController {
     private final Wiki model;
     private final WikiView view;
+    private final SmartSuggestionImpl smartSuggestion = new SmartSuggestionImpl();
 
     /**
      * Constructor.
@@ -24,21 +31,9 @@ public class WikiControllerImpl implements WikiController {
     public WikiControllerImpl(final Wiki model, final WikiView view) {
         this.model = model;
         this.view = view;
-        new it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl().loadAll(model);
-        this.setFakeData();
-    }
 
-    private void setFakeData() {
-        model.addContent(new ArticleImpl(
-            "Allenamento Petto", 
-            "Questo è un testo mostruosamente lungo cosi da permettere di vedere come la view lo gestisce", 
-            Set.of("Forza", "Petto")
-        ));
-        model.addContent(new ArticleImpl(
-            "Dieta Massa", 
-            "Testo dieta", 
-            Set.of("Alimentazione", "Massa")
-        ));
+        final WikiRepositoryImpl repository = new WikiRepositoryImpl();
+        repository.loadAll(this.model);
     }
 
     /**
@@ -59,5 +54,15 @@ public class WikiControllerImpl implements WikiController {
         );
 
         this.view.start();
+    }
+
+    /**
+     * New view with smart suggestions.
+     * 
+     * @param user the current user.
+     */
+    @Override
+    public void showSmartSuggestions(final UserProfile user, final List<Exercise> exercises, final Meal meal) {
+        this.view.updateContents(this.smartSuggestion.suggest(this.model, user, exercises, meal));
     }
 }
