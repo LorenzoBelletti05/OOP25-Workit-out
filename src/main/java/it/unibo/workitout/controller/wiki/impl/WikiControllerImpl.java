@@ -5,11 +5,14 @@ import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.food.api.Meal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
+import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import it.unibo.workitout.model.wiki.impl.SmartSuggestionImpl;
 import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -20,6 +23,10 @@ public class WikiControllerImpl implements WikiController {
     private final Wiki model;
     private final WikiView view;
     private final SmartSuggestionImpl smartSuggestion = new SmartSuggestionImpl();
+
+    private UserProfile user;
+    private List<Exercise> exercises;
+    private Meal meal;
 
     /**
      * Constructor.
@@ -44,7 +51,7 @@ public class WikiControllerImpl implements WikiController {
         this.view.updateContents(this.model.getContents());
 
         this.view.addSelectionListener(content -> 
-            this.view.showDetail(content.getTitle(), content.getText())
+            this.view.showDetail(content.getTitle(), content.getDetailedText())
         );
 
         this.view.addBackListener(this.view::showList);
@@ -53,16 +60,60 @@ public class WikiControllerImpl implements WikiController {
             this.view.updateContents(this.model.search(this.view.getSearchQuery()))
         );
 
+        this.view.addAllFilterListener(() -> 
+            this.view.updateContents(this.model.getContents())
+        );
+
+        this.view.addArticlesFilterListener(() -> 
+            this.view.updateContents(this.model.getContents().stream()
+                .filter(c -> !c.isVideo())
+                .collect(Collectors.toSet()))
+        );
+
+        this.view.addVideosFilterListener(() -> 
+            this.view.updateContents(this.model.getContents().stream()
+                .filter(WikiContent::isVideo)
+                .collect(Collectors.toSet()))
+        );
+
+        this.view.addPrioFoodListener(() -> {
+            if (user != null) {
+                this.view.updateContents(this.smartSuggestion.suggest(model, user, null, meal));
+            }
+        });
+
+        this.view.addPrioExerciseListener(() -> {
+            if (user != null) {
+                this.view.updateContents(this.smartSuggestion.suggest(model, user, exercises, null));
+            }
+        });
+
         this.view.start();
     }
 
     /**
      * New view with smart suggestions.
      * 
-     * @param user the current user.
+     * @param userProfile the current user.
+     * @param currentExercises the current exercises.
+     * @param currentMeal the current meal.
      */
     @Override
-    public void showSmartSuggestions(final UserProfile user, final List<Exercise> exercises, final Meal meal) {
-        this.view.updateContents(this.smartSuggestion.suggest(this.model, user, exercises, meal));
+    public void showSmartSuggestions(
+        final UserProfile userProfile, 
+        final List<Exercise> currentExercises, 
+        final Meal currentMeal) {
+
+        this.user = userProfile;
+
+        if (currentExercises != null) {
+            this.exercises = new ArrayList<>(currentExercises);
+        } else {
+            this.exercises = null;
+        }
+
+        this.meal = currentMeal;
+
+        this.view.updateContents(this.smartSuggestion.suggest(this.model, userProfile, currentExercises, currentMeal));
     }
 }

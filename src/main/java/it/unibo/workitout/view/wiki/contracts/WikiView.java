@@ -59,4 +59,39 @@ public interface WikiView {
      * @param action ...
      */
     void addSearchListener(Runnable action);
+
+    /**
+     * Listener for Show all filters.
+     * 
+     * @param action ...
+     */
+    void addAllFilterListener(Runnable action);
+
+    /**
+     * Listener for articles.
+     * 
+     * @param action ...
+     */
+    void addArticlesFilterListener(Runnable action);
+
+    /**
+     * Listener for videos.
+     * 
+     * @param action ...
+     */
+    void addVideosFilterListener(Runnable action);
+
+    /**
+     * Listener for food priority.
+     * 
+     * @param action ...
+     */
+    void addPrioFoodListener(Runnable action);
+
+    /**
+     * Listener for exercise priority.
+     * 
+     * @param action ...
+     */
+    void addPrioExerciseListener(Runnable action);
 }

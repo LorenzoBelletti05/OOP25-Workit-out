@@ -33,5 +33,21 @@ public final class WorkitoutLauncher {
         final WikiView view = new WikiViewImpl();
         final WikiController controller = new WikiControllerImpl(model, view);
         controller.start();
+
+        // Uncomment for testing
+        /*final UserProfile testUser = new UserProfile(
+            "Mario", "Rossi", 25, 180.0, 80.0, 
+            Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE
+        );
+        final Exercise squat = new Exercise("Squat", 5.0, Set.of());
+        final Food pasta = new FoodImpl("Pasta", 350, 0.15, 0.82, 0.03);
+        final Meal testMeal = new Meal() {
+            @Override
+            public String getTime() { return "12:30"; }
+            @Override
+            public List<Food> getFood() { return List.of(pasta); }
+        };
+
+        controller.showSmartSuggestions(testUser, List.of(squat), testMeal);*/
     }
 }

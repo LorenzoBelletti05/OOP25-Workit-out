@@ -44,4 +44,14 @@ public final class ArticleImpl implements Article {
     public String toString() {
         return this.getTitle();
     }
+
+    @Override
+    public boolean isVideo() {
+        return false;
+    }
+
+    @Override
+    public String getDetailedText() {
+        return this.getText();
+    }
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import it.unibo.workitout.model.food.api.Meal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
@@ -28,24 +29,51 @@ public class SmartSuggestionImpl implements SmartSuggestion {
      */
     @Override
     public Set<WikiContent> suggest(final Wiki wiki, final UserProfile user, final List<Exercise> exercises, final Meal meal) {
-        final Set<String> tags = new HashSet<>();
-        tags.add(user.getGoal().name());
+        final String goal = user.getGoal().name();
+        final Stream<WikiContent> stream = wiki.getContents().stream();
 
+        if (meal != null && exercises == null) {
+            return stream
+                .filter(this::isNutritionContent) 
+                .filter(c -> c.getTags().contains(goal)) 
+                .collect(Collectors.toSet());
+        }
+
+        if (exercises != null && meal == null) {
+            final Set<String> exNames = exercises.stream()
+                .map(Exercise::getName)
+                .collect(Collectors.toSet());
+
+            return stream
+                .filter(c -> !isNutritionContent(c)) 
+                .filter(c -> c.getTags().contains(goal) || c.getTags().stream().anyMatch(exNames::contains))
+                .collect(Collectors.toSet());
+        }
+
+        final Set<String> tags = new HashSet<>();
+        tags.add(goal);
         if (exercises != null) {
             exercises.forEach(e -> tags.add(e.getName()));
         }
-
         if (meal != null) {
             tags.add("Nutrition");
-            if (meal.getFood().size() > 3) {
-                tags.add("Dieta");
-            }
         }
 
-        return wiki.getContents().stream()
+        return stream
             .filter(content -> content.getTags().stream()
-            .anyMatch(tag -> tags.stream()
-            .anyMatch(tag::equalsIgnoreCase)))
+                .anyMatch(tag -> tags.stream().anyMatch(tag::equalsIgnoreCase)))
             .collect(Collectors.toSet());
+    }
+
+    /**
+     * Check if content is nutrition related.
+     * 
+     * @param content the wikicontent.
+     * @return true if it's a nutrition content.
+     */
+    private boolean isNutritionContent(final WikiContent content) {
+        return content.getTags().contains("Nutrition") 
+            || content.getTags().contains("Dieta") 
+            || content.getTags().contains("Alimentazione");
     }
 }
