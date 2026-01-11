@@ -3,6 +3,7 @@ package it.unibo.workitout.view.wiki.impl;
 import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -42,7 +43,13 @@ public class WikiViewImpl implements WikiView {
 
     private final JLabel detailTitle = new JLabel();
     private final JTextArea detailArea = new JTextArea();
+
     private final JButton bBack = new JButton("Back");
+    private final JButton bAll = new JButton("Tutti");
+    private final JButton bArticles = new JButton("Articoli");
+    private final JButton bVideos = new JButton("Video");
+    private final JButton bPrioFood = new JButton("Cibo");
+    private final JButton bPrioEx = new JButton("Esercizi");
 
     /**
      * Builds a new wiki interactive view.
@@ -64,13 +71,26 @@ public class WikiViewImpl implements WikiView {
         final JPanel listPanel = new JPanel(new BorderLayout(10, 10));
         listPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        final JPanel north = new JPanel(new FlowLayout());
-        north.add(new JLabel("Search:"));
-        north.add(searchField);
+        final JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
 
-        listPanel.add(north, BorderLayout.NORTH);
+        final JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        row1.add(new JLabel("Cerca:"));
+        row1.add(searchField);
+        row1.add(bAll);
+        row1.add(bArticles);
+        row1.add(bVideos);
+
+        final JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        row2.add(new JLabel("Priorità:"));
+        row2.add(bPrioFood);
+        row2.add(bPrioEx);
+
+        northPanel.add(row1);
+        northPanel.add(row2);
+
+        listPanel.add(northPanel, BorderLayout.NORTH);
         listPanel.add(new JScrollPane(contentList), BorderLayout.CENTER);
-
         mainPanel.add(listPanel, LIST);
     }
 
@@ -180,4 +200,43 @@ public class WikiViewImpl implements WikiView {
         });
     }
 
+    /**
+     * Listener for Show all filters.
+     */
+    @Override
+    public void addAllFilterListener(final Runnable action) {
+        this.bAll.addActionListener(e -> action.run());
+    }
+
+    /**
+     * Listener for articles.
+     */
+    @Override
+    public void addArticlesFilterListener(final Runnable action) {
+        this.bArticles.addActionListener(e -> action.run());
+    }
+
+    /**
+     * Listener for videos.
+     */
+    @Override
+    public void addVideosFilterListener(final Runnable action) {
+        this.bVideos.addActionListener(e -> action.run());
+    }
+
+    /**
+     * Listener for food priority.
+     */
+    @Override
+    public void addPrioFoodListener(final Runnable action) {
+        this.bPrioFood.addActionListener(e -> action.run());
+    }
+
+    /**
+     * Listener for exercise priority.
+     */
+    @Override
+    public void addPrioExerciseListener(final Runnable action) {
+        this.bPrioEx.addActionListener(e -> action.run());
+    }
 }

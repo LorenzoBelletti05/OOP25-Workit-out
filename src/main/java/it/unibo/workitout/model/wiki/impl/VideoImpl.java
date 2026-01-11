@@ -53,4 +53,14 @@ public final class VideoImpl implements Video {
     public String toString() {
         return this.getTitle();
     }
+
+    @Override
+    public boolean isVideo() {
+        return true;
+    }
+
+    @Override
+    public String getDetailedText() {
+        return this.getText() + "\n\nLink al video: " + this.getUrl().toString();
+    }
 }
