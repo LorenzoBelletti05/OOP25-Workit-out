@@ -44,4 +44,14 @@ public final class WikiContentImpl implements WikiContent {
     public String getText() {
         return this.text;
     }
+
+    @Override
+    public boolean isVideo() {
+        return false;
+    }
+
+    @Override
+    public String getDetailedText() {
+        return this.getText();
+    }
 }

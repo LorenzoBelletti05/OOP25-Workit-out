@@ -1,7 +1,32 @@
 [
-  {
-    "title": "Workout Petto",
-    "text": "Guida completa per il workout del petto",
-    "tags": ["Forza", "Petto"]
-  }
+  { "title": "Guida al Bulking Pulito", "text": "Come aumentare la massa muscolare senza accumulare grasso eccessivo...", "tags": ["Massa", "Nutrition", "MUSCLE_GAIN", "BUILD_MUSCLE"] },
+  { "title": "I Benefici del Cardio", "text": "Perché l'attività aerobica è fondamentale per il dimagrimento...", "tags": ["Cardio", "WHEIGHT_LOSS", "LOSE_WEIGHT"] },
+  { "title": "Proteine: Quante ne servono?", "text": "Analisi del fabbisogno proteico per atleta e sedentario...", "tags": ["Nutrition", "Proteine", "Alimentazione", "BUILD_MUSCLE"] },
+  { "title": "Allenamento Petto Avanzato", "text": "Tecniche di intensità per sbloccare la crescita del petto...", "tags": ["Petto", "Strength", "MUSCLE_GAIN", "BUILD_MUSCLE"] },
+  { "title": "Dieta Ipocalorica Sostenibile", "text": "Come gestire il deficit calorico senza soffrire la fame...", "tags": ["LOSE_WEIGHT", "WHEIGHT_LOSS", "Nutrition"] },
+  { "title": "Importanza del Recupero", "text": "Il muscolo cresce quando riposi. Ecco perché...", "tags": ["Technique", "Massa", "Healt", "WHEIGHT_MAINTENANCE"] },
+  { "title": "Allenamento Gambe per la Forza", "text": "Focus su Squat e varianti per gambe d'acciaio...", "tags": ["Gambe", "Strength", "Forza", "BUILD_MUSCLE"] },
+  { "title": "Meal Prep per la Settimana", "text": "Organizzare i pasti per non sgarrare la dieta...", "tags": ["Nutrition", "Dieta", "Organization", "MAINTAIN_WEIGHT"] },
+  { "title": "Focus sulle Spalle", "text": "Esercizi per deltoidi laterali e posteriori...", "tags": ["Spalle", "Bodybuilding", "MUSCLE_GAIN", "BUILD_MUSCLE"] },
+  { "title": "Metabolismo Basale e BMR", "text": "Cos'è il BMR e come influenza il tuo percorso...", "tags": ["Healt", "Nutrition", "WHEIGHT_MAINTENANCE", "MAINTAIN_WEIGHT"] },
+  { "title": "Allenamento a Casa", "text": "Routine full-body senza attrezzi...", "tags": ["Workout", "Home", "WHEIGHT_MAINTENANCE", "MAINTAIN_WEIGHT"] },
+  { "title": "Creatina: Miti e Realtà", "text": "Tutto sull'integratore più studiato...", "tags": ["Nutrition", "Supplements", "Strength", "BUILD_MUSCLE"] },
+  { "title": "Schiena a V", "text": "Trazioni e Rematori per una schiena larga...", "tags": ["Schiena", "Muscle", "MUSCLE_GAIN", "BUILD_MUSCLE"] },
+  { "title": "Definizione Estiva", "text": "Mantenere la massa magra perdendo grasso...", "tags": ["WHEIGHT_LOSS", "LOSE_WEIGHT", "Definizione", "Nutrition"] },
+  { "title": "Idratazione e Performance", "text": "L'importanza dell'acqua durante l'allenamento...", "tags": ["Healt", "Nutrition", "Performance", "MAINTAIN_WEIGHT"] },
+  { "title": "Braccia Grosse", "text": "Focus tricpiti e bicipiti per volume...", "tags": ["Braccia", "Muscle", "Bodybuilding", "MUSCLE_GAIN"] },
+  { "title": "Pre-Workout: Cosa mangiare", "text": "Energia massima per la sessione...", "tags": ["Nutrition", "Energy", "Performance", "BUILD_MUSCLE"] },
+  { "title": "Mobilità Articolare", "text": "Prevenire infortuni con lo stretching dinamico...", "tags": ["Technique", "Healt", "Mobility", "WHEIGHT_MAINTENANCE"] },
+  { "title": "Dieta Ipercalorica", "text": "I passi fondamentali per chi fatica a prendere peso...", "tags": ["GAIN_WEIGHT", "WHEIGHT_GAIN", "Nutrition", "Alimentazione"] },
+  { "title": "Mind-Muscle Connection", "text": "Migliorare la contrazione volontaria...", "tags": ["Technique", "Muscle", "Concentration", "MUSCLE_GAIN"] },
+  { "title": "Integrazione per Massa", "text": "Gainer e carboidrati in polvere...", "tags": ["GAIN_WEIGHT", "WHEIGHT_GAIN", "Nutrition", "Supplements"] },
+  { "title": "Esercizi Correttivi", "text": "Rimediare a squilibri posturali...", "tags": ["Technique", "Healt", "Mobility", "MAINTAIN_WEIGHT"] },
+  { "title": "Digiuno Intermittente", "text": "Vantaggi e svantaggi per il dimagrimento...", "tags": ["LOSE_WEIGHT", "WHEIGHT_LOSS", "Nutrition", "Definizione"] },
+  { "title": "Pliometria e Esplosività", "text": "Salti e scatti per atleti...", "tags": ["Performance", "Strength", "Forza", "Intensity"] },
+  { "title": "Sonno e Ormoni", "text": "L'impatto del riposo sul testosterone e GH...", "tags": ["Healt", "Recovery", "WHEIGHT_MAINTENANCE", "BUILD_MUSCLE"] },
+  { "title": "Superfood e Micronutrienti", "text": "Vitamine e minerali per la salute...", "tags": ["Nutrition", "Healt", "Alimentazione", "MAINTAIN_WEIGHT"] },
+  { "title": "Ciclo di Forza", "text": "Programmare la forza pura in 8 settimane...", "tags": ["Strength", "Forza", "BUILD_MUSCLE", "Technique"] },
+  { "title": "Psicologia del Fitness", "text": "Mantenere la motivazione a lungo termine...", "tags": ["Healt", "Organization", "MAINTAIN_WEIGHT", "WHEIGHT_MAINTENANCE"] },
+  { "title": "Grassi Sani", "text": "Perché non aver paura dei grassi...", "tags": ["Nutrition", "Alimentazione", "Healt", "MAINTAIN_WEIGHT"] },
+  { "title": "Carico Progressivo", "text": "La legge numero 1 della crescita muscolare...", "tags": ["Technique", "Massa", "BUILD_MUSCLE", "MUSCLE_GAIN"] }
 ]
