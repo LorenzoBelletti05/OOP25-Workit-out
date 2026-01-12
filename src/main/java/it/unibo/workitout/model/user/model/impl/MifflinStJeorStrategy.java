@@ -18,15 +18,15 @@ public final class MifflinStJeorStrategy implements BMRCalculatorStrategy {
         final boolean nd = sex == Sex.NOT_DEFINED;
         final double base = (10 * weight) + (6.25 * height) - (5 * age);
         final double numberMale = 5;
-        final double numberFemale = 161;
-        final double numberNotDefined = 78; 
+        final double numberFemale = -161;
+        final double numberNotDefined = (numberMale + numberFemale) / 2; 
 
         if (male) {
             return base + numberMale; 
         } else if (female) {
-            return base - numberFemale;
+            return base + numberFemale;
         } else if (nd) {
-            return base - numberNotDefined;
+            return base + numberNotDefined;
         } else {
             throw new IllegalStateException("The sex specified doesen't exist:" + sex);
         }

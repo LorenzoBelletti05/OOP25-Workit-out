@@ -12,10 +12,18 @@ public enum ActivityLevel {
 
     private final double multiplier;
 
+    /**
+     * Constructor of the class Activitylevel.
+     * 
+     * @param multiplier is the multiplier for Activity Level.
+     */
     ActivityLevel(final double multiplier) {
         this.multiplier = multiplier;
     }
 
+    /**
+     * @return the multiplier of the Activity.
+     */
     public double getMultiplier() {
         return multiplier;
     }
