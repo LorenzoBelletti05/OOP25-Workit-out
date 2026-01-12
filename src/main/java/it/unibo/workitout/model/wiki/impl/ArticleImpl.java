@@ -1,5 +1,7 @@
 package it.unibo.workitout.model.wiki.impl;
 
+import java.util.Set;
+
 import it.unibo.workitout.model.wiki.contracts.Article;
 
 /**
@@ -7,20 +9,20 @@ import it.unibo.workitout.model.wiki.contracts.Article;
  */
 public final class ArticleImpl implements Article {
     private final String title;
-    private final String description;
     private final String text;
+    private final Set<String> tags;
 
     /**
      * Constructor.
      * 
      * @param title the title of the article.
-     * @param description the description of the article.
-     * @param text the actual text of the article
+     * @param text the actual text of the article.
+     * @param tags set of strings for filtering infos.
      */
-    public ArticleImpl(final String title, final String description, final String text) {
+    public ArticleImpl(final String title, final String text, final Set<String> tags) {
         this.title = title;
-        this.description = description;
         this.text = text;
+        this.tags = Set.copyOf(tags);
     }
 
     @Override
@@ -34,7 +36,22 @@ public final class ArticleImpl implements Article {
     }
 
     @Override
-    public String getDescription() { 
-        return this.description; 
+    public Set<String> getTags() {
+        return this.tags;
+    }
+
+    @Override
+    public String toString() {
+        return this.getTitle();
+    }
+
+    @Override
+    public boolean isVideo() {
+        return false;
+    }
+
+    @Override
+    public String getDetailedText() {
+        return this.getText();
     }
 }
