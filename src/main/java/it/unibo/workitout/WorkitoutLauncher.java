@@ -13,9 +13,15 @@ import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
 import it.unibo.workitout.view.wiki.contracts.WikiView;
+import it.unibo.workitout.model.food.impl.FoodRepository;
+import it.unibo.workitout.model.food.impl.DailyLogManager;
+import it.unibo.workitout.view.food.impl.NutritionViewImpl;
+import javax.swing.JFrame;
 
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.JFrame;
 
 import it.unibo.workitout.controller.wiki.contracts.WikiController;
 
@@ -33,6 +39,24 @@ public final class WorkitoutLauncher {
         final WikiView view = new WikiViewImpl();
         final WikiController controller = new WikiControllerImpl(model, view);
         controller.start();
+
+        //NUTRITION
+        FoodRepository foodRepo = new FoodRepository();
+        foodRepo.loadFromFile("Workit-out/src/main/resources/data/food/foods.csv");
+
+        DailyLogManager logManager = new DailyLogManager();
+
+        logManager.loadHistory("Workit-out/src/main/resources/data/food/history.csv", foodRepo);
+
+        NutritionViewImpl nutritionView = new NutritionViewImpl(foodRepo, logManager);
+        
+        JFrame testFrame = new JFrame("Workit-out - Nutrition Test");
+        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        testFrame.add(nutritionView);
+        testFrame.pack();
+        testFrame.setSize(900, 600);
+        testFrame.setLocationRelativeTo(null);
+        testFrame.setVisible(true);
 
         // Uncomment for testing
         /*final UserProfile testUser = new UserProfile(

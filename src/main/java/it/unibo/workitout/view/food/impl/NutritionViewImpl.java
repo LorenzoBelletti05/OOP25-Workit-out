@@ -84,7 +84,7 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
                 manager.getCurrentLog().addFoodEntry(selectedFood, grams);
 
                 //Salva su file
-                manager.saveHistory("src/main/resources/data/food/history.csv");
+                manager.saveHistory("Workit-out/src/main/resources/data/food/history.csv");
 
                 //Aggiorna la view
                 refreshSummary();
