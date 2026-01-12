@@ -1,5 +1,8 @@
 package it.unibo.workitout.model.workout.contracts;
 
-public class WorkoutSave {
-    
+/**
+ * Interface that implements methots to save the the workout in a csv file.
+ */
+public interface WorkoutSave {
+
 }

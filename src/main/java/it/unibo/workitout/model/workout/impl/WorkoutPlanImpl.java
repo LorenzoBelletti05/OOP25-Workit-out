@@ -14,7 +14,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
  * This class aggregates multiples {@link WorkoutSheet} istence to represent the training program.
  * </p>
  */
-public class WorkoutPlanImpl implements WorkoutPlan {
+public final class WorkoutPlanImpl implements WorkoutPlan {
 
     @Override
     public Set<WorkoutSheet> getSheets() {

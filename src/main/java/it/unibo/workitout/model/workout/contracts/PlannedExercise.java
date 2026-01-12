@@ -13,9 +13,10 @@ import it.unibo.workitout.model.workout.impl.Exercise;
  * </p>
  */
 public interface PlannedExercise {
-    
+
     /**
      * Reclaim the exercise.
+     * 
      * @return the exercise based on the class {@link Exercise}
      */
     Exercise getExercise();
@@ -23,9 +24,9 @@ public interface PlannedExercise {
     /**
      * Give, based on the exercise data calculated during the performance of the exercise based the calories burned.
      * 
-     * @return total calories burned as a double. 
+     * @return total calories burned as a double.
      */
-    double getBurnedCalories();    
+    double getBurnedCalories();
 
     /**
      * Return the number of sets planned for the exercise.

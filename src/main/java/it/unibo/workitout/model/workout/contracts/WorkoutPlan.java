@@ -50,14 +50,10 @@ public interface WorkoutPlan {
      */
     Set<CardioPlannedExercise> getCardiotExercise();
 
-
     /**
      * It aggregates the volume training only for strnght exercise.
      * 
      * @return total volume of exercise in the plan.
      */
     double getTotalStrenghtVolume();
-
-
-
 }

@@ -1,5 +1,6 @@
 package it.unibo.workitout.model.workout.impl;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -28,7 +29,7 @@ public class Exercise {
     public Exercise(final String name, final double calorieBurned, final Set<AttitudeExercise> exerciseMission) {
         this.name = name;
         this.calorieBurned = calorieBurned;
-        this.exerciseMission = exerciseMission;
+        this.exerciseMission = new HashSet<>(exerciseMission); //creating a copy of the set
     }
 
     /**
@@ -50,7 +51,6 @@ public class Exercise {
     public double calorieBurned(final int minutes) {
         return this.calorieBurned * minutes;
     }
-
 
     /**
      * Return the attitude.

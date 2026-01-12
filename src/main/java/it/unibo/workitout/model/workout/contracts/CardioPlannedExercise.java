@@ -9,7 +9,7 @@ package it.unibo.workitout.model.workout.contracts;
  * </p>
  */
 public interface CardioPlannedExercise extends PlannedExercise {
-    
+
     /**
      * Return the distance of the exercise.
      * 

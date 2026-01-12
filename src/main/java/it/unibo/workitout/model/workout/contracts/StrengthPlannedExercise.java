@@ -26,5 +26,5 @@ public interface StrengthPlannedExercise extends PlannedExercise {
      * 
      * @return the weight in kg.
      */
-    double getWeight();    
+    double getWeight();
 }

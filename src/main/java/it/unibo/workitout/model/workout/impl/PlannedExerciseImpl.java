@@ -13,6 +13,30 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
  * The class will be abstract because it can implements or not the sub-interface.
  * </p>
  */
-public abstract class PlannedExerciseImpl implements PlannedExercise {
+public final class PlannedExerciseImpl implements PlannedExercise {
+
+    @Override
+    public Exercise getExercise() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getExercise'");
+    }
+
+    @Override
+    public double getBurnedCalories() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBurnedCalories'");
+    }
+
+    @Override
+    public int getSets() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSets'");
+    }
+
+    @Override
+    public int getReps() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getReps'");
+    }
 
 }
