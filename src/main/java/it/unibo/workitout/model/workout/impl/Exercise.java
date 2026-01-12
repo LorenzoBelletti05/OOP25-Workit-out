@@ -50,4 +50,14 @@ public class Exercise {
     public double calorieBurned(final int minutes) {
         return this.calorieBurned * minutes;
     }
+
+
+    /**
+     * Return the attitude.
+     * 
+     *  @return the attitude for the specific exercise.
+     */
+    public String getExerciseAttitude() {
+        return exerciseMission.toString();
+    }
 }
