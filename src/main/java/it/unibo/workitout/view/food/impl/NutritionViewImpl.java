@@ -3,6 +3,8 @@ package it.unibo.workitout.view.food.impl;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.model.food.api.Food;
@@ -36,6 +38,19 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
         resultTable = new JTable(tableModel);
         resultTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
+        //Possibilità di aggiungere l'alimento al DailyLog
+        resultTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) { //Aggiunge con doppio click }
+                    int row = resultTable.getSelectedRow();
+                    if (row != -1) {
+                        addSelectedFoodToLog(row);
+                    }
+                }
+            }
+        });
+
         //Aggiunta sezioni
         this.add(createSearchPanel(), BorderLayout.NORTH);
         this.add(new JScrollPane(resultTable), BorderLayout.CENTER);
@@ -46,14 +61,49 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
         refreshSummary();
     }
 
+    private void addSelectedFoodToLog(int row) {
+        //Recupera il nome dalla tabella
+        String foodName = (String) tableModel.getValueAt(row, 0);
+        //Cerca il food corrispondente nel repository
+        Food selectedFood = repository.sortByName(foodName).get(0);
+
+        //Chiede i grammi all'utente
+        String input = JOptionPane.showInputDialog(
+            this,
+            "Quanti grammi di '" + foodName + "' hai consumato?",
+            "Aggiungi al Diario",
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (input != null && !input.trim().isEmpty()) {
+            try {
+                int grams = Integer.parseInt(input);
+                if (grams <= 0) throw new NumberFormatException();
+
+                //Aggiorna il modello
+                manager.getCurrentLog().addFoodEntry(selectedFood, grams);
+
+                //Salva su file
+                manager.saveHistory("src/main/resources/data/food/history.csv");
+
+                //Aggiorna la view
+                refreshSummary();
+
+                JOptionPane.showMessageDialog(this, "Alimento aggiunto al diario");
+            } catch (NumberFormatException  ex) {
+                JOptionPane.showMessageDialog(this, "Errore: Inserisci un numero intero positivo", "Input non valido", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
     private JPanel createSearchPanel() {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
         searchField = new JTextField(15);
         JButton searchBtn = new JButton("Cerca");
         JButton proteinBtn = new JButton("Proteine");
-        JButton lowFatBtn = new JButton ("Low Fat");
-        JButton lowCarbBtn = new JButton("Low Carb");
+        JButton lowFatBtn = new JButton ("Magri");
+        JButton lowCarbBtn = new JButton("Pochi Carbo");
 
         //Listeners per i tasti
         searchBtn.addActionListener(e -> updateTable(repository.sortByName(searchField.getText())));
@@ -105,7 +155,6 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
 
     //Aggiorna il sommario usando i dati del manager
     private void refreshSummary() {
-        String logInfo = manager.getCurrentLog().toString();
-        updateSummary(logInfo);
+        updateSummary(manager.getCurrentLog().toString());
     }
 }
