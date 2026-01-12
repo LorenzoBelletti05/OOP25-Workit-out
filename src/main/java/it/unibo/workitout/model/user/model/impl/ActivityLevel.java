@@ -4,9 +4,27 @@ package it.unibo.workitout.model.user.model.impl;
  * Represents the user's physical activity level.
  */
 public enum ActivityLevel {
-    VERY_LOW,
-    LOW,
-    MODERATE,
-    HIGH,
-    VERY_HIGH
+    VERY_LOW(1.2),      //Sedentary 0 days/week
+    LOW(1.375),         //Light Exercise 1-2 days/week
+    MODERATE(1.55),     //Moderate Exercise 3-5 days/week
+    HIGH(1.725),        //Heavy Exercise 6-7 days/week
+    VERY_HIGH(1.9);     //Athlete >7 days/week
+
+    private final double multiplier;
+
+    /**
+     * Constructor of the class Activitylevel.
+     * 
+     * @param multiplier is the multiplier for Activity Level.
+     */
+    ActivityLevel(final double multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    /**
+     * @return the multiplier of the Activity.
+     */
+    public double getMultiplier() {
+        return multiplier;
+    }
 }
