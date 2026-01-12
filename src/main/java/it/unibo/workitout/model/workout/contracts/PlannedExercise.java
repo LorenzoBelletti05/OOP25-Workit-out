@@ -25,18 +25,7 @@ public interface PlannedExercise {
      * 
      * @return total calories burned as a double. 
      */
-    double getBurnedCalories();
-    
-    /**
-     * Calculate the volume of the exercise during the training.
-     * 
-     * <p>
-     * Volume's formula: V=sets/times reps/times weight.
-     * </p>
-     * 
-     * @return the calcualted volume in double.
-     */
-    double getVolume();
+    double getBurnedCalories();    
 
     /**
      * Return the number of sets planned for the exercise.
@@ -51,12 +40,4 @@ public interface PlannedExercise {
      * @return the number of repetitions.
      */
     int getReps();
-
-    /**
-     * Return the weight used in the exercise.
-     * 
-     * @return the weight in kg.
-     */
-    double gerWeight();
-
 }
