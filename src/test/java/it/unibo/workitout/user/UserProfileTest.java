@@ -25,7 +25,7 @@ class UserProfileTest {
     private static final ActivityLevel AL = ActivityLevel.HIGH;
     private static final UserGoal UG = UserGoal.MAINTAIN_WEIGHT;
 
-    final UserProfile us = new UserProfile(
+    private final UserProfile us = new UserProfile(
         NAME, 
         SURNAME,
         AGE,
@@ -35,11 +35,9 @@ class UserProfileTest {
         AL,
         UG
     );
-    
 
     @Test
     void testUserProfile() {
-
         assertEquals(NAME, us.getName());
         assertEquals(SURNAME, us.getSurname());
         assertEquals(AGE, us.getAge());
@@ -48,7 +46,6 @@ class UserProfileTest {
         assertEquals(SEX, us.getSex());
         assertEquals(AL, us.getActivityLevel());
         assertEquals(UG, us.getGoal());
-
     }
 
     @Test
@@ -59,7 +56,7 @@ class UserProfileTest {
         final double exprectedBmr = 1717.5;
         final double exprectedTdee = exprectedBmr * 1.725;
 
-        assertEquals(exprectedBmr, bmr );
+        assertEquals(exprectedBmr, bmr);
         assertEquals(exprectedTdee, tdee);
     }
 }

@@ -24,7 +24,7 @@ public final class UserManager {
     /**
      * @param strategy set the strategy of the BMR calculator.
      */
-    public void setStrategy(final BMRCalculatorStrategy strategy){
+    public void setStrategy(final BMRCalculatorStrategy strategy) {
         this.strategy = strategy;
     }
 
@@ -40,5 +40,41 @@ public final class UserManager {
      */
     public double getTDEEE() {
         return getBMR() * currentUser.getActivityLevel().getMultiplier();
+    }
+
+    /**
+     * @return the target calories calculated based on the UserGoal
+     */
+    public double getDailyCalories() {
+        final double tdee = getTDEEE();
+        final UserGoal goal = currentUser.getGoal();
+        final int calories = 500;
+        final int halfCalories = calories / 2;
+
+        switch (goal) {
+            case LOSE_WEIGHT:
+                return tdee - calories;
+            case GAIN_WEIGHT:
+                return tdee + calories;
+            case BUILD_MUSCLE:
+                return tdee + halfCalories;
+            default:
+                return tdee;
+        }
+    }
+
+    /**
+     * Calclate the grams for each macronutrients.
+     * 
+     * @return the toal of nutrients.
+     */
+    public NutritionalTarget getMacronutrients() {
+        final double totalCalories = getDailyCalories();
+        final UserGoal goal = currentUser.getGoal();
+        final double carbsGrams = totalCalories * goal.getProteinRatio() / 4;
+        final double proteinsGrams = totalCalories * goal.getProteinRatio() / 4;
+        final double fatsGrams = totalCalories * goal.getProteinRatio() / 9;
+
+        return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
     }
 }
