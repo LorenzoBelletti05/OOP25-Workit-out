@@ -36,7 +36,7 @@ public class DailyLogImpl implements DailyLog {
     public double getTotalProteins() {
         return consumedFoods.entrySet().stream()
             .mapToDouble(e -> {
-                double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / 100;
+                double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / 100.0;
                 return (e.getKey().getProteins() * kcalTotaliCibo) / 4.0;
             })
             .sum();

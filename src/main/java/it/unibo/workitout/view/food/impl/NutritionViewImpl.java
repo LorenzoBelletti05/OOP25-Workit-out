@@ -24,9 +24,20 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
         final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         this.searchField = new JTextField(20);
         final JButton searchButton = new JButton("Cerca");
-        northPanel.add(new JLabel("Cerca cibo:"));
+        final JButton highProteinButton = new JButton("Proteici");
+        final JButton lowCarbsButton = new JButton("Pochi Carbo");
+        final JButton lowFatButton = new JButton("Magri");
+        final JButton resetButton = new JButton("Tutti");
+
+        northPanel.add(new JLabel("Cerca:"));
         northPanel.add(searchField);
         northPanel.add(searchButton);
+        northPanel.add(new JSeparator(JSeparator.VERTICAL));
+        northPanel.add(highProteinButton);
+        northPanel.add(lowCarbsButton);
+        northPanel.add(lowFatButton);
+        northPanel.add(resetButton);
+
 
         //Tabella
         this.tableModel = new FoodTableModel();
@@ -67,6 +78,31 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
                 }
             }
         });
+
+        //Listener per filtri
+        highProteinButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.filterHighProtein();
+            }
+        });
+
+        lowCarbsButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.filterLowCarbs();
+            }
+        });
+
+        lowFatButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.filterLowFat();
+            }
+        });
+
+        resetButton.addActionListener(e -> {
+            if (controller != null) {
+                updateTable(controller.getAllFoods());
+            }
+        });
     }
 
     public void setController(final NutritionController controller) {
@@ -82,7 +118,7 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
             JOptionPane.QUESTION_MESSAGE
         );
 
-        if (input != null && input.isEmpty()) {
+        if (input != null && !input.isEmpty()) {
             try {
                 final int grams = Integer.parseInt(input);
                 if (grams <= 0) {

@@ -11,29 +11,31 @@ public class FoodRepository {
     private final List<Food> database = new ArrayList<>();
 
     //Aggiunta manuale del food (si può usare per implementarlo eventualmente)
-    public void addFood(Food food) {
+    public void addFood(final Food food) {
         database.add(food);
     }
 
     //Carica i dati dal file csv
-    public void loadFromFile(String filePath) {
+    public void loadFromFile(final String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.trim().isEmpty()) continue;
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
 
-                String[] parts = line.split(",");
+                final String[] parts = line.split(",");
                 if (parts.length == 5) {
                     try {
-                        String name = parts[0].trim();
-                        double kcal = Double.parseDouble(parts[1].trim());
-                        double pP = Double.parseDouble(parts[2].trim());
-                        double pC = Double.parseDouble(parts[3].trim());
-                        double pF = Double.parseDouble(parts[4].trim());
+                        final String name = parts[0].trim();
+                        final double kcal = Double.parseDouble(parts[1].trim());
+                        final double pP = Double.parseDouble(parts[2].trim());
+                        final double pC = Double.parseDouble(parts[3].trim());
+                        final double pF = Double.parseDouble(parts[4].trim());
 
                         this.addFood(new FoodImpl(name, kcal, pP, pC, pF));
                     } catch (NumberFormatException e) {
-                        System.err.println("Errore nei numeri: " + line);
+                        System.err.println("Errore nel formato numerico della riga: " + line);
                     }
 
                 }
@@ -44,7 +46,7 @@ public class FoodRepository {
     }
 
     //Metodi di ricerca
-    public List<Food> sortByName(String query) {
+    public List<Food> sortByName(final String query) {
         return database.stream()
             .filter(f -> f.getName().toLowerCase().contains(query.toLowerCase()))
             .collect(Collectors.toList());
@@ -64,22 +66,22 @@ public class FoodRepository {
     //Mostra solo i cibi con più del 15% di proteine
     public List<Food> getHighProteinFoods() {
         return database.stream()
-            .filter(f -> f.getProteins() > 15.0)
-            .sorted(Comparator.comparingDouble(Food::getProteins).reversed())
+            .filter(f -> (f.getProteins() * f.getKcalPer100g() / 4.0) > 15.0)
+            .sorted(Comparator.comparingDouble((Food f) -> (f.getProteins() * f.getKcalPer100g() / 4.0)).reversed())
             .collect(Collectors.toList());
     }
     //Mostra solo i cibi con pochi grassi, ordinandoli dal più al meno magro
     public List<Food> getLowFatFoods() {
         return database.stream()
-            .filter(f -> f.getFats() < 3.0)
-            .sorted(Comparator.comparingDouble(Food::getFats))
+            .filter(f -> (f.getFats() * f.getKcalPer100g() / 9.0) < 3.0)
+            .sorted(Comparator.comparingDouble(f -> (f.getFats() * f.getKcalPer100g() / 9.0)))
             .collect(Collectors.toList());
     }
     //Mostra solo i cibi con pochi carboidrati, ordinati dal minor contenuto di carboidrati in su
     public List<Food> getLowCarbsFoods() {
         return database.stream()
-            .filter(f -> f.getCarbs() < 5.0)
-            .sorted(Comparator.comparingDouble(Food::getCarbs))
+            .filter(f -> (f.getCarbs() * f.getKcalPer100g() / 4.0) < 5.0)
+            .sorted(Comparator.comparingDouble(f -> (f.getCarbs() * f.getKcalPer100g() / 4.0)))
             .collect(Collectors.toList());
     }
 

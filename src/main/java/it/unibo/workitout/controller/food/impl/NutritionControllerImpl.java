@@ -50,6 +50,26 @@ public class NutritionControllerImpl implements NutritionController {
     }
 
     @Override
+    public void filterHighProtein() {
+        view.updateTable(repository.getHighProteinFoods());
+    }
+
+    @Override
+    public void filterLowCarbs() {
+        view.updateTable(repository.getLowCarbsFoods());
+    }
+
+    @Override
+    public void filterLowFat() {
+        view.updateTable(repository.getLowFatFoods());
+    }
+
+    @Override
+    public java.util.List<Food> getAllFoods() {
+        return repository.getAllFoods();
+    }
+
+    @Override
     public Map<String, Double> getTodayNutrients() {
         final DailyLog today = logManager.getCurrentLog();
         final Map<String, Double> nutrients = new HashMap<>();

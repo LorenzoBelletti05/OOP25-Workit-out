@@ -30,14 +30,14 @@ public class FoodImpl implements Food {
     //calcola i grammi usando le percentuali
     @Override
     public double getProteins() {
-        return (kcalPer100g * pProtein) / 4.0;
+        return pProtein;
     }
     @Override
     public double getCarbs() {
-        return (kcalPer100g * pCarbs) / 4.0;
+        return pCarbs;
     }
     @Override
     public double getFats() {
-        return (kcalPer100g * pFats) / 9.0;
+        return pFats;
     }
 }
