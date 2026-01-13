@@ -16,6 +16,8 @@ import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.food.impl.FoodRepository;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
+import it.unibo.workitout.controller.food.contracts.NutritionController;
+import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
 import javax.swing.JFrame;
 
 import java.util.List;
@@ -41,16 +43,13 @@ public final class WorkitoutLauncher {
         controller.start();
 
         //NUTRITION
-        FoodRepository foodRepo = new FoodRepository();
-        foodRepo.loadFromFile("Workit-out/src/main/resources/data/food/foods.csv");
-
-        DailyLogManager logManager = new DailyLogManager();
-
-        logManager.loadHistory("Workit-out/src/main/resources/data/food/history.csv", foodRepo);
-
-        NutritionViewImpl nutritionView = new NutritionViewImpl(foodRepo, logManager);
+        final FoodRepository foodRepo = new FoodRepository();
+        final DailyLogManager logManager = new DailyLogManager();
+        final NutritionViewImpl nutritionView = new NutritionViewImpl(foodRepo, logManager);
+        final NutritionController nutritionController = new NutritionControllerImpl(foodRepo, logManager, nutritionView);
+        nutritionController.start();
         
-        JFrame testFrame = new JFrame("Workit-out - Nutrition Test");
+        final JFrame testFrame = new JFrame("Workit-out - Nutrition Test");
         testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         testFrame.add(nutritionView);
         testFrame.pack();
