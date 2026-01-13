@@ -40,13 +40,14 @@ public final class WorkitoutLauncher {
         final Wiki model = new WikiImpl();
         final WikiView view = new WikiViewImpl();
         final WikiController controller = new WikiControllerImpl(model, view);
-        controller.start();
+        controller.start(); 
 
         //NUTRITION
         final FoodRepository foodRepo = new FoodRepository();
         final DailyLogManager logManager = new DailyLogManager();
-        final NutritionViewImpl nutritionView = new NutritionViewImpl(foodRepo, logManager);
+        final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(foodRepo, logManager, nutritionView);
+        nutritionView.setController(nutritionController);
         nutritionController.start();
         
         final JFrame testFrame = new JFrame("Workit-out - Nutrition Test");
