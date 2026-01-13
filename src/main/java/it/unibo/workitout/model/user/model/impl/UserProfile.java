@@ -1,9 +1,12 @@
 package it.unibo.workitout.model.user.model.impl;
 
+import java.util.UUID;
+
 /**
  * Represents the profile of a user, including physical attributes and goals.
  */
 public final class UserProfile {
+    private final UUID id;
     private final String name;
     private final String surname;
     private final int age;
@@ -35,6 +38,7 @@ public final class UserProfile {
         final ActivityLevel activityLevel,
         final UserGoal goal
     ) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.surname = surname;
         this.age = age;
@@ -43,6 +47,13 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.goal = goal;
+    }
+
+    /**
+     * @return the identifier of the user
+     */
+    public UUID getId() {
+        return id;
     }
 
     /**

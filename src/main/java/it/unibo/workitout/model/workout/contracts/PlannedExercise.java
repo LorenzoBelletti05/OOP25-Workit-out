@@ -1,5 +1,7 @@
 package it.unibo.workitout.model.workout.contracts;
 
+import it.unibo.workitout.model.workout.impl.Exercise;
+
 /**
  * This interface is the contracts for a
  * completed single exercise from the Exercise.java class's data.
@@ -12,4 +14,31 @@ package it.unibo.workitout.model.workout.contracts;
  */
 public interface PlannedExercise {
 
+    /**
+     * Reclaim the exercise.
+     * 
+     * @return the exercise based on the class {@link Exercise}
+     */
+    Exercise getExercise();
+
+    /**
+     * Give, based on the exercise data calculated during the performance of the exercise based the calories burned.
+     * 
+     * @return total calories burned as a double.
+     */
+    double getBurnedCalories();
+
+    /**
+     * Return the number of sets planned for the exercise.
+     * 
+     * @return the number of sets.
+     */
+    int getSets();
+
+    /**
+     * Return the number of repetition per set.
+     * 
+     * @return the number of repetitions.
+     */
+    int getReps();
 }
