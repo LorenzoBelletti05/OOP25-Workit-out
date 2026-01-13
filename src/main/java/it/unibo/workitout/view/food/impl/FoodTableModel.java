@@ -36,12 +36,14 @@ public class FoodTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Food food = foods.get(rowIndex);
+        double kcal = food.getKcalPer100g();
+
         return switch (columnIndex) {
             case 0 -> food.getName();
-            case 1 -> food.getKcalPer100g();
-            case 2 -> food.getProteins() + "g";
-            case 3 -> food.getCarbs() + "g";
-            case 4 -> food.getFats() + "g";
+            case 1 -> kcal;
+            case 2 -> String.format("%.1fg", (food.getProteins() * kcal) / 4.0);
+            case 3 -> String.format("%.1fg", (food.getCarbs() * kcal) / 4.0);
+            case 4 -> String.format("%.1fg", (food.getFats() * kcal) / 9.0);
             default -> null;
         };
     }

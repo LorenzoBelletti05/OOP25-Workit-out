@@ -35,21 +35,30 @@ public class DailyLogImpl implements DailyLog {
     @Override
     public double getTotalProteins() {
         return consumedFoods.entrySet().stream()
-            .mapToDouble(e -> (e.getKey().getProteins() * e.getValue()) / 100.0)
+            .mapToDouble(e -> {
+                double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / 100;
+                return (e.getKey().getProteins() * kcalTotaliCibo) / 4.0;
+            })
             .sum();
     }
 
     @Override
     public double getTotalCarbs() {
         return consumedFoods.entrySet().stream()
-            .mapToDouble(e -> (e.getKey().getCarbs() * e.getValue()) / 100.0)
+            .mapToDouble(e -> {
+                double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / 100.0;
+                return (e.getKey().getCarbs() * kcalTotaliCibo) / 4.0;
+            })
             .sum();
     }
 
     @Override
     public double getTotalFats() {
         return consumedFoods.entrySet().stream()
-            .mapToDouble(e -> (e.getKey().getFats() * e.getValue()) / 100.0)
+            .mapToDouble(e -> {
+                double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / 100.0;
+                return (e.getKey().getFats() * kcalTotaliCibo) / 9.0;
+            })
             .sum();
     }
 
