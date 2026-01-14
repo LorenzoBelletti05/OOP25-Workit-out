@@ -15,16 +15,23 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
  */
 public final class PlannedExerciseImpl implements PlannedExercise {
 
+    private Exercise exercise = null;
+    private Integer minutes = 0;
+    
+    public PlannedExerciseImpl(final Exercise exercise, final Integer minutes) {
+        this.exercise = exercise;
+        this.minutes = minutes; 
+    }
+
+
     @Override
     public Exercise getExercise() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getExercise'");
+        return this.exercise;
     }
 
     @Override
     public double getBurnedCalories() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBurnedCalories'");
+        return this.exercise.calorieBurned(minutes);
     }
 
     @Override
