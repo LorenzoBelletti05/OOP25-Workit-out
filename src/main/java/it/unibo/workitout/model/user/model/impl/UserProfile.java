@@ -17,7 +17,7 @@ public final class UserProfile {
     private final UserGoal goal;
 
     /**
-     * Constructs a new UserProfile.
+     * Constructor for a new user.
      * 
      * @param name          the user's name
      * @param surname       the user's surname
@@ -48,6 +48,43 @@ public final class UserProfile {
         this.activityLevel = activityLevel;
         this.goal = goal;
     }
+
+    /**
+     * Constructor for an existing user.
+     * 
+     * @param id            the user's identifier
+     * @param name          the user's name
+     * @param surname       the user's surname
+     * @param age           the user's age
+     * @param height        the user's height in cm
+     * @param weight        the user's weight in kg
+     * @param sex           the user's biological sex
+     * @param activityLevel the user's activity level
+     * @param goal          the user's fitness goal
+     */
+    public UserProfile(
+        final UUID id,
+        final String name,
+        final String surname,
+        final int age,
+        final double height,
+        final double weight,
+        final Sex sex,
+        final ActivityLevel activityLevel,
+        final UserGoal goal
+    ) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.sex = sex;
+        this.height = height;
+        this.weight = weight;
+        this.activityLevel = activityLevel;
+        this.goal = goal;
+    }
+
+    
 
     /**
      * @return the identifier of the user
@@ -111,4 +148,5 @@ public final class UserProfile {
     public UserGoal getGoal() {
         return goal;
     }
+
 }

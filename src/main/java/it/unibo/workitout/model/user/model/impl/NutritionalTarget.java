@@ -1,9 +1,11 @@
 package it.unibo.workitout.model.user.model.impl;
 
+import java.io.Serializable;
+
 /**
  * This class represents the daily target of macronutrients.
  */
-public class NutritionalTarget {
+public class NutritionalTarget implements Serializable{
     private final double carbsG;
     private final double proteinsG;
     private final double fatsG;
@@ -41,4 +43,10 @@ public class NutritionalTarget {
     public double getFatsG() {
         return fatsG;
     }
+    /**
+     * @return a string with daily target
+     */
+    public String toString() {
+        return "Target: " +carbsG + "g carbs, " + proteinsG + "g proteins, " + fatsG + "g fats.";
+    } 
 }

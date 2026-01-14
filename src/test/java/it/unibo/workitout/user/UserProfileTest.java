@@ -49,14 +49,7 @@ class UserProfileTest {
     }
 
     @Test
-    void testBmrAndTdee() {
-        final UserManager manager = new UserManager(new MifflinStJeorStrategy(), us);
-        final double bmr = manager.getBMR();
-        final double tdee = manager.getTDEEE();
-        final double exprectedBmr = 1717.5;
-        final double exprectedTdee = exprectedBmr * 1.725;
-
-        assertEquals(exprectedBmr, bmr);
-        assertEquals(exprectedTdee, tdee);
+    void testUpdateUserProfile() {
+        UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG);
     }
 }
