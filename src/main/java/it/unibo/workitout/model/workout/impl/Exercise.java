@@ -48,7 +48,7 @@ public class Exercise {
      * 
      * @return the calories burned as double value.
      */
-    public double calorieBurned(final int minutes) {
+    public double calorieBurned(final double minutes) {
         return this.calorieBurned * minutes;
     }
 
