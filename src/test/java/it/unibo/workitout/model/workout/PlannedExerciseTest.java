@@ -13,7 +13,7 @@ import it.unibo.workitout.model.workout.impl.PlannedExerciseImpl;
 class PlannedExerciseTest {
 
     @Test
-    void testPlannedClass() {
+    void testPlannedExerciseClass() {
 
         int sets = 3;
         int reps = 12;
