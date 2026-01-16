@@ -26,6 +26,7 @@ class PlannedExerciseTest {
         final PlannedExercise planExe = new PlannedExerciseImpl(exercise, minutes, sets, reps, weight);
 
         double expectedCalories = caloriesPerMinute * minutes;
+        double totalVolume =  sets * reps * weight;
 
         assertNotNull(planExe);
         assertEquals(planExe.getExercise(), exercise);
@@ -33,6 +34,6 @@ class PlannedExerciseTest {
         assertEquals(planExe.getSets(), sets);
         assertEquals(planExe.getReps(), reps);
         assertEquals(planExe.getWeight(), weight);
-    }
-    
+        assertEquals(planExe.getVolumeExercise(), totalVolume);
+    }    
 }

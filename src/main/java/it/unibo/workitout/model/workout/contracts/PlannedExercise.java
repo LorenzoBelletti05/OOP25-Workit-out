@@ -48,4 +48,11 @@ public interface PlannedExercise {
      * @return the weight of the exercise
      */
     double getWeight();
+
+    /**
+     * It return the volume based on the param.
+     * 
+     * @return the volume based on the exercise.
+     */
+    double getVolumeExercise();
 }

@@ -62,4 +62,9 @@ public final class PlannedExerciseImpl implements PlannedExercise {
         return this.weight;
     }
 
+    @Override
+    public double getVolumeExercise() {
+        return VolumeCalculator.calculateVolume(getSets(), getReps(), getWeight());
+    }
+
 }
