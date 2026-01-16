@@ -1,14 +1,13 @@
 package it.unibo.workitout.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
-import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 
 /**
@@ -24,6 +23,9 @@ class UserProfileTest {
     private static final Sex SEX = Sex.MALE;
     private static final ActivityLevel AL = ActivityLevel.HIGH;
     private static final UserGoal UG = UserGoal.MAINTAIN_WEIGHT;
+    private static final int NEWAGE = 31;
+    private static final double NEWHEIGHT = 175;
+    private static final double NEWWEIGHT = 75;
 
     private final UserProfile us = new UserProfile(
         NAME, 
@@ -49,14 +51,22 @@ class UserProfileTest {
     }
 
     @Test
-    void testBmrAndTdee() {
-        final UserManager manager = new UserManager(new MifflinStJeorStrategy(), us);
-        final double bmr = manager.getBMR();
-        final double tdee = manager.getTDEEE();
-        final double exprectedBmr = 1717.5;
-        final double exprectedTdee = exprectedBmr * 1.725;
+    void testUpdateUserProfile() {
+        UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG);
+        user.setAge(NEWAGE);
+        user.setHeight(NEWHEIGHT);
+        user.setWeight(NEWWEIGHT);
 
-        assertEquals(exprectedBmr, bmr);
-        assertEquals(exprectedTdee, tdee);
+        assertEquals(NEWAGE, user.getAge());
+        assertEquals(NEWHEIGHT, user.getHeight());
+        assertEquals(NEWWEIGHT, user.getWeight());
+
+        assertThrows(IllegalArgumentException.class, () -> user.setAge(-20));
+        assertThrows(IllegalArgumentException.class, () -> user.setHeight(-160));
+        assertThrows(IllegalArgumentException.class, () -> user.setWeight(-80));
+
+        assertThrows(IllegalArgumentException.class, () -> user.setAge(120));
+        assertThrows(IllegalArgumentException.class, () -> user.setHeight(220));
+        assertThrows(IllegalArgumentException.class, () -> user.setWeight(320));
     }
 }

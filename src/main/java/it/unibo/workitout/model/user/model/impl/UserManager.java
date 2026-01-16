@@ -71,9 +71,9 @@ public final class UserManager {
     public NutritionalTarget getMacronutrients() {
         final double totalCalories = getDailyCalories();
         final UserGoal goal = currentUser.getGoal();
-        final double carbsGrams = totalCalories * goal.getProteinRatio() / 4;
+        final double carbsGrams = totalCalories * goal.getCarbRatio() / 4;
         final double proteinsGrams = totalCalories * goal.getProteinRatio() / 4;
-        final double fatsGrams = totalCalories * goal.getProteinRatio() / 9;
+        final double fatsGrams = totalCalories * goal.getFatratio() / 9;
 
         return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
     }
