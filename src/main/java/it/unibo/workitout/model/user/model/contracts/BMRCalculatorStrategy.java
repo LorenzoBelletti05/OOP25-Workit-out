@@ -3,7 +3,7 @@ package it.unibo.workitout.model.user.model.contracts;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 
 /**
- * This interface defining the strategy for BMR (Basal Metaboli Rate) calculation.
+ * This interface defining the strategy for BMR (Basal Metabolic Rate) calculation.
  */
 @FunctionalInterface
 public interface BMRCalculatorStrategy {
