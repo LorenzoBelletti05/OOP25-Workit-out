@@ -26,7 +26,7 @@ public interface PlannedExercise {
      * 
      * @return total calories burned as a double.
      */
-    double getBurnedCalories();
+    double getCalculatedBurnedCalories();
 
     /**
      * Return the number of sets planned for the exercise.
@@ -41,4 +41,11 @@ public interface PlannedExercise {
      * @return the number of repetitions.
      */
     int getReps();
+
+    /**
+     * Return the actual exercise weight
+     * 
+     * @return the weight of the exercise
+     */
+    double getWeight();
 }

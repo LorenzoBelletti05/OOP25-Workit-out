@@ -17,10 +17,22 @@ public final class PlannedExerciseImpl implements PlannedExercise {
 
     private Exercise exercise = null;
     private Integer minutes = 0;
-    
-    public PlannedExerciseImpl(final Exercise exercise, final Integer minutes) {
+    private Integer sets = 0;
+    private Integer reps = 0;
+    private double weight = 0.0;
+
+    public PlannedExerciseImpl(
+        final Exercise exercise, 
+        final Integer minutes, 
+        final Integer sets, 
+        final Integer reps, 
+        final double weight
+    ) {
         this.exercise = exercise;
-        this.minutes = minutes; 
+        this.minutes = minutes;
+        this.sets = sets;
+        this.reps = reps;
+        this.weight = weight;
     }
 
 
@@ -30,20 +42,24 @@ public final class PlannedExerciseImpl implements PlannedExercise {
     }
 
     @Override
-    public double getBurnedCalories() {
-        return this.exercise.calorieBurned(minutes);
+    public double getCalculatedBurnedCalories() {
+        final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes);
+        return burnedCaloriesForTime;
     }
 
     @Override
     public int getSets() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSets'");
+        return this.sets;
     }
 
     @Override
     public int getReps() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getReps'");
+        return this.reps;
+    }
+
+    @Override
+    public double getWeight() {
+        return this.weight;
     }
 
 }
