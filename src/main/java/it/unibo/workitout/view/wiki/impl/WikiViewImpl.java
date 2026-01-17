@@ -4,22 +4,34 @@ import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Implementation of Wiki View (To do with JavaFX).
@@ -29,9 +41,10 @@ public class WikiViewImpl implements WikiView {
     private static final String LIST = "LIST";
     private static final String DETAIL = "DETAIL";
 
-    private static final int WIDTH = 500;
+    private static final int WIDTH = 600;
     private static final int HEIGHT = 400;
     private static final int TEXT_SIZE = 18;
+    private static final int BODY_SIZE = 18;
 
     private final JFrame frame = new JFrame(FRAME_NAME);
     private final CardLayout layout = new CardLayout();
@@ -82,12 +95,28 @@ public class WikiViewImpl implements WikiView {
         row1.add(bVideos);
 
         final JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        row2.add(new JLabel("Priorità:"));
+        row2.add(new JLabel("Priorità in base ai tuoi dati:"));
         row2.add(bPrioFood);
         row2.add(bPrioEx);
 
         northPanel.add(row1);
         northPanel.add(row2);
+
+        contentList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(final JList<?> list, final Object value, final int index, 
+                                                        final boolean isSelected, final boolean cellHasFocus) {
+                final JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                final WikiContent content = (WikiContent) value;
+
+                if (content.isVideo()) {
+                   label.setText("<html><b>[VIDEO] </b><b>" + content.getTitle() + "</b><br>" + content.getText() + "</html>");
+                } else {
+                   label.setText("<html><b>[ARTICOLO] </b>" + content.getTitle() + "</html>");
+                }
+                return label;
+            }
+        });
 
         listPanel.add(northPanel, BorderLayout.NORTH);
         listPanel.add(new JScrollPane(contentList), BorderLayout.CENTER);
@@ -95,20 +124,25 @@ public class WikiViewImpl implements WikiView {
     }
 
     /**
-     * Set the DeatilView.
+     * Set the DeatailView.
      */
     private void setupDetailView() {
         final JPanel detailPanel = new JPanel(new BorderLayout(10, 10));
         detailPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        detailTitle.setFont(new Font("Arial", Font.BOLD, TEXT_SIZE));
+        detailTitle.setFont(new Font("Serif", Font.BOLD, TEXT_SIZE));
+
         detailArea.setEditable(false);
         detailArea.setLineWrap(true);
         detailArea.setWrapStyleWord(true);
+        detailArea.setFont(new Font("Serif", Font.PLAIN, BODY_SIZE));
+        detailArea.setMargin(new Insets(10, 10, 10, 10));
 
         detailPanel.add(detailTitle, BorderLayout.NORTH);
         detailPanel.add(new JScrollPane(detailArea), BorderLayout.CENTER);
-        detailPanel.add(bBack, BorderLayout.SOUTH);
+        final JPanel southJPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        southJPanel.add(bBack);
+        detailPanel.add(southJPanel, BorderLayout.SOUTH);
 
         mainPanel.add(detailPanel, DETAIL);
     }
@@ -144,18 +178,25 @@ public class WikiViewImpl implements WikiView {
      */
     @Override
     public void updateContents(final Set<WikiContent> contents) {
-        listModel.clear();
-        contents.forEach(listModel::addElement);
+        final DefaultListModel<WikiContent> newModel = new DefaultListModel<>();
+        contents.forEach(newModel::addElement);
+        contentList.setModel(newModel);
     }
 
     /**
      * Listener for the items in the list.
      */
     @Override
-    public void addSelectionListener(final java.util.function.Consumer<WikiContent> listener) {
-        contentList.addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting() && contentList.getSelectedValue() != null) {
-                listener.accept(contentList.getSelectedValue());
+    public void addSelectionListener(final Consumer<WikiContent> listener) {
+        contentList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                final int index = contentList.locationToIndex(e.getPoint());
+                if (index >= 0 && contentList.getCellBounds(index, index).contains(e.getPoint())) {
+                    final WikiContent selected = contentList.getModel().getElementAt(index);
+                    listener.accept(selected);
+                    contentList.clearSelection();
+                }
             }
         });
     }
@@ -181,20 +222,19 @@ public class WikiViewImpl implements WikiView {
      */
     @Override
     public void addSearchListener(final Runnable action) {
-        searchField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
-
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void changedUpdate(final javax.swing.event.DocumentEvent e) { 
+            public void changedUpdate(final DocumentEvent e) { 
                 action.run(); 
             }
 
             @Override
-            public void removeUpdate(final javax.swing.event.DocumentEvent e) { 
+            public void removeUpdate(final DocumentEvent e) { 
                 action.run(); 
             }
 
             @Override
-            public void insertUpdate(final javax.swing.event.DocumentEvent e) { 
+            public void insertUpdate(final DocumentEvent e) { 
                 action.run(); 
             }
         });
@@ -238,5 +278,26 @@ public class WikiViewImpl implements WikiView {
     @Override
     public void addPrioExerciseListener(final Runnable action) {
         this.bPrioEx.addActionListener(e -> action.run());
+    }
+
+    /**
+     * Open video in the browser.
+     */
+    @Override
+    public void showVideoPlayer(final String url) throws URISyntaxException {
+        try {
+            if (java.awt.Desktop.isDesktopSupported() 
+                && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
+                java.awt.Desktop.getDesktop().browse(new URI(url));
+            } else {
+                JOptionPane.showMessageDialog(frame, 
+                "Browser non supportato.", "Errore Browser", 
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (final IOException | URISyntaxException e) {
+            JOptionPane.showMessageDialog(frame, 
+                "Impossibile aprire il video.\nURL: " + url, "Errore Browser", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

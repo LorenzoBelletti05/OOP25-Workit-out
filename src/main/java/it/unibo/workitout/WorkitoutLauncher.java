@@ -59,7 +59,7 @@ public final class WorkitoutLauncher {
         testFrame.setVisible(true);
 
         // Uncomment for testing
-        /*final UserProfile testUser = new UserProfile(
+        final UserProfile testUser = new UserProfile(
             "Mario", "Rossi", 25, 180.0, 80.0, 
             Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE
         );
@@ -72,6 +72,6 @@ public final class WorkitoutLauncher {
             public List<Food> getFood() { return List.of(pasta); }
         };
 
-        controller.showSmartSuggestions(testUser, List.of(squat), testMeal);*/
+        controller.showSmartSuggestions(testUser, List.of(squat), testMeal);
     }
 }

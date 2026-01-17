@@ -49,9 +49,4 @@ public final class ArticleImpl implements Article {
     public boolean isVideo() {
         return false;
     }
-
-    @Override
-    public String getDetailedText() {
-        return this.getText();
-    }
 }
