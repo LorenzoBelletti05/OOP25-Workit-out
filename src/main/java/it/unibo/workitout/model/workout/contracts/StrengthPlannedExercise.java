@@ -27,4 +27,18 @@ public interface StrengthPlannedExercise extends PlannedExercise {
      * @return the weight in kg.
      */
     double getWeight();
+
+    /**
+     * Return the number of sets planned for the exercise.
+     * 
+     * @return the number of sets.
+     */
+    int getSets();
+
+    /**
+     * Return the number of repetition per set.
+     * 
+     * @return the number of repetitions.
+     */
+    int getReps();    
 }

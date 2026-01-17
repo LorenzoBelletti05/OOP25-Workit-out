@@ -19,19 +19,12 @@ public interface PlannedExercise extends WorkoutFunction {
      * 
      * @return the exercise based on the class {@link Exercise}
      */
-    Exercise getExercise();    
+    Exercise getExercise();
 
     /**
-     * Return the number of sets planned for the exercise.
+     * Get the minutes of the exercise.
      * 
-     * @return the number of sets.
+     * @return the minutes.
      */
-    int getSets();
-
-    /**
-     * Return the number of repetition per set.
-     * 
-     * @return the number of repetitions.
-     */
-    int getReps();    
+    public Integer getMinutes();
 }

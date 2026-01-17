@@ -16,25 +16,29 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 public abstract class PlannedExerciseImpl implements PlannedExercise {
 
     private Exercise exercise = null;
-    private Integer minutes = 0;    
+    private Integer minutes = 0;
 
     public PlannedExerciseImpl(
         final Exercise exercise, 
-        final Integer minutes        
+        final Integer minutes
     ) {
         this.exercise = exercise;
-        this.minutes = minutes;        
+        this.minutes = minutes;
     }
 
     @Override
     public Exercise getExercise() {
         return this.exercise;
-    }    
+    }
+
+    @Override
+    public Integer getMinutes() {
+        return this.minutes;
+    }
 
     @Override
     public double getBurnedCalories() {
         final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes); //used this variable for debug, could have just return from this.get....
         return burnedCaloriesForTime;
     }
-
 }

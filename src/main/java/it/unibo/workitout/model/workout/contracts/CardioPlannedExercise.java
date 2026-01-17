@@ -16,11 +16,5 @@ public interface CardioPlannedExercise extends PlannedExercise {
      * @return the weight in kg.
      */
     double getDistance();
-
-    /**
-     * Return the ammount of time spent for the exercise.
-     * 
-     * @return the time used for the exercise.
-     */
-    int getMinutesExercise();
+    
 }
