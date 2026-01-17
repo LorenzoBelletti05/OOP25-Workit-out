@@ -16,50 +16,20 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 public abstract class PlannedExerciseImpl implements PlannedExercise {
 
     private Exercise exercise = null;
-    private Integer minutes = 0;
-    private Integer sets = 0;
-    private Integer reps = 0;
-    private double weight = 0.0;
+    private Integer minutes = 0;    
 
     public PlannedExerciseImpl(
         final Exercise exercise, 
-        final Integer minutes, 
-        final Integer sets, 
-        final Integer reps, 
-        final double weight
+        final Integer minutes        
     ) {
         this.exercise = exercise;
-        this.minutes = minutes;
-        this.sets = sets;
-        this.reps = reps;
-        this.weight = weight;
+        this.minutes = minutes;        
     }
-
 
     @Override
     public Exercise getExercise() {
         return this.exercise;
     }    
-
-    @Override
-    public int getSets() {
-        return this.sets;
-    }
-
-    @Override
-    public int getReps() {
-        return this.reps;
-    }
-
-    @Override
-    public double getWeight() {
-        return this.weight;
-    }
-
-    @Override
-    public double getVolume() {
-        return VolumeCalculator.calculateVolume(getSets(), getReps(), getWeight());
-    }
 
     @Override
     public double getBurnedCalories() {

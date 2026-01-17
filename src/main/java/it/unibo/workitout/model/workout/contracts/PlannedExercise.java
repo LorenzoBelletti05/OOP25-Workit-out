@@ -33,12 +33,5 @@ public interface PlannedExercise extends WorkoutFunction {
      * 
      * @return the number of repetitions.
      */
-    int getReps();
-
-    /**
-     * Return the actual exercise weight
-     * 
-     * @return the weight of the exercise
-     */
-    double getWeight();    
+    int getReps();    
 }
