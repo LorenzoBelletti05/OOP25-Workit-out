@@ -1,32 +1,62 @@
 [
-  { "title": "Tutorial Squat Perfetto", "text": "Esecuzione tecnica passo dopo passo.", "url": "https://youtu.be/squat", "tags": ["Gambe", "Technique", "Strength", "BUILD_MUSCLE"] },
-  { "title": "Panca Piana: Errori Comuni", "text": "Evita infortuni alle spalle.", "url": "https://youtu.be/bench", "tags": ["Petto", "Technique", "Forza", "BUILD_MUSCLE"] },
-  { "title": "Esecuzione Stacco da Terra", "text": "Guida al Deadlift convenzionale.", "url": "https://youtu.be/deadlift", "tags": ["Schiena", "Strength", "Forza", "MUSCLE_GAIN"] },
-  { "title": "Ricetta: Pancake Proteici", "text": "Cucina sana per sportivi.", "url": "https://youtu.be/pancakes", "tags": ["Nutrition", "Dieta", "Cooking", "MAINTAIN_WEIGHT"] },
-  { "title": "HIIT per Bruciare Grassi", "text": "15 minuti ad alta intensità.", "url": "https://youtu.be/hiit", "tags": ["Cardio", "WHEIGHT_LOSS", "LOSE_WEIGHT", "Intensity"] },
-  { "title": "Tecnica Military Press", "text": "Spingere sopra la testa in sicurezza.", "url": "https://youtu.be/military", "tags": ["Spalle", "Strength", "Technique", "Forza"] },
-  { "title": "Lat Machine Tutorial", "text": "Coinvolgere il gran dorsale.", "url": "https://youtu.be/lat", "tags": ["Schiena", "Technique", "Muscle", "BUILD_MUSCLE"] },
-  { "title": "Stretching Post-Workout", "text": "Rilassa i muscoli.", "url": "https://youtu.be/stretch", "tags": ["Healt", "Recovery", "Mobility", "WHEIGHT_MAINTENANCE"] },
-  { "title": "Esecuzione Curl Bilanciere", "text": "Isolare i bicipiti.", "url": "https://youtu.be/curl", "tags": ["Braccia", "Muscle", "Technique", "MUSCLE_GAIN"] },
-  { "title": "Plank: Tecnica corretta", "text": "Core stability fondamentale.", "url": "https://youtu.be/plank", "tags": ["Core", "WHEIGHT_MAINTENANCE", "Technique", "MAINTAIN_WEIGHT"] },
-  { "title": "Affondi in Camminata", "text": "Forza e equilibrio.", "url": "https://youtu.be/lunges", "tags": ["Gambe", "Strength", "WHEIGHT_LOSS", "LOSE_WEIGHT"] },
-  { "title": "Dips alle Parallele", "text": "Esercizio base per petto e tricipiti.", "url": "https://youtu.be/dips", "tags": ["Petto", "Muscle", "Strength", "BUILD_MUSCLE"] },
-  { "title": "Rematore con Manubrio", "text": "Spessore della schiena.", "url": "https://youtu.be/row", "tags": ["Schiena", "Technique", "MUSCLE_GAIN", "BUILD_MUSCLE"] },
-  { "title": "Alzate Laterali Tutorial", "text": "Spalle stondate.", "url": "https://youtu.be/lateral", "tags": ["Spalle", "Bodybuilding", "Technique", "MUSCLE_GAIN"] },
-  { "title": "Push Up: Varianti", "text": "Dai principianti agli avanzati.", "url": "https://youtu.be/pushup", "tags": ["Workout", "Petto", "Home", "WHEIGHT_MAINTENANCE"] },
-  { "title": "Burpees Tutorial", "text": "Massimo dispendio calorico.", "url": "https://youtu.be/burpees", "tags": ["Cardio", "WHEIGHT_LOSS", "LOSE_WEIGHT", "Intensity"] },
-  { "title": "Leg Press: Guida", "text": "Posizionamento piedi e ROM.", "url": "https://youtu.be/press", "tags": ["Gambe", "Muscle", "Technique", "MUSCLE_GAIN"] },
-  { "title": "Trazioni alla Sbarra", "text": "Come arrivare alla prima trazione.", "url": "https://youtu.be/pullups", "tags": ["Schiena", "Strength", "Technique", "Forza"] },
-  { "title": "Skull Crushers Tutorial", "text": "Isolamento tricipiti.", "url": "https://youtu.be/skull", "tags": ["Braccia", "Muscle", "Technique", "BUILD_MUSCLE"] },
-  { "title": "Yoga per Flessibilità", "text": "Migliora la postura.", "url": "https://youtu.be/yoga", "tags": ["Healt", "Mobility", "Mindset", "MAINTAIN_WEIGHT"] },
-  { "title": "Video Ricetta: Smoothie Gainer", "text": "Frullato da 1000 calorie.", "url": "https://youtu.be/gainer", "tags": ["Nutrition", "Alimentazione", "GAIN_WEIGHT", "WHEIGHT_GAIN"] },
-  { "title": "Tutorial Bulgarian Split Squat", "text": "Il terrore di ogni giorno gambe.", "url": "https://youtu.be/bulgarian", "tags": ["Gambe", "Strength", "Technique", "BUILD_MUSCLE"] },
-  { "title": "Tutorial Hip Thrust", "text": "Il miglior esercizio per i glutei.", "url": "https://youtu.be/hipthrust", "tags": ["Gambe", "Muscle", "Technique", "MUSCLE_GAIN"] },
-  { "title": "Circuito Addominali", "text": "8 minuti per il core.", "url": "https://youtu.be/abs", "tags": ["Core", "Workout", "WHEIGHT_MAINTENANCE", "MAINTAIN_WEIGHT"] },
-  { "title": "Tutorial Rematore Bilanciere", "text": "Schiena spessa e potente.", "url": "https://youtu.be/barbellrow", "tags": ["Schiena", "Strength", "Forza", "BUILD_MUSCLE"] },
-  { "title": "Video Tutorial: Face Pulls", "text": "Salute delle spalle e deltoide posteriore.", "url": "https://youtu.be/facepulls", "tags": ["Spalle", "Healt", "Technique", "Recovery"] },
-  { "title": "Corsa per Dimagrire", "text": "Ritmo e tecnica per il running.", "url": "https://youtu.be/running", "tags": ["Cardio", "WHEIGHT_LOSS", "LOSE_WEIGHT", "Intensity"] },
-  { "title": "Tutorial Chest Press", "text": "Massima contrazione del petto.", "url": "https://youtu.be/chestpress", "tags": ["Petto", "Muscle", "Technique", "MUSCLE_GAIN"] },
-  { "title": "Tutorial Hammer Curl", "text": "Sviluppo del brachiale e bicipiti.", "url": "https://youtu.be/hammer", "tags": ["Braccia", "Muscle", "Technique", "BUILD_MUSCLE"] },
-  { "title": "Preparazione Pasti: Esempio Gainer", "text": "Come mangiare 4000kcal al giorno.", "url": "https://youtu.be/mealprep", "tags": ["Nutrition", "Organization", "GAIN_WEIGHT", "WHEIGHT_GAIN"] }
+  {
+    "title": "Tutorial: Lo Squat Perfetto",
+    "text": "Analisi tecnica e biomeccanica dello squat.",
+    "url": "https://www.youtube.com/watch?v=xfyxEaUWo3M",
+    "tags": ["Gambe", "Technique", "BUILD_MUSCLE", "Squat"]
+  },
+  {
+    "title": "Panca Piana: Guida al Setup",
+    "text": "Setup corretto per una panca piana sicura e potente.",
+    "url": "https://www.youtube.com/watch?v=vthMCtgVtFw",
+    "tags": ["Petto", "Technique", "BUILD_MUSCLE", "Panca"]
+  },
+  {
+    "title": "Stacco da Terra: Esecuzione Corretta",
+    "text": "Come eseguire lo stacco da terra evitando errori comuni.",
+    "url": "https://www.youtube.com/watch?v=op9kVnSso6Q",
+    "tags": ["Strength", "Technique", "BUILD_MUSCLE", "Stacco"]
+  },
+  {
+    "title": "Meal Prep per la Settimana",
+    "text": "Organizzazione dei pasti per risparmiare tempo e macro.",
+    "url": "https://www.youtube.com/watch?v=8Vz_itG7z9Y",
+    "tags": ["Nutrition", "Alimentazione", "MAINTAIN_WEIGHT", "LOSE_WEIGHT"]
+  },
+  {
+    "title": "Allenamento HIIT Brucia Grassi",
+    "text": "Routine cardio intensa di 20 minuti per dimagrire.",
+    "url": "https://www.youtube.com/watch?v=ml6cT4AZdqI",
+    "tags": ["Cardio", "Intensity", "LOSE_WEIGHT"]
+  },
+  {
+    "title": "Military Press: Spalle d'Acciaio",
+    "text": "Tecnica corretta per la spinta verticale e stabilità del core.",
+    "url": "https://www.youtube.com/watch?v=2yjwXTZQDDI",
+    "tags": ["Spalle", "Strength", "Technique", "BUILD_MUSCLE"]
+  },
+  {
+    "title": "10 Minuti Mobilità Mattutina",
+    "text": "Routine rapida per migliorare la mobilità articolare.",
+    "url": "https://www.youtube.com/watch?v=L_xrDAtykMI",
+    "tags": ["Recovery", "Mobility", "Health", "MAINTAIN_WEIGHT"]
+  },
+  {
+    "title": "Trazioni alla Sbarra per Principianti",
+    "text": "Propedeutiche fondamentali per la tua prima trazione.",
+    "url": "https://www.youtube.com/watch?v=3YvfRx31xDE",
+    "tags": ["Dorso", "Strength", "Technique", "BUILD_MUSCLE"]
+  },
+  {
+    "title": "Colazioni Proteiche Veloci",
+    "text": "Idee rapide per colazioni nutrienti e ricche di proteine.",
+    "url": "https://www.youtube.com/watch?v=J_rlxfghbZ4",
+    "tags": ["Nutrition", "BUILD_MUSCLE", "Alimentazione"]
+  },
+  {
+    "title": "Addominali: 10 Minuti No-Stop",
+    "text": "Circuito intenso per la stabilità e definizione del core.",
+    "url": "https://www.youtube.com/watch?v=AnYl6Nk9GOA",
+    "tags": ["Addominali", "Technique", "LOSE_WEIGHT"]
+  }
 ]

@@ -4,12 +4,14 @@ import it.unibo.workitout.controller.wiki.contracts.WikiController;
 import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.food.api.Meal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
+import it.unibo.workitout.model.wiki.contracts.Video;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import it.unibo.workitout.model.wiki.impl.SmartSuggestionImpl;
 import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ public class WikiControllerImpl implements WikiController {
     private final Wiki model;
     private final WikiView view;
     private final SmartSuggestionImpl smartSuggestion = new SmartSuggestionImpl();
+    private final System.Logger logger = System.getLogger(WikiControllerImpl.class.getName());
 
     private UserProfile user;
     private List<Exercise> exercises;
@@ -50,9 +53,18 @@ public class WikiControllerImpl implements WikiController {
     public void start() {
         this.view.updateContents(this.model.getContents());
 
-        this.view.addSelectionListener(content -> 
-            this.view.showDetail(content.getTitle(), content.getDetailedText())
-        );
+        this.view.addSelectionListener(content -> {
+            if (content.isVideo()) {
+                final Video video = (Video) content;
+                try {
+                    this.view.showVideoPlayer(video.getUrl().toString());
+                } catch (final URISyntaxException e) {
+                    logger.log(System.Logger.Level.ERROR, "Errore nell'apertura del video: " + video.getUrl(), e);
+                }
+            } else {
+                this.view.showDetail(content.getTitle(), content.getText());
+            }
+        });
 
         this.view.addBackListener(this.view::showList);
 
@@ -104,16 +116,32 @@ public class WikiControllerImpl implements WikiController {
         final List<Exercise> currentExercises, 
         final Meal currentMeal) {
 
-        this.user = userProfile;
+        if (userProfile != null) {
+            this.user = new UserProfile(
+                userProfile.getId(),
+                userProfile.getName(),
+                userProfile.getSurname(),
+                userProfile.getAge(),
+                userProfile.getHeight(),
+                userProfile.getWeight(),
+                userProfile.getSex(),
+                userProfile.getActivityLevel(),
+                userProfile.getGoal()
+            );
 
-        if (currentExercises != null) {
-            this.exercises = new ArrayList<>(currentExercises);
-        } else {
-            this.exercises = null;
+            if (currentExercises != null) {
+                this.exercises = new ArrayList<>(currentExercises);
+            } else {
+                this.exercises = null;
+            }
+
+            this.meal = currentMeal;
+            this.view.updateContents(this.smartSuggestion.suggest(
+                this.model, 
+                this.user, 
+                this.exercises, 
+                this.meal
+            ));
         }
-
-        this.meal = currentMeal;
-
-        this.view.updateContents(this.smartSuggestion.suggest(this.model, userProfile, currentExercises, currentMeal));
     }
 }

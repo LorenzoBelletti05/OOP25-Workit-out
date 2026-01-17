@@ -25,9 +25,4 @@ public interface WikiContent {
      * @return true if it's a video.
      */
     boolean isVideo();
-
-    /**
-     * @return text with url
-     */
-    String getDetailedText();
 }

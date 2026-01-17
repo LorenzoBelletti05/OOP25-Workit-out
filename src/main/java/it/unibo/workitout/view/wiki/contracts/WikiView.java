@@ -1,5 +1,6 @@
 package it.unibo.workitout.view.wiki.contracts;
 
+import java.net.URISyntaxException;
 import java.util.Set;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
 
@@ -94,4 +95,11 @@ public interface WikiView {
      * @param action ...
      */
     void addPrioExerciseListener(Runnable action);
+
+    /**
+     * Set the videoplayer.
+     * 
+     * @param url of the video.
+     */
+    void showVideoPlayer(String url) throws URISyntaxException;
 }
