@@ -13,7 +13,7 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
  * The class will be abstract because it can implements or not the sub-interface.
  * </p>
  */
-public final class PlannedExerciseImpl implements PlannedExercise {
+public abstract class PlannedExerciseImpl implements PlannedExercise {
 
     private Exercise exercise = null;
     private Integer minutes = 0;
@@ -39,13 +39,7 @@ public final class PlannedExerciseImpl implements PlannedExercise {
     @Override
     public Exercise getExercise() {
         return this.exercise;
-    }
-
-    @Override
-    public double getCalculatedBurnedCalories() {
-        final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes);
-        return burnedCaloriesForTime;
-    }
+    }    
 
     @Override
     public int getSets() {
@@ -63,8 +57,14 @@ public final class PlannedExerciseImpl implements PlannedExercise {
     }
 
     @Override
-    public double getVolumeExercise() {
+    public double getVolume() {
         return VolumeCalculator.calculateVolume(getSets(), getReps(), getWeight());
+    }
+
+    @Override
+    public double getBurnedCalories() {
+        final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes); //used this variable for debug, could have just return from this.get....
+        return burnedCaloriesForTime;
     }
 
 }

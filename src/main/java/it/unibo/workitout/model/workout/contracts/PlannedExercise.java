@@ -12,21 +12,14 @@ import it.unibo.workitout.model.workout.impl.Exercise;
  * the best exercise to the WorkoutSheet.
  * </p>
  */
-public interface PlannedExercise {
+public interface PlannedExercise extends WorkoutFunction {
 
     /**
      * Reclaim the exercise.
      * 
      * @return the exercise based on the class {@link Exercise}
      */
-    Exercise getExercise();
-
-    /**
-     * Give, based on the exercise data calculated during the performance of the exercise based the calories burned.
-     * 
-     * @return total calories burned as a double.
-     */
-    double getCalculatedBurnedCalories();
+    Exercise getExercise();    
 
     /**
      * Return the number of sets planned for the exercise.
@@ -47,12 +40,5 @@ public interface PlannedExercise {
      * 
      * @return the weight of the exercise
      */
-    double getWeight();
-
-    /**
-     * It return the volume based on the param.
-     * 
-     * @return the volume based on the exercise.
-     */
-    double getVolumeExercise();
+    double getWeight();    
 }
