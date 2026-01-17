@@ -36,7 +36,7 @@ public enum UserGoal {
     /**
      * @return the Ratio of the fats
      */
-    public double getFatratio() {
+    public double getFatRatio() {
         return fatRatio;
     }
 }
