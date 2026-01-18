@@ -2,7 +2,7 @@ package it.unibo.workitout.model.workout.contracts;
 
 import java.util.Set;
 
-import it.unibo.workitout.model.workout.impl.WorkoutSheet;
+import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 
 /**
  * Interface that representing the entire workout for the user
@@ -13,47 +13,33 @@ import it.unibo.workitout.model.workout.impl.WorkoutSheet;
  * is a WorkoutSheet provided untill the user is satisfied.
  * </p>
  */
-public interface WorkoutPlan {
+public interface WorkoutPlan extends WorkoutFunction{
 
     /**
      * Return the hole exercise in a session.
-     * 
+     *
      * @return an unmodifiable set of all session.
      */
-    Set<WorkoutSheet> getSheets();
+    Set<WorkoutSheetImpl> getSheets();
 
     /**
      * Utility methot that return all the exercises from each sheets.
      * 
      * @return the planned exercises in the plan.
      */
-    Set<PlannedExercise> getAllExercise();
-
-    /**
-     * Calculate and return the total calories for the plan.
-     * 
-     * @return sum of all the burned calories from all exercises.
-     */
-    double getTotalBurnedCalories();
+    Set<PlannedExercise> getAllExercise();    
 
     /**
      * Return all the filter plan based on strenght.
-     * 
+     *
      * @return the plan based on strenght.
      */
     Set<StrengthPlannedExercise> getStrenghtExercise();
 
     /**
      * Return all the filter plan based on cardio.
-     * 
+     *
      * @return the plan based on cardio.
      */
     Set<CardioPlannedExercise> getCardiotExercise();
-
-    /**
-     * It aggregates the volume training only for strnght exercise.
-     * 
-     * @return total volume of exercise in the plan.
-     */
-    double getTotalStrenghtVolume();
 }
