@@ -1,6 +1,5 @@
 package it.unibo.workitout.model.workout.impl;
 
-import java.lang.instrument.UnmodifiableClassException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
