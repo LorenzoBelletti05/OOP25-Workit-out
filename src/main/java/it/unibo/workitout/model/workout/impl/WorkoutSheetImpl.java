@@ -1,5 +1,7 @@
 package it.unibo.workitout.model.workout.impl;
 
+import java.lang.instrument.UnmodifiableClassException;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -37,6 +39,15 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
         return sum;
     }
 
+    /**
+     * Public getter that return this unmoodifiable structure data.
+     * 
+     * @return the unmodifiable set of planned exercise.
+     */
+    public Set<PlannedExercise> getWorkoutSheet() {
+        return Collections.unmodifiableSet(this.exercisesSheet);
+    }
+
     @Override
     public Optional<PlannedExercise> getExercise(final String nameExercise) {
         return exercisesSheet.stream().filter(b -> b.getName().equals(nameExercise)).findAny();
@@ -61,6 +72,7 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
     public double getBurnedCalories() {
         return sumAll(PlannedExercise::getBurnedCalories);
     }
+    
 }
 
 
