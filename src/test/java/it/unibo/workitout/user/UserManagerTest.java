@@ -12,7 +12,10 @@ import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 
-public class UserManagerTest {
+/**
+ * Test for the class UserManager.
+ */
+class UserManagerTest {
     private static final double BMR = 1717.5;
     private static final double MULTIPLIER = 1.55;
     private static final double TDEE = BMR * MULTIPLIER;
@@ -20,9 +23,17 @@ public class UserManagerTest {
     private static final double HALF_CALORIES = FULL_CALORIES / 2;
     private static final double CARBO_PROTEIN_TO_CAL = 4;
     private static final double FAT_TO_CAL = 9;
+    private static final int AGE = 30;
+    private static final double HEIGHT = 170;
+    private static final double WEIGHT = 80;
 
-    private UserProfile userProfile = new UserProfile("Leone", "Verdi", 30, 170, 80, Sex.MALE, ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT);
-    private UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
+    private final UserProfile userProfile = new UserProfile("Leone", "Verdi",
+    AGE, HEIGHT, 
+    WEIGHT, Sex.MALE, 
+    ActivityLevel.MODERATE, 
+    UserGoal.MAINTAIN_WEIGHT
+);
+    private final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 
     @Test
     void testCaloriesMaintaingWeight() {
@@ -60,7 +71,7 @@ public class UserManagerTest {
     }
 
     @Test
-    void testMacronutrientsCalculation(){
+    void testMacronutrientsCalculation() {
         final NutritionalTarget resultManager = userManager.getMacronutrients();
         final double expectedCalories = 2662.125;
         final double carboRatio = UserGoal.MAINTAIN_WEIGHT.getCarbRatio();

@@ -23,9 +23,15 @@ class UserProfileTest {
     private static final Sex SEX = Sex.MALE;
     private static final ActivityLevel AL = ActivityLevel.HIGH;
     private static final UserGoal UG = UserGoal.MAINTAIN_WEIGHT;
-    private static final int NEWAGE = 31;
-    private static final double NEWHEIGHT = 175;
-    private static final double NEWWEIGHT = 75;
+    private static final int NEW_AGE = 31;
+    private static final double NEW_HEIGHT = 175;
+    private static final double NEW_WEIGHT = 75;
+    private static final int NEGATIVE_AGE = -20;
+    private static final double NEGATIVE_HEIGHT = -160;
+    private static final double NEGATIVE_WEIGHT = -80;
+    private static final int OVER_LIMIT_AGE = 120;
+    private static final double OVER_LIMIT_HEIGHT = 220;
+    private static final double OVER_LIMIT_WEIGHT = 320;
 
     private final UserProfile us = new UserProfile(
         NAME, 
@@ -52,21 +58,21 @@ class UserProfileTest {
 
     @Test
     void testUpdateUserProfile() {
-        UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG);
-        user.setAge(NEWAGE);
-        user.setHeight(NEWHEIGHT);
-        user.setWeight(NEWWEIGHT);
+        final UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG);
+        user.setAge(NEW_AGE);
+        user.setHeight(NEW_HEIGHT);
+        user.setWeight(NEW_WEIGHT);
 
-        assertEquals(NEWAGE, user.getAge());
-        assertEquals(NEWHEIGHT, user.getHeight());
-        assertEquals(NEWWEIGHT, user.getWeight());
+        assertEquals(NEW_AGE, user.getAge());
+        assertEquals(NEW_HEIGHT, user.getHeight());
+        assertEquals(NEW_WEIGHT, user.getWeight());
 
-        assertThrows(IllegalArgumentException.class, () -> user.setAge(-20));
-        assertThrows(IllegalArgumentException.class, () -> user.setHeight(-160));
-        assertThrows(IllegalArgumentException.class, () -> user.setWeight(-80));
+        assertThrows(IllegalArgumentException.class, () -> user.setAge(NEGATIVE_AGE));
+        assertThrows(IllegalArgumentException.class, () -> user.setHeight(NEGATIVE_HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> user.setWeight(NEGATIVE_WEIGHT));
 
-        assertThrows(IllegalArgumentException.class, () -> user.setAge(120));
-        assertThrows(IllegalArgumentException.class, () -> user.setHeight(220));
-        assertThrows(IllegalArgumentException.class, () -> user.setWeight(320));
+        assertThrows(IllegalArgumentException.class, () -> user.setAge(OVER_LIMIT_AGE));
+        assertThrows(IllegalArgumentException.class, () -> user.setHeight(OVER_LIMIT_HEIGHT));
+        assertThrows(IllegalArgumentException.class, () -> user.setWeight(OVER_LIMIT_WEIGHT));
     }
 }

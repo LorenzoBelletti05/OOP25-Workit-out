@@ -6,6 +6,14 @@ import java.util.UUID;
  * Represents the profile of a user, including physical attributes and goals.
  */
 public final class UserProfile {
+    private static final double ZERO = 0;
+    private static final int MAX_AGE = 110;
+    private static final double MAX_HEIGHT = 210;
+    private static final double MAX_WEIGHT = 310;
+    private static final String ERR_MESS_AGE = "The age must be positive and less of 110";
+    private static final String ERR_MESS_HEIGHT = "The height must be positive and less of 210";
+    private static final String ERR_MESS_WEIGHT = "The weight must be positive and less of 310";
+
     private final UUID id;
     private final String name;
     private final String surname;
@@ -38,16 +46,16 @@ public final class UserProfile {
         ActivityLevel activityLevel,
         UserGoal userGoal
     ) {
-        if(age < 0) {
-            throw new IllegalArgumentException("The age must be positive");
+        if (age < ZERO || age > MAX_AGE) {
+            throw new IllegalArgumentException(ERR_MESS_AGE);
         }
-        if(height < 0) {
-            throw new IllegalArgumentException("The height must be positive");
+        if (height < ZERO || height > MAX_HEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_HEIGHT);
         }
-        if(weight < 0) {
-            throw new IllegalArgumentException("The weight must be positive");
+        if (weight < ZERO || weight > MAX_WEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_WEIGHT);
         }
-        
+
         this.id = UUID.randomUUID();
         this.name = name;
         this.surname = surname;
@@ -83,14 +91,14 @@ public final class UserProfile {
         ActivityLevel activityLevel,
         UserGoal userGoal
     ) {
-        if(age < 0 || age > 110) {
-            throw new IllegalArgumentException("The age must be positive and less of 110");
+        if (age < ZERO || age > MAX_AGE) {
+            throw new IllegalArgumentException(ERR_MESS_AGE);
         }
-        if(height < 0 || height > 210) {
-            throw new IllegalArgumentException("The height must be positive and less of 210");
+        if (height < ZERO || height > MAX_HEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_HEIGHT);
         }
-        if(weight < 0 || weight > 310) {
-            throw new IllegalArgumentException("The weight must be positive and less of 310");
+        if (weight < ZERO || weight > MAX_WEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_WEIGHT);
         }
 
         this.id = id;
@@ -169,39 +177,43 @@ public final class UserProfile {
 
     /**
      * Set a new user's age.
+     * 
      * @param age the new age, must be positive
      */
     public void setAge(final int age) {
-        if(age < 0 || age > 110) {
-            throw new IllegalArgumentException("The age must be positive and less of 110");
+        if (age < ZERO || age > MAX_AGE) {
+            throw new IllegalArgumentException(ERR_MESS_AGE);
         }
         this.age = age;
     }
 
     /**
      * Set a new user's height.
+     * 
      * @param height the new height, must be positive
      */
     public void setHeight(final double height) {
-        if(height < 0 || height > 210) {
-            throw new IllegalArgumentException("The height must be positive and less of 210");
+        if (height < ZERO || height > MAX_HEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_HEIGHT);
         }
         this.height = height;
     }
 
     /**
      * Set a new user's height.
+     * 
      * @param weight the new weight, must be positive
      */
     public void setWeight(final double weight) {
-        if(weight < 0 || weight > 310) {
-            throw new IllegalArgumentException("The weight must be positive and less of 310");
+        if (weight < ZERO || weight > MAX_WEIGHT) {
+            throw new IllegalArgumentException(ERR_MESS_WEIGHT);
         }
         this.weight = weight;
     }
 
     /**
      * Update the user's activity level.
+     * 
      * @param activityLevel the new activity level
      */
     public void setActivityLevel(final ActivityLevel activityLevel) {
@@ -210,6 +222,7 @@ public final class UserProfile {
 
     /**
      * Update the user's fitness goal.
+     * 
      * @param userGoal the new goal
      */
     public void setGoal(final UserGoal userGoal) {

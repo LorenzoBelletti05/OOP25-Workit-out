@@ -14,7 +14,10 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-public class UserProfileViewImpl implements UserProfileView{
+/**
+ * The constructor for first log-in GUI.
+ */
+public class UserProfileViewImpl implements UserProfileView {
     private static final String FRAME_NAME = "Workit-out User (First log-in)";
     private static final int PROPORTION = 2;
     
@@ -26,7 +29,7 @@ public class UserProfileViewImpl implements UserProfileView{
     private final JTextField heightField = new JTextField();
     private final JTextField weightField = new JTextField();
 
-    UserProfileViewImpl(){
+    UserProfileViewImpl() {
         frame.getContentPane().add(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         profileGUI();
@@ -36,7 +39,7 @@ public class UserProfileViewImpl implements UserProfileView{
     private void profileGUI() {
         panel.setLayout(new BorderLayout());
         JPanel secondPanel = new JPanel(new GridLayout(0, 2));
-        
+
         secondPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 30, 50));
         secondPanel.add(new JLabel("Name: "));
         secondPanel.add(nameField);
@@ -52,11 +55,11 @@ public class UserProfileViewImpl implements UserProfileView{
         panel.add(secondPanel, BorderLayout.NORTH);
     }
 
-    public void display() {
+    private void display() {
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int width = (int) screen.getWidth();
         final int height = (int) screen.getHeight();
-        
+
         panel.setPreferredSize(new Dimension(width / PROPORTION, height / PROPORTION));
         frame.setLocationByPlatform(true);
         frame.pack();
