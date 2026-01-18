@@ -5,35 +5,87 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.EnumSet;
 
 import org.junit.jupiter.api.Test;
+
+import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
+import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.impl.AttitudeExercise;
+import it.unibo.workitout.model.workout.impl.CardioPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.PlannedExerciseImpl;
+import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
 
 class PlannedExerciseTest {
 
+    //Exercise general data
+    double caloriesPerMinute = 10.0;
+    Integer minutes = 20;
+
+    //Cardio data    
+    double distance = 30;    
+
+    //Strenght data
+    Integer sets = 5;
+    Integer reps = 7;
+    double weight = 20;
+
+    final Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN));
+    final CardioPlannedExercise cardioPlannedExercise = new CardioPlannedExerciseImpl(exercise, minutes, distance);
+    final StrengthPlannedExercise strenghtPlannedExercise = new StrengthPlannedExerciseImpl(exercise, minutes, sets, reps, weight);
+
     @Test
-    void testPlannedExerciseClass() {
+    void testGetExercise() {
+        assertEquals(exercise, cardioPlannedExercise.getExercise());
+        assertEquals(exercise, strenghtPlannedExercise.getExercise());
+    }
 
-        int sets = 3;
-        int reps = 12;
-        double weight = 10.0;
-        
-        double caloriesPerMinute = 10.0;    //calories per minutes, the rate
-        Integer minutes = 14;               //time for the execution of the all exercise
+    @Test
+    void testGetMinutes() {
+        assertEquals(cardioPlannedExercise.getMinutes(), minutes);
+        assertEquals(strenghtPlannedExercise.getMinutes(), minutes);
+    }
 
-        final Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN));
-        final PlannedExercise planExe = new PlannedExerciseImpl(exercise, minutes, sets, reps, weight);
+    @Test
+    void testGetBurnedCalories() {
+        double totalCalories = minutes*caloriesPerMinute;
+        assertEquals(cardioPlannedExercise.getBurnedCalories(), totalCalories);
+        assertEquals(strenghtPlannedExercise.getBurnedCalories(), totalCalories);
+    }
 
-        double expectedCalories = caloriesPerMinute * minutes;
-        double totalVolume =  sets * reps * weight;
+    @Test
+    void testGetName() {
+        assertEquals(cardioPlannedExercise.getName(), "Affondi");
+        assertEquals(strenghtPlannedExercise.getName(), "Affondi");
+        assertEquals(exercise.getName(), "Affondi");
+    }
 
-        assertNotNull(planExe);
-        assertEquals(planExe.getExercise(), exercise);
-        assertEquals(planExe.getCalculatedBurnedCalories(), expectedCalories);
-        assertEquals(planExe.getSets(), sets);
-        assertEquals(planExe.getReps(), reps);
-        assertEquals(planExe.getWeight(), weight);
-        assertEquals(planExe.getVolumeExercise(), totalVolume);
-    }    
+    @Test
+    void testGetVolume() {
+        double volume = sets*reps*weight;
+        assertEquals(cardioPlannedExercise.getVolume(), distance);
+        assertEquals(strenghtPlannedExercise.getVolume(), volume);
+    }
+
+    //Cardio part
+    @Test
+    void testGetDistance() {
+        assertEquals(cardioPlannedExercise.getDistance(), distance);
+    }
+
+    //Strenght part
+    @Test
+    void testGetWeight() {
+        assertEquals(strenghtPlannedExercise.getWeight(), weight);
+    }
+
+    @Test
+    void testgetSets() {
+        assertEquals(strenghtPlannedExercise.getSets(), sets);
+    }
+
+    @Test
+    void testGetReps() {
+        assertEquals(strenghtPlannedExercise.getReps(), reps);
+    }
+
 }
