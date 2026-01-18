@@ -8,7 +8,6 @@ import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
-import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
 import it.unibo.workitout.view.main.contracts.MainView;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
