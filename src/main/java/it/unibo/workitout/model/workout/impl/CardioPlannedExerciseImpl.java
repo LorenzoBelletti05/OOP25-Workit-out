@@ -1,7 +1,6 @@
 package it.unibo.workitout.model.workout.impl;
 
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
-import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 
 public final class CardioPlannedExerciseImpl extends PlannedExerciseImpl implements CardioPlannedExercise {
 
