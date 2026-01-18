@@ -99,8 +99,6 @@ public class WikiControllerImpl implements WikiController {
                 this.view.updateContents(this.smartSuggestion.suggest(model, user, exercises, null));
             }
         });
-
-        this.view.start();
     }
 
     /**

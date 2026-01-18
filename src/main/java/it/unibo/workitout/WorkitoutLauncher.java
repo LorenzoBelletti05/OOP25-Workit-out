@@ -16,14 +16,16 @@ import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.food.impl.FoodRepository;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
+import it.unibo.workitout.view.main.impl.MainViewImpl;
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
+import it.unibo.workitout.controller.main.contracts.MainController;
+import it.unibo.workitout.controller.main.impl.MainControllerImpl;
+
 import javax.swing.JFrame;
 
 import java.util.List;
 import java.util.Set;
-
-import javax.swing.JFrame;
 
 import it.unibo.workitout.controller.wiki.contracts.WikiController;
 
@@ -43,35 +45,21 @@ public final class WorkitoutLauncher {
         controller.start(); 
 
         //NUTRITION
-        final FoodRepository foodRepo = new FoodRepository();
+        /*final FoodRepository foodRepo = new FoodRepository();
         final DailyLogManager logManager = new DailyLogManager();
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(foodRepo, logManager, nutritionView);
         nutritionView.setController(nutritionController);
-        nutritionController.start();
+        nutritionController.start();*/
         
-        final JFrame testFrame = new JFrame("Workit-out - Nutrition Test");
-        testFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        testFrame.add(nutritionView);
-        testFrame.pack();
-        testFrame.setSize(900, 600);
-        testFrame.setLocationRelativeTo(null);
-        testFrame.setVisible(true);
-
-        // Uncomment for testing
         final UserProfile testUser = new UserProfile(
             "Mario", "Rossi", 25, 180.0, 80.0, 
             Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE
         );
-        final Exercise squat = new Exercise("Squat", 5.0, Set.of());
-        final Food pasta = new FoodImpl("Pasta", 350, 0.15, 0.82, 0.03);
-        final Meal testMeal = new Meal() {
-            @Override
-            public String getTime() { return "12:30"; }
-            @Override
-            public List<Food> getFood() { return List.of(pasta); }
-        };
 
-        controller.showSmartSuggestions(testUser, List.of(squat), testMeal);
+        final MainViewImpl mainView = new MainViewImpl();
+        final MainControllerImpl mainController = new MainControllerImpl(mainView, testUser);
+
+        mainController.start();
     }
 }
