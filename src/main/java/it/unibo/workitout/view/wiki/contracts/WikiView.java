@@ -9,11 +9,6 @@ import it.unibo.workitout.model.wiki.contracts.WikiContent;
  */
 public interface WikiView {
     /**
-     * Start the wiki view. 
-     */
-    void start();
-
-    /**
      * Update the view.
      * 
      * @param contents set of Wikicontent (Articles/Videos).

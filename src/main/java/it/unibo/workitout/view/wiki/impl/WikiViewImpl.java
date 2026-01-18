@@ -7,7 +7,6 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -21,7 +20,6 @@ import javax.swing.event.DocumentListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
@@ -34,19 +32,15 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * Implementation of Wiki View (To do with JavaFX).
+ * Implementation of Wiki View.
  */
-public class WikiViewImpl implements WikiView {
-    private static final String FRAME_NAME = "Workit-out Wiki";
+public class WikiViewImpl extends JPanel implements WikiView {
+    private static final long serialVersionUID = 1L;
     private static final String LIST = "LIST";
     private static final String DETAIL = "DETAIL";
-
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 400;
     private static final int TEXT_SIZE = 18;
     private static final int BODY_SIZE = 18;
 
-    private final JFrame frame = new JFrame(FRAME_NAME);
     private final CardLayout layout = new CardLayout();
     private final JPanel mainPanel = new JPanel(layout);
 
@@ -68,13 +62,10 @@ public class WikiViewImpl implements WikiView {
      * Builds a new wiki interactive view.
      */
     public WikiViewImpl() { 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        super.setLayout(new BorderLayout());
         setupListView();
         setupDetailView();
-
-        frame.add(mainPanel);
-        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        frame.setLocationByPlatform(true);
+        super.add(mainPanel, BorderLayout.CENTER);
     }
 
     /**
@@ -145,14 +136,6 @@ public class WikiViewImpl implements WikiView {
         detailPanel.add(southJPanel, BorderLayout.SOUTH);
 
         mainPanel.add(detailPanel, DETAIL);
-    }
-
-    /** 
-     * Starts the view.
-     */ 
-    @Override
-    public void start() {
-        this.frame.setVisible(true);
     }
 
     /**
@@ -290,12 +273,12 @@ public class WikiViewImpl implements WikiView {
                 && java.awt.Desktop.getDesktop().isSupported(java.awt.Desktop.Action.BROWSE)) {
                 java.awt.Desktop.getDesktop().browse(new URI(url));
             } else {
-                JOptionPane.showMessageDialog(frame, 
+                JOptionPane.showMessageDialog(this, 
                 "Browser non supportato.", "Errore Browser", 
                         JOptionPane.ERROR_MESSAGE);
             }
         } catch (final IOException | URISyntaxException e) {
-            JOptionPane.showMessageDialog(frame, 
+            JOptionPane.showMessageDialog(this, 
                 "Impossibile aprire il video.\nURL: " + url, "Errore Browser", 
                 JOptionPane.ERROR_MESSAGE);
         }

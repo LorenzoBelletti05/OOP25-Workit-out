@@ -38,7 +38,7 @@ public final class UserManager {
     /**
      * @return the TDEE, Total Daily Energy Expenditure.
      */
-    public double getTDEEE() {
+    public double getTDEE() {
         return getBMR() * currentUser.getActivityLevel().getMultiplier();
     }
 
@@ -46,7 +46,7 @@ public final class UserManager {
      * @return the target calories calculated based on the UserGoal
      */
     public double getDailyCalories() {
-        final double tdee = getTDEEE();
+        final double tdee = getTDEE();
         final UserGoal goal = currentUser.getGoal();
         final int calories = 500;
         final int halfCalories = calories / 2;
@@ -73,7 +73,7 @@ public final class UserManager {
         final UserGoal goal = currentUser.getGoal();
         final double carbsGrams = totalCalories * goal.getCarbRatio() / 4;
         final double proteinsGrams = totalCalories * goal.getProteinRatio() / 4;
-        final double fatsGrams = totalCalories * goal.getFatratio() / 9;
+        final double fatsGrams = totalCalories * goal.getFatRatio() / 9;
 
         return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
     }

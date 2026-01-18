@@ -4,19 +4,21 @@ package it.unibo.workitout.model.user.model.impl;
  * Represent the primary objective of the user.
  */
 public enum UserGoal {
-    LOSE_WEIGHT(0.4, 0.3, 0.3),
-    MAINTAIN_WEIGHT(0.5, 0.25, 0.25),
-    GAIN_WEIGHT(0.55, 0.25, 0.20),
-    BUILD_MUSCLE(0.5, 0.3, 0.2);
+    LOSE_WEIGHT(0.4, 0.3, 0.3, "Weight Loss"),
+    MAINTAIN_WEIGHT(0.5, 0.25, 0.25, "Maintain Weight"),
+    GAIN_WEIGHT(0.55, 0.25, 0.20, "Weight Gain"),
+    BUILD_MUSCLE(0.5, 0.3, 0.2, "Muscle Gain");
 
     private final double carbRatio;
     private final double proteinRatio;
     private final double fatRatio;
+    private final String description;
 
-    UserGoal(final double carbRatio, final double proteinRatio, final double fatRatio) {
+    private UserGoal(final double carbRatio, final double proteinRatio, final double fatRatio, final String description) {
         this.carbRatio = carbRatio;
         this.proteinRatio = proteinRatio;
         this.fatRatio = fatRatio;
+        this.description = description;
     }
 
     /**
@@ -36,7 +38,12 @@ public enum UserGoal {
     /**
      * @return the Ratio of the fats
      */
-    public double getFatratio() {
+    public double getFatRatio() {
         return fatRatio;
+    }
+
+    @Override
+    public String toString() {
+        return description;
     }
 }
