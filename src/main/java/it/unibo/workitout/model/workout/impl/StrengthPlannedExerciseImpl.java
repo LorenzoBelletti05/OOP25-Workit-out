@@ -27,7 +27,7 @@ public final class StrengthPlannedExerciseImpl extends PlannedExerciseImpl imple
 
     @Override
     public int getSets() {
-        return this.reps;
+        return this.sets;
     }
 
     @Override
