@@ -1,18 +1,15 @@
 package it.unibo.workitout.model.workout;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.EnumSet;
 
 import org.junit.jupiter.api.Test;
 
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
-import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.impl.AttitudeExercise;
 import it.unibo.workitout.model.workout.impl.CardioPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
-import it.unibo.workitout.model.workout.impl.PlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
 
 class PlannedExerciseTest {
