@@ -41,4 +41,9 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
         final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes); //used this variable for debug, could have just return from this.get....
         return burnedCaloriesForTime;
     }
+
+    @Override
+    public String getName() {
+        return this.exercise.getName();
+    }
 }
