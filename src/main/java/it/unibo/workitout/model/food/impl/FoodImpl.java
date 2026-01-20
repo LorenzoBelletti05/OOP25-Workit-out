@@ -1,15 +1,25 @@
 package it.unibo.workitout.model.food.impl;
 import it.unibo.workitout.model.food.api.Food;
 
+/**
+ * Implementation of Food interface
+ */
 public class FoodImpl implements Food {
-    //variabili private e final
     private final String name;
     private final double kcalPer100g;
     private final double pProtein;
     private final double pCarbs;
-    private final double pFats;  
-
-    public FoodImpl (String name, double kcal, double pP, double pC, double pF) {
+    private final double pFats; 
+    
+    /**
+     * @param name name of the food
+     * @param kcal calories per 100g
+     * @param pP proteins
+     * @param pC carbs
+     * @param pF fats
+     */
+    public FoodImpl (final String name, final double kcal, final double pP,
+                     final double pC, final double pF) {
         this.name = name;
         this.kcalPer100g = kcal;
         this.pProtein = pP;
@@ -27,7 +37,6 @@ public class FoodImpl implements Food {
         return kcalPer100g;
     }
 
-    //calcola i grammi usando le percentuali
     @Override
     public double getProteins() {
         return pProtein;
