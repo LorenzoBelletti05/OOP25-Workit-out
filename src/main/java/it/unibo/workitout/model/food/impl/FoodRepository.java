@@ -11,9 +11,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Repository for managing food data
+ * Repository for managing food data.
  */
-
 public final class FoodRepository {
     private static final double PROT_DIVISOR = 4.0;
     private static final double FAT_DIVISOR = 9.0;
@@ -25,6 +24,8 @@ public final class FoodRepository {
     private final List<Food> database = new ArrayList<>();
 
     /**
+     * Adds a food to the database.
+     * 
      * @param food food to add
      */
     public void addFood(final Food food) {
@@ -32,6 +33,8 @@ public final class FoodRepository {
     }
 
     /**
+     * Loads food data from a CSV file.
+     * 
      * @param filePath path to CSV
      */
     public void loadFromFile(final String filePath) {
@@ -46,7 +49,7 @@ public final class FoodRepository {
                 }
             }
         } catch (IOException e) {
-            //.
+            throw new IllegalStateException("Failed to load food file", e);
         }
     }
 
@@ -59,11 +62,13 @@ public final class FoodRepository {
             final double pF = Double.parseDouble(parts[4].trim());
             this.addFood(new FoodImpl(name, kcal, pP, pC, pF));
         } catch (NumberFormatException e) {
-            //.
+            throw new IllegalArgumentException("Invalid data in CSV", e);
         }
     }
 
     /**
+     * Sorts food by name.
+     *
      * @param query search string
      * @return filtered list
      */
@@ -72,44 +77,73 @@ public final class FoodRepository {
             .filter(f -> f.getName().toLowerCase(java.util.Locale.ROOT).contains(query.toLowerCase(java.util.Locale.ROOT)))
             .collect(Collectors.toList());
     }
-    /** @return sorted list of foods */
+
+    /**
+     * Returns the sorted list of foods by calories.
+     *
+     * @return sorted list of foods 
+     */
     public List<Food> sortByKcalAscending() {
         return database.stream()
             .sorted(Comparator.comparingDouble(Food::getKcalPer100g))
             .collect(Collectors.toList());
     }
-    /** @return reversed sorted list of foods */
+
+    /**
+     * Returns the reversed sorted list of foods by calories.
+     * 
+     * @return reversed sorted list of foods 
+     */
     public List<Food> sortByKcalDescending() {
         return database.stream()
             .sorted(Comparator.comparingDouble(Food::getKcalPer100g).reversed())
             .collect(Collectors.toList());
     }
-    /** @return sorted high protein foods */
+
+    /**
+     * Filters high protein foods.
+     * 
+     * @return sorted high protein foods
+     */
     public List<Food> getHighProteinFoods() {
         return database.stream()
-            .filter(f -> (f.getProteins() * f.getKcalPer100g() / PROT_DIVISOR) > HIGH_PROT_LIMIT)
+            .filter(f -> f.getProteins() * f.getKcalPer100g() / PROT_DIVISOR > HIGH_PROT_LIMIT)
             .sorted(Comparator.comparingDouble((Food f) -> 
-                (f.getProteins() * f.getKcalPer100g() / PROT_DIVISOR)).reversed())
+                f.getProteins() * f.getKcalPer100g() / PROT_DIVISOR).reversed())
             .collect(Collectors.toList());
     }
-    /** @return sorted low fat foods */
+
+    /** 
+     * Filters low fat foods.
+     * 
+     * @return sorted low fat foods 
+     */
     public List<Food> getLowFatFoods() {
         return database.stream()
-            .filter(f -> (f.getFats() * f.getKcalPer100g() / FAT_DIVISOR) < LOW_FAT_LIMIT)
+            .filter(f -> f.getFats() * f.getKcalPer100g() / FAT_DIVISOR < LOW_FAT_LIMIT)
             .sorted(Comparator.comparingDouble(f -> 
-                (f.getFats() * f.getKcalPer100g() / FAT_DIVISOR)))
+                f.getFats() * f.getKcalPer100g() / FAT_DIVISOR))
             .collect(Collectors.toList());
     }
-    /** @return sorted low carbs foods */
+
+    /**
+     * Filters low carbs foods.
+     * 
+     * @return sorted low carbs foods
+     */
     public List<Food> getLowCarbsFoods() {
         return database.stream()
-            .filter(f -> (f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR) < LOW_CARB_LIMIT)
+            .filter(f -> f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR < LOW_CARB_LIMIT)
             .sorted(Comparator.comparingDouble(f -> 
-                (f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR)))
+                f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR))
             .collect(Collectors.toList());
     }
     
-    /** @return all foods */
+    /** 
+     * Returns a copy of the database.
+     * 
+     * @return all foods list
+     */
     public List<Food> getAllFoods() {
         return List.copyOf(database);
     }
