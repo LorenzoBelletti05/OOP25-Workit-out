@@ -48,7 +48,7 @@ public final class FoodRepository {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException("Failed to load food file", e);
         }
     }
@@ -61,7 +61,7 @@ public final class FoodRepository {
             final double pC = Double.parseDouble(parts[3].trim());
             final double pF = Double.parseDouble(parts[4].trim());
             this.addFood(new FoodImpl(name, kcal, pP, pC, pF));
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             throw new IllegalArgumentException("Invalid data in CSV", e);
         }
     }
@@ -138,7 +138,7 @@ public final class FoodRepository {
                 f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR))
             .collect(Collectors.toList());
     }
-    
+
     /** 
      * Returns a copy of the database.
      * 

@@ -4,7 +4,7 @@ import it.unibo.workitout.model.food.api.Food;
 /**
  * Implementation of Food interface
  */
-public class FoodImpl implements Food {
+public final class FoodImpl implements Food {
     private final String name;
     private final double kcalPer100g;
     private final double pProtein;
@@ -41,10 +41,12 @@ public class FoodImpl implements Food {
     public double getProteins() {
         return pProtein;
     }
+
     @Override
     public double getCarbs() {
         return pCarbs;
     }
+    
     @Override
     public double getFats() {
         return pFats;
