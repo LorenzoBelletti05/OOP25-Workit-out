@@ -16,7 +16,7 @@ import java.util.Objects;
  * Implementation of NutritionController
  */
 
-public class NutritionControllerImpl implements NutritionController {
+public final class NutritionControllerImpl implements NutritionController {
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
