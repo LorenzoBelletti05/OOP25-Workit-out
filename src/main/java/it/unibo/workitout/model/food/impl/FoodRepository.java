@@ -138,7 +138,6 @@ public final class FoodRepository {
                 f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR))
             .collect(Collectors.toList());
     }
-
     /** 
      * Returns a copy of the database.
      * 
