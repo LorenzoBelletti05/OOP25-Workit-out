@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * WorkoutSheets method definition.
  */
-public interface WorkoutSheet extends WorkoutFunction{
+public interface WorkoutSheet extends WorkoutFunction {
 
     /**
      * Return the specified exercise
@@ -34,5 +34,6 @@ public interface WorkoutSheet extends WorkoutFunction{
      * 
      * @return the unmodifiable set of planned exercise.
      */
-    public Set<PlannedExercise> getWorkoutSheet(); 
+    public Set<PlannedExercise> getWorkoutSheet();
+
 }

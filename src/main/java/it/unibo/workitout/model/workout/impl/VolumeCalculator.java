@@ -17,7 +17,7 @@ public class VolumeCalculator {
         final Integer reps, 
         final double weight
     ) {
-        return (double) sets * reps * weight;        
+        return (double) sets * reps * weight;
     }
 
 }

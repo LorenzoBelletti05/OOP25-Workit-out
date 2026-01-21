@@ -2,7 +2,6 @@ package it.unibo.workitout.model.workout.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -18,7 +17,7 @@ import java.time.LocalDate;
 
 /**
  * Implementation of {@link WorkoutPlan}.
- * 
+ *
  * <p>
  * This class aggregates multiples {@link WorkoutSheetImpl} istence to represent the training program.
  * </p>
@@ -26,7 +25,7 @@ import java.time.LocalDate;
 public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     private Map<LocalDate, WorkoutSheet> workoutPlan; //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
-    
+
     public WorkoutPlanImpl(final String namePlan) {
         super(namePlan);
         workoutPlan = new TreeMap<>(); //used treemap to have key value ordered
@@ -34,8 +33,8 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     private double sumAll(ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
-        for (WorkoutSheet sheet : workoutPlan.values()) {            
-            sum+=sheetPlan.applyAsDouble(sheet);           
+        for (WorkoutSheet sheet : workoutPlan.values()) {
+            sum+=sheetPlan.applyAsDouble(sheet);
         }
         return sum;
     }
@@ -44,7 +43,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         Set<T> allExercise = new HashSet<>();
         for (WorkoutSheet sheet : workoutPlan.values()) {
             for (PlannedExercise plannExercise : sheet.getWorkoutSheet()) {
-                if(exerciseClass.isInstance(plannExercise)){
+                if (exerciseClass.isInstance(plannExercise)){
                     allExercise.add(exerciseClass.cast(plannExercise));
                 }
             }
@@ -94,6 +93,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     @Override
     public Set<CardioPlannedExercise> getCardiotExercise() {
         return getExerciseSubdivision(CardioPlannedExercise.class);
-    }    
+    }
 
 }

@@ -16,5 +16,5 @@ public interface CardioPlannedExercise extends PlannedExercise {
      * @return the weight in kg.
      */
     double getDistance();
-    
+
 }

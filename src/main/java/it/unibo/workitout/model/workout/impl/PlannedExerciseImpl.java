@@ -46,4 +46,5 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
     public String getName() {
         return this.exercise.getName();
     }
+    
 }

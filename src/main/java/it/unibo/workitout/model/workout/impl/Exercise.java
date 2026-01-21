@@ -60,4 +60,5 @@ public class Exercise {
     public String getExerciseAttitude() {
         return exerciseMission.toString();
     }
+    
 }

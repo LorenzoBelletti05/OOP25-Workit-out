@@ -38,10 +38,11 @@ public final class StrengthPlannedExerciseImpl extends PlannedExerciseImpl imple
     @Override
     public double getWeight() {
         return this.weight;
-    }    
+    }
 
     @Override
     public double getVolume() {
         return VolumeCalculator.calculateVolume(sets, reps, weight);
     }
+
 }

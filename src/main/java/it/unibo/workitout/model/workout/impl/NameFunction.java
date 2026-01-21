@@ -19,5 +19,5 @@ public abstract class NameFunction {
     public String getName() {
         return this.name;
     }
-    
+
 }

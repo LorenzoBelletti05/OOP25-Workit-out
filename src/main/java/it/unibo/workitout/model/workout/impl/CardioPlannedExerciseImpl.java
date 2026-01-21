@@ -4,7 +4,7 @@ import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 
 public final class CardioPlannedExerciseImpl extends PlannedExerciseImpl implements CardioPlannedExercise {
 
-    private double distance;    
+    private double distance;
 
     public CardioPlannedExerciseImpl(
         final Exercise exercise,
@@ -25,4 +25,5 @@ public final class CardioPlannedExerciseImpl extends PlannedExerciseImpl impleme
     public double getDistance() {
         return this.distance;
     }
+
 }

@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Set;
 
-import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
-
 /**
  * Interface that representing the entire workout for the user
  * based on his preferencies.

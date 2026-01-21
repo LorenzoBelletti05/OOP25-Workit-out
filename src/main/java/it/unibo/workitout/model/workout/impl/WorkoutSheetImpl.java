@@ -1,6 +1,5 @@
 package it.unibo.workitout.model.workout.impl;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -17,9 +16,9 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * </p>
  */
 public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
-      
+
     private Set<PlannedExercise> exercisesSheet;
-    
+
     public WorkoutSheetImpl(final String nameSheet) {
         super(nameSheet);        
         exercisesSheet = new HashSet<>();
@@ -38,7 +37,7 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
         }
         return sum;
     }
-    
+
     @Override
     public Set<PlannedExercise> getWorkoutSheet() {
         return Set.copyOf(this.exercisesSheet);
@@ -68,7 +67,5 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
     public double getBurnedCalories() {
         return sumAll(PlannedExercise::getBurnedCalories);
     }
-    
+
 }
-
-
