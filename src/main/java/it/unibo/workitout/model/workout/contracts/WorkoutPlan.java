@@ -1,5 +1,7 @@
 package it.unibo.workitout.model.workout.contracts;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 
 import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
@@ -20,10 +22,10 @@ public interface WorkoutPlan extends WorkoutFunction{
      *
      * @return an unmodifiable set of all session.
      */
-    Set<WorkoutSheetImpl> getSheets();
+    Set<WorkoutSheet> getSheets();
 
     /**
-     * Utility methot that return all the exercises from each sheets.
+     * Utility method that return all the exercises from each sheets.
      * 
      * @return the planned exercises in the plan.
      */
@@ -42,4 +44,11 @@ public interface WorkoutPlan extends WorkoutFunction{
      * @return the plan based on cardio.
      */
     Set<CardioPlannedExercise> getCardiotExercise();
+
+    /**
+     * Public getter that return the class unmoodifiable structure data.
+     * 
+     * @return the unmodifiable set of Workoutsheet.
+     */
+    public Map<LocalDate, WorkoutSheet> getWorkoutPlan();
 }
