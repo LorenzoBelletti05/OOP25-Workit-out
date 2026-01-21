@@ -11,29 +11,35 @@ public interface WorkoutSheet extends WorkoutFunction {
     /**
      * Return the specified exercise
      * 
-     * @return
+     * @param nameExercise the name of the exercise required.
+     * 
+     * @return an optional of plannedExercise which contains or the exercise or null.
      */
-    public Optional<PlannedExercise> getExercise(final String nameExercise);
+    Optional<PlannedExercise> getExercise(String nameExercise);
 
     /**
      * Return the success or not, for the operation of adding a PlannedExercise.
      * 
+     * @param exercise the planned exercise, could be strenght or cardio.
+     *
      * @return the operation of adding result in a boolean state.
      */
-    public Boolean addExercise(final PlannedExercise exercise);
+    Boolean addExercise(PlannedExercise exercise);
 
     /**
      * Return the success or not, for the operation of remouving a PlannedExercise.
      * 
+     * @param exercise the planned exercise, could be strenght or cardio.
+     *
      * @return the operation of remouving result in a boolean state.
      */
-    public Boolean remouveExercise(final PlannedExercise exercise);
+    Boolean remouveExercise(PlannedExercise exercise);
 
     /**
      * Public getter that return the class unmoodifiable structure data.
      * 
      * @return the unmodifiable set of planned exercise.
      */
-    public Set<PlannedExercise> getWorkoutSheet();
+    Set<PlannedExercise> getWorkoutSheet();
 
 }

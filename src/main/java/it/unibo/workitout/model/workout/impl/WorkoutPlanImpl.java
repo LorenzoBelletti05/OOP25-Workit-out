@@ -24,26 +24,32 @@ import java.time.LocalDate;
  */
 public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
-    private Map<LocalDate, WorkoutSheet> workoutPlan; //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
+    //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
+    private Map<LocalDate, WorkoutSheet> workoutPlan; 
 
+    /**
+     * Costructor that gived the nema of the plan give it to the NameFunction and than create a new plan.
+     * 
+     * @param namePlan the new plan created each time an istance is setted.
+     */
     public WorkoutPlanImpl(final String namePlan) {
         super(namePlan);
         workoutPlan = new TreeMap<>(); //used treemap to have key value ordered
     }
 
-    private double sumAll(ToDoubleFunction<WorkoutSheet> sheetPlan) {
+    private double sumAll(final ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
         for (WorkoutSheet sheet : workoutPlan.values()) {
-            sum+=sheetPlan.applyAsDouble(sheet);
+            sum += sheetPlan.applyAsDouble(sheet);
         }
         return sum;
     }
 
-    private <T extends PlannedExercise> Set<T> getExerciseSubdivision(Class<T> exerciseClass) {
-        Set<T> allExercise = new HashSet<>();
+    private <T extends PlannedExercise> Set<T> getExerciseSubdivision(final Class<T> exerciseClass) {
+        final Set<T> allExercise = new HashSet<>();
         for (WorkoutSheet sheet : workoutPlan.values()) {
             for (PlannedExercise plannExercise : sheet.getWorkoutSheet()) {
-                if (exerciseClass.isInstance(plannExercise)){
+                if (exerciseClass.isInstance(plannExercise)) {
                     allExercise.add(exerciseClass.cast(plannExercise));
                 }
             }
@@ -76,7 +82,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     @Override
     public Set<PlannedExercise> getAllExercise() {
-        Set<PlannedExercise> allExercise = new HashSet<>();
+        final Set<PlannedExercise> allExercise = new HashSet<>();
         for (WorkoutSheet sheet : workoutPlan.values()) {
             allExercise.addAll(sheet.getWorkoutSheet());
         }

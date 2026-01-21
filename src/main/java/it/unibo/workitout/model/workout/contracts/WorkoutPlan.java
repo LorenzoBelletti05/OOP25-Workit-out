@@ -13,7 +13,7 @@ import java.util.Set;
  * is a WorkoutSheet provided untill the user is satisfied.
  * </p>
  */
-public interface WorkoutPlan extends WorkoutFunction{
+public interface WorkoutPlan extends WorkoutFunction {
 
     /**
      * Return the hole exercise in a session.
@@ -27,7 +27,7 @@ public interface WorkoutPlan extends WorkoutFunction{
      * 
      * @return the planned exercises in the plan.
      */
-    Set<PlannedExercise> getAllExercise();    
+    Set<PlannedExercise> getAllExercise();
 
     /**
      * Return all the filter plan based on strenght.
@@ -48,5 +48,5 @@ public interface WorkoutPlan extends WorkoutFunction{
      * 
      * @return the unmodifiable set of Workoutsheet.
      */
-    public Map<LocalDate, WorkoutSheet> getWorkoutPlan();
+    Map<LocalDate, WorkoutSheet> getWorkoutPlan();
 }

@@ -6,6 +6,13 @@ package it.unibo.workitout.model.workout.impl;
 public class VolumeCalculator {
 
     /**
+     * Private costructor that does nothing.
+     */
+    private VolumeCalculator() {
+
+    }
+
+    /**
      * A static method that calculate the volume of the exercise base on the parameters.
      * @param sets number of sets.
      * @param reps number of repetition for each sets.

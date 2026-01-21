@@ -15,7 +15,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * His purpose is to act as contaienr for a group of {@link PlannedExercise} for a specific train.
  * </p>
  */
-public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
+public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
 
     private Set<PlannedExercise> exercisesSheet;
 

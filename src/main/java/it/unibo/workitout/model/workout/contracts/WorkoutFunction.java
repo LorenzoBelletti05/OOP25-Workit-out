@@ -10,20 +10,20 @@ interface WorkoutFunction {
      *
      * @return the volume. It depends where is called.
      */
-    public double getVolume();
+    double getVolume();
 
     /**
      * Method that returned the burned calories required.
      * 
      * @return the burned calories. It depends where is called.
      */
-    public double getBurnedCalories();
+    double getBurnedCalories();
 
     /**
      * Return the name of the planned exercise.
      *
      * @return the name of the exercise.
      */
-    public String getName();
+    String getName();
 
 }
