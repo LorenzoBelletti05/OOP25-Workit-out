@@ -29,7 +29,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     
     public WorkoutPlanImpl(final String namePlan) {
         super(namePlan);
-        workoutPlan = new TreeMap<>();
+        workoutPlan = new TreeMap<>(); //used treemap to have key value ordered
     }
 
     private double sumAll(ToDoubleFunction<WorkoutSheet> sheetPlan) {
@@ -38,7 +38,19 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
             sum+=sheetPlan.applyAsDouble(sheet);           
         }
         return sum;
-    }   
+    }
+
+    private <T extends PlannedExercise> Set<T> getExerciseSubdivision(Class<T> exerciseClass) {
+        Set<T> allExercise = new HashSet<>();
+        for (WorkoutSheet sheet : workoutPlan.values()) {
+            for (PlannedExercise plannExercise : sheet.getWorkoutSheet()) {
+                if(exerciseClass.isInstance(plannExercise)){
+                    allExercise.add(exerciseClass.cast(plannExercise));
+                }
+            }
+        }
+        return Set.copyOf(allExercise);
+    }
 
     @Override
     public Map<LocalDate, WorkoutSheet> getWorkoutPlan() {
@@ -76,28 +88,12 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     //Following two methods return the set of each type of the exercise: strenght or cardio
     @Override
     public Set<StrengthPlannedExercise> getStrenghtExercise() {
-        Set<StrengthPlannedExercise> allExerciseStrenght = new HashSet<>();
-        for (WorkoutSheet sheet : workoutPlan.values()) {
-            for (PlannedExercise plannedExercise : sheet.getWorkoutSheet()) {
-                if(plannedExercise instanceof StrengthPlannedExercise){
-                    allExerciseStrenght.add((StrengthPlannedExercise)plannedExercise);
-                }
-            }
-        }
-        return Set.copyOf(allExerciseStrenght);
+        return getExerciseSubdivision(StrengthPlannedExercise.class);
     }
 
     @Override
     public Set<CardioPlannedExercise> getCardiotExercise() {
-        Set<CardioPlannedExercise> allExerciseCardio = new HashSet<>();
-        for (WorkoutSheet sheet : workoutPlan.values()) {
-            for (PlannedExercise plannedExercise : sheet.getWorkoutSheet()) {
-                if(plannedExercise instanceof CardioPlannedExercise){
-                    allExerciseCardio.add((CardioPlannedExercise)plannedExercise);
-                }
-            }
-        }
-        return Set.copyOf(allExerciseCardio);
+        return getExerciseSubdivision(CardioPlannedExercise.class);
     }    
 
 }
