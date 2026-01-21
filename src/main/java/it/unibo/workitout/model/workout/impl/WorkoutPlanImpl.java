@@ -1,9 +1,11 @@
 package it.unibo.workitout.model.workout.impl;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.function.ToDoubleFunction;
 
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
@@ -23,67 +25,79 @@ import java.time.LocalDate;
  */
 public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
-    private Map<LocalDate, List<WorkoutSheet>> workoutPlan;
+    private Map<LocalDate, WorkoutSheet> workoutPlan; //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
     
     public WorkoutPlanImpl(final String namePlan) {
         super(namePlan);
+        workoutPlan = new TreeMap<>();
     }
 
-    private double sumAll(ToDoubleFunction<PlannedExercise> sheetPlan) {
+    private double sumAll(ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
-        for (List<WorkoutSheet> sheetExercisesList : workoutPlan.values()) {
-            for (WorkoutSheet workoutSheet : sheetExercisesList) {
-                
-                sum+=sheetPlan.applyAsDouble((PlannedExercise) workoutSheet);
-            }
-            
+        for (WorkoutSheet sheet : workoutPlan.values()) {            
+            sum+=sheetPlan.applyAsDouble(sheet);           
         }
         return sum;
-    }
+    }   
 
-    /**
-     * Public getter that return this unmoodifiable structure data.
-     * 
-     * @return the unmodifiable set of Workoutsheet.
-     */
-    public Map<LocalDate, List<WorkoutSheet>> getWorkoutSheet() {
+    @Override
+    public Map<LocalDate, WorkoutSheet> getWorkoutPlan() {
         return Collections.unmodifiableMap(this.workoutPlan);
     }
 
+    //Following two methods return the sum of: volume and burned calories
     @Override
     public double getVolume() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBurnedCalories'");
+        return sumAll(WorkoutSheet::getVolume);
     }
 
     @Override
     public double getBurnedCalories() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBurnedCalories'");
+        return sumAll(WorkoutSheet::getBurnedCalories);
     }
 
+
+    //Following two methods return the set of: workoutSheets and of all exercise
     @Override
-    public Set<WorkoutSheetImpl> getSheets() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSheets'");
+    public Set<WorkoutSheet> getSheets() {
+        return Set.copyOf(workoutPlan.values()); //give an unmodifiable set of workoutSheet
     }
 
     @Override
     public Set<PlannedExercise> getAllExercise() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllExercise'");
+        Set<PlannedExercise> allExercise = new HashSet<>();
+        for (WorkoutSheet sheet : workoutPlan.values()) {
+            allExercise.addAll(sheet.getWorkoutSheet());
+        }
+        return Set.copyOf(allExercise);
     }
 
+
+    //Following two methods return the set of each type of the exercise: strenght or cardio
     @Override
     public Set<StrengthPlannedExercise> getStrenghtExercise() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStrenghtExercise'");
+        Set<StrengthPlannedExercise> allExerciseStrenght = new HashSet<>();
+        for (WorkoutSheet sheet : workoutPlan.values()) {
+            for (PlannedExercise plannedExercise : sheet.getWorkoutSheet()) {
+                if(plannedExercise instanceof StrengthPlannedExercise){
+                    allExerciseStrenght.add((StrengthPlannedExercise)plannedExercise);
+                }
+            }
+        }
+        return Set.copyOf(allExerciseStrenght);
     }
 
     @Override
     public Set<CardioPlannedExercise> getCardiotExercise() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCardiotExercise'");
+        Set<CardioPlannedExercise> allExerciseCardio = new HashSet<>();
+        for (WorkoutSheet sheet : workoutPlan.values()) {
+            for (PlannedExercise plannedExercise : sheet.getWorkoutSheet()) {
+                if(plannedExercise instanceof CardioPlannedExercise){
+                    allExerciseCardio.add((CardioPlannedExercise)plannedExercise);
+                }
+            }
+        }
+        return Set.copyOf(allExerciseCardio);
     }    
 
 }
