@@ -18,10 +18,11 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  */
 public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
       
-    private Set<PlannedExercise> exercisesSheet = new HashSet<>();
+    private Set<PlannedExercise> exercisesSheet;
     
     public WorkoutSheetImpl(final String nameSheet) {
         super(nameSheet);        
+        exercisesSheet = new HashSet<>();
     }
 
     /**
@@ -44,7 +45,7 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
      * @return the unmodifiable set of planned exercise.
      */
     public Set<PlannedExercise> getWorkoutSheet() {
-        return Collections.unmodifiableSet(this.exercisesSheet);
+        return Set.copyOf(this.exercisesSheet);
     }
 
     @Override
