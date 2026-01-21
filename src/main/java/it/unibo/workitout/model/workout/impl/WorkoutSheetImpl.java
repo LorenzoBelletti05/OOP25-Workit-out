@@ -38,12 +38,8 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
         }
         return sum;
     }
-
-    /**
-     * Public getter that return this unmoodifiable structure data.
-     * 
-     * @return the unmodifiable set of planned exercise.
-     */
+    
+    @Override
     public Set<PlannedExercise> getWorkoutSheet() {
         return Set.copyOf(this.exercisesSheet);
     }

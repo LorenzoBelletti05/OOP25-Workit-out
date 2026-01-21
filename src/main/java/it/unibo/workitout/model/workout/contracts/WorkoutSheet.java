@@ -1,6 +1,7 @@
 package it.unibo.workitout.model.workout.contracts;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * WorkoutSheets method definition.
@@ -27,4 +28,11 @@ public interface WorkoutSheet extends WorkoutFunction{
      * @return the operation of remouving result in a boolean state.
      */
     public Boolean remouveExercise(final PlannedExercise exercise);
+
+    /**
+     * Public getter that return the class unmoodifiable structure data.
+     * 
+     * @return the unmodifiable set of planned exercise.
+     */
+    public Set<PlannedExercise> getWorkoutSheet(); 
 }
