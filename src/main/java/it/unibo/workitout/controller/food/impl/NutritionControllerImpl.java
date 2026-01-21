@@ -8,18 +8,31 @@ import it.unibo.workitout.model.food.api.DailyLog;
 import it.unibo.workitout.model.food.api.Food;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Collections;
+import java.util.Objects;
 
-public class NutritionControllerImpl implements NutritionController {
+/**
+ * Implementation of NutritionController
+ */
+
+public final class NutritionControllerImpl implements NutritionController {
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
     private static final String FOODS_PATH = "Workit-out/src/main/resources/data/food/foods.csv";
     private static final String HISTORY_PATH = "Workit-out/src/main/resources/data/food/history.csv";
 
-    public NutritionControllerImpl(FoodRepository repository, DailyLogManager logManager, NutritionView view) {
-        this.repository = repository;
-        this.logManager = logManager;
-        this.view = view;
+    /**
+     * @param repository the food database
+     * @param logManager the manager for daily logs
+     * @param view the user interface
+     */
+
+    public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, NutritionView view) {
+        this.repository = Objects.requireNonNull(repository);
+        this.logManager = Objects.requireNonNull(logManager);
+        this.view = Objects.requireNonNull(view);
     }
 
     @Override
@@ -65,8 +78,8 @@ public class NutritionControllerImpl implements NutritionController {
     }
 
     @Override
-    public java.util.List<Food> getAllFoods() {
-        return repository.getAllFoods();
+    public List<Food> getAllFoods() {
+        return List.copyOf(repository.getAllFoods());
     }
 
     @Override
@@ -79,7 +92,7 @@ public class NutritionControllerImpl implements NutritionController {
         nutrients.put("carbs", today.getTotalCarbs());
         nutrients.put("fats", today.getTotalFats());
 
-        return nutrients;
+        return Collections.unmodifiableMap(new HashMap<>(nutrients));
     }
 
     private void refreshViewSummary() {

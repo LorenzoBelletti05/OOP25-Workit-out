@@ -2,68 +2,97 @@ package it.unibo.workitout.model.food.impl;
 
 import it.unibo.workitout.model.food.api.DailyLog;
 import it.unibo.workitout.model.food.api.Food;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.Optional;
 
-public class DailyLogManager {
-    //storico di tutti i giorni
+/**
+ * Manager for the daily food logs history
+ */
+public final class DailyLogManager {
+    private static final int HISTORY_COLUMNS = 3;
     private final Map<LocalDate, DailyLog> history = new TreeMap<>();
 
-    //Restituisce il log della giornata attuale e lo cambia allo scoccare della mezzanotte
+    /**
+     * @return the log for the current date
+     */
     public DailyLog getCurrentLog() {
         return getLogByDate(LocalDate.now());
     }
 
-    //recupera i dati dei giorni passati, quindi tutto lo storico
+    /**
+     * @param date the date to retrieve
+     * @return the daily log for that date
+     */
     public DailyLog getLogByDate(LocalDate date) {
-        //Se il log non esiste o non è mai esistito, lo crea
         return history.computeIfAbsent(date, d -> new DailyLogImpl(d));
     }
 
-    //Salva lo storico sul csv
-    public void saveHistory(String filePath) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
-            for (DailyLog log : history.values()) {
-                LocalDate date = log.getDate();
-                for (Map.Entry<Food, Integer> entry : log.getFoodsConsumed().entrySet()) {
+    /**
+     * @param filePath the path where to save history
+     */
+    public void saveHistory(final String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
+            for (final DailyLog log : history.values()) {
+                final LocalDate date = log.getDate();
+                for (final Map.Entry<Food, Integer> entry : log.getFoodsConsumed().entrySet()) {
                     writer.println(date + "," + entry.getKey().getName() + "," + entry.getValue());
                 }
             }
         } catch (IOException e) {
-            System.err.println("Errore nel salvataggio dello storico: " + e.getMessage());
+            throw new IllegalStateException("Failed to save history", e);
         }
     }
 
-    //Carica lo storico leggendo il file csv
-    public void loadHistory(String filePath, FoodRepository repository) {
-        File file = new File(filePath);
-        if (!file.exists()) return; //se il file non esiste, non fa nulla
+    /**
+     * @param filePath the path from where to load history
+     * @param repository the food repository
+     */
+    public void loadHistory(final String filePath, final FoodRepository repository) {
+        final File file = new File(filePath);
+        if (!file.exists()) {
+            return;
+        }
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    LocalDate date = LocalDate.parse(parts[0]);
-                    String foodName = parts[1];
-                    int grams = Integer.parseInt(parts[2]);
-
-                    //Cerca i food nel repository
-                    Optional<Food> food = repository.getAllFoods().stream()
-                        .filter(f -> f.getName().equalsIgnoreCase(foodName))
-                        .findFirst();
-                    
-                    if (food.isPresent()) {
-                        this.getLogByDate(date).addFoodEntry(food.get(), grams);
-                    }
+                final String[] parts = line.split(",");
+                if (parts.length == HISTORY_COLUMNS) {
+                    processHistoryLine(parts, repository);
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.err.println("Errore nel caricamento dello storico: " + e.getMessage());
+            throw new IllegalStateException("Failed to load history", e);
         }
     }
 
+    private void processHistoryLine(final String[] parts, final FoodRepository repository) {
+        final LocalDate date = LocalDate.parse(parts[0]);
+        final String foodName = parts[1];
+        final int grams = Integer.parseInt(parts[2]);
+
+        final Optional<Food> food = repository.getAllFoods().stream()
+            .filter(f -> f.getName().equalsIgnoreCase(foodName))
+            .findFirst();
+                    
+        if (food.isPresent()) {
+            this.getLogByDate(date).addFoodEntry(food.get(), grams);
+        }
+    }
+
+    /** 
+     * @return a copy of the full history
+     */
     public Map<LocalDate, DailyLog> getFullHistory() {
         return new HashMap<>(history);
     }
