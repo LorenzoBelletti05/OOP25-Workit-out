@@ -45,27 +45,27 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
 
     @Override
     public Optional<PlannedExercise> getExercise(final String nameExercise) {
-        return exercisesSheet.stream().filter(b -> b.getName().equals(nameExercise)).findAny();
+        return this.exercisesSheet.stream().filter(b -> b.getName().equals(nameExercise)).findAny();
     }
 
     @Override
     public Boolean addExercise(final PlannedExercise exercise) {
-        return exercisesSheet.add(exercise);
+        return this.exercisesSheet.add(exercise);
     }
 
     @Override
     public Boolean remouveExercise(final PlannedExercise exercise) {
-        return exercisesSheet.remove(exercise);
+        return this.exercisesSheet.remove(exercise);
     }
 
     @Override
     public double getVolume() {
-        return sumAll(PlannedExercise::getVolume);
+        return sumAll(b -> b.getVolume());
     }
 
     @Override
     public double getBurnedCalories() {
-        return sumAll(PlannedExercise::getBurnedCalories);
+        return sumAll(b -> b.getBurnedCalories());
     }
 
 }
