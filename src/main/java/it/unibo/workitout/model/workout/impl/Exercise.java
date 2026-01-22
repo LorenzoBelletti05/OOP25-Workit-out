@@ -14,7 +14,7 @@ import java.util.Set;
 public class Exercise {
 
     private final String name;
-    private final double calorieBurned;
+    private final double caloriesBurned;
     private final Set<AttitudeExercise> exerciseMission;
 
     /**
@@ -22,13 +22,13 @@ public class Exercise {
      * 
      * @param name the name of the exercise
      * 
-     * @param calorieBurned the ammount of calories that the exerc. will let the user burn.
+     * @param caloriesBurned the ammount of calories that the exerc. will let the user burn.
      * 
      * @param exerciseMission a set of {@link AttitudeExercise}, the value associeted to each exercise.
      */
-    public Exercise(final String name, final double calorieBurned, final Set<AttitudeExercise> exerciseMission) {
+    public Exercise(final String name, final double caloriesBurned, final Set<AttitudeExercise> exerciseMission) {
         this.name = name;
-        this.calorieBurned = calorieBurned;
+        this.caloriesBurned = caloriesBurned;
         this.exerciseMission = new HashSet<>(exerciseMission); //creating a copy of the set
     }
 
@@ -49,7 +49,7 @@ public class Exercise {
      * @return the calories burned as double value.
      */
     public double calorieBurned(final double minutes) {
-        return this.calorieBurned * minutes;
+        return this.caloriesBurned * minutes;
     }
 
     /**
