@@ -5,10 +5,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import it.unibo.workitout.controller.user.contracts.UserProfileController;
+import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
@@ -37,7 +41,10 @@ public class UserProfileViewImpl implements UserProfileView {
     private final JComboBox<Sex> sexCombo = new JComboBox<>(Sex.values());
     private final JComboBox<ActivityLevel> activityLevelCombo = new JComboBox<>(ActivityLevel.values());
     private final JComboBox<UserGoal> userGoalCombo = new JComboBox<>(UserGoal.values());
+    private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
     private final JButton calculateButton = new JButton("Save");
+
+    private UserProfileController controller = null;
 
     public UserProfileViewImpl() {
         frame.getContentPane().add(panel);
@@ -68,12 +75,26 @@ public class UserProfileViewImpl implements UserProfileView {
         secondPanel.add(activityLevelCombo);
         secondPanel.add(new JLabel("User Goal:"));
         secondPanel.add(userGoalCombo);
+        secondPanel.add(new JLabel("Calculate BMR with:"));
+        secondPanel.add(strategyCombo);
 
         panel.add(secondPanel, BorderLayout.NORTH);
 
         JPanel calculatePanel = new JPanel();
         calculatePanel.add(calculateButton);
         panel.add(calculatePanel, BorderLayout.SOUTH);
+
+        calculateButton.addActionListener (al -> {
+            if (controller != null) {
+                controller.calculateProfile();
+            } else {
+                showErrorController("Controller not linked ");
+            }
+        });
+    }
+
+    private void showErrorController(String errorDescription) {
+        JOptionPane.showMessageDialog(frame, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void display() {
@@ -88,7 +109,8 @@ public class UserProfileViewImpl implements UserProfileView {
     }
 
     public static void main(String[] args) {
-        new UserProfileViewImpl();
+        UserProfileViewImpl view = new UserProfileViewImpl();
+        new UserProfileControllerImpl(view);
     }
 
     @Override
@@ -129,5 +151,20 @@ public class UserProfileViewImpl implements UserProfileView {
     @Override
     public UserGoal UserGoalInput() {
         return (UserGoal) userGoalCombo.getSelectedItem();
+    }
+
+    @Override
+    public BMRStrategyChoise getBMRStrategyInput() {
+        return (BMRStrategyChoise) strategyCombo.getSelectedItem();
+    }
+
+    @Override
+    public void setController(UserProfileController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public void close() {
+        frame.dispose();
     }
 }
