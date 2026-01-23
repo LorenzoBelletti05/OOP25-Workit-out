@@ -2,276 +2,331 @@
   {
     "name": "Corsa (12 km/h)",
     "caloriesBurned": 13.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Jogging (8 km/h)",
     "caloriesBurned": 9.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Corsa in salita",
     "caloriesBurned": 16.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Trail Running",
     "caloriesBurned": 12.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Ciclismo su strada (veloce)",
     "caloriesBurned": 12.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Mountain Bike (sterrato)",
     "caloriesBurned": 11.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Nuoto (Delfino)",
     "caloriesBurned": 14.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Nuoto (Rana)",
     "caloriesBurned": 10.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Canottaggio (Alta intensità)",
     "caloriesBurned": 13.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Salto della corda (Moderato)",
     "caloriesBurned": 11.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Battle Ropes",
     "caloriesBurned": 11.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Burpees",
     "caloriesBurned": 10.5,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Mountain Climbers",
     "caloriesBurned": 9.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Box Jumps",
     "caloriesBurned": 10.0,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Wall Balls",
     "caloriesBurned": 9.5,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Thrusters (Bilanciere)",
     "caloriesBurned": 12.0,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Kettlebell Snatch",
     "caloriesBurned": 13.5,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Sled Push (Slitta)",
     "caloriesBurned": 14.0,
+    "type": "CARDIO",
     "goals": "MUSCLE_GAIN, WHEIGHT_LOSS, WHEIGHT_GAIN"
   },
   {
     "name": "Deadlift (Stacco da terra)",
     "caloriesBurned": 9.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Back Squat",
     "caloriesBurned": 8.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Front Squat",
     "caloriesBurned": 9.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Panca Piana (Bench Press)",
     "caloriesBurned": 6.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Military Press",
     "caloriesBurned": 6.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Bent Over Row (Rematore)",
     "caloriesBurned": 7.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Pull-ups (Trazioni)",
     "caloriesBurned": 8.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Dips (Parallele)",
     "caloriesBurned": 7.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Muscle-up",
     "caloriesBurned": 11.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_LOSS"
   },
   {
     "name": "Affondi camminati",
     "caloriesBurned": 8.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_LOSS"
   },
   {
     "name": "Leg Press",
     "caloriesBurned": 5.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Leg Extension",
     "caloriesBurned": 4.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN"
   },
   {
     "name": "Leg Curl",
     "caloriesBurned": 4.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN"
   },
   {
     "name": "Lat Pulldown",
     "caloriesBurned": 5.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN"
   },
   {
     "name": "Curl Bilanciere",
     "caloriesBurned": 4.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "French Press",
     "caloriesBurned": 4.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_GAIN"
   },
   {
     "name": "Alzate Laterali",
     "caloriesBurned": 3.5,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN"
   },
   {
     "name": "Calf Raise (Polpacci)",
     "caloriesBurned": 3.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN"
   },
   {
     "name": "Plank Addominale",
     "caloriesBurned": 3.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Russian Twist",
     "caloriesBurned": 4.5,
+    "type": "STRENGTH",
     "goals": "WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Leg Raises",
     "caloriesBurned": 5.0,
+    "type": "STRENGTH",
     "goals": "MUSCLE_GAIN, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Kickboxing",
     "caloriesBurned": 11.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Sparring (Boxe/MMA)",
     "caloriesBurned": 13.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Brazilian Jiu-Jitsu",
     "caloriesBurned": 10.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, MUSCLE_GAIN"
   },
   {
     "name": "Calcio (Partita)",
     "caloriesBurned": 9.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Basketball (Partita)",
     "caloriesBurned": 10.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Tennis (Singolo)",
     "caloriesBurned": 8.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Padel",
     "caloriesBurned": 7.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Escursionismo con zaino",
     "caloriesBurned": 8.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Camminata veloce (6.5 km/h)",
     "caloriesBurned": 5.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE, WHEIGHT_LOSS"
   },
   {
     "name": "Power Yoga",
     "caloriesBurned": 5.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE, MUSCLE_GAIN"
   },
   {
     "name": "Pilates",
     "caloriesBurned": 4.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE, MUSCLE_GAIN"
   },
   {
     "name": "Stretching Statico",
     "caloriesBurned": 2.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Arrampicata (Rock Climbing)",
     "caloriesBurned": 9.5,
+    "type": "CARDIO",
     "goals": "MUSCLE_GAIN, WHEIGHT_LOSS"
   },
   {
     "name": "Spinning (Alta intensità)",
     "caloriesBurned": 12.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Step Aerobica",
     "caloriesBurned": 8.5,
+    "type": "CARDIO",
     "goals": "WHEIGHT_LOSS, WHEIGHT_MAINTENANCE"
   },
   {
     "name": "Tai Chi",
     "caloriesBurned": 3.0,
+    "type": "CARDIO",
     "goals": "WHEIGHT_MAINTENANCE"
   }
 ]
