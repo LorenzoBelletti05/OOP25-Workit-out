@@ -14,7 +14,7 @@ public enum BMRStrategyChoise {
         this.strategy=strategy;
     }
 
-    public BMRCalculatorStrategy geStrategy(){
+    public BMRCalculatorStrategy getStrategy(){
         return strategy;
     }
 
