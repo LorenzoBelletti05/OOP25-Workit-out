@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
@@ -37,6 +38,7 @@ public class UserProfileViewImpl implements UserProfileView {
     private final JComboBox<Sex> sexCombo = new JComboBox<>(Sex.values());
     private final JComboBox<ActivityLevel> activityLevelCombo = new JComboBox<>(ActivityLevel.values());
     private final JComboBox<UserGoal> userGoalCombo = new JComboBox<>(UserGoal.values());
+    private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
     private final JButton calculateButton = new JButton("Save");
 
     public UserProfileViewImpl() {
@@ -68,6 +70,8 @@ public class UserProfileViewImpl implements UserProfileView {
         secondPanel.add(activityLevelCombo);
         secondPanel.add(new JLabel("User Goal:"));
         secondPanel.add(userGoalCombo);
+        secondPanel.add(new JLabel("Calculate BMR with:"));
+        secondPanel.add(strategyCombo);
 
         panel.add(secondPanel, BorderLayout.NORTH);
 
@@ -129,5 +133,10 @@ public class UserProfileViewImpl implements UserProfileView {
     @Override
     public UserGoal UserGoalInput() {
         return (UserGoal) userGoalCombo.getSelectedItem();
+    }
+
+    @Override
+    public BMRStrategyChoise getBMRStrategyInput() {
+        return (BMRStrategyChoise) strategyCombo.getSelectedItem();
     }
 }
