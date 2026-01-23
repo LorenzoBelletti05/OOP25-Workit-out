@@ -11,14 +11,18 @@ import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
 import it.unibo.workitout.view.main.contracts.MainView;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
+import it.unibo.workitout.view.workout.contracts.PlanViewer;
+import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 public class MainControllerImpl implements MainController {
     private final MainView mainView;
     private final UserProfile user;
+   
     
     public MainControllerImpl(MainView mainView, UserProfile user) {
         this.mainView = mainView;
         this.user = user;
+       
     }
 
     /**
@@ -30,6 +34,7 @@ public class MainControllerImpl implements MainController {
         final NutritionController nutritionController = new NutritionControllerImpl(
             new FoodRepository(), new DailyLogManager(), nutritionView);
         nutritionView.setController(nutritionController);
+
         nutritionController.start();
         mainView.addModule("Diario Alimentare", nutritionView);
         
@@ -38,7 +43,7 @@ public class MainControllerImpl implements MainController {
         wikiController.start();
         mainView.addModule("Wiki", wikiView);
         wikiController.showSmartSuggestions(user, null, null);
-        mainView.start();
+        mainView.start();        
     }
     
 }
