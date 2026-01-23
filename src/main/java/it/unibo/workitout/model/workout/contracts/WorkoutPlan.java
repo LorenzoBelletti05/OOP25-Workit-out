@@ -1,8 +1,8 @@
 package it.unibo.workitout.model.workout.contracts;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
-
-import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 
 /**
  * Interface that representing the entire workout for the user
@@ -13,21 +13,21 @@ import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
  * is a WorkoutSheet provided untill the user is satisfied.
  * </p>
  */
-public interface WorkoutPlan extends WorkoutFunction{
+public interface WorkoutPlan extends WorkoutFunction {
 
     /**
      * Return the hole exercise in a session.
      *
      * @return an unmodifiable set of all session.
      */
-    Set<WorkoutSheetImpl> getSheets();
+    Set<WorkoutSheet> getSheets();
 
     /**
-     * Utility methot that return all the exercises from each sheets.
+     * Utility method that return all the exercises from each sheets.
      * 
      * @return the planned exercises in the plan.
      */
-    Set<PlannedExercise> getAllExercise();    
+    Set<PlannedExercise> getAllExercise();
 
     /**
      * Return all the filter plan based on strenght.
@@ -42,4 +42,11 @@ public interface WorkoutPlan extends WorkoutFunction{
      * @return the plan based on cardio.
      */
     Set<CardioPlannedExercise> getCardiotExercise();
+
+    /**
+     * Public getter that return the class unmoodifiable structure data.
+     * 
+     * @return the unmodifiable set of Workoutsheet.
+     */
+    Map<LocalDate, WorkoutSheet> getWorkoutPlan();
 }

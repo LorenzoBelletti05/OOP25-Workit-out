@@ -1,6 +1,5 @@
 package it.unibo.workitout.model.workout.impl;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -16,12 +15,13 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * His purpose is to act as contaienr for a group of {@link PlannedExercise} for a specific train.
  * </p>
  */
-public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
-      
-    private Set<PlannedExercise> exercisesSheet = new HashSet<>();
-    
+public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
+
+    private Set<PlannedExercise> exercisesSheet;
+
     public WorkoutSheetImpl(final String nameSheet) {
         super(nameSheet);        
+        exercisesSheet = new HashSet<>();
     }
 
     /**
@@ -38,13 +38,9 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
         return sum;
     }
 
-    /**
-     * Public getter that return this unmoodifiable structure data.
-     * 
-     * @return the unmodifiable set of planned exercise.
-     */
+    @Override
     public Set<PlannedExercise> getWorkoutSheet() {
-        return Collections.unmodifiableSet(this.exercisesSheet);
+        return Set.copyOf(this.exercisesSheet);
     }
 
     @Override
@@ -71,7 +67,5 @@ public class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
     public double getBurnedCalories() {
         return sumAll(PlannedExercise::getBurnedCalories);
     }
-    
+
 }
-
-

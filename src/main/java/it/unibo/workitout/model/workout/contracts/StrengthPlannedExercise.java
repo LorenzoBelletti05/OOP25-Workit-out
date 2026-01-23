@@ -40,5 +40,6 @@ public interface StrengthPlannedExercise extends PlannedExercise {
      * 
      * @return the number of repetitions.
      */
-    int getReps();    
+    int getReps();
+
 }

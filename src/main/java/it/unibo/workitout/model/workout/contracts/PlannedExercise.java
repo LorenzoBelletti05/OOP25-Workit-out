@@ -26,5 +26,6 @@ public interface PlannedExercise extends WorkoutFunction {
      * 
      * @return the minutes.
      */
-    public Integer getMinutes();
+    Integer getMinutes();
+
 }
