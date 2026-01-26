@@ -11,8 +11,6 @@ import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
 import it.unibo.workitout.view.main.contracts.MainView;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
-import it.unibo.workitout.view.workout.contracts.PlanViewer;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 public class MainControllerImpl implements MainController {
     private final MainView mainView;
