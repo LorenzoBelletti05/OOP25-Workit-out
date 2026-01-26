@@ -22,6 +22,7 @@ public final class NutritionControllerImpl implements NutritionController {
     private final NutritionView view;
     private static final String FOODS_PATH = "Workit-out/src/main/resources/data/food/foods.csv";
     private static final String HISTORY_PATH = "Workit-out/src/main/resources/data/food/history.csv";
+    private static final int MAX_GRAMS = 2000;
 
     /**
      * @param repository the food database
@@ -29,7 +30,7 @@ public final class NutritionControllerImpl implements NutritionController {
      * @param view the user interface
      */
 
-    public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, NutritionView view) {
+    public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, final NutritionView view) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
         this.view = Objects.requireNonNull(view);
@@ -57,6 +58,17 @@ public final class NutritionControllerImpl implements NutritionController {
 
     @Override
     public void addFoodToDailyLog(final Food food, final int grams) {
+        //Controllo dei limiti
+        if (grams <= 0) {
+            System.out.println("Quantità non valida.");
+            return;
+        }
+
+        if (grams > MAX_GRAMS) {
+            System.out.println("Quantità eccessiva (max 2kg).");
+            return;
+        }
+        
         logManager.getCurrentLog().addFoodEntry(food, grams);
         logManager.saveHistory(HISTORY_PATH);
         refreshViewSummary();

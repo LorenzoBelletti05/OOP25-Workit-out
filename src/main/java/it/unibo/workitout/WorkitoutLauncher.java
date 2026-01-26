@@ -11,8 +11,12 @@ import it.unibo.workitout.model.wiki.contracts.Wiki;
 import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.view.main.impl.MainViewImpl;
 import it.unibo.workitout.controller.main.impl.MainControllerImpl;
-
 import it.unibo.workitout.controller.wiki.contracts.WikiController;
+import it.unibo.workitout.model.food.impl.FoodRepository;
+import it.unibo.workitout.model.food.impl.DailyLogManager;
+import it.unibo.workitout.view.food.impl.NutritionViewImpl;
+import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
+import it.unibo.workitout.controller.food.contracts.NutritionController;
 
 /**
  * Main entry point for the application.
@@ -30,12 +34,12 @@ public final class WorkitoutLauncher {
         controller.start(); 
 
         //NUTRITION
-        /*final FoodRepository foodRepo = new FoodRepository();
+        final FoodRepository foodRepo = new FoodRepository();
         final DailyLogManager logManager = new DailyLogManager();
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(foodRepo, logManager, nutritionView);
         nutritionView.setController(nutritionController);
-        nutritionController.start();*/
+        nutritionController.start();
         
         final UserProfile testUser = new UserProfile(
             "Mario", "Rossi", 25, 180.0, 80.0, 
