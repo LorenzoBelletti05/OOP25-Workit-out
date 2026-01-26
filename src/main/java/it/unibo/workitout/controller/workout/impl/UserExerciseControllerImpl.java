@@ -35,6 +35,8 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         throw new UnsupportedOperationException("Unimplemented method 'checkWeek'");
     }
 
+    
+
 
 
     
