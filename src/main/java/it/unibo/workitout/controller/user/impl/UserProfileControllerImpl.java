@@ -3,6 +3,8 @@ package it.unibo.workitout.controller.user.impl;
 import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
+import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
+import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
@@ -48,7 +50,7 @@ public class UserProfileControllerImpl implements UserProfileController{
 
             view.close();
             
-            //UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
+            UserExerciseController userExercise = new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
             UserDashboardView dashboard = new UserDashboardViewImpl();
 
