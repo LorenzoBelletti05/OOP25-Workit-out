@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
-import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
 import it.unibo.workitout.model.user.model.impl.Sex;
@@ -106,11 +105,6 @@ public class UserProfileViewImpl implements UserProfileView {
         frame.setLocationByPlatform(true);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        UserProfileViewImpl view = new UserProfileViewImpl();
-        new UserProfileControllerImpl(view);
     }
 
     @Override
