@@ -2,8 +2,6 @@ package it.unibo.workitout;
 
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
-import it.unibo.workitout.view.workout.contracts.PlanViewer;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.Sex;
