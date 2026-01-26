@@ -4,7 +4,7 @@ package it.unibo.workitout.model.user.model.impl;
  * Represents the biological sex of the user.
  */
 public enum Sex {
-    NOT_DEFINED("Not Defined"),
+    NOT_DEFINED("Prefer not to say"),
     MALE("Male"),
     FEMALE("Female");
 
