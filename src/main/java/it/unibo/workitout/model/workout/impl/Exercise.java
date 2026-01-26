@@ -16,6 +16,7 @@ public class Exercise {
     private final String name;
     private final double caloriesBurned;
     private final Set<AttitudeExercise> exerciseMission;
+    private final ExerciseType typeExercise;
 
     /**
      * Costructor for a new exercise.
@@ -26,10 +27,11 @@ public class Exercise {
      * 
      * @param exerciseMission a set of {@link AttitudeExercise}, the value associeted to each exercise.
      */
-    public Exercise(final String name, final double caloriesBurned, final Set<AttitudeExercise> exerciseMission) {
+    public Exercise(final String name, final double caloriesBurned, final Set<AttitudeExercise> exerciseMission, ExerciseType typeExercise) {
         this.name = name;
         this.caloriesBurned = caloriesBurned;
         this.exerciseMission = new HashSet<>(exerciseMission); //creating a copy of the set
+        this.typeExercise = typeExercise;
     }
 
     /**
@@ -59,6 +61,15 @@ public class Exercise {
      */
     public String getExerciseAttitude() {
         return exerciseMission.toString();
+    }
+
+    /**
+     * Return the exercise type.
+     * 
+     * @return the exercise type {@link ExerciseType}
+     */
+    public ExerciseType getExerciseType() {
+        return this.typeExercise;
     }
 
 }

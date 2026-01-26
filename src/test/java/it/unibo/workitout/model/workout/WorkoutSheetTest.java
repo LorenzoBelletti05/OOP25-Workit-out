@@ -14,6 +14,7 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 import it.unibo.workitout.model.workout.impl.AttitudeExercise;
 import it.unibo.workitout.model.workout.impl.Exercise;
+import it.unibo.workitout.model.workout.impl.ExerciseType;
 import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 
@@ -21,8 +22,8 @@ public class WorkoutSheetTest {
 
     private final double caloriesPerMinute = 10.0;
 
-    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN));
-    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(AttitudeExercise.WHEIGHT_MAINTENANCE, AttitudeExercise.WHEIGHT_LOSS));
+    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.STRENGTH);
+    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(AttitudeExercise.WHEIGHT_MAINTENANCE, AttitudeExercise.WHEIGHT_LOSS), ExerciseType.STRENGTH);
 
     private PlannedExercise planExe = new StrengthPlannedExerciseImpl(exercise, 10, 3, 12, 10);
     private PlannedExercise planExe2 = new StrengthPlannedExerciseImpl(exercise2, 11, 4, 13, 11); 
@@ -81,6 +82,12 @@ public class WorkoutSheetTest {
             + planExe2.getBurnedCalories(),            
             sheet.getBurnedCalories()
         );
+    }
+
+    @Test
+    void testGetExerciseType() {
+        assertEquals(sheet.getExercise("Affondi").get().getExercise().getExerciseType(), ExerciseType.STRENGTH);
+        assertEquals(sheet.getExercise("Push-up").get().getExercise().getExerciseType(), ExerciseType.STRENGTH);
     }
 
 }

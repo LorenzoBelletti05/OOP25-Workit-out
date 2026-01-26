@@ -8,6 +8,7 @@ import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.impl.AttitudeExercise;
 import it.unibo.workitout.model.workout.impl.CardioPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
+import it.unibo.workitout.model.workout.impl.ExerciseType;
 import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
 
 class PlannedExerciseTest {
@@ -25,14 +26,15 @@ class PlannedExerciseTest {
     final Integer reps = 7;
     final double weight = 20;
 
-    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN));
+    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.CARDIO);
+    final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.STRENGTH);
     private CardioPlannedExercise cardioPlannedExercise = new CardioPlannedExerciseImpl(exercise, minutes, distance);
-    private StrengthPlannedExercise strenghtPlannedExercise = new StrengthPlannedExerciseImpl(exercise, minutes, sets, reps, weight);
+    private StrengthPlannedExercise strenghtPlannedExercise = new StrengthPlannedExerciseImpl(exercise2, minutes, sets, reps, weight);
 
     @Test
     void testGetExercise() {
         assertEquals(exercise, cardioPlannedExercise.getExercise());
-        assertEquals(exercise, strenghtPlannedExercise.getExercise());
+        assertEquals(exercise2, strenghtPlannedExercise.getExercise());
     }
 
     @Test
@@ -82,6 +84,12 @@ class PlannedExerciseTest {
     @Test
     void testGetReps() {
         assertEquals(strenghtPlannedExercise.getReps(), reps);
+    }
+
+    @Test
+    void testGetExerciseType() {
+        assertEquals(cardioPlannedExercise.getExercise().getExerciseType(), ExerciseType.CARDIO);
+        assertEquals(strenghtPlannedExercise.getExercise().getExerciseType(), ExerciseType.STRENGTH);
     }
 
 }
