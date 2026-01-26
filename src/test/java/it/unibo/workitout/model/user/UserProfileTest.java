@@ -1,4 +1,4 @@
-package it.unibo.workitout.user;
+package it.unibo.workitout.model.user;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
