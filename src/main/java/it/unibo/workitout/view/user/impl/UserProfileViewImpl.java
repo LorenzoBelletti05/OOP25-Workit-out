@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
-import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
 import it.unibo.workitout.model.user.model.impl.Sex;
