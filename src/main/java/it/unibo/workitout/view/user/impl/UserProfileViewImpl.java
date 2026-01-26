@@ -108,11 +108,6 @@ public class UserProfileViewImpl implements UserProfileView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        UserProfileViewImpl view = new UserProfileViewImpl();
-        new UserProfileControllerImpl(view);
-    }
-
     @Override
     public String getNameInput() {
         return nameField.getText();
