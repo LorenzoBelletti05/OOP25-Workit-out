@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.List;
 import java.util.Set;
 
+import javax.lang.model.type.ExecutableType;
+
 import org.junit.jupiter.api.Test;
 
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
@@ -18,6 +20,7 @@ import it.unibo.workitout.model.wiki.impl.SmartSuggestionImpl;
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
+import it.unibo.workitout.model.workout.impl.ExerciseType;
 
 class SmartSuggestionTest {
 
@@ -29,7 +32,7 @@ class SmartSuggestionTest {
         final UserProfile user = new UserProfile("Mario", "Rossi", 
             25, 180, 80, Sex.MALE, ActivityLevel.MODERATE, UserGoal.BUILD_MUSCLE);
 
-        final Exercise squat = new Exercise("Squat", 5.0, Set.of());
+        final Exercise squat = new Exercise("Squat", 5.0, Set.of(), ExerciseType.STRENGTH);
         final var engine = new SmartSuggestionImpl();
         final Set<WikiContent> suggestions = engine.suggest(wiki, user, List.of(squat), null);
         assertFalse(suggestions.isEmpty(), "La lista dei suggerimenti non deve essere vuota");
