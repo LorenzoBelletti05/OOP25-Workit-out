@@ -1,6 +1,7 @@
 package it.unibo.workitout.model.workout.contracts;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -14,6 +15,14 @@ import java.util.Set;
  * </p>
  */
 public interface WorkoutPlan extends WorkoutFunction {
+
+    /**
+     * Method that add the sheet to the plan.
+     * 
+     * @param sheet the sheet to add.
+     *  
+     */
+    void addWorkSheet(WorkoutSheet sheet);
 
     /**
      * Return the hole exercise in a session.

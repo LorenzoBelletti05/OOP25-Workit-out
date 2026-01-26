@@ -2,11 +2,13 @@ package it.unibo.workitout.model.workout.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.ToDoubleFunction;
 
+import it.unibo.workitout.model.main.dataManipulation.loadData;
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
@@ -57,6 +59,8 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return Set.copyOf(allExercise);
     }
 
+
+    
     @Override
     public Map<LocalDate, WorkoutSheet> getWorkoutPlan() {
         return Collections.unmodifiableMap(this.workoutPlan);
@@ -99,6 +103,11 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     @Override
     public Set<CardioPlannedExercise> getCardiotExercise() {
         return getExerciseSubdivision(CardioPlannedExercise.class);
+    }
+
+    @Override
+    public void addWorkSheet(WorkoutSheet sheet) {
+        this.workoutPlan.put(LocalDate.now(), sheet);
     }
 
 }
