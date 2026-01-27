@@ -10,9 +10,9 @@ import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
-import it.unibo.workitout.model.workout.impl.AttitudeExercise;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.ExerciseType;
 import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
@@ -22,8 +22,8 @@ public class WorkoutSheetTest {
 
     private final double caloriesPerMinute = 10.0;
 
-    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.STRENGTH);
-    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(AttitudeExercise.WHEIGHT_MAINTENANCE, AttitudeExercise.WHEIGHT_LOSS), ExerciseType.STRENGTH);
+    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
+    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(UserGoal.MAINTAIN_WEIGHT, UserGoal.LOSE_WEIGHT), ExerciseType.STRENGTH);
 
     private PlannedExercise planExe = new StrengthPlannedExerciseImpl(exercise, 10, 3, 12, 10);
     private PlannedExercise planExe2 = new StrengthPlannedExerciseImpl(exercise2, 11, 4, 13, 11); 
