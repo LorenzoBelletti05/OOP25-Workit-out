@@ -7,8 +7,9 @@ import it.unibo.workitout.view.user.impl.UserProfileViewImpl;
 public class TestUserView {
     public static void main(String[] args) {
         UserProfileViewImpl firstView = new UserProfileViewImpl();
-        new UserProfileControllerImpl(firstView);
-
-        new UserDashboardViewImpl();
+        UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
+        
+        new UserProfileControllerImpl(firstView, dashboardView);
+        
     }
 }
