@@ -20,11 +20,21 @@ import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
 public class UserProfileControllerImpl implements UserProfileController{
 
     private final UserProfileView view;
+    private final UserDashboardView dashboard;
     private UserManager userManager;
 
-    public UserProfileControllerImpl (final UserProfileView view){
+    public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard){
         this.view = view;
+        this.dashboard = dashboard;
         this.view.setController(this);
+        this.dashboard.getProfileButton().addActionListener(al -> {
+            editProfile();
+        });
+    }
+
+    private void editProfile() {
+        dashboard.setVisible(false);
+        view.setVisible(true);
     }
 
     @Override
@@ -48,6 +58,13 @@ public class UserProfileControllerImpl implements UserProfileController{
             double dailyCalories = userManager.getDailyCalories();
             NutritionalTarget macronutrients = userManager.getMacronutrients();
 
+            if(dailyCalories <= 0) {
+                throw new IllegalStateException("The total calories are negative, please check your input data.");
+            }
+
+            this.userManager = new UserManager(strategy, userProfile);
+            dashboard.showData(this.userManager);
+            dashboard.setVisible(true);
             view.close();
             
             UserExerciseController userExercise = new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
