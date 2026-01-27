@@ -18,4 +18,5 @@ public interface UserProfileView {
     public BMRStrategyChoise getBMRStrategyInput();
     public void setController(UserProfileController controller);
     public void close();
+    public void setVisible(boolean visible);
 }

@@ -161,4 +161,9 @@ public class UserProfileViewImpl implements UserProfileView {
     public void close() {
         frame.dispose();
     }
+
+    @Override
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+    }
 }
