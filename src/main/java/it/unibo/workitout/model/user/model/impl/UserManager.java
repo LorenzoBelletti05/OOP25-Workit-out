@@ -42,6 +42,10 @@ public final class UserManager {
         return getBMR() * currentUser.getActivityLevel().getMultiplier();
     }
 
+    public UserProfile getUserProfile() {
+        return this.currentUser;
+    }
+
     /**
      * @return the target calories calculated based on the UserGoal
      */
