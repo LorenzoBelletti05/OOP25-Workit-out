@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.List;
 import it.unibo.workitout.model.food.api.Food;
 
+/**
+ * Interface for the Nutrition Controller.
+ */
 public interface NutritionController {
     void start();
 

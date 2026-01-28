@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.ToDoubleFunction;
 
-import it.unibo.workitout.model.main.dataManipulation.loadData;
+//import it.unibo.workitout.model.main.dataManipulation.loadData;
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;

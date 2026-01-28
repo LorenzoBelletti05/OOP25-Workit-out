@@ -21,9 +21,9 @@ public class TestWorkoutView {
         
         List<Exercise> dummyExercises = new ArrayList<>();
         
-        dummyExercises.add(new Exercise("Panca Piana", 5.0, Set.of(AttitudeExercise.MUSCLE_GAIN)));
-        dummyExercises.add(new Exercise("Corsa", 10.0, Set.of(AttitudeExercise.WHEIGHT_LOSS)));
-        dummyExercises.add(new Exercise("Squat", 6.5, Set.of(AttitudeExercise.WHEIGHT_MAINTENANCE)));
+        //dummyExercises.add(new Exercise("Panca Piana", 5.0, Set.of(AttitudeExercise.MUSCLE_GAIN)));
+        //dummyExercises.add(new Exercise("Corsa", 10.0, Set.of(AttitudeExercise.WHEIGHT_LOSS)));
+        //dummyExercises.add(new Exercise("Squat", 6.5, Set.of(AttitudeExercise.WHEIGHT_MAINTENANCE)));
 
         
         viewer.setExercises(dummyExercises);
