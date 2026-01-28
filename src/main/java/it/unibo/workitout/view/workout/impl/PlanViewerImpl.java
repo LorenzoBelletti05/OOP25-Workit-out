@@ -3,56 +3,52 @@ package it.unibo.workitout.view.workout.impl;
 import it.unibo.workitout.view.workout.contracts.PlanViewer;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Graphical {@link DrawNumberView} implementation.
  */
-public final class PlanViewerImpl implements PlanViewer {
+public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
-    private static final String FRAME_NAME = "";   
+    private final String[] indexColumnName = {"Esercizio", "Volume/Tempo", "Peso/Velocità", "Kcal", "Stato"};
 
-   
-    private final JFrame frame = new JFrame(FRAME_NAME);
+    private final JTable table;
+    private final DefaultTableModel tableModel; 
 
-    /**
-     * Constructor.
-     */
-    public PlanViewerImpl() {
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new JPanel(new BorderLayout()));
-        final JPanel pNorth = new JPanel(new FlowLayout());
-        final JTextField tNumber = new JTextField(10);
-        
-        pNorth.add(tNumber);
-        
-        final JPanel pSouth = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        
-        
-        frame.getContentPane().add(pNorth, BorderLayout.NORTH);
-        frame.getContentPane().add(pSouth, BorderLayout.SOUTH);
-        
-        
-        
+    final JButton searchButton = new JButton("Cerca scheda");
+    final JButton planButton = new JButton("Vis. piano");
+    final JButton sheetButton = new JButton("Vis. scheda"); //associated with a combo box with all the data calculated from the logic
+    final JButton checkMarkButton = new JButton("Segna Completato +");
 
-        frame.pack();
-        frame.setLocationByPlatform(true);
+    private final JTextField searchInTable = new JTextField(15);    
+
+
+    public PlanViewerImpl() {        
+        this.setLayout(new BorderLayout());
+
+        JPanel chearchPanel = new JPanel();
+        chearchPanel.add(new JLabel("Nome/Data:"));
+        chearchPanel.add(searchInTable);
+        chearchPanel.add(planButton);
+        chearchPanel.add(sheetButton);        
+
+        tableModel = new DefaultTableModel(indexColumnName, 0);
+        table = new JTable(tableModel);
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(checkMarkButton);
+
+        this.add(chearchPanel, BorderLayout.NORTH);
+        this.add(new JScrollPane(table), BorderLayout.CENTER);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+
     }
-
-    @Override
-    public void start() {
-        this.frame.setVisible(true);
-    }
-
-    // public void main(String[] args) {
-    //     new PlanViewImpl();
-    // }
-
-    
 
 }
