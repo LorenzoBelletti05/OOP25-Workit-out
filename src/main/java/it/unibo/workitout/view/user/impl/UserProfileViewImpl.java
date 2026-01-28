@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-//import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
@@ -40,7 +40,7 @@ public class UserProfileViewImpl implements UserProfileView {
     private final JComboBox<Sex> sexCombo = new JComboBox<>(Sex.values());
     private final JComboBox<ActivityLevel> activityLevelCombo = new JComboBox<>(ActivityLevel.values());
     private final JComboBox<UserGoal> userGoalCombo = new JComboBox<>(UserGoal.values());
-    //private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
+    private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
     private final JButton calculateButton = new JButton("Save");
 
     private UserProfileController controller = null;
@@ -75,7 +75,7 @@ public class UserProfileViewImpl implements UserProfileView {
         secondPanel.add(new JLabel("User Goal:"));
         secondPanel.add(userGoalCombo);
         secondPanel.add(new JLabel("Calculate BMR with:"));
-        //secondPanel.add(strategyCombo);
+        secondPanel.add(strategyCombo);
 
         panel.add(secondPanel, BorderLayout.NORTH);
 
@@ -147,10 +147,10 @@ public class UserProfileViewImpl implements UserProfileView {
         return (UserGoal) userGoalCombo.getSelectedItem();
     }
 
-    //@Override
-    //public BMRStrategyChoise getBMRStrategyInput() {
-        //return (BMRStrategyChoise) strategyCombo.getSelectedItem();
-    //}
+    @Override
+    public BMRStrategyChoise getBMRStrategyInput() {
+        return (BMRStrategyChoise) strategyCombo.getSelectedItem();
+    }
 
     @Override
     public void setController(UserProfileController controller) {
