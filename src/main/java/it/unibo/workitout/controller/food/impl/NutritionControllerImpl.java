@@ -13,9 +13,8 @@ import java.util.Collections;
 import java.util.Objects;
 
 /**
- * Implementation of NutritionController
+ * Implementation of NutritionController.
  */
-
 public final class NutritionControllerImpl implements NutritionController {
     private final FoodRepository repository;
     private final DailyLogManager logManager;
@@ -25,9 +24,9 @@ public final class NutritionControllerImpl implements NutritionController {
     private static final int MAX_GRAMS = 2000;
 
     /**
-     * @param repository the food database
-     * @param logManager the manager for daily logs
-     * @param view the user interface
+     * @param repository the food database.
+     * @param logManager the manager for daily logs.
+     * @param view the user interface.
      */
 
     public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, final NutritionView view) {
@@ -104,7 +103,7 @@ public final class NutritionControllerImpl implements NutritionController {
         nutrients.put("carbs", today.getTotalCarbs());
         nutrients.put("fats", today.getTotalFats());
 
-        return Collections.unmodifiableMap(new HashMap<>(nutrients));
+        return Collections.unmodifiableMap(nutrients);
     }
 
     private void refreshViewSummary() {

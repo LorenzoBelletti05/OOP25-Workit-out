@@ -26,7 +26,7 @@ public final class FoodRepository {
     /**
      * Adds a food to the database.
      * 
-     * @param food food to add
+     * @param food food to add.
      */
     public void addFood(final Food food) {
         database.add(food);
@@ -35,7 +35,7 @@ public final class FoodRepository {
     /**
      * Loads food data from a CSV file.
      * 
-     * @param filePath path to CSV
+     * @param filePath path to CSV.
      */
     public void loadFromFile(final String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
@@ -69,8 +69,8 @@ public final class FoodRepository {
     /**
      * Sorts food by name.
      *
-     * @param query search string
-     * @return filtered list
+     * @param query search string.
+     * @return filtered list.
      */
     public List<Food> sortByName(final String query) {
         return database.stream()
@@ -81,7 +81,7 @@ public final class FoodRepository {
     /**
      * Returns the sorted list of foods by calories.
      *
-     * @return sorted list of foods 
+     * @return sorted list of foods.
      */
     public List<Food> sortByKcalAscending() {
         return database.stream()
@@ -92,7 +92,7 @@ public final class FoodRepository {
     /**
      * Returns the reversed sorted list of foods by calories.
      * 
-     * @return reversed sorted list of foods 
+     * @return reversed sorted list of foods.
      */
     public List<Food> sortByKcalDescending() {
         return database.stream()
@@ -103,7 +103,7 @@ public final class FoodRepository {
     /**
      * Filters high protein foods.
      * 
-     * @return sorted high protein foods
+     * @return sorted high protein foods.
      */
     public List<Food> getHighProteinFoods() {
         return database.stream()
@@ -116,7 +116,7 @@ public final class FoodRepository {
     /** 
      * Filters low fat foods.
      * 
-     * @return sorted low fat foods 
+     * @return sorted low fat foods.
      */
     public List<Food> getLowFatFoods() {
         return database.stream()
@@ -129,7 +129,7 @@ public final class FoodRepository {
     /**
      * Filters low carbs foods.
      * 
-     * @return sorted low carbs foods
+     * @return sorted low carbs foods.
      */
     public List<Food> getLowCarbsFoods() {
         return database.stream()
@@ -138,10 +138,11 @@ public final class FoodRepository {
                 f.getCarbs() * f.getKcalPer100g() / PROT_DIVISOR))
             .collect(Collectors.toList());
     }
-    /** 
+
+    /**
      * Returns a copy of the database.
      * 
-     * @return all foods list
+     * @return all foods list.
      */
     public List<Food> getAllFoods() {
         return List.copyOf(database);

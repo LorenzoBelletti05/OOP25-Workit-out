@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Collections;
 
 /**
- * Implementation of a daily food log
+ * Implementation of a daily food log.
  */
 public class DailyLogImpl implements DailyLog {
     private static final double HUNDRED = 100.0;
@@ -19,7 +19,7 @@ public class DailyLogImpl implements DailyLog {
     private final Map<Food, Integer> consumedFoods = new HashMap<>();
 
     /**
-     * @param date the date of this log
+     * @param date the date of this log.
      */
     public DailyLogImpl(final LocalDate date) {
         this.date = date;

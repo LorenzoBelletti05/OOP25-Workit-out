@@ -2,21 +2,21 @@ package it.unibo.workitout.model.food.impl;
 import it.unibo.workitout.model.food.api.Food;
 
 /**
- * Implementation of Food interface
+ * Implementation of Food interface.
  */
 public final class FoodImpl implements Food {
     private final String name;
     private final double kcalPer100g;
     private final double pProtein;
     private final double pCarbs;
-    private final double pFats; 
+    private final double pFats;
     
     /**
-     * @param name name of the food
-     * @param kcal calories per 100g
-     * @param pP proteins
-     * @param pC carbs
-     * @param pF fats
+     * @param name name of the food.
+     * @param kcal calories per 100g.
+     * @param pP proteins.
+     * @param pC carbs.
+     * @param pF fats.
      */
     public FoodImpl (final String name, final double kcal, final double pP,
                      final double pC, final double pF) {

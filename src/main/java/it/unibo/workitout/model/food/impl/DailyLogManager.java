@@ -16,29 +16,29 @@ import java.util.TreeMap;
 import java.util.Optional;
 
 /**
- * Manager for the daily food logs history
+ * Manager for the daily food logs history.
  */
 public final class DailyLogManager {
     private static final int HISTORY_COLUMNS = 3;
     private final Map<LocalDate, DailyLog> history = new TreeMap<>();
 
     /**
-     * @return the log for the current date
+     * @return the log for the current date.
      */
     public DailyLog getCurrentLog() {
         return getLogByDate(LocalDate.now());
     }
 
     /**
-     * @param date the date to retrieve
-     * @return the daily log for that date
+     * @param date the date to retrieve.
+     * @return the daily log for that date.
      */
-    public DailyLog getLogByDate(LocalDate date) {
+    public DailyLog getLogByDate(final LocalDate date) {
         return history.computeIfAbsent(date, d -> new DailyLogImpl(d));
     }
 
     /**
-     * @param filePath the path where to save history
+     * @param filePath the path where to save history.
      */
     public void saveHistory(final String filePath) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
@@ -54,8 +54,8 @@ public final class DailyLogManager {
     }
 
     /**
-     * @param filePath the path from where to load history
-     * @param repository the food repository
+     * @param filePath the path from where to load history.
+     * @param repository the food repository.
      */
     public void loadHistory(final String filePath, final FoodRepository repository) {
         final File file = new File(filePath);
@@ -90,8 +90,8 @@ public final class DailyLogManager {
         }
     }
 
-    /** 
-     * @return a copy of the full history
+    /**
+     * @return a copy of the full history.
      */
     public Map<LocalDate, DailyLog> getFullHistory() {
         return new HashMap<>(history);
