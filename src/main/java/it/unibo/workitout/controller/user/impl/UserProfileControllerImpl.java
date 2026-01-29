@@ -22,10 +22,11 @@ public class UserProfileControllerImpl implements UserProfileController{
     private UserManager userManager;
 
     public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard){
+
         this.view = view;
         this.dashboard = dashboard;
-        this.view.setController(this);
-        
+        this.view.setController(this);       
+
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
         });
@@ -43,6 +44,7 @@ public class UserProfileControllerImpl implements UserProfileController{
 
     @Override
     public void calculateProfile() {
+
         try{
             String name = view.getNameInput();
             String surname = view.getSurnameInput();
@@ -56,7 +58,6 @@ public class UserProfileControllerImpl implements UserProfileController{
             BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
             UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal);
             this.userManager = new UserManager(strategy, userProfile);
-
             double bmr = userManager.getBMR();
             double tdee = userManager.getTDEE();
             double dailyCalories = userManager.getDailyCalories();
@@ -64,19 +65,20 @@ public class UserProfileControllerImpl implements UserProfileController{
             if(dailyCalories <= 0) {
                 throw new IllegalStateException("The total calories are negative, please check your input data.");
             }
-
             dashboard.showData(this.userManager);
             dashboard.setVisible(true);
-            view.close();
-            
-            new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);            
+            view.close();           
+
+            new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
         } catch (Exception expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());
         }
+
     }
 
     private void showInputDataError(String errorDescription) {
         JOptionPane.showMessageDialog(null, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
 }
