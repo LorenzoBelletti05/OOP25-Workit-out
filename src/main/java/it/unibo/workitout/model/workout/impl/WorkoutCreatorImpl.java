@@ -1,7 +1,208 @@
 package it.unibo.workitout.model.workout.impl;
 
-import it.unibo.workitout.model.workout.contracts.WorkoutCreator;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
-public class WorkoutCreatorImpl implements WorkoutCreator{
+import com.google.gson.reflect.TypeToken;
+
+import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.user.model.impl.ActivityLevel;
+import it.unibo.workitout.model.user.model.impl.UserGoal;
+import it.unibo.workitout.model.workout.contracts.PlannedExercise;
+import it.unibo.workitout.model.workout.contracts.WorkoutCreator;
+import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
+import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
+
+public class WorkoutCreatorImpl implements WorkoutCreator {
+    
+    private Boolean userCheckSafety = false;
+    private final String pathRawExerciwse = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
+    List<Exercise> lista; 
+
+    public WorkoutCreatorImpl() throws IOException {           
+        lista = loadSaveData.getSavedDataFrom(pathRawExerciwse, Exercise[].class);            
+    }    
+
+    private double getCardioMultiplierPerExercise(Exercise exercise) {
+        String nameExercise = exercise.getName();        
+        if (nameExercise.contains("piscina") || nameExercise.contains("nuoto")) {
+            return 0.2; //low distance
+        }
+        if(nameExercise.contains("ciclismo") || nameExercise.contains("bici")) {
+            return 2.5; //high distance
+        }
+        if(nameExercise.contains("corsa") || nameExercise.contains("running")) {
+            return 1.0; //mid distance
+        }
+        if(nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
+            return 0.5;
+        }
+
+        return 1.0; //default
+    }
+
+    private double getStrenghtMultiplierPerExercise(Exercise exercise) {
+        String nameExercise = exercise.getName();        
+        if (nameExercise.contains("bicipiti") || nameExercise.contains("tricipiti") || nameExercise.contains("spalle")) {
+            return 0.8; //low weight
+        }
+        if(nameExercise.contains("gambe") || nameExercise.contains("squat") || nameExercise.contains("pressa")) {
+            return 2.5; //high weight
+        }
+        if(nameExercise.contains("panca") || nameExercise.contains("dorso") || nameExercise.contains("rematore")) {
+            return 1.8; //mid weight
+        }
+        if(nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
+            return 0.5;
+        }
+        return 1.0; //default
+    }
+
+    public WorkoutPlan generatePlan(double bmr, double tdee, double dailyCalories, ActivityLevel activityLevel, UserGoal userGoal) {
+        userCheckSafety = dailyCalories < bmr;
+        List<Exercise> filteredRawExercise = new ArrayList<>();
+        int sets = 0;
+        int reps = 0;
+        double intensityExercise = 1;
+        double tdeeMultiplier = tdee / 2100.0;
+        
+        
+        double weight = 5;
+        int distance = 5;
+        int minutes = 10;
+        double goalWeightMul = 1.0;
+        double goalDistanceMul = 1.0;
+
+        for (Exercise exercise : lista) {
+            if(exercise.getExerciseAttitude().contains(userGoal.toString())) {
+                filteredRawExercise.add(exercise);
+            }            
+        }
+        
+        Random random = new Random();
+        switch (userGoal) {
+            case BUILD_MUSCLE :
+                
+                sets = random.nextInt(4,5);
+                reps = random.nextInt(8, 10);
+                intensityExercise = 1.5;     
+                goalWeightMul = 2.0;
+                goalDistanceMul = 0.5;           
+                break;
+
+            case MAINTAIN_WEIGHT:
+                
+                sets = random.nextInt(3,4);
+                reps = random.nextInt(10, 12);                
+                intensityExercise = 1;
+                goalWeightMul = 1.0;
+                goalDistanceMul = 1.0;
+                break;
+
+            case GAIN_WEIGHT:
+
+                sets = random.nextInt(1,2);
+                reps = random.nextInt(6, 8);
+                intensityExercise = 0.4;     
+                goalWeightMul = 0.3;
+                goalDistanceMul = 0.3;            
+                break;
+
+            case LOSE_WEIGHT:
+
+                sets = random.nextInt(3,4);
+                reps = random.nextInt(10, 15);
+                intensityExercise = 0.7;               
+                goalWeightMul = 0.7;
+                goalDistanceMul = 2.2; 
+                break;
+        
+            default:                
+                break;
+        }        
+        
+
+        int currentInsity = (int) (intensityExercise);
+        int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
+        // //calculate the final sets based on the intensdity of the type of exercise previously setted.
+       
+        
+        //creating the workoutplan with his custom name.
+        WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
+        
+        for(int j = 0; j < 1 + activityLevel.ordinal(); j++) {
+            
+            //create the planned exercises with custom name
+            WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));     
+            
+            //here because the next day an exercise can be done again
+            List<Exercise> alreadyUsed = new ArrayList<>(); 
+            
+            for(int i = 0; i < random.nextInt(5, 10) + currentInsity; i++) {
+                
+                Exercise rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
+
+                //checking if the exercise has been already selected
+                if(alreadyUsed.isEmpty()) {                
+                    alreadyUsed.add(rawExercise);
+                }else if(alreadyUsed.contains(rawExercise)) {
+                    while(alreadyUsed.contains(rawExercise)) {
+                        rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
+                    }                    
+                    alreadyUsed.add(rawExercise);
+                }
+
+                //Create the plan then check which type is: CARDIO or STRENGHT
+                PlannedExercise plannedExercise;
+
+                if (rawExercise.getExerciseType().equals(ExerciseType.STRENGTH)) {
+
+                    //creating a weight based on the type of the exercise, all is corrected from the intensity modifier
+                    double finalWeight = weight * tdeeMultiplier * goalWeightMul * this.getStrenghtMultiplierPerExercise(rawExercise) * intensityExercise;
+
+                    finalWeight = Math.min(finalWeight, 120.0);
+                    //if the user is under is daily-need it divide the fatique.
+                    if(userCheckSafety) {
+                        finalWeight *= 0.5;
+                    }
+
+                    //the effective inizializzation of the exercise
+                    plannedExercise = new StrengthPlannedExerciseImpl(
+                        rawExercise, 
+                        (int) (minutes * intensityExercise), 
+                        sets + currentInsity + activityBonus, 
+                        reps + ( currentInsity * 2 ),
+                        finalWeight                        
+                    );
+
+                } else {
+
+                    //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
+                    double finalDistance = distance * tdeeMultiplier * goalDistanceMul * this.getCardioMultiplierPerExercise(rawExercise) * intensityExercise;
+
+                    finalDistance = Math.min(finalDistance, 20);
+                    if(userCheckSafety) {
+                        finalDistance *= 0.5;
+                    }
+
+                    plannedExercise = new CardioPlannedExerciseImpl(
+                        rawExercise, 
+                        (int) (minutes + 5 * intensityExercise), 
+                        finalDistance
+                    );
+
+                }
+                //adding the exercise to the sheet
+                workoutSheet.addExercise(plannedExercise);
+            }
+            //adding the sheet to the plan
+            workoutPlan.addWorkSheet(workoutSheet);
+            
+        }
+        return workoutPlan;        
+    }
     
 }

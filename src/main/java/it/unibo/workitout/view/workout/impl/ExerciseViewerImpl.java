@@ -6,7 +6,6 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,18 +15,28 @@ import it.unibo.workitout.view.workout.contracts.ExerciseViewer;
 
 public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
-    private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target"};
+    private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
     private List<Exercise> rawExercise = new ArrayList<>();
     private DefaultTableModel modelRawExercise;
 
 
     final JButton searchButton = new JButton("Cerca");
-    final JButton highProteinButton = new JButton("Proteici");
-    final JButton lowCarbsButton = new JButton("Pochi Carbo");
-    JTable tableRawExercise;
+    final JButton kcalButton = new JButton("Ordina per Kcal");
+    final JButton targhetButton = new JButton("Ordina per targht");
+    final JButton typeButton = new JButton("Ordina per Type");
+    JTable tableRawExercise; //the table for the exercise
+    JPanel btnPanel; //the panel of the button
+    
 
     public ExerciseViewerImpl() {
+        
         this.setLayout(new BorderLayout());
+        btnPanel = new JPanel();
+        btnPanel.add(searchButton);
+        btnPanel.add(kcalButton);
+        btnPanel.add(targhetButton);
+        btnPanel.add(typeButton);
+        
         this.modelRawExercise = new DefaultTableModel(indexColumnName, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -37,6 +46,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         this.tableRawExercise  = new JTable(modelRawExercise);
         JScrollPane scrollPane = new JScrollPane(tableRawExercise);
         this.add(scrollPane, BorderLayout.CENTER);
+        this.add(btnPanel, BorderLayout.NORTH);
     }
 
     @Override
@@ -47,6 +57,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
                 exercise.getName(),
                 exercise.calorieBurned(1),
                 exercise.getExerciseAttitude(),
+                exercise.getExerciseType()
             });
         }
     }

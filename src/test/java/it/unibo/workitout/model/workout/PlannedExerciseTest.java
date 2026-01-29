@@ -3,9 +3,10 @@ package it.unibo.workitout.model.workout;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.EnumSet;
 import org.junit.jupiter.api.Test;
+
+import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
-import it.unibo.workitout.model.workout.impl.AttitudeExercise;
 import it.unibo.workitout.model.workout.impl.CardioPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.ExerciseType;
@@ -26,8 +27,8 @@ class PlannedExerciseTest {
     final Integer reps = 7;
     final double weight = 20;
 
-    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.CARDIO);
-    final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(AttitudeExercise.MUSCLE_GAIN), ExerciseType.STRENGTH);
+    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.CARDIO);
+    final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
     private CardioPlannedExercise cardioPlannedExercise = new CardioPlannedExerciseImpl(exercise, minutes, distance);
     private StrengthPlannedExercise strenghtPlannedExercise = new StrengthPlannedExerciseImpl(exercise2, minutes, sets, reps, weight);
 

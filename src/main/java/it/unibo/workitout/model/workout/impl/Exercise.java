@@ -3,6 +3,9 @@ package it.unibo.workitout.model.workout.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+
+import it.unibo.workitout.model.user.model.impl.UserGoal;
+
 /**
  * Represent a raw single exercise entity.
  * 
@@ -15,7 +18,7 @@ public class Exercise {
 
     private final String name;
     private final double caloriesBurned;
-    private final Set<AttitudeExercise> exerciseMission;
+    private final Set<UserGoal> exerciseMission;
     private final ExerciseType typeExercise;
 
     /**
@@ -25,9 +28,9 @@ public class Exercise {
      * 
      * @param caloriesBurned the ammount of calories that the exerc. will let the user burn.
      * 
-     * @param exerciseMission a set of {@link AttitudeExercise}, the value associeted to each exercise.
+     * @param exerciseMission a set of {@link UserGoal}, the value associeted to each exercise.
      */
-    public Exercise(final String name, final double caloriesBurned, final Set<AttitudeExercise> exerciseMission, ExerciseType typeExercise) {
+    public Exercise(final String name, final double caloriesBurned, final Set<UserGoal> exerciseMission, ExerciseType typeExercise) {
         this.name = name;
         this.caloriesBurned = caloriesBurned;
         this.exerciseMission = new HashSet<>(exerciseMission); //creating a copy of the set
@@ -66,7 +69,7 @@ public class Exercise {
     /**
      * Return the exercise type.
      * 
-     * @return the exercise type {@link ExerciseType}
+     * @return the exercise type {@link UserGoal}
      */
     public ExerciseType getExerciseType() {
         return this.typeExercise;
