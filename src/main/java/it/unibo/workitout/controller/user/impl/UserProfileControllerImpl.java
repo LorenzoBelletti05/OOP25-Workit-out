@@ -25,12 +25,14 @@ public class UserProfileControllerImpl implements UserProfileController{
         this.view = view;
         this.dashboard = dashboard;
         this.view.setController(this);
+        
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
         });
+
         this.dashboard.getExerciseButton().addActionListener(al -> {
-            new PlanViewerImpl().setVisible(true);
             this.dashboard.setVisible(false);
+            new PlanViewerImpl().setVisible(true);
         });
     }
 
