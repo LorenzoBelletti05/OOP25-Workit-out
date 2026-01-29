@@ -127,10 +127,13 @@ public class UserDashboardViewImpl implements UserDashboardView {
         showCalories.setText(consumedCal + " /" + dailyCal + " kcal");
 
         NutritionalTarget macroTarget = userManager.getMacronutrients();
+        double consumedCarbs = 0;
+        double consumedProteins = 0;
+        double consumedFats = 0;
 
-        lCarbs.setText("" + macroTarget.getCarbsG());
-        lProteins.setText("" + macroTarget.getProteinsG());
-        lFats.setText("" + macroTarget.getFatsG());
+        lCarbs.setText("Carbs: " + consumedCarbs + " g / " + (int) macroTarget.getCarbsG() + " g");
+        lProteins.setText("Proteins: " + consumedProteins + " g / " + (int) macroTarget.getProteinsG() + " g" );
+        lFats.setText("Fats: " + consumedFats +" g / " + (int) macroTarget.getFatsG() + " g");
     }
 
 
