@@ -5,6 +5,7 @@ import it.unibo.workitout.view.workout.contracts.PlanViewer;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,15 +18,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
-    private final String[] indexColumnName = {"Esercizio", "Volume/Tempo", "Peso/Velocità", "Kcal", "Stato"};
+    private final String[] indexColumnName = {"Exercise", "Volum/Time", "Weight/Speed", "Kcal", "State"};
 
     private final JTable table;
     private final DefaultTableModel tableModel; 
 
-    final JButton searchButton = new JButton("Cerca scheda");
-    final JButton planButton = new JButton("Vis. piano");
-    final JButton sheetButton = new JButton("Vis. scheda"); //associated with a combo box with all the data calculated from the logic
-    final JButton checkMarkButton = new JButton("Segna Completato +");
+    final JButton searchButton = new JButton("Find sheet");
+    final JButton planButton = new JButton("Vis. plan");
+    final JButton sheetButton = new JButton("Vis. sheet"); //associated with a combo box with all the data calculated from the logic
+    final JButton checkMarkButton = new JButton("Check as completed +");
 
     private final JTextField searchInTable = new JTextField(15);    
 
@@ -34,7 +35,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         this.setLayout(new BorderLayout());
 
         JPanel chearchPanel = new JPanel();
-        chearchPanel.add(new JLabel("Nome/Data:"));
+        chearchPanel.add(new JLabel("Name/Data:"));
         chearchPanel.add(searchInTable);
         chearchPanel.add(planButton);
         chearchPanel.add(sheetButton);        
@@ -49,6 +50,20 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         this.add(new JScrollPane(table), BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
+    }
+
+    public static void main(String[] args) {
+        
+        JFrame frame = new JFrame("Planned view");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 400);        
+        
+        PlanViewerImpl planViewr = new PlanViewerImpl();  
+
+        frame.add(planViewr);
+        
+        frame.setVisible(true);        
+        
     }
 
 }

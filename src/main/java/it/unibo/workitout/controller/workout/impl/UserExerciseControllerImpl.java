@@ -1,7 +1,10 @@
 package it.unibo.workitout.controller.workout.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
@@ -11,6 +14,7 @@ import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
+import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.WorkoutCreatorImpl;;
 
 public class UserExerciseControllerImpl implements UserExerciseController {
@@ -22,6 +26,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private final UserGoal userGoal;
     private final String pathToManageWorkoutPlan = "Workit-out\\src\\main\\resources\\data\\workout\\workoutPlan.json";
     private final String pathToWorkoutUserData = "Workit-out\\src\\main\\resources\\data\\workout\\workoutDataUser.json";
+    private static final String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
     private final WorkoutPlan generatedWorkoutPlan;
@@ -112,4 +117,15 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return this.generatedWorkoutPlan.getWorkoutPlan();
     }
 
+    public static List<Exercise> getRawExercise(){
+        System.out.println("Cerco gli esercizi in: " + new File(pathToRawExercise).getAbsolutePath());
+        try {
+            return List.copyOf(loadSaveData.getSavedDataFrom(pathToRawExercise, Exercise[].class));
+        }catch (IOException e) {
+            e.getMessage();
+            return null;
+        }
+    }
+
+    
 }

@@ -3,28 +3,40 @@ package it.unibo.workitout.controller.user.impl;
 import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
-import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
-import it.unibo.workitout.model.user.model.impl.NutritionalTarget;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
-//import it.unibo.workitout.view.user.contracts.UserDashboardView;
+import it.unibo.workitout.view.user.contracts.UserDashboardView;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
-//import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
+import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
 
 public class UserProfileControllerImpl implements UserProfileController{
 
     private final UserProfileView view;
+    private final UserDashboardView dashboard;
     private UserManager userManager;
 
-    public UserProfileControllerImpl (final UserProfileView view){
+    public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard){
         this.view = view;
+        this.dashboard = dashboard;
         this.view.setController(this);
+        this.dashboard.getProfileButton().addActionListener(al -> {
+            editProfile();
+        });
+        this.dashboard.getExerciseButton().addActionListener(al -> {
+            new PlanViewerImpl().setVisible(true);
+            this.dashboard.setVisible(false);
+        });
+    }
+
+    private void editProfile() {
+        dashboard.setVisible(false);
+        view.setVisible(true);
     }
 
     @Override
@@ -46,13 +58,18 @@ public class UserProfileControllerImpl implements UserProfileController{
             double bmr = userManager.getBMR();
             double tdee = userManager.getTDEE();
             double dailyCalories = userManager.getDailyCalories();
-            NutritionalTarget macronutrients = userManager.getMacronutrients();
 
+            if(dailyCalories <= 0) {
+                throw new IllegalStateException("The total calories are negative, please check your input data.");
+            }
+
+            dashboard.showData(this.userManager);
+            dashboard.setVisible(true);
             view.close();
             
             UserExerciseController userExercise = new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
-            //UserDashboardView dashboard = new UserDashboardViewImpl();
+            UserDashboardView dashboard = new UserDashboardViewImpl();
 
         } catch (Exception expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());

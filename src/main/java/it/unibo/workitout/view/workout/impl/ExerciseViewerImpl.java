@@ -10,20 +10,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.contracts.ExerciseViewer;
 
 public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
     private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
-    private List<Exercise> rawExercise = new ArrayList<>();
     private DefaultTableModel modelRawExercise;
 
 
-    final JButton searchButton = new JButton("Cerca");
-    final JButton kcalButton = new JButton("Ordina per Kcal");
-    final JButton targhetButton = new JButton("Ordina per targht");
-    final JButton typeButton = new JButton("Ordina per Type");
+    final JButton searchButton = new JButton("Find");
+    final JButton kcalButton = new JButton("Sort per Kcal/min");
+    final JButton targhetButton = new JButton("Sort per Targht");
+    final JButton typeButton = new JButton("Sort per Type");
     JTable tableRawExercise; //the table for the exercise
     JPanel btnPanel; //the panel of the button
     
@@ -47,6 +47,11 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         JScrollPane scrollPane = new JScrollPane(tableRawExercise);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(btnPanel, BorderLayout.NORTH);
+
+        //call the static method to take the 
+        List<Exercise> rawExercise = UserExerciseControllerImpl.getRawExercise();
+        this.setExercises(rawExercise);
+
     }
 
     @Override
