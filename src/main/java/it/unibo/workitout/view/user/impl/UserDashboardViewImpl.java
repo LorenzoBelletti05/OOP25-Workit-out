@@ -9,6 +9,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import it.unibo.workitout.model.user.model.impl.NutritionalTarget;
 import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 
@@ -37,6 +38,10 @@ public class UserDashboardViewImpl implements UserDashboardView {
     private JButton bExercise;
 
     private JProgressBar caloriesBar;
+    
+    private JLabel lCarbs;
+    private JLabel lProteins;
+    private JLabel lFats;
 
     public UserDashboardViewImpl() {
         dashboardGUI();
@@ -61,7 +66,7 @@ public class UserDashboardViewImpl implements UserDashboardView {
         topPanel.setBorder(new EmptyBorder(10,10,10,10));
         panel.add(topPanel, BorderLayout.NORTH);
 
-        JPanel progressBarPanel = new JPanel();
+        JPanel progressBarPanel = new JPanel(new BorderLayout());
         JPanel caloriesPanel = new JPanel(new BorderLayout());
 
         caloriesBar = new JProgressBar();
@@ -69,12 +74,23 @@ public class UserDashboardViewImpl implements UserDashboardView {
         caloriesBar.setPreferredSize(new Dimension(300,30));
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
-        showCalories.setBorder(new EmptyBorder(5,0,0,0));
+        showCalories.setBorder(new EmptyBorder(5,0,5,0));
 
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
+
+        JPanel macroPanel = new JPanel(new GridLayout(1,3,0,0));
+        lCarbs = new JLabel("Carbs: 0 / 0 g", SwingConstants.CENTER);
+        lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
+        lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
+
+        macroPanel.add(lCarbs);
+        macroPanel.add(lProteins);
+        macroPanel.add(lFats);
         
-        progressBarPanel.add(caloriesPanel);
+        
+        progressBarPanel.add(caloriesPanel, BorderLayout.NORTH);
+        progressBarPanel.add(macroPanel, BorderLayout.SOUTH);
 
         centerPanel.add(new JLabel());
         centerPanel.add(progressBarPanel);
@@ -109,6 +125,12 @@ public class UserDashboardViewImpl implements UserDashboardView {
         caloriesBar.setValue(consumedCal);
         
         showCalories.setText(consumedCal + " /" + dailyCal + " kcal");
+
+        NutritionalTarget macroTarget = userManager.getMacronutrients();
+
+        lCarbs.setText("" + macroTarget.getCarbsG());
+        lProteins.setText("" + macroTarget.getProteinsG());
+        lFats.setText("" + macroTarget.getFatsG());
     }
 
 
