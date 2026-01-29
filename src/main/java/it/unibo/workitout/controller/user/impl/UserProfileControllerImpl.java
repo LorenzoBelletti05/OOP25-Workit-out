@@ -15,7 +15,6 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
-import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
 
 public class UserProfileControllerImpl implements UserProfileController{
 
@@ -68,8 +67,6 @@ public class UserProfileControllerImpl implements UserProfileController{
             view.close();
             
             UserExerciseController userExercise = new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
-
-            UserDashboardView dashboard = new UserDashboardViewImpl();
 
         } catch (Exception expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());

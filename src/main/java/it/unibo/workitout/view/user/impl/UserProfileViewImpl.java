@@ -159,7 +159,7 @@ public class UserProfileViewImpl implements UserProfileView {
 
     @Override
     public void close() {
-        frame.dispose();
+        frame.setVisible(false);
     }
 
     @Override
