@@ -20,7 +20,7 @@ import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 
 public class WorkoutSheetTest {
 
-    private final double caloriesPerMinute = 10.0;
+    private final static double caloriesPerMinute = 10.0;
 
     private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
     private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(UserGoal.MAINTAIN_WEIGHT, UserGoal.LOSE_WEIGHT), ExerciseType.STRENGTH);

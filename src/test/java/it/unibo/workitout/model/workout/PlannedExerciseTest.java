@@ -15,17 +15,17 @@ import it.unibo.workitout.model.workout.impl.StrengthPlannedExerciseImpl;
 class PlannedExerciseTest {
 
     //Exercise general data
-    final double caloriesPerMinute = 10.0;
-    final Integer minutes = 20;
-    final String nameExe = "Affondi";
+    final static double caloriesPerMinute = 10.0;
+    final static Integer minutes = 20;
+    final static String nameExe = "Affondi";
 
     //Cardio data
-    final double distance = 30;
+    final static double distance = 30;
 
     //Strenght data
-    final Integer sets = 5;
-    final Integer reps = 7;
-    final double weight = 20;
+    final static Integer sets = 5;
+    final static Integer reps = 7;
+    final static double weight = 20;
 
     final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.CARDIO);
     final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
