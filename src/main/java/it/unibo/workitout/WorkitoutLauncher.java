@@ -2,6 +2,8 @@ package it.unibo.workitout;
 
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
+import it.unibo.workitout.view.workout.impl.ExerciseViewerImpl;
+import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.Sex;
@@ -48,6 +50,10 @@ public final class WorkitoutLauncher {
                                               
         final MainViewImpl mainView = new MainViewImpl();
         final MainControllerImpl mainController = new MainControllerImpl(mainView, testUser);
+
+        //WORKOUT
+        final PlanViewerImpl planView = new PlanViewerImpl();
+        final ExerciseViewerImpl exerView = new ExerciseViewerImpl();
 
         mainController.start();
     }
