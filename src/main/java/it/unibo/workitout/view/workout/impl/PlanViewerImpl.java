@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Graphical {@link DrawNumberView} implementation.
  */
-public final class PlanViewerImpl extends JPanel implements PlanViewer {
+public final class PlanViewerImpl extends JFrame implements PlanViewer {
 
     private final String[] indexColumnName = {"Exercise", "Volum/Time", "Weight/Speed", "Kcal", "State"};
 
@@ -50,20 +50,6 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         this.add(new JScrollPane(table), BorderLayout.CENTER);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
-    }
-
-    public static void main(String[] args) {
-        
-        JFrame frame = new JFrame("Planned view");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 400);        
-        
-        PlanViewerImpl planViewr = new PlanViewerImpl();  
-
-        frame.add(planViewr);
-        
-        frame.setVisible(true);        
-        
-    }
+    }    
 
 }
