@@ -4,8 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
@@ -117,8 +122,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return this.generatedWorkoutPlan.getWorkoutPlan();
     }
 
-    public static List<Exercise> getRawExercise(){
-        System.out.println("Cerco gli esercizi in: " + new File(pathToRawExercise).getAbsolutePath());
+    public static List<Exercise> getRawExercise(){       
         try {
             return List.copyOf(loadSaveData.getSavedDataFrom(pathToRawExercise, Exercise[].class));
         }catch (IOException e) {
@@ -127,5 +131,39 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         }
     }
 
+    public static List<Exercise> orderListBasedOn(String conditionSort, List<Exercise> rawExercise, Optional<String> data) {
+        List<Exercise> currentRawExercise = new ArrayList<>();        
+        switch (conditionSort) {
+            case "Name":
+                for (var element : rawExercise) {
+                    if(element.getName().toUpperCase().contains(data.get().toUpperCase())) {
+                        currentRawExercise.add(element);
+                    }
+                }
+                break;           
+
+            case "type":
+                for (var element : rawExercise) {
+                    if(element.getExerciseType().name().toString().toUpperCase().contains(data.get().toUpperCase())) {
+                        currentRawExercise.add(element);
+                    }
+                }                
+                break;
+
+            case "target":
+                for (var element : rawExercise) {
+                    if(element.getExerciseAttitude().toString().toUpperCase().contains(data.get().toUpperCase())) {
+                        currentRawExercise.add(element);
+                    }
+                }
+                break;                
+
+            default:
+                break;
+        }
+        return currentRawExercise;
+    }
+
+    
     
 }
