@@ -3,6 +3,7 @@ package it.unibo.workitout.model.workout.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.google.gson.annotations.SerializedName;
 
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 
@@ -18,7 +19,11 @@ public class Exercise {
 
     private final String name;
     private final double caloriesBurned;
-    private final Set<UserGoal> exerciseMission;
+    
+    @SerializedName("goals")
+    private final String exerciseMission;
+    
+    @SerializedName("type")
     private final ExerciseType typeExercise;
 
     /**
@@ -30,10 +35,10 @@ public class Exercise {
      * 
      * @param exerciseMission a set of {@link UserGoal}, the value associeted to each exercise.
      */
-    public Exercise(final String name, final double caloriesBurned, final Set<UserGoal> exerciseMission, ExerciseType typeExercise) {
+    public Exercise(final String name, final double caloriesBurned, final String exerciseMission, ExerciseType typeExercise) {
         this.name = name;
         this.caloriesBurned = caloriesBurned;
-        this.exerciseMission = new HashSet<>(exerciseMission); //creating a copy of the set
+        this.exerciseMission = exerciseMission; //creating a copy of the set
         this.typeExercise = typeExercise;
     }
 
@@ -63,7 +68,7 @@ public class Exercise {
      *  @return the attitude for the specific exercise.
      */
     public String getExerciseAttitude() {
-        return exerciseMission.toString();
+        return this.exerciseMission;
     }
 
     /**
