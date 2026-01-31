@@ -72,6 +72,7 @@ public class UserProfileControllerImpl implements UserProfileController{
             new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
             if(goToDashboard != null){
+                this.view.setBackButton(true);
                 goToDashboard.run();
             }
 

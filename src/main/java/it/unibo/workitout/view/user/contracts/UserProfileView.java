@@ -21,5 +21,6 @@ public interface UserProfileView {
     public void setController(UserProfileController controller);
     public void close();
     public void setVisible(boolean visible);
-    JButton getBackButton();
+    public JButton getBackButton();
+    public void setBackButton(boolean visible);
 }

@@ -73,6 +73,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
 
         JPanel calculatePanel = new JPanel();
         calculatePanel.add(calculateButton);
+        backButton.setEnabled(false);
         calculatePanel.add(backButton);
         panel.add(calculatePanel, BorderLayout.SOUTH);
 
@@ -147,5 +148,10 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     @Override
     public void close() {
         this.setVisible(false);
+    }
+
+    @Override
+    public void setBackButton(boolean visible) {
+        this.backButton.setEnabled(visible);
     }
 }
