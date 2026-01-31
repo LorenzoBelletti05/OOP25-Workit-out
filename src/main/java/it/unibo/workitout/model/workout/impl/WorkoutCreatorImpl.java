@@ -77,7 +77,11 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         double goalDistanceMul = 1.0;
 
         for (Exercise exercise : lista) {
-            if(exercise.getExerciseAttitude().contains(userGoal.toString())) {
+
+            String goals = exercise.getExerciseAttitude(); //get the hole string of goals
+
+            //if the exercise match at least one of the goals then add it
+            if(goals.contains(userGoal.name())) {
                 filteredRawExercise.add(exercise);
             }            
         }
