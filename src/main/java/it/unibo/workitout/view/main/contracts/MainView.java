@@ -18,4 +18,6 @@ public interface MainView {
      * @param panel Jpanle of module.
      */
     void addModule(String title, JPanel panel);
+
+    void showView(String string);
 }

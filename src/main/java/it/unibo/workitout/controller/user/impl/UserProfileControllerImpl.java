@@ -19,12 +19,14 @@ public class UserProfileControllerImpl implements UserProfileController{
 
     private final UserProfileView view;
     private final UserDashboardView dashboard;
+    private final Runnable goToDashboard;
     private UserManager userManager;
 
-    public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard){
+    public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard, final Runnable runnable){
 
         this.view = view;
         this.dashboard = dashboard;
+        this.goToDashboard = runnable;
         this.view.setController(this);       
 
         this.dashboard.getProfileButton().addActionListener(al -> {
@@ -66,10 +68,12 @@ public class UserProfileControllerImpl implements UserProfileController{
                 throw new IllegalStateException("The total calories are negative, please check your input data.");
             }
             dashboard.showData(this.userManager);
-            dashboard.setVisible(true);
-            view.close();           
 
             new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
+
+            if(goToDashboard != null){
+                goToDashboard.run();
+            }
 
         } catch (Exception expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());

@@ -3,7 +3,6 @@ package it.unibo.workitout.view.user.impl;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,17 +19,10 @@ import it.unibo.workitout.view.user.contracts.UserProfileView;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-
 /**
  * The constructor for first log-in GUI.
  */
-public class UserProfileViewImpl implements UserProfileView {
-    private static final String FRAME_NAME = "Workit-out User (First log-in)";
-    private static final int PROPORTION = 2;
-    
-    private final JFrame frame = new JFrame(FRAME_NAME);
+public class UserProfileViewImpl extends JPanel implements UserProfileView {
     private final JPanel panel = new JPanel();
     private final JTextField nameField = new JTextField();
     private final JTextField surnameField = new JTextField();
@@ -42,14 +34,14 @@ public class UserProfileViewImpl implements UserProfileView {
     private final JComboBox<UserGoal> userGoalCombo = new JComboBox<>(UserGoal.values());
     private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
     private final JButton calculateButton = new JButton("Save");
+    private final JButton backButton = new JButton("Back");
 
     private UserProfileController controller = null;
 
     public UserProfileViewImpl() {
-        frame.getContentPane().add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
         profileGUI();
-        display();
+        this.add(panel, BorderLayout.CENTER);
     }
 
     private void profileGUI() {
@@ -81,6 +73,7 @@ public class UserProfileViewImpl implements UserProfileView {
 
         JPanel calculatePanel = new JPanel();
         calculatePanel.add(calculateButton);
+        calculatePanel.add(backButton);
         panel.add(calculatePanel, BorderLayout.SOUTH);
 
         calculateButton.addActionListener (al -> {
@@ -93,18 +86,12 @@ public class UserProfileViewImpl implements UserProfileView {
     }
 
     private void showErrorController(String errorDescription) {
-        JOptionPane.showMessageDialog(frame, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void display() {
-        final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int width = (int) screen.getWidth();
-        final int height = (int) screen.getHeight();
-
-        panel.setPreferredSize(new Dimension(width / PROPORTION, height / PROPORTION));
-        frame.setLocationByPlatform(true);
-        frame.pack();
-        frame.setVisible(true);
+    @Override
+    public JButton getBackButton() {
+        return backButton;
     }
 
     @Override
@@ -159,11 +146,6 @@ public class UserProfileViewImpl implements UserProfileView {
 
     @Override
     public void close() {
-        frame.setVisible(false);
-    }
-
-    @Override
-    public void setVisible(boolean visible) {
-        frame.setVisible(visible);
+        this.setVisible(false);
     }
 }

@@ -1,7 +1,6 @@
 package it.unibo.workitout.view.user.impl;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -14,19 +13,9 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 
-public class UserDashboardViewImpl implements UserDashboardView {
-    private static final String FRAME_NAME = "Workit-out User (Dashboard)";
-    private static final int PROPORTION = 2;
-
-    final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    final int width = (int) screen.getWidth();
-    final int height = (int) screen.getHeight();
-
-    private final JFrame frame = new JFrame(FRAME_NAME);
+public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
     private final JPanel panel = new JPanel(new BorderLayout());
 
     private JLabel welcomeTitle;
@@ -44,12 +33,8 @@ public class UserDashboardViewImpl implements UserDashboardView {
     private JLabel lFats;
 
     public UserDashboardViewImpl() {
+        this.setLayout(new BorderLayout());
         dashboardGUI();
-        frame.getContentPane().add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        panel.setPreferredSize(new Dimension(width / PROPORTION, height / PROPORTION));
-        frame.setLocationByPlatform(true);
-        frame.pack();
     }
 
 
@@ -71,7 +56,6 @@ public class UserDashboardViewImpl implements UserDashboardView {
 
         caloriesBar = new JProgressBar();
         caloriesBar.setStringPainted(true);
-        caloriesBar.setPreferredSize(new Dimension(300,30));
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
         showCalories.setBorder(new EmptyBorder(5,0,5,0));
@@ -108,13 +92,14 @@ public class UserDashboardViewImpl implements UserDashboardView {
         
         bottomPanel.setBorder(new EmptyBorder(10,10,10,10));
         panel.add(bottomPanel, BorderLayout.SOUTH);
+
+        this.add(panel, BorderLayout.CENTER);
     }
 
     @Override
     public void showData(UserManager userManager) {
         if(userManager == null){
-            JOptionPane.showMessageDialog(frame, "The user manager is not linked", "Error!", JOptionPane.ERROR_MESSAGE);
-            frame.dispose();
+            JOptionPane.showMessageDialog(this, "The user manager is not linked", "Error!", JOptionPane.ERROR_MESSAGE);
         }
         String name = userManager.getUserProfile().getName();
         welcomeTitle.setText("Hello " + name);
@@ -139,7 +124,7 @@ public class UserDashboardViewImpl implements UserDashboardView {
 
     @Override
     public void setVisible(boolean status) {
-        frame.setVisible(status);
+        super.setVisible(status);
     }
 
     public JButton getProfileButton() {

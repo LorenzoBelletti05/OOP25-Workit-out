@@ -1,5 +1,7 @@
 package it.unibo.workitout.view.user.contracts;
 
+import javax.swing.JButton;
+
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
@@ -19,4 +21,5 @@ public interface UserProfileView {
     public void setController(UserProfileController controller);
     public void close();
     public void setVisible(boolean visible);
+    JButton getBackButton();
 }

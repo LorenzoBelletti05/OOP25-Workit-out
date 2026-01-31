@@ -28,10 +28,12 @@ public final class WorkitoutLauncher {
      * @param args ...
      */
     public static void main(final String[] args) {
-        final Wiki model = new WikiImpl();
-        final WikiView view = new WikiViewImpl();
-        final WikiController controller = new WikiControllerImpl(model, view);
-        controller.start(); 
+        final MainViewImpl mainView = new MainViewImpl();
+
+        //WIKI
+        final Wiki modelWiki = new WikiImpl();
+        final WikiView viewWiki = new WikiViewImpl();
+        final WikiController controllerWiki = new WikiControllerImpl(modelWiki, viewWiki);
 
         //NUTRITION
         final FoodRepository foodRepo = new FoodRepository();
@@ -39,14 +41,12 @@ public final class WorkitoutLauncher {
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(foodRepo, logManager, nutritionView);
         nutritionView.setController(nutritionController);
-        nutritionController.start();
         
         final UserProfile testUser = new UserProfile(
             "Mario", "Rossi", 25, 180.0, 80.0, 
             Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE
         );
-                                              
-        final MainViewImpl mainView = new MainViewImpl();
+
         final MainControllerImpl mainController = new MainControllerImpl(mainView, testUser);
 
         mainController.start();
