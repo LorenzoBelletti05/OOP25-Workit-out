@@ -1,12 +1,18 @@
 package it.unibo.workitout.view.workout.impl;
 
+import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
+import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.contracts.PlanViewer;
 
 import java.awt.BorderLayout;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,6 +33,7 @@ public final class PlanViewerImpl extends JFrame implements PlanViewer {
     final JButton planButton = new JButton("Vis. plan");
     final JButton sheetButton = new JButton("Vis. sheet"); //associated with a combo box with all the data calculated from the logic
     final JButton checkMarkButton = new JButton("Check as completed +");
+    final JButton backButton = new JButton("Back");
 
     private final JTextField searchInTable = new JTextField(15);    
 
@@ -39,6 +46,7 @@ public final class PlanViewerImpl extends JFrame implements PlanViewer {
         chearchPanel.add(searchInTable);
         chearchPanel.add(planButton);
         chearchPanel.add(sheetButton);        
+        chearchPanel.add(backButton);
 
         tableModel = new DefaultTableModel(indexColumnName, 0);
         table = new JTable(tableModel);
@@ -51,5 +59,24 @@ public final class PlanViewerImpl extends JFrame implements PlanViewer {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
     }    
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+    }
+
+    @Override
+    public void close() {
+        this.setVisible(false);
+    }
+
+     private void showErrorController(String errorDescription) {
+        JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public JButton getBackButton() {
+        return backButton;
+    }
+    
 
 }
