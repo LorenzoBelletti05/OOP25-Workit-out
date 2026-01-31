@@ -22,8 +22,8 @@ public class WorkoutSheetTest {
 
     private final static double caloriesPerMinute = 10.0;
 
-    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
-    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, EnumSet.of(UserGoal.MAINTAIN_WEIGHT, UserGoal.LOSE_WEIGHT), ExerciseType.STRENGTH);
+    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, UserGoal.BUILD_MUSCLE.toString(), ExerciseType.STRENGTH);
+    private Exercise exercise2 = new Exercise("Push-up", caloriesPerMinute, UserGoal.MAINTAIN_WEIGHT.toString()+  ", "+ UserGoal.LOSE_WEIGHT.toString(), ExerciseType.STRENGTH);
 
     private PlannedExercise planExe = new StrengthPlannedExerciseImpl(exercise, 10, 3, 12, 10);
     private PlannedExercise planExe2 = new StrengthPlannedExerciseImpl(exercise2, 11, 4, 13, 11); 

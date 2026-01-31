@@ -15,7 +15,7 @@ public class ExerciseTest {
      * Creating field for testing
      */
     final static double caloriesPerMinute = 10.0;
-    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.CARDIO);
+    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, UserGoal.BUILD_MUSCLE.toString(), ExerciseType.CARDIO);
 
     @Test
     void testGetName() {

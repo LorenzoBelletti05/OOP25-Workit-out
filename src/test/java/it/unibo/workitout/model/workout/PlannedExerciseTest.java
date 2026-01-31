@@ -27,8 +27,8 @@ class PlannedExerciseTest {
     final static Integer reps = 7;
     final static double weight = 20;
 
-    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.CARDIO);
-    final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, EnumSet.of(UserGoal.BUILD_MUSCLE), ExerciseType.STRENGTH);
+    final Exercise exercise = new Exercise(nameExe, caloriesPerMinute, UserGoal.BUILD_MUSCLE.toString(), ExerciseType.CARDIO);
+    final Exercise exercise2 = new Exercise(nameExe, caloriesPerMinute, UserGoal.BUILD_MUSCLE.toString(), ExerciseType.STRENGTH);
     private CardioPlannedExercise cardioPlannedExercise = new CardioPlannedExerciseImpl(exercise, minutes, distance);
     private StrengthPlannedExercise strenghtPlannedExercise = new StrengthPlannedExerciseImpl(exercise2, minutes, sets, reps, weight);
 
