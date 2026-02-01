@@ -75,9 +75,10 @@ public class MainControllerImpl implements MainController {
         //nutritionController.start(); fix your hardcoded path
 
         final WikiViewImpl wikiView = new WikiViewImpl();
+        wikiView.addMainBackListener(view -> mainView.showView("DASHBOARD"));
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
         wikiController.start();
-
+        
         if (this.user != null) {
             wikiController.showSmartSuggestions(this.user, null, null);
         }
