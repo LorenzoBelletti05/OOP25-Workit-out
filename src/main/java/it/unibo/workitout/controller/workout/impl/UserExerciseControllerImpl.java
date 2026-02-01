@@ -1,55 +1,37 @@
 package it.unibo.workitout.controller.workout.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 import it.unibo.workitout.model.workout.impl.Exercise;
-import it.unibo.workitout.model.workout.impl.WorkoutCreatorImpl;;
+import it.unibo.workitout.model.workout.impl.WorkoutCreatorImpl;
 
 public class UserExerciseControllerImpl implements UserExerciseController {
 
-    private final double bmr;
-    private final double tdee;
-    private final double dailyCalories;
-    private final ActivityLevel activityLevel;
-    private final UserGoal userGoal;
-    private final String pathToManageWorkoutPlan = "Workit-out\\src\\main\\resources\\data\\workout\\workoutPlan.json";
-    private final String pathToWorkoutUserData = "Workit-out\\src\\main\\resources\\data\\workout\\workoutDataUser.json";
+    private double bmr;
+    private double tdee;
+    private double dailyCalories;
+    private ActivityLevel activityLevel;
+    private UserGoal userGoal;
+    private String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
+    private String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
     private static final String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
-    private final WorkoutPlan generatedWorkoutPlan;
+    private WorkoutPlan generatedWorkoutPlan;
+    private static UserExerciseControllerImpl instance;
 
-    public UserExerciseControllerImpl(
-        final double bmr,
-        final double tdee,
-        final double dailyCalories,
-        final ActivityLevel activityLevel,
-        final UserGoal userGoal
-    ) {
-        this.bmr = bmr;
-        this.tdee = tdee;
-        this.dailyCalories = dailyCalories;
-        this.activityLevel = activityLevel;
-        this.userGoal = userGoal;
-
-        generatedWorkoutPlan = checkAndCreate();
+    public UserExerciseControllerImpl() {
 
     }
 
@@ -64,14 +46,16 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             userGoal, 
             localDate.toString()
         );
-        loadSaveData.saveWorkoutuserDataIn(pathToWorkoutUserData, workoutUserData);
+
+        LoadSaveData.saveWorkoutuserDataIn(pathToWorkoutUserData, workoutUserData);
+
     }
 
     private WorkoutPlan checkAndCreate() {
 
         //load from json the plan
-        WorkoutPlan workoutPlan = loadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
-        workoutUserData = loadSaveData.getWorkoutuserDataIn(pathToWorkoutUserData);
+        WorkoutPlan workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
+        workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData);
 
         //check if the workoutPlan and the oldData json are full or not
         if(workoutPlan != null && workoutUserData != null) {
@@ -107,7 +91,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         try {
             plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
             if(plan != null) {
-                loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+                LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
                 callSaveUserData();
 
                 return plan;
@@ -122,9 +106,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return this.generatedWorkoutPlan.getWorkoutPlan();
     }
 
-    public static List<Exercise> getRawExercise(){       
+    public static List<Exercise> getRawExercise(){
         try {
-            return List.copyOf(loadSaveData.getSavedDataFrom(pathToRawExercise, Exercise[].class));
+            return List.copyOf(LoadSaveData.loadSavedDataFrom(pathToRawExercise, Exercise[].class));
         }catch (IOException e) {
             e.getMessage();
             return null;
@@ -164,6 +148,33 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return currentRawExercise;
     }
 
-    
+    public void setDataUser(
+        final double bmr,
+        final double tdee,
+        final double dailyCalories,
+        final ActivityLevel activityLevel,
+        final UserGoal userGoal
+    ) {
+
+        this.bmr = bmr;
+        this.tdee = tdee;
+        this.dailyCalories = dailyCalories;
+        this.activityLevel = activityLevel;
+        this.userGoal = userGoal;
+
+        generatedWorkoutPlan = checkAndCreate();
+    }
+
+    //creating a single istance to avoid creating unnecessary istance with different behaviour
+    public static UserExerciseControllerImpl getIstance() {
+        if(instance != null) {
+            instance = new UserExerciseControllerImpl();
+        }
+        return instance;
+    }
+
+    public WorkoutPlan getGeneratedWorkoutPlan() {
+        return this.generatedWorkoutPlan;
+    }
     
 }
