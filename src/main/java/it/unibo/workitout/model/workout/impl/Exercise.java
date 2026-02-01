@@ -1,10 +1,6 @@
 package it.unibo.workitout.model.workout.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.google.gson.annotations.SerializedName;
-
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 
 /**

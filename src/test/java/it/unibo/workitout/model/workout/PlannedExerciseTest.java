@@ -1,9 +1,7 @@
 package it.unibo.workitout.model.workout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.EnumSet;
 import org.junit.jupiter.api.Test;
-
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;

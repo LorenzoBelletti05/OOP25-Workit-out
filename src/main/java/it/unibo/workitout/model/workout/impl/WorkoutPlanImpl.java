@@ -2,18 +2,15 @@ package it.unibo.workitout.model.workout.impl;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.ToDoubleFunction;
-
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
-
 import java.time.LocalDate;
 
 /**
