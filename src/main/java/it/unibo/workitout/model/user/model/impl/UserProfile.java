@@ -23,6 +23,7 @@ public final class UserProfile {
     private double weight;
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
+    private String strategy;
 
     /**
      * Constructor for a new user.
@@ -44,7 +45,8 @@ public final class UserProfile {
         double weight,
         final Sex sex,
         ActivityLevel activityLevel,
-        UserGoal userGoal
+        UserGoal userGoal,
+        String strategy
     ) {
         if (age < ZERO || age > MAX_AGE) {
             throw new IllegalArgumentException(ERR_MESS_AGE);
@@ -65,6 +67,11 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
+        if(this.strategy == null) {
+            this.strategy = "MifflinStJeorStrategy";
+        } else {
+            this.strategy = strategy;
+        }
     }
 
     /**
@@ -89,7 +96,8 @@ public final class UserProfile {
         double weight,
         final Sex sex,
         ActivityLevel activityLevel,
-        UserGoal userGoal
+        UserGoal userGoal,
+        String strategy
     ) {
         if (age < ZERO || age > MAX_AGE) {
             throw new IllegalArgumentException(ERR_MESS_AGE);
@@ -110,6 +118,11 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
+        if(this.strategy == null) {
+            this.strategy = "MifflinStJeorStrategy";
+        } else {
+            this.strategy = strategy;
+        }
     }
 
     /**
@@ -173,6 +186,10 @@ public final class UserProfile {
      */
     public UserGoal getGoal() {
         return userGoal;
+    }
+
+    public String getStrategy() {
+        return strategy;
     }
 
     /**

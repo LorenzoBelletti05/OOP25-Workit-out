@@ -33,7 +33,7 @@ class BMRStrategyTest {
             MALE_NAME, SURNAME, 
             MALE_AGE, MALE_HEIGHT, 
             MALE_WEIGHT, Sex.MALE, 
-            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT
+            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT, null
         );
         final HarrisBenedictStrategy strategy = new HarrisBenedictStrategy();
         final double expectedBMR = 1805.642;
@@ -46,7 +46,7 @@ class BMRStrategyTest {
         final UserProfile femaleUser = new UserProfile(FEMALE_NAME, SURNAME,
             FEMALE_AGE, FEMALE_HEIGHT, 
             FEMALE_WEIGHT, Sex.FEMALE, 
-            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT
+            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT, null
         );
         final HarrisBenedictStrategy strategy = new HarrisBenedictStrategy();
         final double expectedBMR = 1405.333;
@@ -60,7 +60,7 @@ class BMRStrategyTest {
             MALE_NAME, SURNAME, 
             MALE_AGE, MALE_HEIGHT, 
             MALE_WEIGHT, Sex.MALE,
-            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT
+            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT, null
         );
         final MifflinStJeorStrategy strategy = new MifflinStJeorStrategy();
         final double expectedBMR = 1717.5;
@@ -74,7 +74,8 @@ class BMRStrategyTest {
             FEMALE_NAME, SURNAME, 
             FEMALE_AGE, FEMALE_HEIGHT, 
             FEMALE_WEIGHT, Sex.FEMALE,
-            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT
+            ActivityLevel.MODERATE, UserGoal.MAINTAIN_WEIGHT,
+            null
         );
         final MifflinStJeorStrategy strategy = new MifflinStJeorStrategy();
         final double expectedBMR = 1345.25;

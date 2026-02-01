@@ -1,6 +1,5 @@
 package it.unibo.workitout.view.workout.impl;
 
-
 import java.util.List;
 import java.util.Optional;
 import java.awt.BorderLayout;
@@ -123,8 +122,6 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
     @Override
     public int getExercise() {
         return tableRawExercise.getSelectedRow();
-    }
-
-    
+    }   
 
 }

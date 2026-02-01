@@ -23,6 +23,7 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -34,7 +35,7 @@ import java.util.function.Consumer;
 /**
  * Implementation of Wiki View.
  */
-public class WikiViewImpl extends JPanel implements WikiView {
+public final class WikiViewImpl extends JPanel implements WikiView {
     private static final long serialVersionUID = 1L;
     private static final String LIST = "LIST";
     private static final String DETAIL = "DETAIL";
@@ -57,6 +58,7 @@ public class WikiViewImpl extends JPanel implements WikiView {
     private final JButton bVideos = new JButton("Video");
     private final JButton bPrioFood = new JButton("Cibo");
     private final JButton bPrioEx = new JButton("Esercizi");
+    private final JButton backButtonView = new JButton("Back");
 
     /**
      * Builds a new wiki interactive view.
@@ -77,6 +79,10 @@ public class WikiViewImpl extends JPanel implements WikiView {
 
         final JPanel northPanel = new JPanel();
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+
+        final JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        southPanel.add(backButtonView);
+        listPanel.add(southPanel, BorderLayout.SOUTH);
 
         final JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT));
         row1.add(new JLabel("Cerca:"));
@@ -282,5 +288,13 @@ public class WikiViewImpl extends JPanel implements WikiView {
                 "Impossibile aprire il video.\nURL: " + url, "Errore Browser", 
                 JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Open the main view.
+     */
+    @Override
+    public void addMainBackListener(final ActionListener listener) {
+        this.backButtonView.addActionListener(listener);
     }
 }

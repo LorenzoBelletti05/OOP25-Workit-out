@@ -41,7 +41,8 @@ class UserProfileTest {
         WEIGHT,
         SEX,
         AL,
-        UG
+        UG,
+        null
     );
 
     @Test
@@ -58,7 +59,7 @@ class UserProfileTest {
 
     @Test
     void testUpdateUserProfile() {
-        final UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG);
+        final UserProfile user = new UserProfile(NAME, SURNAME, AGE, HEIGHT, WEIGHT, SEX, AL, UG, null);
         user.setAge(NEW_AGE);
         user.setHeight(NEW_HEIGHT);
         user.setWeight(NEW_WEIGHT);

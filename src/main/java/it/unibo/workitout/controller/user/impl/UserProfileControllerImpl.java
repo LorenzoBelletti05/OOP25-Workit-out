@@ -4,9 +4,10 @@ import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserManager;
@@ -44,6 +45,10 @@ public class UserProfileControllerImpl implements UserProfileController{
         view.setVisible(true);
     }
 
+    public void firstAccess(boolean isFirstAccess) {
+        this.view.setBackButton(!isFirstAccess);
+    }
+
     @Override
     public void calculateProfile() {
 
@@ -56,9 +61,15 @@ public class UserProfileControllerImpl implements UserProfileController{
             Sex sex = view.getSexInput();
             ActivityLevel activityLevel = view.getActivityInput();
             UserGoal userGoal = view.UserGoalInput();
-            BMRStrategyChoise selectedStrategy = view.getBMRStrategyInput();
+            BMRStrategyChoice selectedStrategy = view.getBMRStrategyInput();
             BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
-            UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal);
+            UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal, strategy.toString());
+
+            try {
+                //LoadSaveData.saveUserProfile("user_profile.json", userProfile);
+            } catch (Exception expt) {
+                showInputDataError("The insert data is not saved \n " + expt.getMessage());
+            }
             this.userManager = new UserManager(strategy, userProfile);
             double bmr = userManager.getBMR();
             double tdee = userManager.getTDEE();

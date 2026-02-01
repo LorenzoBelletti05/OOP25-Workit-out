@@ -1,5 +1,6 @@
 package it.unibo.workitout.view.wiki.contracts;
 
+import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 import java.util.Set;
 import it.unibo.workitout.model.wiki.contracts.WikiContent;
@@ -27,6 +28,13 @@ public interface WikiView {
      * @param text the content text.
      */
     void showDetail(String title, String text);
+
+    /**
+     * Back to the main view.
+     * 
+     * @param listener ...
+     */
+    void addMainBackListener(ActionListener listener);
 
     /**
      * Listener for the item in the list.

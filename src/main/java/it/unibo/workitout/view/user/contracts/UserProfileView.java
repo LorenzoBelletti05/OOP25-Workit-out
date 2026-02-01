@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 
@@ -17,9 +17,10 @@ public interface UserProfileView {
     public Sex getSexInput();
     public ActivityLevel getActivityInput();
     public UserGoal UserGoalInput();
-    public BMRStrategyChoise getBMRStrategyInput();
+    public BMRStrategyChoice getBMRStrategyInput();
     public void setController(UserProfileController controller);
     public void close();
     public void setVisible(boolean visible);
-    JButton getBackButton();
+    public JButton getBackButton();
+    public void setBackButton(boolean visible);
 }

@@ -7,6 +7,10 @@ import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
+import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
+import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
 import it.unibo.workitout.view.food.impl.NutritionViewImpl;
@@ -14,15 +18,14 @@ import it.unibo.workitout.view.main.contracts.MainView;
 import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
 import it.unibo.workitout.view.user.impl.UserProfileViewImpl;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
+import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 public class MainControllerImpl implements MainController {
     private final MainView mainView;
-    private final UserProfile user;  
+    private UserProfile user;  
     
-    public MainControllerImpl(MainView mainView, UserProfile user) {
+    public MainControllerImpl(MainView mainView) {
         this.mainView = mainView;
-        this.user = user;
-       
     }
 
     /**
@@ -34,7 +37,31 @@ public class MainControllerImpl implements MainController {
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
 
         Runnable goToDashboard = () -> mainView.showView("DASHBOARD");
-        new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
+
+        UserProfileControllerImpl userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
+
+        this.user = LoadSaveData.loadUserProfile("user_profile.json");
+
+        if(this.user != null) {
+            BMRCalculatorStrategy strategy;
+            if(user.getStrategy().equals("MifflinStJeorStrategy")) {
+                strategy = new MifflinStJeorStrategy();
+            } else {
+                strategy = new MifflinStJeorStrategy();
+            }
+
+            UserManager userManager = new UserManager(strategy, this.user);
+            dashboardView.showData(userManager);
+            userController.firstAccess(false);
+            mainView.addModule("LOGIN", profileView);
+            mainView.addModule("DASHBOARD", dashboardView);
+            mainView.showView("DASHBOARD");
+        } else {
+        userController.firstAccess(true);
+            mainView.addModule("LOGIN", profileView);
+            mainView.addModule("DASHBOARD", dashboardView);
+            mainView.showView("LOGIN");
+        }
 
 
         profileView.getBackButton().addActionListener(al -> {
@@ -43,16 +70,24 @@ public class MainControllerImpl implements MainController {
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(
-            new FoodRepository(), new DailyLogManager(), nutritionView);
+        new FoodRepository(), new DailyLogManager(), nutritionView);
         nutritionView.setController(nutritionController);
-        
-        final WikiViewImpl wikiView = new WikiViewImpl();
-        final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
+        //nutritionController.start(); fix your hardcoded path
 
-        mainView.addModule("LOGIN", profileView);
-        mainView.addModule("DASHBOARD", dashboardView);
+        final WikiViewImpl wikiView = new WikiViewImpl();
+        wikiView.addMainBackListener(view -> mainView.showView("DASHBOARD"));
+        final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
+        wikiController.start();
+        
+        if (this.user != null) {
+            wikiController.showSmartSuggestions(this.user, null, null);
+        }
+
+        final PlanViewerImpl exerciseView = new PlanViewerImpl();
+
         mainView.addModule("WIKI", wikiView);
         mainView.addModule("FOOD", nutritionView);
+        mainView.addModule("EXERCISE", exerciseView);
 
         dashboardView.getProfileButton().addActionListener(al -> {
             mainView.showView("LOGIN");
@@ -65,8 +100,11 @@ public class MainControllerImpl implements MainController {
         dashboardView.getInfoButton().addActionListener(al -> {
             mainView.showView("WIKI");
         });
-        
-        mainView.showView("LOGIN");
+
+        dashboardView.getExerciseButton().addActionListener(al -> {
+            mainView.showView("EXERCISE");
+        });
+
         mainView.start();        
     }
     

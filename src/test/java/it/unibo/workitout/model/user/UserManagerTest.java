@@ -31,7 +31,8 @@ class UserManagerTest {
     AGE, HEIGHT, 
     WEIGHT, Sex.MALE, 
     ActivityLevel.MODERATE, 
-    UserGoal.MAINTAIN_WEIGHT
+    UserGoal.MAINTAIN_WEIGHT,
+    null
 );
     private final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 

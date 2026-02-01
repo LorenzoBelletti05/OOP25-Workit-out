@@ -124,7 +124,8 @@ public class WikiControllerImpl implements WikiController {
                 userProfile.getWeight(),
                 userProfile.getSex(),
                 userProfile.getActivityLevel(),
-                userProfile.getGoal()
+                userProfile.getGoal(),
+                userProfile.getStrategy()
             );
 
             if (currentExercises != null) {

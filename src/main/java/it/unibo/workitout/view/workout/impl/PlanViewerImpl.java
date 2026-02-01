@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Graphical {@link DrawNumberView} implementation.
  */
-public final class PlanViewerImpl extends JFrame implements PlanViewer {
+public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
     private List<PlannedExercise> currentExercises;
 
@@ -103,9 +102,9 @@ public final class PlanViewerImpl extends JFrame implements PlanViewer {
         this.setVisible(false);
     }
 
-    private void showErrorController(String errorDescription) {
+    /*private void showErrorController(String errorDescription) {
         JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    }*/
 
     public JButton getBackButton() {
         return backButton;
