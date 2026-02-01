@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 /**
  * Implementation of Wiki View.
  */
-public class WikiViewImpl extends JPanel implements WikiView {
+public final class WikiViewImpl extends JPanel implements WikiView {
     private static final long serialVersionUID = 1L;
     private static final String LIST = "LIST";
     private static final String DETAIL = "DETAIL";
@@ -290,8 +290,11 @@ public class WikiViewImpl extends JPanel implements WikiView {
         }
     }
 
+    /**
+     * Open the main view.
+     */
     @Override
-    public void addMainBackListener(ActionListener listener) {
+    public void addMainBackListener(final ActionListener listener) {
         this.backButtonView.addActionListener(listener);
     }
 }

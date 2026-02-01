@@ -30,9 +30,9 @@ public interface WikiView {
     void showDetail(String title, String text);
 
     /**
-     * Back to the main view
+     * Back to the main view.
      * 
-     * @param title the content title.
+     * @param listener ...
      */
     void addMainBackListener(ActionListener listener);
 
