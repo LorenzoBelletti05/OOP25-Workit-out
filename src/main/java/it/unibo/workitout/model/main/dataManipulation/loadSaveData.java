@@ -6,18 +6,31 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import com.google.gson.Gson;
-
 import it.unibo.workitout.model.main.WorkoutUserData;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
+import java.io.File;
 
-public class loadSaveData {
+public class LoadSaveData {    
 
     private static final Gson gsonFile = new Gson();
 
-    public static <T> List<T> getSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
+    private static final String APP_DIR = ".workitout";
+
+    //General method to create the path
+    public static String getWorkspacePath() {
+        return System.getProperty("user.home") + File.separator + APP_DIR;
+    }
+
+    //dinamic method that will be called in the specific class
+    public static String createPath(final String nameFile) {
+        return getWorkspacePath() + File.separator + nameFile;
+    }
+
+    
+
+    public static <T> List<T> loadSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
         try (FileReader read = new FileReader(pathData)) {
             T[] arrayData = gsonFile.fromJson(read, typeClass);
             return arrayData != null ? new ArrayList<>(Arrays.asList(arrayData)) : new ArrayList<>();
@@ -62,7 +75,7 @@ public class loadSaveData {
         }
     }
 
-    public static WorkoutUserData getWorkoutuserDataIn(String pathData) {
+    public static WorkoutUserData loadWorkoutuserDataIn(String pathData) {
         try (FileReader reader = new FileReader(pathData)) {            
             return gsonFile.fromJson(reader, WorkoutUserData.class);
         } catch (IOException e) {
