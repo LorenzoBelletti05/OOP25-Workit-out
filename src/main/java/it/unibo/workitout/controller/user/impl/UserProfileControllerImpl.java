@@ -7,7 +7,7 @@ import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserManager;
@@ -61,7 +61,7 @@ public class UserProfileControllerImpl implements UserProfileController{
             Sex sex = view.getSexInput();
             ActivityLevel activityLevel = view.getActivityInput();
             UserGoal userGoal = view.UserGoalInput();
-            BMRStrategyChoise selectedStrategy = view.getBMRStrategyInput();
+            BMRStrategyChoice selectedStrategy = view.getBMRStrategyInput();
             BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
             UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal, strategy.toString());
 

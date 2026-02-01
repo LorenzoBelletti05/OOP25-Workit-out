@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
-import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
+import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
@@ -32,7 +32,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     private final JComboBox<Sex> sexCombo = new JComboBox<>(Sex.values());
     private final JComboBox<ActivityLevel> activityLevelCombo = new JComboBox<>(ActivityLevel.values());
     private final JComboBox<UserGoal> userGoalCombo = new JComboBox<>(UserGoal.values());
-    private final JComboBox<BMRStrategyChoise> strategyCombo = new JComboBox<>(BMRStrategyChoise.values());
+    private final JComboBox<BMRStrategyChoice> strategyCombo = new JComboBox<>(BMRStrategyChoice.values());
     private final JButton calculateButton = new JButton("Save");
     private final JButton backButton = new JButton("Back");
 
@@ -60,7 +60,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
         secondPanel.add(new JLabel("Weight:"));
         secondPanel.add(weightField);
 
-        secondPanel.add(new JLabel("Sesso:"));
+        secondPanel.add(new JLabel("Sex:"));
         secondPanel.add(sexCombo);
         secondPanel.add(new JLabel("Activity Level:"));
         secondPanel.add(activityLevelCombo);
@@ -136,8 +136,8 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     }
 
     @Override
-    public BMRStrategyChoise getBMRStrategyInput() {
-        return (BMRStrategyChoise) strategyCombo.getSelectedItem();
+    public BMRStrategyChoice getBMRStrategyInput() {
+        return (BMRStrategyChoice) strategyCombo.getSelectedItem();
     }
 
     @Override
