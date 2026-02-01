@@ -3,7 +3,6 @@ package it.unibo.workitout.model.workout;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.EnumSet;
 import java.util.Optional;
 import java.util.Set;
 

@@ -1,11 +1,8 @@
 package it.unibo.workitout.view.workout.impl;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.awt.BorderLayout;
-import java.lang.reflect.Array;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;

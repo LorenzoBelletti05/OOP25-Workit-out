@@ -26,7 +26,6 @@ public class MainControllerImpl implements MainController {
     
     public MainControllerImpl(MainView mainView) {
         this.mainView = mainView;
-       
     }
 
     /**
@@ -71,11 +70,18 @@ public class MainControllerImpl implements MainController {
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(
-            new FoodRepository(), new DailyLogManager(), nutritionView);
+        new FoodRepository(), new DailyLogManager(), nutritionView);
         nutritionView.setController(nutritionController);
-        
+        //nutritionController.start(); fix your hardcoded path
+
         final WikiViewImpl wikiView = new WikiViewImpl();
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
+        wikiController.start();
+
+        if (this.user != null) {
+            wikiController.showSmartSuggestions(this.user, null, null);
+        }
+
         final PlanViewerImpl exerciseView = new PlanViewerImpl();
 
         mainView.addModule("WIKI", wikiView);

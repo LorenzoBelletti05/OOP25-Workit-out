@@ -1,7 +1,5 @@
 package it.unibo.workitout.model.main;
 
-import java.time.LocalDate;
-
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 

@@ -1,18 +1,11 @@
 package it.unibo.workitout.view.workout.impl;
 
-import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
-import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.contracts.PlanViewer;
 
 import java.awt.BorderLayout;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -70,9 +63,9 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         this.setVisible(false);
     }
 
-     private void showErrorController(String errorDescription) {
+    /*private void showErrorController(String errorDescription) {
         JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
-    }
+    }*/
 
     public JButton getBackButton() {
         return backButton;

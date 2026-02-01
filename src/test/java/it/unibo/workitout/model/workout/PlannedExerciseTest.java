@@ -1,7 +1,6 @@
 package it.unibo.workitout.model.workout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.util.EnumSet;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.workitout.model.user.model.impl.UserGoal;
