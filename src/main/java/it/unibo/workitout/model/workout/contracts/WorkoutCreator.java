@@ -2,7 +2,6 @@ package it.unibo.workitout.model.workout.contracts;
 
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
-import it.unibo.workitout.model.workout.impl.Exercise;
 
 public interface WorkoutCreator {
 
