@@ -10,6 +10,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import it.unibo.workitout.model.main.WorkoutUserData;
+import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 
@@ -66,6 +67,22 @@ public class loadSaveData {
         try (FileReader reader = new FileReader(pathData)) {            
             return gsonFile.fromJson(reader, WorkoutUserData.class);
         } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public static void saveUserProfile(String pathData, UserProfile userProfile) {
+        try (FileWriter writer = new FileWriter(pathData)) {
+            gsonFile.toJson(userProfile, writer);
+        } catch (Exception e) {
+            return ;
+        }
+    }
+
+    public static UserProfile loadUserProfile(String pathData) {
+        try (FileReader reader = new FileReader(pathData)) {
+            return gsonFile.fromJson(reader, UserProfile.class);
+        } catch (Exception e) {
             return null;
         }
     }

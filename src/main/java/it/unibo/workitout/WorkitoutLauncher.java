@@ -46,10 +46,10 @@ public final class WorkitoutLauncher {
         
         final UserProfile testUser = new UserProfile(
             "Mario", "Rossi", 25, 180.0, 80.0, 
-            Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE
+            Sex.MALE, ActivityLevel.HIGH, UserGoal.BUILD_MUSCLE, null
         );
 
-        final MainControllerImpl mainController = new MainControllerImpl(mainView, testUser);
+        final MainControllerImpl mainController = new MainControllerImpl(mainView);
 
         //WORKOUT
         final PlanViewerImpl planView = new PlanViewerImpl();

@@ -22,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Graphical {@link DrawNumberView} implementation.
  */
-public final class PlanViewerImpl extends JFrame implements PlanViewer {
+public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
     private final String[] indexColumnName = {"Exercise", "Volum/Time", "Weight/Speed", "Kcal", "State"};
 

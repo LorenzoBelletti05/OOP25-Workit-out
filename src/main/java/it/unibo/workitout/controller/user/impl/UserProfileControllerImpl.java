@@ -4,6 +4,7 @@ import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoise;
@@ -44,6 +45,10 @@ public class UserProfileControllerImpl implements UserProfileController{
         view.setVisible(true);
     }
 
+    public void firstAccess(boolean isFirstAccess) {
+        this.view.setBackButton(!isFirstAccess);
+    }
+
     @Override
     public void calculateProfile() {
 
@@ -58,7 +63,13 @@ public class UserProfileControllerImpl implements UserProfileController{
             UserGoal userGoal = view.UserGoalInput();
             BMRStrategyChoise selectedStrategy = view.getBMRStrategyInput();
             BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
-            UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal);
+            UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal, strategy.toString());
+
+            try {
+                loadSaveData.saveUserProfile("user_profile.json", userProfile);
+            } catch (Exception expt) {
+                showInputDataError("The insert data is not saved \n " + expt.getMessage());
+            }
             this.userManager = new UserManager(strategy, userProfile);
             double bmr = userManager.getBMR();
             double tdee = userManager.getTDEE();
@@ -70,9 +81,9 @@ public class UserProfileControllerImpl implements UserProfileController{
             dashboard.showData(this.userManager);
 
             new UserExerciseControllerImpl(bmr, tdee, dailyCalories, activityLevel, userGoal);
+            this.view.setBackButton(true);
 
             if(goToDashboard != null){
-                this.view.setBackButton(true);
                 goToDashboard.run();
             }
 
