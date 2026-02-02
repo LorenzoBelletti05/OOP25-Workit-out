@@ -25,7 +25,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private UserGoal userGoal;
     private String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
     private String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
-    private static final String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
+    private static final String pathToRawExercise = LoadSaveData.createPath("exercise.json");
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
     private WorkoutPlan generatedWorkoutPlan;
@@ -167,13 +167,16 @@ public class UserExerciseControllerImpl implements UserExerciseController {
 
     //creating a single istance to avoid creating unnecessary istance with different behaviour
     public static UserExerciseControllerImpl getIstance() {
-        if(instance != null) {
+        if(instance == null) {
             instance = new UserExerciseControllerImpl();
         }
         return instance;
     }
 
     public WorkoutPlan getGeneratedWorkoutPlan() {
+        if( this.generatedWorkoutPlan == null) {
+            this.generatedWorkoutPlan = LoadSaveData.loadWorkoutPlan(LoadSaveData.createPath("workoutPlan.json"));
+        }
         return this.generatedWorkoutPlan;
     }
     
