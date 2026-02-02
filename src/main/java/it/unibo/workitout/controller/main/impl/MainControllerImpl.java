@@ -113,6 +113,10 @@ public class MainControllerImpl implements MainController {
             mainView.showView(EXERCISE);
         });
 
+        exerciseView.getBackButton().addActionListener(al -> {
+            mainView.showView(DASHBOARD);
+        });
+
         mainView.start();        
     }
     
