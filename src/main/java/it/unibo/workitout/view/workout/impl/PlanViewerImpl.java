@@ -112,11 +112,17 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
     private void setTable() {        
 
-        Map<LocalDate, WorkoutSheet> plan = UserExerciseControllerImpl.getIstance().getGeneratedWorkoutPlan().getWorkoutPlan();
+        WorkoutPlan plan = UserExerciseControllerImpl.getIstance().getGeneratedWorkoutPlan();
+
+        if (plan == null || plan.getWorkoutPlan() == null) {
+            System.out.println("In attesa di dati...");
+            tableModel.setRowCount(0); 
+            return; 
+        }
 
         tableModel.setRowCount(0);
 
-        for (WorkoutSheet workoutSheet : plan.values()) {
+        for (WorkoutSheet workoutSheet : plan.getWorkoutPlan().values()) {
             for (PlannedExercise exercisePlanned : workoutSheet.getWorkoutSheet()) {
                 
                 Object[] row = new Object[6];
