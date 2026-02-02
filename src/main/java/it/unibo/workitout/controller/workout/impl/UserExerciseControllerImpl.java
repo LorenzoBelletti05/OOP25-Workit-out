@@ -54,8 +54,17 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private WorkoutPlan checkAndCreate() {
 
         //load from json the plan
-        WorkoutPlan workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
-        workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData);
+        WorkoutPlan workoutPlan;
+        try {
+            workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
+        } catch (NullPointerException e) {
+            workoutPlan = null;
+        }
+        try {
+            workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData); 
+        }catch (NullPointerException e) {
+            workoutPlan = null;
+        }
 
         //check if the workoutPlan and the oldData json are full or not
         if(workoutPlan != null && workoutUserData != null) {
