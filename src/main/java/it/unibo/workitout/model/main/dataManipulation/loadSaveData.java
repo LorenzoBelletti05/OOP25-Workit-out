@@ -42,6 +42,7 @@ public class LoadSaveData {
     
 
     public static <T> List<T> loadSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
+        checkFolderPresence(pathData);
         try (FileReader read = new FileReader(pathData)) {
             T[] arrayData = gsonFile.fromJson(read, typeClass);
             return arrayData != null ? new ArrayList<>(Arrays.asList(arrayData)) : new ArrayList<>();
@@ -51,6 +52,7 @@ public class LoadSaveData {
     }
 
     public static <T> void saveDataIn(String pathData, Class<T[]> dataClass) throws IOException {
+        checkFolderPresence(pathData);
         try(FileWriter writer = new FileWriter(pathData)) {
             gsonFile.toJson(dataClass, writer);
         } catch (Exception e) {
@@ -61,6 +63,7 @@ public class LoadSaveData {
 
     //method that load and save the entire workout from the json
     public static WorkoutPlan loadWorkoutPlan(String pathData) {
+        checkFolderPresence(pathData);
         try (FileReader read = new FileReader(pathData)) {            
             return gsonFile.fromJson(read, WorkoutPlanImpl.class);
         } catch (IOException e) {
@@ -69,6 +72,7 @@ public class LoadSaveData {
     }
 
     public static void saveWorkoutPlan(String pathData, WorkoutPlan dataPlan) {
+        checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData)) {            
              gsonFile.toJson(dataPlan, writer);
         } catch (IOException e) {
@@ -79,6 +83,7 @@ public class LoadSaveData {
 
     //two methods that save and get the workoutUserData
     public static void saveWorkoutuserDataIn(String pathData, WorkoutUserData workoutUserData) {
+        checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData)) {            
             gsonFile.toJson(workoutUserData, writer );
         } catch (IOException e) {
@@ -87,6 +92,7 @@ public class LoadSaveData {
     }
 
     public static WorkoutUserData loadWorkoutuserDataIn(String pathData) {
+        checkFolderPresence(pathData);
         try (FileReader reader = new FileReader(pathData)) {            
             return gsonFile.fromJson(reader, WorkoutUserData.class);
         } catch (IOException e) {
@@ -95,6 +101,7 @@ public class LoadSaveData {
     }
 
     public static void saveUserProfile(String pathData, UserProfile userProfile) {
+        checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData)) {
             gsonFile.toJson(userProfile, writer);
         } catch (Exception e) {
@@ -103,6 +110,7 @@ public class LoadSaveData {
     }
 
     public static UserProfile loadUserProfile(String pathData) {
+        checkFolderPresence(pathData);
         try (FileReader reader = new FileReader(pathData)) {
             return gsonFile.fromJson(reader, UserProfile.class);
         } catch (Exception e) {
