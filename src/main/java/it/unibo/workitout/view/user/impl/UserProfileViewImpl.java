@@ -197,6 +197,10 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
 
     @Override
     public void setBMRStrategyInput(String strategy) {
-        this.strategyCombo.setSelectedItem(strategy);
+        if(strategy.equals("MifflinStJeorStrategy")) {
+        this.strategyCombo.setSelectedIndex(0);
+        } else if (strategy.equals("HarrisBenedictStrategy")) {
+            this.strategyCombo.setSelectedIndex(1);
+        }
     }
 }
