@@ -29,6 +29,16 @@ public class LoadSaveData {
         return getWorkspacePath() + File.separator + nameFile;
     }
 
+    //provate method that check the presence of the folder, if not create it
+    private static void checkFolderPresence(String pathData) {
+        File file = new File(pathData);
+        File parDir = file.getParentFile();
+        if(parDir != null && !parDir.exists()) {
+            parDir.mkdirs();
+        }
+
+    }
+
     
 
     public static <T> List<T> loadSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
@@ -62,7 +72,7 @@ public class LoadSaveData {
         try (FileWriter writer = new FileWriter(pathData)) {            
              gsonFile.toJson(dataPlan, writer);
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(" " + e.getMessage());
         }
     }
 
@@ -72,7 +82,7 @@ public class LoadSaveData {
         try (FileWriter writer = new FileWriter(pathData)) {            
             gsonFile.toJson(workoutUserData, writer );
         } catch (IOException e) {
-            e.getMessage();
+            System.out.println(" " + e.getMessage());
         }
     }
 
