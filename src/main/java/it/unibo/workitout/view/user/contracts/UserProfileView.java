@@ -23,4 +23,13 @@ public interface UserProfileView {
     public void setVisible(boolean visible);
     public JButton getBackButton();
     public void setBackButton(boolean visible);
+    public void setNameInput(String name);
+    public void setSurnameInput(String surname);
+    public void setAgeInput(int age);
+    public void setHeightInput(double height);
+    public void setWeightInput(double weight);
+    public void setSexInput(Sex sex);
+    public void setActivityInput(ActivityLevel activityLevel);
+    public void setUserGoalInput(UserGoal userGoal);
+    public void setBMRStrategyInput(String strategy);
 }

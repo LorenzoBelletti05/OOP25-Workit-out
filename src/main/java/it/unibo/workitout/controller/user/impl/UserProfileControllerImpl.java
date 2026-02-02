@@ -28,7 +28,7 @@ public class UserProfileControllerImpl implements UserProfileController{
         this.view = view;
         this.dashboard = dashboard;
         this.goToDashboard = runnable;
-        this.view.setController(this);       
+        this.view.setController(this); 
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
@@ -41,12 +41,33 @@ public class UserProfileControllerImpl implements UserProfileController{
     }
 
     private void editProfile() {
+        if(this.userManager.getUserProfile() != null) {
+            fillProfileButton();
+            isFirstAccess(false);
+        }
         dashboard.setVisible(false);
         view.setVisible(true);
     }
 
-    public void firstAccess(boolean isFirstAccess) {
+    private void fillProfileButton() {
+        UserProfile userProfile = this.userManager.getUserProfile();
+        view.setNameInput(userProfile.getName());
+        view.setSurnameInput(userProfile.getSurname());
+        view.setAgeInput(userProfile.getAge());
+        view.setHeightInput(userProfile.getHeight());
+        view.setWeightInput(userProfile.getWeight());
+        view.setSexInput(userProfile.getSex());
+        view.setActivityInput(userProfile.getActivityLevel());
+        view.setUserGoalInput(userProfile.getGoal());
+        view.setBMRStrategyInput(userProfile.getStrategy());
+    }
+
+    public void isFirstAccess(boolean isFirstAccess) {
         this.view.setBackButton(!isFirstAccess);
+    }
+
+    public void setUserManager(UserManager userManager) {
+        this.userManager = userManager;
     }
 
     @Override
@@ -95,5 +116,4 @@ public class UserProfileControllerImpl implements UserProfileController{
     private void showInputDataError(String errorDescription) {
         JOptionPane.showMessageDialog(null, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
-
 }
