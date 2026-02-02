@@ -154,4 +154,49 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     public void setBackButton(boolean visible) {
         this.backButton.setEnabled(visible);
     }
+
+    @Override
+    public void setNameInput(String name) {
+        this.nameField.setText(name);
+    }
+
+    @Override
+    public void setSurnameInput(String surname) {
+        this.surnameField.setText(surname);
+    }
+
+    @Override
+    public void setAgeInput(int age) {
+        this.ageField.setText(String.valueOf(age));
+    }
+
+    @Override
+    public void setHeightInput(double height) {
+        this.heightField.setText(String.valueOf(height));
+    }
+
+    @Override
+    public void setWeightInput(double weight) {
+        this.weightField.setText(String.valueOf(weight));
+    }
+
+    @Override
+    public void setSexInput(Sex sex) {
+        this.sexCombo.setSelectedItem(sex);
+    }
+
+    @Override
+    public void setActivityInput(ActivityLevel activityLevel) {
+        this.activityLevelCombo.setSelectedItem(activityLevel);
+    }
+
+    @Override
+    public void setUserGoalInput(UserGoal userGoal) {
+        this.userGoalCombo.setSelectedItem(userGoal);
+    }
+
+    @Override
+    public void setBMRStrategyInput(String strategy) {
+        this.strategyCombo.setSelectedItem(strategy);
+    }
 }

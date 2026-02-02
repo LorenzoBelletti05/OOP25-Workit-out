@@ -9,6 +9,7 @@ import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
 import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
+import it.unibo.workitout.model.user.model.impl.HarrisBenedictStrategy;
 import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
 import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
@@ -46,24 +47,25 @@ public class MainControllerImpl implements MainController {
 
         UserProfileControllerImpl userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
 
-        this.user = LoadSaveData.loadUserProfile("user_profile.json");
+        this.user = LoadSaveData.loadUserProfile(LoadSaveData.createPath("user_profile.json"));
 
         if(this.user != null) {
             BMRCalculatorStrategy strategy;
             if(user.getStrategy().equals("MifflinStJeorStrategy")) {
                 strategy = new MifflinStJeorStrategy();
             } else {
-                strategy = new MifflinStJeorStrategy();
+                strategy = new HarrisBenedictStrategy();
             }
 
             UserManager userManager = new UserManager(strategy, this.user);
+            userController.setUserManager(userManager);
             dashboardView.showData(userManager);
-            userController.firstAccess(false);
+            userController.isFirstAccess(false);
             mainView.addModule(LOGIN, profileView);
             mainView.addModule(DASHBOARD, dashboardView);
             mainView.showView(DASHBOARD);
         } else {
-        userController.firstAccess(true);
+            userController.isFirstAccess(true);
             mainView.addModule(LOGIN, profileView);
             mainView.addModule(DASHBOARD, dashboardView);
             mainView.showView(LOGIN);
