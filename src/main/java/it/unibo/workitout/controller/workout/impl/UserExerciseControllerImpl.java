@@ -25,7 +25,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private UserGoal userGoal;
     private String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
     private String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
-    private static final String pathToRawExercise = LoadSaveData.createPath("exercise.json");
+    private static final String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
     private WorkoutPlan generatedWorkoutPlan;
