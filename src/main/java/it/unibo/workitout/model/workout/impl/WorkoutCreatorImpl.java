@@ -4,8 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
@@ -20,7 +19,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
     List<Exercise> lista; 
 
     public WorkoutCreatorImpl() throws IOException {           
-        lista = loadSaveData.getSavedDataFrom(pathRawExerciwse, Exercise[].class);            
+        lista = LoadSaveData.loadSavedDataFrom(pathRawExerciwse, Exercise[].class);            
     }    
 
     private double getCardioMultiplierPerExercise(Exercise exercise) {

@@ -17,6 +17,7 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
 
     private Exercise exercise = null;
     private Integer minutes = 0;
+    private boolean completed = false;
 
     /**
      * Costructor that gived the exercise and the minutes save it in the filed
@@ -43,7 +44,7 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
 
     /**
      * Give the minutes passed and saved before.
-     */
+     */ 
     @Override
     public Integer getMinutes() {
         return this.minutes;
@@ -64,6 +65,16 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
     @Override
     public String getName() {
         return this.exercise.getName();
+    }
+
+    @Override
+    public void setCompletedExercise(boolean compleExerecise) {
+        this.completed = compleExerecise;
+    }
+
+    @Override
+    public boolean isComplited() {        
+        return this.completed;
     }
 
 }

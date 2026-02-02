@@ -6,13 +6,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.ToDoubleFunction;
-
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
-
 import java.time.LocalDate;
 
 /**

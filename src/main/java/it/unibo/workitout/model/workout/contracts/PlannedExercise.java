@@ -28,4 +28,18 @@ public interface PlannedExercise extends WorkoutFunction {
      */
     Integer getMinutes();
 
+    /**
+     * Set the status of the exercise.
+     * 
+     * @param statusExercise that specify if is completed or not.
+     */
+    void setCompletedExercise(boolean statusExercise);
+
+    /**
+     * Return the status of the exercise.
+     * 
+     * @return a boolean state that tell if the exercise is completed.
+     */
+    boolean isComplited();   
+
 }

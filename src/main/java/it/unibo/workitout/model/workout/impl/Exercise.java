@@ -1,7 +1,6 @@
 package it.unibo.workitout.model.workout.impl;
 
 import com.google.gson.annotations.SerializedName;
-
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 
 /**

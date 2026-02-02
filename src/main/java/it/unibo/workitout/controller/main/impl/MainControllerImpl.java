@@ -7,7 +7,7 @@ import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
 import it.unibo.workitout.model.user.model.impl.UserManager;
@@ -46,7 +46,7 @@ public class MainControllerImpl implements MainController {
 
         UserProfileControllerImpl userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
 
-        this.user = loadSaveData.loadUserProfile("user_profile.json");
+        this.user = LoadSaveData.loadUserProfile("user_profile.json");
 
         if(this.user != null) {
             BMRCalculatorStrategy strategy;

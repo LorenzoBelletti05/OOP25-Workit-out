@@ -3,7 +3,6 @@ package it.unibo.workitout.view.workout.impl;
 import java.util.List;
 import java.util.Optional;
 import java.awt.BorderLayout;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -21,7 +20,6 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
     private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
     private DefaultTableModel modelRawExercise;
-
 
     final JButton searchButton = new JButton("Find");    
     
@@ -124,8 +122,6 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
     @Override
     public int getExercise() {
         return tableRawExercise.getSelectedRow();
-    }
-
-    
+    }   
 
 }
