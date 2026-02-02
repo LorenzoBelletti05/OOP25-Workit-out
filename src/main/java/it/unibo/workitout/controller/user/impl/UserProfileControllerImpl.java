@@ -66,7 +66,7 @@ public class UserProfileControllerImpl implements UserProfileController{
             UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal, strategy.toString());
 
             try {
-                LoadSaveData.saveUserProfile("user_profile.json", userProfile);
+                LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
             } catch (Exception expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }
