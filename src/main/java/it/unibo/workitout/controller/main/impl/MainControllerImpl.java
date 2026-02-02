@@ -21,6 +21,12 @@ import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 public class MainControllerImpl implements MainController {
+    private static final String LOGIN = "LOGIN";
+    private static final String DASHBOARD = "DASHBOARD";
+    private static final String WIKI = "WIKI";
+    private static final String FOOD = "FOOD";
+    private static final String EXERCISE = "EXERCISE";
+
     private final MainView mainView;
     private UserProfile user;  
     
@@ -36,7 +42,7 @@ public class MainControllerImpl implements MainController {
         final UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
 
-        Runnable goToDashboard = () -> mainView.showView("DASHBOARD");
+        Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
 
         UserProfileControllerImpl userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
 
@@ -53,19 +59,19 @@ public class MainControllerImpl implements MainController {
             UserManager userManager = new UserManager(strategy, this.user);
             dashboardView.showData(userManager);
             userController.firstAccess(false);
-            mainView.addModule("LOGIN", profileView);
-            mainView.addModule("DASHBOARD", dashboardView);
-            mainView.showView("DASHBOARD");
+            mainView.addModule(LOGIN, profileView);
+            mainView.addModule(DASHBOARD, dashboardView);
+            mainView.showView(DASHBOARD);
         } else {
         userController.firstAccess(true);
-            mainView.addModule("LOGIN", profileView);
-            mainView.addModule("DASHBOARD", dashboardView);
-            mainView.showView("LOGIN");
+            mainView.addModule(LOGIN, profileView);
+            mainView.addModule(DASHBOARD, dashboardView);
+            mainView.showView(LOGIN);
         }
 
 
         profileView.getBackButton().addActionListener(al -> {
-            mainView.showView("DASHBOARD");
+            mainView.showView(DASHBOARD);
         });
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
@@ -75,7 +81,7 @@ public class MainControllerImpl implements MainController {
         //nutritionController.start(); fix your hardcoded path
 
         final WikiViewImpl wikiView = new WikiViewImpl();
-        wikiView.addMainBackListener(view -> mainView.showView("DASHBOARD"));
+        wikiView.addMainBackListener(view -> mainView.showView(DASHBOARD));
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
         wikiController.start();
         
@@ -85,24 +91,24 @@ public class MainControllerImpl implements MainController {
 
         final PlanViewerImpl exerciseView = new PlanViewerImpl();
 
-        mainView.addModule("WIKI", wikiView);
-        mainView.addModule("FOOD", nutritionView);
-        mainView.addModule("EXERCISE", exerciseView);
+        mainView.addModule(WIKI, wikiView);
+        mainView.addModule(FOOD, nutritionView);
+        mainView.addModule(EXERCISE, exerciseView);
 
         dashboardView.getProfileButton().addActionListener(al -> {
-            mainView.showView("LOGIN");
+            mainView.showView(LOGIN);
         });
 
         dashboardView.getFoodButton().addActionListener(al -> {
-            mainView.showView("FOOD");
+            mainView.showView(FOOD);
         });
 
         dashboardView.getInfoButton().addActionListener(al -> {
-            mainView.showView("WIKI");
+            mainView.showView(WIKI);
         });
 
         dashboardView.getExerciseButton().addActionListener(al -> {
-            mainView.showView("EXERCISE");
+            mainView.showView(EXERCISE);
         });
 
         mainView.start();        
