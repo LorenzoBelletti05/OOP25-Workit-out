@@ -1,5 +1,7 @@
 package it.unibo.workitout.controller.main.impl;
 
+import java.time.LocalDate;
+
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
 import it.unibo.workitout.controller.main.contracts.MainController;
@@ -50,6 +52,12 @@ public class MainControllerImpl implements MainController {
         this.user = LoadSaveData.loadUserProfile(LoadSaveData.createPath("user_profile.json"));
 
         if(this.user != null) {
+            LocalDate now = LocalDate.now();
+            if(!this.user.getLastAccess().equals(now)) {
+                this.user.setLastAccess();
+                LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
+            }
+
             BMRCalculatorStrategy strategy;
             if(user.getStrategy().equals("MifflinStJeorStrategy")) {
                 strategy = new MifflinStJeorStrategy();

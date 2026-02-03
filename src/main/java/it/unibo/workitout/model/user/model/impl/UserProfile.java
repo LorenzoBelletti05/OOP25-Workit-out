@@ -1,5 +1,6 @@
 package it.unibo.workitout.model.user.model.impl;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 /**
@@ -24,6 +25,7 @@ public final class UserProfile {
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
     private String strategy;
+    private String lastAccess;
 
     /**
      * Constructor for a new user.
@@ -72,6 +74,7 @@ public final class UserProfile {
         } else {
             this.strategy = strategy;
         }
+        this.lastAccess = LocalDate.now().toString();
     }
 
     /**
@@ -192,6 +195,14 @@ public final class UserProfile {
         return strategy;
     }
 
+    public LocalDate getLastAccess() {
+        if(this.lastAccess == null) {
+            return LocalDate.now();
+        } else {
+            return LocalDate.parse(this.lastAccess);
+        }
+    }
+
     /**
      * Set a new user's age.
      * 
@@ -244,5 +255,9 @@ public final class UserProfile {
      */
     public void setGoal(final UserGoal userGoal) {
         this.userGoal = userGoal;
+    }
+
+    public void setLastAccess() {
+        this.lastAccess = LocalDate.now().toString();
     }
 }
