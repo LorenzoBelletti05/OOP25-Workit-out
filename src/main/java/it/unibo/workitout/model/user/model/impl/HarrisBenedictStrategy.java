@@ -29,4 +29,9 @@ public final class HarrisBenedictStrategy implements BMRCalculatorStrategy {
             throw new IllegalStateException("The sex specified doesen't exist:" + sex);
         }
     }
+
+    @Override
+    public String toString() {
+        return "HarrisBenedictStrategy";
+    }
 }
