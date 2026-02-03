@@ -16,15 +16,24 @@ import it.unibo.workitout.view.user.contracts.UserDashboardView;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
-public class UserProfileControllerImpl implements UserProfileController{
+/**
+ * Implementation of the UserProfile controller.
+ */
+public final class UserProfileControllerImpl implements UserProfileController {
 
     private final UserProfileView view;
     private final UserDashboardView dashboard;
     private final Runnable goToDashboard;
     private UserManager userManager;
 
-    public UserProfileControllerImpl (final UserProfileView view, final UserDashboardView dashboard, final Runnable runnable){
-
+    /**
+     * Constructor for the UserProfileController.
+     * 
+     * @param view          the view for editing the profile
+     * @param dashboard     the main dashboard view
+     * @param runnable      action to perform to go to dashboard
+     */
+    public UserProfileControllerImpl(final UserProfileView view, final UserDashboardView dashboard, final Runnable runnable) {
         this.view = view;
         this.dashboard = dashboard;
         this.goToDashboard = runnable;
@@ -36,12 +45,11 @@ public class UserProfileControllerImpl implements UserProfileController{
 
         this.dashboard.getExerciseButton().addActionListener(al -> {
             this.dashboard.setVisible(false);
-            new PlanViewerImpl().setVisible(true);
         });
     }
 
     private void editProfile() {
-        if(this.userManager.getUserProfile() != null) {
+        if (this.userManager.getUserProfile() != null) {
             fillProfileButton();
             isFirstAccess(false);
         }
@@ -50,7 +58,7 @@ public class UserProfileControllerImpl implements UserProfileController{
     }
 
     private void fillProfileButton() {
-        UserProfile userProfile = this.userManager.getUserProfile();
+        final UserProfile userProfile = this.userManager.getUserProfile();
         view.setNameInput(userProfile.getName());
         view.setSurnameInput(userProfile.getSurname());
         view.setAgeInput(userProfile.getAge());
@@ -62,58 +70,80 @@ public class UserProfileControllerImpl implements UserProfileController{
         view.setBMRStrategyInput(userProfile.getStrategy());
     }
 
-    public void isFirstAccess(boolean isFirstAccess) {
+    /**
+     * Sets the button based on if is the first access of user or not.
+     * 
+     * @param isFirstAccess true if it is the first access
+     */
+    public void isFirstAccess(final boolean isFirstAccess) {
         this.view.setBackButton(!isFirstAccess);
     }
 
-    public void setUserManager(UserManager userManager) {
+    /**
+     * Sets the UserManager for this controller.
+     * 
+     * @param userManager the UserManager
+     */
+    public void setUserManager(final UserManager userManager) {
         this.userManager = userManager;
     }
 
     @Override
     public void calculateProfile() {
 
-        try{
-            String name = view.getNameInput();
-            String surname = view.getSurnameInput();
-            int age = Integer.parseInt(view.getAgeInput());
-            double height = Double.parseDouble(view.getHeightInput());
-            double weight = Double.parseDouble(view.getWeightInput());
-            Sex sex = view.getSexInput();
-            ActivityLevel activityLevel = view.getActivityInput();
-            UserGoal userGoal = view.UserGoalInput();
-            BMRStrategyChoice selectedStrategy = view.getBMRStrategyInput();
-            BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
-            UserProfile userProfile = new UserProfile(name, surname, age, height, weight, sex, activityLevel, userGoal, strategy.toString());
+        try {
+            final String name = view.getNameInput();
+            final String surname = view.getSurnameInput();
+            final int age = Integer.parseInt(view.getAgeInput());
+            final double height = Double.parseDouble(view.getHeightInput());
+            final double weight = Double.parseDouble(view.getWeightInput());
+            final Sex sex = view.getSexInput();
+            final ActivityLevel activityLevel = view.getActivityInput();
+            final UserGoal userGoal = view.UserGoalInput();
+            final BMRStrategyChoice selectedStrategy = view.getBMRStrategyInput();
+            final BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
+            final UserProfile userProfile = new UserProfile(
+                name,
+                surname,
+                age,
+                height,
+                weight,
+                sex,
+                activityLevel,
+                userGoal,
+                strategy.toString()
+            );
 
             try {
                 LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
-            } catch (Exception expt) {
+            } catch (final Exception expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }
-            this.userManager = new UserManager(strategy, userProfile);
-            double bmr = userManager.getBMR();
-            double tdee = userManager.getTDEE();
-            double dailyCalories = userManager.getDailyCalories();
 
-            if(dailyCalories <= 0) {
+            this.userManager = new UserManager(strategy, userProfile);
+
+            final double bmr = userManager.getBMR();
+            final double tdee = userManager.getTDEE();
+            final double dailyCalories = userManager.getDailyCalories();
+
+            if (dailyCalories <= 0) {
                 throw new IllegalStateException("The total calories are negative, please check your input data.");
             }
             dashboard.showData(this.userManager);
 
-           UserExerciseControllerImpl.getIstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);           
+           UserExerciseControllerImpl.getIstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
-            if(goToDashboard != null){
+            if (goToDashboard != null) {
                 goToDashboard.run();
             }
 
-        } catch (Exception expt) {
+        } catch (final Exception expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());
         }
 
     }
 
-    private void showInputDataError(String errorDescription) {
+    private void showInputDataError(final String errorDescription) {
         JOptionPane.showMessageDialog(null, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
