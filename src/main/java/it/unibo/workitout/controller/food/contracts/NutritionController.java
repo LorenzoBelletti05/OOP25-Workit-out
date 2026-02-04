@@ -16,16 +16,18 @@ public interface NutritionController {
 
     /**
      * Searches for food.
+     * 
      * @param query the search string.
      */
-    void searchFood(final String query);
+    void searchFood(String query);
 
     /**
      * Adds food to the daily log.
+     * 
      * @param food the food to add.
      * @param grams the amount in grams.
      */
-    void addFoodToDailyLog(final Food food, final int grams);
+    void addFoodToDailyLog(Food food, int grams);
 
     /**
      * @return a map of today's nutrients.

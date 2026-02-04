@@ -1,28 +1,49 @@
 package it.unibo.workitout.view.food.impl;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Objects;
+
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.model.food.api.Food;
 
 
-public class NutritionViewImpl extends JPanel implements NutritionView {
-    private NutritionController controller; 
+public final class NutritionViewImpl extends JPanel implements NutritionView {
+    private static final long serialVersionUID = 1L;
+    private static final int SEARCH_FIELD_COLUMNS = 20;
+    private static final int FONT_SIZE = 14;
+    private static final int BORDER_SIZE = 10;
+
+    private NutritionController controller;
     private final JTable foodTable;
     private final FoodTableModel tableModel;
     private final JLabel summaryLabel;
     private final JTextField searchField;
 
+    /**
+     * Constructor for NutritionViewImpl.
+     */
     public NutritionViewImpl() {
-        this.setLayout(new BorderLayout());
+        super(new BorderLayout());
 
         //Ricerca
         final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        this.searchField = new JTextField(20);
+        this.searchField = new JTextField(SEARCH_FIELD_COLUMNS);
         final JButton searchButton = new JButton("Cerca");
         final JButton highProteinButton = new JButton("Proteici");
         final JButton lowCarbsButton = new JButton("Pochi Carbo");
@@ -47,8 +68,8 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
         //Riepilogo e percentuali
         final JPanel southPanel = new JPanel(new BorderLayout());
         this.summaryLabel = new JLabel("Caricamento dati...", SwingConstants.CENTER);
-        this.summaryLabel.setFont(new Font("Arial", Font.BOLD, 14));
-        this.summaryLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.summaryLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
+        this.summaryLabel.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
         southPanel.add(summaryLabel, BorderLayout.CENTER);
 
         this.add(northPanel, BorderLayout.NORTH);
@@ -58,8 +79,8 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
         //LISTENERS
         //Listener per la ricerca
         searchButton.addActionListener(e -> {
-            if (controller != null) {
-                controller.searchFood(searchField.getText());
+            if (this.controller != null) {
+                this.controller.searchFood(this.searchField.getText());
             }
         });
 
@@ -71,9 +92,7 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
                     final int row = foodTable.getSelectedRow();
                     if (row != -1) {
                         //Converte l'indice se la tabella è ordinata
-                        final int modelRow = foodTable.convertRowIndexToModel(row);
-                        final Food selectedFood = tableModel.getFoodAt(modelRow);
-                        handleFoodSelection(selectedFood);
+                        handleFoodSelection(tableModel.getFoodAt(foodTable.convertRowIndexToModel(row)));
                     }
                 }
             }
@@ -81,32 +100,32 @@ public class NutritionViewImpl extends JPanel implements NutritionView {
 
         //Listener per filtri
         highProteinButton.addActionListener(e -> {
-            if (controller != null) {
-                controller.filterHighProtein();
+            if (this.controller != null) {
+                this.controller.filterHighProtein();
             }
         });
 
         lowCarbsButton.addActionListener(e -> {
-            if (controller != null) {
-                controller.filterLowCarbs();
+            if (this.controller != null) {
+                this.controller.filterLowCarbs();
             }
         });
 
         lowFatButton.addActionListener(e -> {
-            if (controller != null) {
-                controller.filterLowFat();
+            if (this.controller != null) {
+                this.controller.filterLowFat();
             }
         });
 
         resetButton.addActionListener(e -> {
-            if (controller != null) {
-                updateTable(controller.getAllFoods());
+            if (this.controller != null) {
+                updateTable(this.controller.getAllFoods());
             }
         });
     }
 
     public void setController(final NutritionController controller) {
-        this.controller = controller;
+        this.controller = Objects.requireNonNull(controller);
     }
 
     //Gestisce l'inserimento dei grammi
