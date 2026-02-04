@@ -56,13 +56,7 @@ public final class NutritionControllerImpl implements NutritionController {
     @Override
     public void addFoodToDailyLog(final Food food, final int grams) {
         //Controllo dei limiti
-        if (grams <= 0) {
-            System.out.println("Quantità non valida.");
-            return;
-        }
-
-        if (grams > MAX_GRAMS) {
-            System.out.println("Quantità eccessiva (max 2kg).");
+        if (grams <= 0 || grams > MAX_GRAMS) {
             return;
         }
         
@@ -74,7 +68,7 @@ public final class NutritionControllerImpl implements NutritionController {
     }
 
     /**
-     * Helper to export data for the User module
+     * Helper to export data for the User module.
      */
     private void saveTotalsForUser() {
         final DailyLog today = logManager.getCurrentLog();
@@ -91,8 +85,8 @@ public final class NutritionControllerImpl implements NutritionController {
         updateDailyStatsFile(statsPath, statsRow, date);
     }
 
-    private void updateDailyStatsFile(String path, String newRow, String date) {
-        List<String> allLines = LoadSaveData.loadCsvFile(path);
+    private void updateDailyStatsFile(final String path, final String newRow, final String date) {
+        final List<String> allLines = LoadSaveData.loadCsvFile(path);
         boolean found = false;
 
         for (int i = 0; i < allLines.size(); i++) {
