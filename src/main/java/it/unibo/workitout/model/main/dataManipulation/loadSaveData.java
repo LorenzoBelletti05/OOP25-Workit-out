@@ -117,10 +117,16 @@ public class LoadSaveData {
             return null;
         }
     }
-
+    /** Public constant for foods file name. */
     public static final String FOODS_FILE = "foods.csv";
+
+    /** Public constant for history file name. */
     public static final String HISTORY_FILE = "history.csv";
+
+    /** Public constant for stats file name. */
     public static final String STATS_FILE = "daily_stats.csv";
+
+    //
     /**
      * Loads a CSV or text file as a list of strings.
      * @param pathData the path to the file.
@@ -142,7 +148,7 @@ public class LoadSaveData {
                 lines.add(line);
             }
         } catch (IOException e) {
-            System.err.println("Error reading CSV: " + e.getMessage());
+            return new ArrayList<>();
         }
         return lines;
     }
@@ -161,7 +167,7 @@ public class LoadSaveData {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Error saving CSV: " + e.getMessage());
+            System.err.println("Errore durante il salvataggio del file CSV: " + e.getMessage());
         }
     }
 
