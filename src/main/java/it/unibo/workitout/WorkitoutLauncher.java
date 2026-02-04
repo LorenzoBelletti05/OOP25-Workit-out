@@ -17,4 +17,4 @@ public final class WorkitoutLauncher {
         final MainControllerImpl mainController = new MainControllerImpl(mainView);
         mainController.start();
     }
-}
+}   

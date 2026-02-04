@@ -118,4 +118,66 @@ public class LoadSaveData {
         }
     }
 
+    public static final String FOODS_FILE = "foods.csv";
+    public static final String HISTORY_FILE = "history.csv";
+    public static final String STATS_FILE = "daily_stats.csv";
+    /**
+     * Loads a CSV or text file as a list of strings.
+     * @param pathData the path to the file.
+     * @return a list of lines.
+     */
+    public static List<String> loadCsvFile(final String pathData) {
+        checkFolderPresence(pathData);
+        final List<String> lines = new ArrayList<>();
+        final File file = new File(pathData);
+
+        if (!file.exists()) {
+            return lines;
+        }
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(
+                new java.io.FileReader(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                lines.add(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading CSV: " + e.getMessage());
+        }
+        return lines;
+    }
+
+    /**
+     * Saves a list of string into a CSV or text file.
+     * @param pathData the path to the file.
+     * @param lines the lines to save.
+     */
+    public static void saveCsvFile(final String pathData, final List<String> lines) {
+        checkFolderPresence(pathData);
+        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
+                new java.io.FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+            for (final String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving CSV: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Saves daily totals for nutrition.
+     * @param pathData the path to the file.
+     * @param stats a string in format "date,kcal,proteins,carbs,fats".
+     */
+    public static void saveDailyStats(final String pathData, final String stats) {
+        checkFolderPresence(pathData);
+        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
+                new java.io.FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8, true))) {
+            bw.write(stats);
+            bw.newLine();
+        } catch (java.io.IOException e) {
+            System.err.println("Error saving stats: " + e.getMessage());
+        }
+    }
 }
