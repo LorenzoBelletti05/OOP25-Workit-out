@@ -17,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.Objects;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.controller.food.contracts.NutritionController;
@@ -130,6 +131,7 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
      * 
      * @param controller the nutrition controller to be used.
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Controller must be shared")
     public void setController(final NutritionController controller) {
         this.controller = Objects.requireNonNull(controller);
     }
