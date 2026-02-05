@@ -13,6 +13,7 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
@@ -32,6 +33,8 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
     private JLabel lProteins;
     private JLabel lFats;
 
+    private static final Font  TITLE_FONT = new Font("Arial", Font.BOLD, 26);
+
     public UserDashboardViewImpl() {
         this.setLayout(new BorderLayout());
         dashboardGUI();
@@ -44,21 +47,25 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         JPanel bottomPanel = new JPanel(new GridLayout(1,3,10,0));
 
         welcomeTitle = new JLabel("Hello!");
+        welcomeTitle.setFont(TITLE_FONT);
+
         bProfile = new JButton ("Profile");
 
         topPanel.add(welcomeTitle, BorderLayout.CENTER);
         topPanel.add(bProfile, BorderLayout.EAST);
-        topPanel.setBorder(new EmptyBorder(10,10,10,10));
+        topPanel.setBorder(new EmptyBorder(0,0,20,0));
         panel.add(topPanel, BorderLayout.NORTH);
+        panel.setBorder(new EmptyBorder(10,10,10,10));
 
         JPanel progressBarPanel = new JPanel(new BorderLayout());
         JPanel caloriesPanel = new JPanel(new BorderLayout());
 
+        progressBarPanel.setBorder(new EmptyBorder(0,50,0,50));
         caloriesBar = new JProgressBar();
         caloriesBar.setStringPainted(true);
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
-        showCalories.setBorder(new EmptyBorder(5,0,5,0));
+        showCalories.setBorder(new EmptyBorder(5,0,20,0));
 
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
@@ -67,6 +74,8 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         lCarbs = new JLabel("Carbs: 0 / 0 g", SwingConstants.CENTER);
         lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
         lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
+
+        showCalories.setBorder(new EmptyBorder(10,0,20,0));
 
         macroPanel.add(lCarbs);
         macroPanel.add(lProteins);
@@ -90,7 +99,7 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         bottomPanel.add(bInfo);
         bottomPanel.add(bExercise);
         
-        bottomPanel.setBorder(new EmptyBorder(10,10,10,10));
+        bottomPanel.setBorder(new EmptyBorder(20,0,0,0));
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
