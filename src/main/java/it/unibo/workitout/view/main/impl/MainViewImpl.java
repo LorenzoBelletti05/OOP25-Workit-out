@@ -29,8 +29,8 @@ public class MainViewImpl extends JFrame implements MainView {
         super("Workit-out");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-        final int width = (int) (screen.getWidth() * 0.3);
-        final int height = (int) (screen.getHeight() * 0.4);
+        final int width = (int) (screen.getWidth() * 0.6);
+        final int height = (int) (screen.getHeight() * 0.7);
         this.setSize(width, height);
         this.setLocationRelativeTo(null);
 

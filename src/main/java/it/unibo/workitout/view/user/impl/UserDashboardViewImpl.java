@@ -13,6 +13,7 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -33,7 +34,9 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
     private JLabel lProteins;
     private JLabel lFats;
 
-    private static final Font  TITLE_FONT = new Font("Arial", Font.BOLD, 26);
+    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 26);
+    private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 18);
+    private static final Font MACRO_FONT = new Font("Arial", Font.PLAIN , 18); 
 
     public UserDashboardViewImpl() {
         this.setLayout(new BorderLayout());
@@ -50,6 +53,8 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         welcomeTitle.setFont(TITLE_FONT);
 
         bProfile = new JButton ("Profile");
+        Dimension bSize = new Dimension(100, 30);
+        bProfile.setPreferredSize(bSize);
 
         topPanel.add(welcomeTitle, BorderLayout.CENTER);
         topPanel.add(bProfile, BorderLayout.EAST);
@@ -62,10 +67,12 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
 
         progressBarPanel.setBorder(new EmptyBorder(0,50,0,50));
         caloriesBar = new JProgressBar();
+        caloriesBar.setPreferredSize(new Dimension(100,40));
+        caloriesBar.setFont(TEXT_FONT);
         caloriesBar.setStringPainted(true);
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
-        showCalories.setBorder(new EmptyBorder(5,0,20,0));
+        showCalories.setFont(TEXT_FONT);
 
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
@@ -74,6 +81,10 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         lCarbs = new JLabel("Carbs: 0 / 0 g", SwingConstants.CENTER);
         lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
         lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
+
+        lCarbs.setFont(MACRO_FONT);
+        lProteins.setFont(MACRO_FONT);
+        lFats.setFont(MACRO_FONT);
 
         showCalories.setBorder(new EmptyBorder(10,0,20,0));
 
@@ -95,6 +106,10 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         bInfo = new JButton("Info");
         bExercise = new JButton("Exercise");
 
+        bFood.setPreferredSize(bSize);
+        bInfo.setPreferredSize(bSize);
+        bExercise.setPreferredSize(bSize);
+
         bottomPanel.add(bFood);
         bottomPanel.add(bInfo);
         bottomPanel.add(bExercise);
@@ -111,23 +126,23 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
             JOptionPane.showMessageDialog(this, "The user manager is not linked", "Error!", JOptionPane.ERROR_MESSAGE);
         }
         String name = userManager.getUserProfile().getName();
-        welcomeTitle.setText("Hello " + name);
+        welcomeTitle.setText("Hello " + name + "!");
         int dailyCal = (int) userManager.getDailyCalories();
-        int consumedCal = 0;
+        int consumedCal = 1000;
         caloriesBar.setMaximum(dailyCal);
         caloriesBar.setMinimum(0);
         caloriesBar.setValue(consumedCal);
         
-        showCalories.setText(consumedCal + " /" + dailyCal + " kcal");
+        showCalories.setText(consumedCal + " / " + dailyCal + " kcal");
 
         NutritionalTarget macroTarget = userManager.getMacronutrients();
-        double consumedCarbs = 0;
-        double consumedProteins = 0;
-        double consumedFats = 0;
+        int consumedCarbs = 0;
+        int consumedProteins = 0;
+        int consumedFats = 0;
 
-        lCarbs.setText("Carbs: " + consumedCarbs + " g / " + (int) macroTarget.getCarbsG() + " g");
-        lProteins.setText("Proteins: " + consumedProteins + " g / " + (int) macroTarget.getProteinsG() + " g" );
-        lFats.setText("Fats: " + consumedFats +" g / " + (int) macroTarget.getFatsG() + " g");
+        lCarbs.setText("Carbs: " + consumedCarbs + " / " + (int) macroTarget.getCarbsG() + " g");
+        lProteins.setText("Proteins: " + consumedProteins + " / " + (int) macroTarget.getProteinsG() + " g" );
+        lFats.setText("Fats: " + consumedFats +" / " + (int) macroTarget.getFatsG() + " g");
     }
 
 
