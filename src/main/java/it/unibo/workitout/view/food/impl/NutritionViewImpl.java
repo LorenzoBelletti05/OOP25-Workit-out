@@ -22,14 +22,16 @@ import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.model.food.api.Food;
 
-
+/**
+ * View implementation for the nutrition management system.
+ */
 public final class NutritionViewImpl extends JPanel implements NutritionView {
     private static final long serialVersionUID = 1L;
     private static final int SEARCH_FIELD_COLUMNS = 20;
     private static final int FONT_SIZE = 14;
     private static final int BORDER_SIZE = 10;
 
-    private NutritionController controller;
+    private transient NutritionController controller;
     private final JTable foodTable;
     private final FoodTableModel tableModel;
     private final JLabel summaryLabel;
@@ -58,7 +60,6 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         northPanel.add(lowCarbsButton);
         northPanel.add(lowFatButton);
         northPanel.add(resetButton);
-
 
         //Tabella
         this.tableModel = new FoodTableModel();
@@ -124,6 +125,11 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         });
     }
 
+    /**
+     * Sets the controller for this view.
+     * 
+     * @param controller the nutrition controller to be used.
+     */
     public void setController(final NutritionController controller) {
         this.controller = Objects.requireNonNull(controller);
     }
@@ -140,12 +146,15 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         if (input != null && !input.isEmpty()) {
             try {
                 final int grams = Integer.parseInt(input);
-                if (grams <= 0) {
-                    throw new NumberFormatException();
+                if (grams > 0) {
+                    this.controller.addFoodToDailyLog(food, grams);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Inserisci un numero intero positivo.",
+                        "Errore", JOptionPane.ERROR_MESSAGE);
                 }
-                controller.addFoodToDailyLog(food, grams);
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Inserisci un numero intero positivo.", "Errore", JOptionPane.ERROR_MESSAGE);
+            } catch (final NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Inserisci un numero intero positivo.",
+                 "Errore", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -158,5 +167,5 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
     @Override
     public void updateSummary(final String text) {
         summaryLabel.setText(text);
-    }   
+    }
 }

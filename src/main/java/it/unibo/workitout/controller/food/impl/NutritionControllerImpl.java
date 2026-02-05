@@ -12,21 +12,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.Objects;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Implementation of NutritionController.
  */
 public final class NutritionControllerImpl implements NutritionController {
+    private static final int MAX_GRAMS = 2000;
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
-    private static final int MAX_GRAMS = 2000;
+    
 
     /**
      * @param repository the food database.
      * @param logManager the manager for daily logs.
      * @param view the user interface.
      */
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Repository is shared and managed externally")
     public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, final NutritionView view) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
