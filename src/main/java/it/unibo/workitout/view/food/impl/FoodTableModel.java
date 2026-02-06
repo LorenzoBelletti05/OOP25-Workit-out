@@ -14,7 +14,7 @@ public final class FoodTableModel extends AbstractTableModel {
     private static final double KCAL_PER_FAT = 9.0;
     private static final String GRAM_FORMAT = "%.1fg";
     private final String[] columnNames = {"Nome", "Calorie (100g)", "Proteine", "Carbo", "Grassi"};
-    private transient List<Food> foods = new ArrayList<>();
+    private List<Food> foods = new ArrayList<>();
 
     /**
      * Updates the list of foods displayed.

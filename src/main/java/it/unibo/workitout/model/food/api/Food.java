@@ -1,9 +1,11 @@
 package it.unibo.workitout.model.food.api;
 
+import java.io.Serializable;
+
 /**
  * Represents a food with nutritional information.
  */
-public interface Food extends java.io.Serializable {
+public interface Food extends Serializable {
 
     /**
      * Returns the name of the food.

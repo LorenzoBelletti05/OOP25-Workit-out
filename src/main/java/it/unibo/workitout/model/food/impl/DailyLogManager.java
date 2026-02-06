@@ -70,6 +70,7 @@ public final class DailyLogManager {
                 if (parts.length == HISTORY_COLUMNS) {
                     processHistoryLine(parts, repository);
                 }
+                line = br.readLine();
             }
         } catch (IOException | NumberFormatException e) {
             throw new IllegalStateException("Failed to load history", e);
@@ -84,7 +85,7 @@ public final class DailyLogManager {
         final Optional<Food> food = repository.getAllFoods().stream()
             .filter(f -> f.getName().equalsIgnoreCase(foodName))
             .findFirst();
-        
+
         if (food.isPresent()) {
             this.getLogByDate(date).addFoodEntry(food.get(), grams);
         }
