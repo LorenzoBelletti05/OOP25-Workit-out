@@ -10,6 +10,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.swing.JOptionPane;
+
+import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
 import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
@@ -45,12 +47,17 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private PlanViewerImpl planView;
     private Runnable navigationTask;
     private final Integer DAYS_IN_WEEK = 7;
+    private MainController mainController = null;
 
     /**
      * Costructor empty.
      */
     public UserExerciseControllerImpl() {
-        
+
+    }
+
+    public UserExerciseControllerImpl(MainController mainController) {
+        this.mainController = mainController;
     }
 
     /**
@@ -121,7 +128,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             //from the data of the json check the data if they are the same from the one given in the costructor.
             if(java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= DAYS_IN_WEEK) {
                 return workoutPlan;
-            } 
+            }
         }
 
         //If jsons are empty (because both have to return the same result) 
@@ -137,7 +144,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private WorkoutPlan generateAfterAll() {
         //DEBUG
         System.out.println("Generazione per: " + userGoal + " con BMR: " + bmr);
-        
+
         //Try generate the plan with the datam save the plan and the data in the json.
         try {
             final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
@@ -185,14 +192,14 @@ public class UserExerciseControllerImpl implements UserExerciseController {
                         currentRawExercise.add(element);
                     }
                 }
-                break;           
+                break;
 
             case "type":
                 for (var element : rawExercise) {
                     if(element.getExerciseType().name().toString().toUpperCase().contains(data.get().toUpperCase())) {
                         currentRawExercise.add(element);
                     }
-                }                
+                }
                 break;
 
             case "target":
@@ -201,7 +208,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
                         currentRawExercise.add(element);
                     }
                 }
-                break;                
+                break;
 
             default:
                 break;
@@ -247,33 +254,33 @@ public class UserExerciseControllerImpl implements UserExerciseController {
 
     public void refreshTableWorkoutData(Runnable navigationTask) {
 
-        if (this.generatedWorkoutPlan == null) {       
-            
+        if (this.generatedWorkoutPlan == null) {
+
             int response = JOptionPane.showConfirmDialog(
                 null, 
-                "As a person of sound mind, do you declare and self-certify your motor skills and guarantee \nthat your physical health allows you to perform physical activities?", 
+                "As a person of sound mind, do you declare and self-certify your motor skills and guarantee \nthat your physical health allows you to perform physical activities?",
                 "integrity", 
                 JOptionPane.YES_NO_OPTION, 
                 JOptionPane.QUESTION_MESSAGE
             );
 
             if (response == JOptionPane.YES_OPTION) {
-                
-                this.generatedWorkoutPlan = checkAndCreate(); 
+
+                this.generatedWorkoutPlan = checkAndCreate();
 
                 if (this.generatedWorkoutPlan == null) {
                     JOptionPane.showMessageDialog(null, "Impossibile generare: mancano i dati del profilo!");
                 }
-                
+
                 // if(this.planView != null) {
                 //     this.planView.setTable();
                 // }
             } else {
-                
+
                 return;
             }
-        }        
-        
+        }
+
         if (this.planView != null) {
             this.planView.setTable();
         }
@@ -281,8 +288,6 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         if (navigationTask != null) {
             navigationTask.run();
         }
-        
-            
     }
 
     public void setView(PlanViewerImpl view) {
@@ -327,8 +332,8 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         }
     }
 
-    public void setProfile(double totKcal) {
-        //chiamata al metodo di del controller di diego a cui passo i dati
+   public void setProfile(final double totKcal) {
+        this.mainController.communicateBurnedCalories(totKcal);
     }
 
 }

@@ -30,12 +30,18 @@ public class MainControllerImpl implements MainController {
     private static final String WIKI = "WIKI";
     private static final String FOOD = "FOOD";
     private static final String EXERCISE = "EXERCISE";
-
     private final MainView mainView;
     private UserProfile user;  
     
     public MainControllerImpl(MainView mainView) {
         this.mainView = mainView;
+    }
+
+    public void communicateBurnedCalories(final double calories) {
+        // Il MainController prende il dato e lo passa a Diego
+        if (this.user != null) {
+            this.user.updateBurnedCalories(calories);
+        }
     }
 
     /**
