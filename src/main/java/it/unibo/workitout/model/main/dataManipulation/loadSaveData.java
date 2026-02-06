@@ -15,6 +15,9 @@ import java.io.File;
 
 public class LoadSaveData {    
 
+    //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
+
+
     private static final Gson gsonFile = new Gson();
 
     private static final String APP_DIR = ".workitout";
