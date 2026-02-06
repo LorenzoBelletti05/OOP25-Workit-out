@@ -54,9 +54,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
      */
     public UserExerciseControllerImpl() {
 
-    }
+    }    
 
-    public UserExerciseControllerImpl(MainController mainController) {
+    public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 

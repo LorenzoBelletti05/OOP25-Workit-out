@@ -53,6 +53,7 @@ public class MainControllerImpl implements MainController {
     public void start() {
         final UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
+        UserExerciseControllerImpl.getIstance().setMainController(this);
 
         Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
 
