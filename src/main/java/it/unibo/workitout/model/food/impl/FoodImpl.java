@@ -6,6 +6,7 @@ import it.unibo.workitout.model.food.api.Food;
  * Implementation of Food interface.
  */
 public final class FoodImpl implements Food {
+    private static final long serialVersionUID = 1L;
     private final String name;
     private final double kcalPer100g;
     private final double pProtein;

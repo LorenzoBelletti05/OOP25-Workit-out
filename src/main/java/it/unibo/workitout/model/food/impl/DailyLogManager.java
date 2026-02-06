@@ -64,8 +64,8 @@ public final class DailyLogManager {
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = br.readLine()) != null) {
+            String line = br.readLine();
+            while (line != null) {
                 final String[] parts = line.split(",");
                 if (parts.length == HISTORY_COLUMNS) {
                     processHistoryLine(parts, repository);
