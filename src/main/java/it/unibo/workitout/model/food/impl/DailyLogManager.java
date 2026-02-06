@@ -48,7 +48,7 @@ public final class DailyLogManager {
                     writer.println(date + "," + entry.getKey().getName() + "," + entry.getValue());
                 }
             }
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new IllegalStateException("Failed to save history", e);
         }
     }
@@ -84,7 +84,7 @@ public final class DailyLogManager {
         final Optional<Food> food = repository.getAllFoods().stream()
             .filter(f -> f.getName().equalsIgnoreCase(foodName))
             .findFirst();
-                    
+        
         if (food.isPresent()) {
             this.getLogByDate(date).addFoodEntry(food.get(), grams);
         }

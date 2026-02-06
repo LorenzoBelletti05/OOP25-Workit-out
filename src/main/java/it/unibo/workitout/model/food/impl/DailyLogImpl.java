@@ -40,7 +40,7 @@ public final class DailyLogImpl implements DailyLog {
     @Override
     public double getTotalKcal() {
         return consumedFoods.entrySet().stream()
-            .mapToDouble(e -> (e.getKey().getKcalPer100g() * e.getValue()) / HUNDRED)
+            .mapToDouble(e -> e.getKey().getKcalPer100g() * e.getValue() / HUNDRED)
             .sum();
     }
 
@@ -48,8 +48,8 @@ public final class DailyLogImpl implements DailyLog {
     public double getTotalProteins() {
         return consumedFoods.entrySet().stream()
             .mapToDouble(e -> {
-                final double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / HUNDRED;
-                return (e.getKey().getProteins() * kcalTotaliCibo) / KCAL_PER_PROT_CARB;
+                final double kcalTotaliCibo = e.getKey().getKcalPer100g() * e.getValue() / HUNDRED;
+                return e.getKey().getProteins() * kcalTotaliCibo / KCAL_PER_PROT_CARB;
             })
             .sum();
     }
@@ -58,8 +58,8 @@ public final class DailyLogImpl implements DailyLog {
     public double getTotalCarbs() {
         return consumedFoods.entrySet().stream()
             .mapToDouble(e -> {
-                final double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / HUNDRED;
-                return (e.getKey().getCarbs() * kcalTotaliCibo) / KCAL_PER_PROT_CARB;
+                final double kcalTotaliCibo = e.getKey().getKcalPer100g() * e.getValue() / HUNDRED;
+                return e.getKey().getCarbs() * kcalTotaliCibo / KCAL_PER_PROT_CARB;
             })
             .sum();
     }
@@ -68,8 +68,8 @@ public final class DailyLogImpl implements DailyLog {
     public double getTotalFats() {
         return consumedFoods.entrySet().stream()
             .mapToDouble(e -> {
-                final double kcalTotaliCibo = (e.getKey().getKcalPer100g() * e.getValue()) / HUNDRED;
-                return (e.getKey().getFats() * kcalTotaliCibo) / KCAL_PER_FAT;
+                final double kcalTotaliCibo = e.getKey().getKcalPer100g() * e.getValue() / HUNDRED;
+                return e.getKey().getFats() * kcalTotaliCibo / KCAL_PER_FAT;
             })
             .sum();
     }
@@ -84,7 +84,7 @@ public final class DailyLogImpl implements DailyLog {
         if (totalKcal <= 0) {
             return 0;
         }
-        return (getTotalProteins() * KCAL_PER_PROT_CARB) / totalKcal * HUNDRED;
+        return getTotalProteins() * KCAL_PER_PROT_CARB / totalKcal * HUNDRED;
     }
 
     /**
@@ -97,7 +97,7 @@ public final class DailyLogImpl implements DailyLog {
         if (totalKcal <= 0) {
             return 0;
         }
-        return (getTotalCarbs() * KCAL_PER_PROT_CARB) / totalKcal * HUNDRED;
+        return getTotalCarbs() * KCAL_PER_PROT_CARB / totalKcal * HUNDRED;
     }
 
     /**
@@ -110,7 +110,7 @@ public final class DailyLogImpl implements DailyLog {
         if (totalKcal <= 0) {
             return 0;
         }
-        return (getTotalFats() * KCAL_PER_FAT) / totalKcal * HUNDRED;
+        return getTotalFats() * KCAL_PER_FAT / totalKcal * HUNDRED;
     }
 
     @Override
