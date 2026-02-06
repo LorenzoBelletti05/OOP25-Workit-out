@@ -14,11 +14,14 @@ public final class UserProfile {
     private static final String ERR_MESS_AGE = "The age must be positive and less of 110";
     private static final String ERR_MESS_HEIGHT = "The height must be positive and less of 210";
     private static final String ERR_MESS_WEIGHT = "The weight must be positive and less of 310";
+    private static final String ERR_BURNED_CALORIES = "The burned calories must be positive";
+    private static final String MIFFLIN_STRATEGY = "MifflinStJeorStrategy";
+    private static final String HARRIS_STRATEGY = "HarrisBenedictStrategy";
 
     private final UUID id;
-    private final String name;
-    private final String surname;
-    private final Sex sex;
+    private String name;
+    private String surname;
+    private Sex sex;
     private int age;
     private double height;
     private double weight;
@@ -26,6 +29,7 @@ public final class UserProfile {
     private UserGoal userGoal;
     private String strategy;
     private String lastAccess;
+    private double burnedCalories;
 
     /**
      * Constructor for a new user.
@@ -38,17 +42,18 @@ public final class UserProfile {
      * @param sex           the user's biological sex
      * @param activityLevel the user's activity level
      * @param userGoal      the user's fitness goal
+     * @param strategy      the user's strategy for calculate the BMR
      */
     public UserProfile(
         final String name,
         final String surname,
-        int age,
-        double height,
-        double weight,
+        final int age,
+        final double height,
+        final double weight,
         final Sex sex,
-        ActivityLevel activityLevel,
-        UserGoal userGoal,
-        String strategy
+        final ActivityLevel activityLevel,
+        final UserGoal userGoal,
+        final String strategy
     ) {
         if (age < ZERO || age > MAX_AGE) {
             throw new IllegalArgumentException(ERR_MESS_AGE);
@@ -69,8 +74,8 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
-        if(this.strategy == null) {
-            this.strategy = "MifflinStJeorStrategy";
+        if (this.strategy == null) {
+            this.strategy = MIFFLIN_STRATEGY;
         } else {
             this.strategy = strategy;
         }
@@ -89,18 +94,19 @@ public final class UserProfile {
      * @param sex           the user's biological sex
      * @param activityLevel the user's activity level
      * @param userGoal      the user's fitness goal
+     * @param strategy      the user's strategy for calculate the BMR
      */
     public UserProfile(
         final UUID id,
         final String name,
         final String surname,
-        int age,
-        double height,
-        double weight,
+        final int age,
+        final double height,
+        final double weight,
         final Sex sex,
-        ActivityLevel activityLevel,
-        UserGoal userGoal,
-        String strategy
+        final ActivityLevel activityLevel,
+        final UserGoal userGoal,
+        final String strategy
     ) {
         if (age < ZERO || age > MAX_AGE) {
             throw new IllegalArgumentException(ERR_MESS_AGE);
@@ -121,8 +127,8 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
-        if(this.strategy == null) {
-            this.strategy = "MifflinStJeorStrategy";
+        if (this.strategy == null) {
+            this.strategy = MIFFLIN_STRATEGY;
         } else {
             this.strategy = strategy;
         }
@@ -187,20 +193,47 @@ public final class UserProfile {
     /**
      * @return the fitness goal of the user
      */
-    public UserGoal getGoal() {
+    public UserGoal getUserGoal() {
         return userGoal;
     }
 
+    /**
+     * @return the strategy name
+     */
     public String getStrategy() {
         return strategy;
     }
 
+    /**
+     * @return the date of the last access of user
+     */
     public LocalDate getLastAccess() {
-        if(this.lastAccess == null) {
+        if (this.lastAccess == null) {
             return LocalDate.now();
         } else {
             return LocalDate.parse(this.lastAccess);
         }
+    }
+
+    /**
+     * @return the total of burned calories
+     */
+    public double getBurnedCalories() {
+        return burnedCalories;
+    }
+
+    /**
+     * @param name sets the new user's name
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * @param surname sets the new user's name
+     */
+    public void setSurname(final String surname) {
+        this.surname = surname;
     }
 
     /**
@@ -213,6 +246,15 @@ public final class UserProfile {
             throw new IllegalArgumentException(ERR_MESS_AGE);
         }
         this.age = age;
+    }
+
+    /**
+     * Set a new user's sex.
+     * 
+     * @param sex the new sex
+     */
+    public void setSex(final Sex sex) {
+        this.sex = sex;
     }
 
     /**
@@ -253,11 +295,37 @@ public final class UserProfile {
      * 
      * @param userGoal the new goal
      */
-    public void setGoal(final UserGoal userGoal) {
+    public void setUserGoal(final UserGoal userGoal) {
         this.userGoal = userGoal;
     }
 
+    /**
+     * Update the user's strategy choice.
+     * 
+     * @param strategy the new strategy for calculate BMR
+     */
+    public void setStrategy(final String strategy) {
+        if (MIFFLIN_STRATEGY.equals(strategy)
+            || HARRIS_STRATEGY.equals(strategy)) {
+
+            this.strategy = strategy;
+        }
+    }
+
+    /**
+     * Sets the last access with current date.
+     */
     public void setLastAccess() {
         this.lastAccess = LocalDate.now().toString();
+    }
+
+    /**
+     * @param burnedCalories Update the user's burned calories from exercise
+     */
+    public void setBurnedCalories(final double burnedCalories) {
+        if (burnedCalories < 0) {
+            throw new IllegalArgumentException(ERR_BURNED_CALORIES);
+        }
+        this.burnedCalories = burnedCalories;
     }
 }

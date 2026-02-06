@@ -106,7 +106,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             final UserProfile mainProfile = loadSaveData.loadUserProfile(loadSaveData.createPath("user_profile.json"));
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
-                this.userGoal = mainProfile.getGoal();
+                this.userGoal = mainProfile.getUserGoal();
             } else {
                 return null; 
             }

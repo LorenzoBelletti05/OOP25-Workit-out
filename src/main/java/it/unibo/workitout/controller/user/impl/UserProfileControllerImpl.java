@@ -61,7 +61,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
         view.setWeightInput(userProfile.getWeight());
         view.setSexInput(userProfile.getSex());
         view.setActivityInput(userProfile.getActivityLevel());
-        view.setUserGoalInput(userProfile.getGoal());
+        view.setUserGoalInput(userProfile.getUserGoal());
         view.setBMRStrategyInput(userProfile.getStrategy());
     }
 
@@ -145,6 +145,13 @@ public final class UserProfileControllerImpl implements UserProfileController {
     @Override
     public void updateBurnedCalories(double burnedCalories) {
         this.userManager.addBurnedCalories(burnedCalories);
+
+        try {
+            loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
+        } catch (Exception expt) {
+            showInputDataError("The insert data is not saved \n " + expt.getMessage());
+        }
+        
         this.dashboard.showData(this.userManager);
     }
 }

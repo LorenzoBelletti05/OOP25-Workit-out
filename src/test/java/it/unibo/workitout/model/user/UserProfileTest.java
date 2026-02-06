@@ -54,7 +54,7 @@ class UserProfileTest {
         assertEquals(WEIGHT, us.getWeight());
         assertEquals(SEX, us.getSex());
         assertEquals(AL, us.getActivityLevel());
-        assertEquals(UG, us.getGoal());
+        assertEquals(UG, us.getUserGoal());
     }
 
     @Test

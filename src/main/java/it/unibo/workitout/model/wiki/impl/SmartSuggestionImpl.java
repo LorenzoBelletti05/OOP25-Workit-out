@@ -29,7 +29,7 @@ public class SmartSuggestionImpl implements SmartSuggestion {
      */
     @Override
     public Set<WikiContent> suggest(final Wiki wiki, final UserProfile user, final List<Exercise> exercises, final Meal meal) {
-        final String goal = user.getGoal().name();
+        final String goal = user.getUserGoal().name();
         final Stream<WikiContent> stream = wiki.getContents().stream();
 
         if (meal != null && exercises == null) {

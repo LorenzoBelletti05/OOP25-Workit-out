@@ -47,7 +47,7 @@ class UserManagerTest {
     @Test
     void testCaloriesLoseWeight() {
         final double exp = TDEE - FULL_CALORIES;
-        userProfile.setGoal(UserGoal.LOSE_WEIGHT);
+        userProfile.setUserGoal(UserGoal.LOSE_WEIGHT);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());
@@ -56,7 +56,7 @@ class UserManagerTest {
     @Test
     void testCaloriesGainWeight() {
         final double exp = TDEE + FULL_CALORIES;
-        userProfile.setGoal(UserGoal.GAIN_WEIGHT);
+        userProfile.setUserGoal(UserGoal.GAIN_WEIGHT);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());
@@ -65,7 +65,7 @@ class UserManagerTest {
     @Test
     void testCaloriesBuildMuscle() {
         final double exp = TDEE + HALF_CALORIES;
-        userProfile.setGoal(UserGoal.BUILD_MUSCLE);
+        userProfile.setUserGoal(UserGoal.BUILD_MUSCLE);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());

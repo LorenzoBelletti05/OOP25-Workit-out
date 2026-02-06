@@ -9,8 +9,7 @@ public final class UserManager {
 
     private BMRCalculatorStrategy strategy;
     private final UserProfile currentUser;
-    private double burnedCalories = 0;
-
+    
     /**
      * Creates a new User Manager.
      * 
@@ -52,7 +51,7 @@ public final class UserManager {
      */
     public double getDailyCalories() {
         double totalCalories= getTDEE();
-        final UserGoal goal = currentUser.getGoal();
+        final UserGoal goal = currentUser.getUserGoal();
         final int calories = 500;
         final double halfCalories = calories / 2;
 
@@ -69,7 +68,7 @@ public final class UserManager {
             default:
                 break;
         }
-        totalCalories += this.burnedCalories;
+        totalCalories += this.currentUser.getBurnedCalories();
         return totalCalories;
     }
 
@@ -80,7 +79,7 @@ public final class UserManager {
      */
     public NutritionalTarget getMacronutrients() {
         final double totalCalories = getDailyCalories();
-        final UserGoal goal = currentUser.getGoal();
+        final UserGoal goal = currentUser.getUserGoal();
         final double carbsGrams = totalCalories * goal.getCarbRatio() / 4;
         final double proteinsGrams = totalCalories * goal.getProteinRatio() / 4;
         final double fatsGrams = totalCalories * goal.getFatRatio() / 9;
@@ -88,7 +87,8 @@ public final class UserManager {
         return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
     }
 
-    public void addBurnedCalories(double calories) {
-        this.burnedCalories += calories;
+    public void addBurnedCalories(double burnedCalories) {
+        double totalCalories = this.currentUser.getBurnedCalories();
+        this.currentUser.setBurnedCalories(totalCalories + burnedCalories);
     }
 }
