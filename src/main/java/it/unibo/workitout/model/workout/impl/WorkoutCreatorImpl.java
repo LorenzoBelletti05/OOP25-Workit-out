@@ -1,10 +1,11 @@
 package it.unibo.workitout.model.workout.impl;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
@@ -13,14 +14,14 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 
 public class WorkoutCreatorImpl implements WorkoutCreator {
-    
+
     private Boolean userCheckSafety = false;
     private final String pathRawExerciwse = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
     List<Exercise> lista; 
 
-    public WorkoutCreatorImpl() throws IOException {           
-        lista = LoadSaveData.loadSavedDataFrom(pathRawExerciwse, Exercise[].class);            
-    }    
+    public WorkoutCreatorImpl() throws IOException {
+        lista = loadSaveData.loadSavedDataFrom(pathRawExerciwse, Exercise[].class);
+    }
 
     private double getCardioMultiplierPerExercise(Exercise exercise) {
         String nameExercise = exercise.getName();        
@@ -63,9 +64,9 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         int sets = 0;
         int reps = 0;
         double intensityExercise = 1;
-        double tdeeMultiplier = tdee / 2100.0;
-        
-        
+        double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
+        double tdeeMultiplier = calculatedTdee / 2100.0;
+
         double weight = 5;
         int distance = 5;
         int minutes = 10;
@@ -79,24 +80,24 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
             //if the exercise match at least one of the goals then add it
             if(goals.contains(userGoal.name())) {
                 filteredRawExercise.add(exercise);
-            }            
+            }
         }
         
         Random random = new Random();
         switch (userGoal) {
             case BUILD_MUSCLE :
-                
+
                 sets = random.nextInt(4,5);
                 reps = random.nextInt(8, 10);
-                intensityExercise = 1.5;     
+                intensityExercise = 1.5;
                 goalWeightMul = 2.0;
-                goalDistanceMul = 0.5;           
+                goalDistanceMul = 0.5;
                 break;
 
             case MAINTAIN_WEIGHT:
-                
+
                 sets = random.nextInt(3,4);
-                reps = random.nextInt(10, 12);                
+                reps = random.nextInt(10, 12);
                 intensityExercise = 1;
                 goalWeightMul = 1.0;
                 goalDistanceMul = 1.0;
@@ -106,52 +107,52 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                 sets = random.nextInt(1,2);
                 reps = random.nextInt(6, 8);
-                intensityExercise = 0.4;     
+                intensityExercise = 0.4;
                 goalWeightMul = 0.3;
-                goalDistanceMul = 0.3;            
+                goalDistanceMul = 0.3;
                 break;
 
             case LOSE_WEIGHT:
 
                 sets = random.nextInt(3,4);
                 reps = random.nextInt(10, 15);
-                intensityExercise = 0.7;               
+                intensityExercise = 0.7;
                 goalWeightMul = 0.7;
                 goalDistanceMul = 2.2; 
                 break;
-        
-            default:                
+
+            default:
                 break;
-        }        
-        
+        }
 
         int currentInsity = (int) (intensityExercise);
         int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
         // //calculate the final sets based on the intensdity of the type of exercise previously setted.
-       
-        
+        LocalDate startDate = LocalDate.now();
+
         //creating the workoutplan with his custom name.
         WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
-        
+
         for(int j = 0; j < 1 + activityLevel.ordinal(); j++) {
-            
+            String dateNext = startDate.plusDays(j).toString();
+
             //create the planned exercises with custom name
-            WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));     
-            
+            WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));
+
             //here because the next day an exercise can be done again
             List<Exercise> alreadyUsed = new ArrayList<>(); 
-            
+
             for(int i = 0; i < random.nextInt(5, 10) + currentInsity; i++) {
-                
+
                 Exercise rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
 
                 //checking if the exercise has been already selected
-                if(alreadyUsed.isEmpty()) {                
+                if(alreadyUsed.isEmpty()) {
                     alreadyUsed.add(rawExercise);
                 }else if(alreadyUsed.contains(rawExercise)) {
                     while(alreadyUsed.contains(rawExercise)) {
                         rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
-                    }                    
+                    }
                     alreadyUsed.add(rawExercise);
                 }
 
@@ -164,6 +165,11 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                     double finalWeight = weight * tdeeMultiplier * goalWeightMul * this.getStrenghtMultiplierPerExercise(rawExercise) * intensityExercise;
 
                     finalWeight = Math.min(finalWeight, 120.0);
+
+                    //regenerate sets and reps for diversity
+                    int localSets = sets + random.nextInt(-1, 2); 
+                    int localReps = reps + random.nextInt(-2, 3);
+
                     //if the user is under is daily-need it divide the fatique.
                     if(userCheckSafety) {
                         finalWeight *= 0.5;
@@ -173,9 +179,9 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                     plannedExercise = new StrengthPlannedExerciseImpl(
                         rawExercise, 
                         (int) (minutes * intensityExercise), 
-                        sets + currentInsity + activityBonus, 
-                        reps + ( currentInsity * 2 ),
-                        finalWeight                        
+                        Math.max(1, localSets + currentInsity + activityBonus),
+                        Math.max(1, localReps + (currentInsity * 2)),
+                        finalWeight
                     );
 
                 } else {
@@ -190,7 +196,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                     plannedExercise = new CardioPlannedExerciseImpl(
                         rawExercise, 
-                        (int) (minutes + 5 * intensityExercise), 
+                        (int) (minutes + 5 * intensityExercise),
                         finalDistance
                     );
 
@@ -199,10 +205,9 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 workoutSheet.addExercise(plannedExercise);
             }
             //adding the sheet to the plan
-            workoutPlan.addWorkSheet(workoutSheet);
-            
+            workoutPlan.addWorkSheet(dateNext, workoutSheet);
         }
-        return workoutPlan;        
+        return workoutPlan;
     }
-    
+
 }

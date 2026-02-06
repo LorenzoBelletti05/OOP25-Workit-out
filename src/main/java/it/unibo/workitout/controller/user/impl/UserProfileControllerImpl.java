@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
@@ -14,7 +14,6 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 /**
  * Implementation of the UserProfile controller.
@@ -43,9 +42,9 @@ public final class UserProfileControllerImpl implements UserProfileController {
             editProfile();
         });
 
-        this.dashboard.getExerciseButton().addActionListener(al -> {
-            this.dashboard.setVisible(false);
-        });
+        // this.dashboard.getExerciseButton().addActionListener(al -> {        
+        // UserExerciseControllerImpl.getIstance().refreshTableWorkoutData(runnable);           
+        // });
     }
 
     private void editProfile() {
@@ -115,7 +114,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
             );
 
             try {
-                LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
+                loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), userProfile);
             } catch (final Exception expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }

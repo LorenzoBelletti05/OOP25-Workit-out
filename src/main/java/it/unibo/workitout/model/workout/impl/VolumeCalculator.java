@@ -20,8 +20,8 @@ public class VolumeCalculator {
      * @return the volume calculated based on the parameters gived.
      */
     public static double calculateVolume(
-        final Integer sets, 
-        final Integer reps, 
+        final Integer sets,
+        final Integer reps,
         final double weight
     ) {
         return (double) sets * reps * weight;

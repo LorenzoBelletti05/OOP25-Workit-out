@@ -68,7 +68,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         this.add(btnPanel, BorderLayout.NORTH);
 
         //call the static method to take the 
-        List<Exercise> rawExercise = UserExerciseControllerImpl.getRawExercise();
+        List<Exercise> rawExercise = UserExerciseControllerImpl.getIstance().getRawExercise();
         this.setExercises(rawExercise);
 
         searchButton.addActionListener(e -> {
@@ -76,7 +76,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
             if(!dataInserted.isEmpty()) {
                 
-                this.setExercises(UserExerciseControllerImpl.orderListBasedOn("Name", rawExercise, Optional.of(dataInserted)));
+                this.setExercises(UserExerciseControllerImpl.getIstance().orderListBasedOn("Name", rawExercise, Optional.of(dataInserted)));
             }else {
                 this.setExercises(rawExercise);
             }
@@ -88,7 +88,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises((UserExerciseControllerImpl.orderListBasedOn("type", rawExercise, Optional.of(typeComboBox.getSelectedItem().toString()))));
+            this.setExercises((UserExerciseControllerImpl.getIstance().orderListBasedOn("type", rawExercise, Optional.of(typeComboBox.getSelectedItem().toString()))));
         });
 
         targetComboBox.addActionListener(e -> {
@@ -96,7 +96,7 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises((UserExerciseControllerImpl.orderListBasedOn("target", rawExercise, Optional.of(targetComboBox.getSelectedItem().toString()))));
+            this.setExercises((UserExerciseControllerImpl.getIstance().orderListBasedOn("target", rawExercise, Optional.of(targetComboBox.getSelectedItem().toString()))));
         });
 
     }

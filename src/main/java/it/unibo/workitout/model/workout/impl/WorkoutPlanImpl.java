@@ -11,7 +11,6 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
-import java.time.LocalDate;
 
 /**
  * Implementation of {@link WorkoutPlan}.
@@ -23,7 +22,7 @@ import java.time.LocalDate;
 public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
-    private Map<LocalDate, WorkoutSheet> workoutPlan; 
+    private Map<String, WorkoutSheetImpl> workoutPlan; 
 
     /**
      * Costructor that gived the nema of the plan give it to the NameFunction and than create a new plan.
@@ -55,11 +54,9 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return Set.copyOf(allExercise);
     }
 
-
-    
     @Override
-    public Map<LocalDate, WorkoutSheet> getWorkoutPlan() {
-        return Collections.unmodifiableMap(this.workoutPlan);
+    public Map<String, WorkoutSheet> getWorkoutPlan() {
+        return Collections.unmodifiableMap(new TreeMap<String, WorkoutSheet>(this.workoutPlan));
     }
 
     //Following two methods return the sum of: volume and burned calories
@@ -72,7 +69,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     public double getBurnedCalories() {
         return sumAll(WorkoutSheet::getBurnedCalories);
     }
-
 
     //Following two methods return the set of: workoutSheets and of all exercise
     @Override
@@ -89,7 +85,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return Set.copyOf(allExercise);
     }
 
-
     //Following two methods return the set of each type of the exercise: strenght or cardio
     @Override
     public Set<StrengthPlannedExercise> getStrenghtExercise() {
@@ -102,8 +97,8 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     }
 
     @Override
-    public void addWorkSheet(WorkoutSheet sheet) {
-        this.workoutPlan.put(LocalDate.now(), sheet);
+    public void addWorkSheet(String dateNext, WorkoutSheet workoutSheet) {
+        this.workoutPlan.put(dateNext, (WorkoutSheetImpl) workoutSheet);
     }
 
 }
