@@ -1,16 +1,43 @@
 package it.unibo.workitout.model.food.api;
 
-//interfaccia Food
-public interface Food {
-    /** @return name of the food */
+/**
+ * Represents a food with nutritional information.
+ */
+public interface Food extends java.io.Serializable {
+
+    /**
+     * Returns the name of the food.
+     * 
+     * @return name of the food.
+     */
     String getName();
-    /** @return calories per 100g */
+
+    /**
+     * Returns the calories per 100g.
+     * 
+     * @return calories per 100g.
+     */
     double getKcalPer100g();
-    /** @return proteins percentage */
+
+    /**
+     * Returns the protein percentage.
+     * 
+     * @return proteins percentage.
+     */
     double getProteins();
-    /** @return carbohydrates percentage */
+
+    /**
+     * Returns the carbs percentage.
+     * 
+     * @return carbohydrates percentage.
+     */
     double getCarbs();
-    /** @return fats percentage */
+
+    /**
+     * Returns the fats percentage.
+     * 
+     * @return fats percentage.
+     */
     double getFats();
 }
 

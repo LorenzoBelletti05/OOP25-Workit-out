@@ -10,7 +10,7 @@ import java.util.Collections;
 /**
  * Implementation of a daily food log.
  */
-public class DailyLogImpl implements DailyLog {
+public final class DailyLogImpl implements DailyLog {
     private static final double HUNDRED = 100.0;
     private static final double KCAL_PER_PROT_CARB = 4.0;
     private static final double KCAL_PER_FAT = 9.0;
@@ -19,6 +19,8 @@ public class DailyLogImpl implements DailyLog {
     private final Map<Food, Integer> consumedFoods = new HashMap<>();
 
     /**
+     * Constructs a new daily log.
+     * 
      * @param date the date of this log.
      */
     public DailyLogImpl(final LocalDate date) {
@@ -72,7 +74,11 @@ public class DailyLogImpl implements DailyLog {
             .sum();
     }
 
-    /** @return percentage of calories from proteins */
+    /**
+     * Returns the percentage of calories from proteins.
+     * 
+     * @return percentage of calories from proteins.
+     */
     public double getProteinPercentage() {
         final double totalKcal = getTotalKcal();
         if (totalKcal <= 0) {
@@ -81,7 +87,11 @@ public class DailyLogImpl implements DailyLog {
         return (getTotalProteins() * KCAL_PER_PROT_CARB) / totalKcal * HUNDRED;
     }
 
-    /** @return percentage of calories from carbs */
+    /**
+     * Returns the percentage of calories from carbs.
+     * 
+     * @return percentage of calories from carbs.
+     */
     public double getCarbsPercentage() {
         final double totalKcal = getTotalKcal();
         if (totalKcal <= 0) {
@@ -90,7 +100,11 @@ public class DailyLogImpl implements DailyLog {
         return (getTotalCarbs() * KCAL_PER_PROT_CARB) / totalKcal * HUNDRED;
     }
 
-    /** @return percentage of calories from fats */
+    /**
+     * Returns the percentage of calories from fats.
+     * 
+     * @return percentage of calories from fats.
+     */
     public double getFatPercentage() {
         final double totalKcal = getTotalKcal();
         if (totalKcal <= 0) {

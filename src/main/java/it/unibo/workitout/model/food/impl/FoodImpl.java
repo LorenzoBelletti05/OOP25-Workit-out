@@ -1,4 +1,5 @@
 package it.unibo.workitout.model.food.impl;
+
 import it.unibo.workitout.model.food.api.Food;
 
 /**
@@ -10,15 +11,17 @@ public final class FoodImpl implements Food {
     private final double pProtein;
     private final double pCarbs;
     private final double pFats;
-    
+
     /**
+     * Constructs a new food implementation.
+     * 
      * @param name name of the food.
      * @param kcal calories per 100g.
      * @param pP proteins.
      * @param pC carbs.
      * @param pF fats.
      */
-    public FoodImpl (final String name, final double kcal, final double pP,
+    public FoodImpl(final String name, final double kcal, final double pP,
                      final double pC, final double pF) {
         this.name = name;
         this.kcalPer100g = kcal;
@@ -26,7 +29,7 @@ public final class FoodImpl implements Food {
         this.pCarbs = pC;
         this.pFats = pF;
     }
-    
+
     @Override
     public String getName() {
         return name;
@@ -46,7 +49,7 @@ public final class FoodImpl implements Food {
     public double getCarbs() {
         return pCarbs;
     }
-    
+
     @Override
     public double getFats() {
         return pFats;

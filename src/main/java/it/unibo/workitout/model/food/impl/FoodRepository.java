@@ -39,14 +39,15 @@ public final class FoodRepository {
      */
     public void loadFromFile(final String filePath) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
+            String line = br.readLine();
+            while (line != null) {
+                if (!line.isBlank()) {
                     final String[] parts = line.split(",");
                     if (parts.length == CSV_COLUMNS) {
                         parseLine(parts);
                     }
                 }
+                line = br.readLine();
             }
         } catch (final IOException e) {
             throw new IllegalStateException("Failed to load food file", e);

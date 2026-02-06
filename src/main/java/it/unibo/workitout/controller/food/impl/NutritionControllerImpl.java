@@ -22,7 +22,6 @@ public final class NutritionControllerImpl implements NutritionController {
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
-    
 
     /**
      * @param repository the food database.
@@ -62,7 +61,7 @@ public final class NutritionControllerImpl implements NutritionController {
         if (grams <= 0 || grams > MAX_GRAMS) {
             return;
         }
-        
+
         logManager.getCurrentLog().addFoodEntry(food, grams);
         final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
         logManager.saveHistory(historyPath);
