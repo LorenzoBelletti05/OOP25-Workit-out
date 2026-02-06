@@ -7,6 +7,7 @@ import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
 import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.user.impl.UserProfileControllerImpl;
 import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
+import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
 import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
@@ -117,8 +118,10 @@ public class MainControllerImpl implements MainController {
             mainView.showView(WIKI);
         });
 
-        dashboardView.getExerciseButton().addActionListener(al -> {
-            mainView.showView(EXERCISE);
+        dashboardView.getExerciseButton().addActionListener(al -> {            
+            UserExerciseControllerImpl.getIstance().refreshTableWorkoutData(() -> {
+                mainView.showView(EXERCISE);
+            });
         });
 
         exerciseView.getBackButton().addActionListener(al -> {
