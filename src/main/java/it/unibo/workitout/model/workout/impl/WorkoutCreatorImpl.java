@@ -1,6 +1,7 @@
 package it.unibo.workitout.model.workout.impl;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -63,7 +64,8 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         int sets = 0;
         int reps = 0;
         double intensityExercise = 1;
-        double tdeeMultiplier = tdee / 2100.0;
+        double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
+        double tdeeMultiplier = calculatedTdee / 2100.0;
         
         
         double weight = 5;
@@ -128,13 +130,14 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         int currentInsity = (int) (intensityExercise);
         int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
         // //calculate the final sets based on the intensdity of the type of exercise previously setted.
-       
+       LocalDate startDate = LocalDate.now();
         
         //creating the workoutplan with his custom name.
         WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
         
         for(int j = 0; j < 1 + activityLevel.ordinal(); j++) {
-            
+            String dateNext = startDate.plusDays(j).toString();
+
             //create the planned exercises with custom name
             WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));     
             
@@ -164,6 +167,11 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                     double finalWeight = weight * tdeeMultiplier * goalWeightMul * this.getStrenghtMultiplierPerExercise(rawExercise) * intensityExercise;
 
                     finalWeight = Math.min(finalWeight, 120.0);
+
+                    //regenerate sets and reps for diversity
+                    int localSets = sets + random.nextInt(-1, 2); 
+                    int localReps = reps + random.nextInt(-2, 3);
+
                     //if the user is under is daily-need it divide the fatique.
                     if(userCheckSafety) {
                         finalWeight *= 0.5;
@@ -173,8 +181,8 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                     plannedExercise = new StrengthPlannedExerciseImpl(
                         rawExercise, 
                         (int) (minutes * intensityExercise), 
-                        sets + currentInsity + activityBonus, 
-                        reps + ( currentInsity * 2 ),
+                        Math.max(1, localSets + currentInsity + activityBonus), 
+                        Math.max(1, localReps + (currentInsity * 2)),
                         finalWeight                        
                     );
 
@@ -199,7 +207,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 workoutSheet.addExercise(plannedExercise);
             }
             //adding the sheet to the plan
-            workoutPlan.addWorkSheet(workoutSheet);
+            workoutPlan.addWorkSheet(dateNext, workoutSheet);
             
         }
         return workoutPlan;        
