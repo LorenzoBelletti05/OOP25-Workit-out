@@ -7,7 +7,7 @@ public class WorkoutUserData {
 
     private final double bmr;
     private final double tdee;
-    private final double dailyCalories;    
+    private final double dailyCalories;
     private final ActivityLevel activityLevel;
     private final UserGoal userGoal;
     private final String localDate;
@@ -18,13 +18,13 @@ public class WorkoutUserData {
         final double dailyCalories, 
         final ActivityLevel activityLevel, 
         final UserGoal userGoal,
-        final String localDate        
+        final String localDate
     ) {
         this.bmr = bmr;
         this.tdee = tdee;
         this.dailyCalories = dailyCalories;
         this.activityLevel = activityLevel;
-        this.userGoal = userGoal;        
+        this.userGoal = userGoal;
         this.localDate = localDate;
     }
 
@@ -51,5 +51,5 @@ public class WorkoutUserData {
     public String getLocalDate() {
         return this.localDate;
     }
-    
+
 }

@@ -17,7 +17,6 @@ public class LoadSaveData {
 
     //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
 
-
     private static final Gson gsonFile = new Gson();
 
     private static final String APP_DIR = ".workitout";
@@ -39,10 +38,7 @@ public class LoadSaveData {
         if(parDir != null && !parDir.exists()) {
             parDir.mkdirs();
         }
-
     }
-
-    
 
     public static <T> List<T> loadSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
         checkFolderPresence(pathData);
@@ -76,7 +72,7 @@ public class LoadSaveData {
 
     public static void saveWorkoutPlan(String pathData, WorkoutPlan dataPlan) {
         checkFolderPresence(pathData);
-        try (FileWriter writer = new FileWriter(pathData)) {            
+        try (FileWriter writer = new FileWriter(pathData)) {
              gsonFile.toJson(dataPlan, writer);
         } catch (IOException e) {
             System.out.println(" " + e.getMessage());
@@ -87,7 +83,7 @@ public class LoadSaveData {
     //two methods that save and get the workoutUserData
     public static void saveWorkoutuserDataIn(String pathData, WorkoutUserData workoutUserData) {
         checkFolderPresence(pathData);
-        try (FileWriter writer = new FileWriter(pathData)) {            
+        try (FileWriter writer = new FileWriter(pathData)) {
             gsonFile.toJson(workoutUserData, writer );
         } catch (IOException e) {
             System.out.println(" " + e.getMessage());
@@ -96,7 +92,7 @@ public class LoadSaveData {
 
     public static WorkoutUserData loadWorkoutuserDataIn(String pathData) {
         checkFolderPresence(pathData);
-        try (FileReader reader = new FileReader(pathData)) {            
+        try (FileReader reader = new FileReader(pathData)) {
             return gsonFile.fromJson(reader, WorkoutUserData.class);
         } catch (IOException e) {
             return null;

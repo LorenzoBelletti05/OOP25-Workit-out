@@ -14,7 +14,6 @@ import it.unibo.workitout.model.user.model.impl.UserManager;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.view.user.contracts.UserDashboardView;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 /**
  * Implementation of the UserProfile controller.

@@ -73,7 +73,7 @@ public abstract class PlannedExerciseImpl implements PlannedExercise {
     }
 
     @Override
-    public boolean isComplited() {        
+    public boolean isComplited() {
         return this.completed;
     }
 

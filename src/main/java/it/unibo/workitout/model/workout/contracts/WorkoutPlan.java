@@ -3,7 +3,6 @@ package it.unibo.workitout.model.workout.contracts;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * Interface that representing the entire workout for the user
  * based on his preferencies.
@@ -57,5 +56,5 @@ public interface WorkoutPlan extends WorkoutFunction {
      * @return the unmodifiable set of Workoutsheet.
      */
     Map<String, WorkoutSheet> getWorkoutPlan();
-    
+
 }

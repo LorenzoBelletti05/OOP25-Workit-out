@@ -54,8 +54,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return Set.copyOf(allExercise);
     }
 
-
-    
     @Override
     public Map<String, WorkoutSheet> getWorkoutPlan() {
         return Collections.unmodifiableMap(new TreeMap<String, WorkoutSheet>(this.workoutPlan));
@@ -72,7 +70,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return sumAll(WorkoutSheet::getBurnedCalories);
     }
 
-
     //Following two methods return the set of: workoutSheets and of all exercise
     @Override
     public Set<WorkoutSheet> getSheets() {
@@ -88,7 +85,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return Set.copyOf(allExercise);
     }
 
-
     //Following two methods return the set of each type of the exercise: strenght or cardio
     @Override
     public Set<StrengthPlannedExercise> getStrenghtExercise() {
@@ -99,8 +95,6 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     public Set<CardioPlannedExercise> getCardiotExercise() {
         return getExerciseSubdivision(CardioPlannedExercise.class);
     }
-
-    
 
     @Override
     public void addWorkSheet(String dateNext, WorkoutSheet workoutSheet) {

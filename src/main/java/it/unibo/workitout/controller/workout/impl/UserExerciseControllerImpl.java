@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.swing.JOptionPane;
-
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
 import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
@@ -25,9 +23,11 @@ import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.WorkoutCreatorImpl;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
-import it.unibo.workitout.view.workout.contracts.PlanViewer;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
+/**
+ * Controller class that manage the view and the model of the workout part and comunicate with the other controllers.
+ */
 public class UserExerciseControllerImpl implements UserExerciseController {
 
     private double bmr;
@@ -35,17 +35,23 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private double dailyCalories;
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
-    private String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
+    private String path_To_Manage_Workout_Plan = LoadSaveData.createPath("workoutPlan.json");
     private String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
-    private static final String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
+    private final static  String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
     private WorkoutPlan generatedWorkoutPlan;
     private static UserExerciseControllerImpl instance;
     private PlanViewerImpl planView;
     private Runnable navigationTask;
+    private final Integer DAYS_IN_WEEK = 7;
 
-    public UserExerciseControllerImpl() {}
+    /**
+     * Costructor empty.
+     */
+    public UserExerciseControllerImpl() {
+        
+    }
 
     /**
      * method that from the data given from the user save it (with the current date) in a JSON.
@@ -76,7 +82,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         //try to load the dataUser from the json.
         try {
             workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData); 
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             workoutUserData = null; //means that the json is empty and a new plan must be generated.
         }
 
@@ -90,11 +96,11 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             //DEBUG
             System.out.println("LOG: Dati caricati con successo per " + userGoal);
         } else {
-            UserProfile mainProfile = LoadSaveData.loadUserProfile(LoadSaveData.createPath("user_profile.json"));
+            final UserProfile mainProfile = LoadSaveData.loadUserProfile(LoadSaveData.createPath("user_profile.json"));
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
-                this.userGoal = mainProfile.getGoal();                
-            } else {                
+                this.userGoal = mainProfile.getGoal();
+            } else {
                 return null; 
             }
         }
@@ -102,30 +108,31 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         //Try to load from json the plan, otherwise, set it null.
         WorkoutPlan workoutPlan = null;
         try {
-            workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
-        } catch (NullPointerException e) {
+            workoutPlan = LoadSaveData.loadWorkoutPlan(path_To_Manage_Workout_Plan);
+        } catch (final NullPointerException e) {
             workoutPlan = null;
         }
 
         //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
-        if(workoutPlan != null && workoutUserData != null) {
+        if (workoutPlan != null && workoutUserData != null) {
 
-            LocalDate date = LocalDate.parse(workoutUserData.getLocalDate());           
+            final LocalDate date = LocalDate.parse(workoutUserData.getLocalDate());
 
             //from the data of the json check the data if they are the same from the one given in the costructor.
-            if(java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= 7) {
-                return workoutPlan;                
+            if(java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= DAYS_IN_WEEK) {
+                return workoutPlan;
             } 
         }
 
-        //If jsons are empty (because both have to return the same result) generate the plan and save it on the json with the workout suer data.
+        //If jsons are empty (because both have to return the same result) 
+        //generate the plan and save it on the json with the workout suer data.
         return generateAfterAll();
     }
 
     /**
      * Method that generaate the Plan and save it.
      * 
-     * @return
+     * @return the workoutPlan.
      */
     private WorkoutPlan generateAfterAll() {
         //DEBUG
@@ -133,14 +140,15 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         
         //Try generate the plan with the datam save the plan and the data in the json.
         try {
-            WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
-            if(plan != null) {
-                LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+            final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
+            if (plan != null) {
+                LoadSaveData.saveWorkoutPlan(path_To_Manage_Workout_Plan, plan);
                 callSaveUserData();
 
                 return plan;
             }
-        }catch (IOException e) {
+
+        } catch (IOException e) {
             //DEGUB
             System.out.println("" + e.getMessage());
         }
@@ -158,7 +166,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         }
         return listSheets;
     }
-    
+
     public List<Exercise> getRawExercise(){
         try {
             return List.copyOf(LoadSaveData.loadSavedDataFrom(pathToRawExercise, Exercise[].class));
@@ -236,7 +244,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     public void setNavigationTask(Runnable navigationTask) {
         this.navigationTask = navigationTask;
     }
-    
+
     public void refreshTableWorkoutData(Runnable navigationTask) {
 
         if (this.generatedWorkoutPlan == null) {       
@@ -283,7 +291,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
 
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
-            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+            LoadSaveData.saveWorkoutPlan(path_To_Manage_Workout_Plan, this.generatedWorkoutPlan);
             System.out.println("LOG: Piano salvato su disco dopo la modifica.");
         }
     }
@@ -318,13 +326,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             }
         }
     }
-    
+
     public void setProfile(double totKcal) {
-
         //chiamata al metodo di del controller di diego a cui passo i dati
-        
-
     }
-
 
 }

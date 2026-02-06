@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.ToDoubleFunction;
-
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 
@@ -23,7 +22,7 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
     private Set<CardioPlannedExerciseImpl> cardioExs = new HashSet<>();
 
     public WorkoutSheetImpl(final String nameSheet) {
-        super(nameSheet);        
+        super(nameSheet);
         // exercisesSheet = new HashSet<>();
         cardioExs = new HashSet<>();
         strengthExs = new HashSet<>();
@@ -52,7 +51,7 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
         if (this.cardioExs != null) {
             mergeExercise.addAll(this.cardioExs);
         }
-        
+
         return Set.copyOf(mergeExercise);
     }
 

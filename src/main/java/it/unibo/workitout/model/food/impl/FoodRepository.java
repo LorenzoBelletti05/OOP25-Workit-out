@@ -38,19 +38,19 @@ public final class FoodRepository {
      * @param filePath path to CSV.
      */
     public void loadFromFile(final String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    final String[] parts = line.split(",");
-                    if (parts.length == CSV_COLUMNS) {
-                        parseLine(parts);
-                    }
-                }
-            }
-        } catch (final IOException e) {
-            throw new IllegalStateException("Failed to load food file", e);
-        }
+        // try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
+        //     String line;
+        //     while ((line = br.readLine()) != null) {
+        //         if (!line.trim().isEmpty()) {
+        //             final String[] parts = line.split(",");
+        //             if (parts.length == CSV_COLUMNS) {
+        //                 parseLine(parts);
+        //             }
+        //         }
+        //     }
+        // } catch (final IOException e) {
+        //     throw new IllegalStateException("Failed to load food file", e);
+        // }
     }
 
     private void parseLine(final String[] parts) {
