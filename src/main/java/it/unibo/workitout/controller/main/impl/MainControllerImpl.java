@@ -89,7 +89,7 @@ public class MainControllerImpl implements MainController {
         final NutritionController nutritionController = new NutritionControllerImpl(
         new FoodRepository(), new DailyLogManager(), nutritionView);
         nutritionView.setController(nutritionController);
-        //nutritionController.start(); fix your hardcoded path
+        nutritionController.start();
 
         final WikiViewImpl wikiView = new WikiViewImpl();
         wikiView.addMainBackListener(view -> mainView.showView(DASHBOARD));

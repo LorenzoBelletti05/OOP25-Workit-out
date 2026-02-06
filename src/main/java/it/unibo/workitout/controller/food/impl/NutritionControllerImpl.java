@@ -2,6 +2,7 @@ package it.unibo.workitout.controller.food.impl;
 
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.model.food.impl.FoodRepository;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.model.food.api.DailyLog;
@@ -11,24 +12,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Collections;
 import java.util.Objects;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Implementation of NutritionController.
  */
 public final class NutritionControllerImpl implements NutritionController {
+    private static final int MAX_GRAMS = 2000;
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
-    private static final String FOODS_PATH = "Workit-out/src/main/resources/data/food/foods.csv";
-    private static final String HISTORY_PATH = "Workit-out/src/main/resources/data/food/history.csv";
-    private static final int MAX_GRAMS = 2000;
+    
 
     /**
      * @param repository the food database.
      * @param logManager the manager for daily logs.
      * @param view the user interface.
      */
-
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Repository is shared and managed externally")
     public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, final NutritionView view) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
@@ -37,12 +38,12 @@ public final class NutritionControllerImpl implements NutritionController {
 
     @Override
     public void start() {
-        //Carica i dati all'avvio
-        repository.loadFromFile(FOODS_PATH);
-        logManager.loadHistory(HISTORY_PATH, repository);
-        //Riempie la tabella nella view
+        final String foodsPath = LoadSaveData.createPath(LoadSaveData.FOODS_FILE);
+        final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
+        repository.loadFromFile(foodsPath);
+        logManager.loadHistory(historyPath, repository);
+
         view.updateTable(repository.getAllFoods());
-        //Aggiorna il riepilogo
         refreshViewSummary();
     }
 
@@ -58,19 +59,52 @@ public final class NutritionControllerImpl implements NutritionController {
     @Override
     public void addFoodToDailyLog(final Food food, final int grams) {
         //Controllo dei limiti
-        if (grams <= 0) {
-            System.out.println("Quantità non valida.");
-            return;
-        }
-
-        if (grams > MAX_GRAMS) {
-            System.out.println("Quantità eccessiva (max 2kg).");
+        if (grams <= 0 || grams > MAX_GRAMS) {
             return;
         }
         
         logManager.getCurrentLog().addFoodEntry(food, grams);
-        logManager.saveHistory(HISTORY_PATH);
+        final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
+        logManager.saveHistory(historyPath);
+        saveTotalsForUser();
         refreshViewSummary();
+    }
+
+    /**
+     * Helper to export data for the User module.
+     */
+    private void saveTotalsForUser() {
+        final DailyLog today = logManager.getCurrentLog();
+        final String date = java.time.LocalDate.now().toString();
+        final String statsRow = String.format("%s,%d,%d,%d,%d",
+            date,
+            (int) today.getTotalKcal(),
+            (int) today.getTotalProteins(),
+            (int) today.getTotalCarbs(),
+            (int) today.getTotalFats()
+        );
+
+        final String statsPath = LoadSaveData.createPath(LoadSaveData.STATS_FILE);
+        updateDailyStatsFile(statsPath, statsRow, date);
+    }
+
+    private void updateDailyStatsFile(final String path, final String newRow, final String date) {
+        final List<String> allLines = LoadSaveData.loadCsvFile(path);
+        boolean found = false;
+
+        for (int i = 0; i < allLines.size(); i++) {
+            if (allLines.get(i).startsWith(date)) {
+                allLines.set(i, newRow);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            allLines.add(newRow);
+        }
+
+        LoadSaveData.saveCsvFile(path, allLines);
     }
 
     @Override

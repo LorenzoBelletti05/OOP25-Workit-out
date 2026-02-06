@@ -5,10 +5,10 @@ import javax.swing.JButton;
 import it.unibo.workitout.model.user.model.impl.UserManager;
 
 public interface UserDashboardView {
-    public void showData(UserManager userManager);
-    public void setVisible(boolean status);
-    public JButton getProfileButton();
-    public JButton getFoodButton();
-    public JButton getInfoButton();
-    public JButton getExerciseButton();
+    void showData(UserManager userManager);
+    void setVisible(boolean status);
+    JButton getProfileButton();
+    JButton getFoodButton();
+    JButton getInfoButton();
+    JButton getExerciseButton();
 }
