@@ -25,4 +25,6 @@ public interface UserProfileController {
      * @param userManager the user manager.
      */
     void setUserManager(UserManager userManager);
+
+    void updateBurnedCalories(double burnedCalories);
 }
