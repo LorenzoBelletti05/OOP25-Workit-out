@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Repository for managing food data.
@@ -36,7 +41,26 @@ public final class FoodRepository {
      * @param filePath path to CSV.
      */
     public void loadFromFile(final String filePath) {
-        final List<String> lines = loadSaveData.loadCsvFile(filePath);
+        List<String> lines = loadSaveData.loadCsvFile(filePath);
+
+        if (lines.isEmpty()) {
+            try (InputStream is = getClass().getResourceAsStream("/data/food/foods.csv");
+                 BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                if (is != null) {
+                    String line = reader.readLine();
+                    final List<String> defaultLines = new ArrayList<>();
+                    while (line != null) {
+                        defaultLines.add(line);
+                        line = reader.readLine();
+                    }
+                    loadSaveData.saveCsvFile(filePath, defaultLines);
+                    lines = defaultLines;
+                }
+            } catch (final IOException e) {
+                throw new IllegalStateException("Failed to load default foods from resources", e);
+            }
+        }
 
         for (final String line : lines) {
             if (!line.isBlank()) {
