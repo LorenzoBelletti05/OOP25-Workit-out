@@ -17,11 +17,16 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  */
 public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
 
-    private Set<PlannedExercise> exercisesSheet;
+    // private Set<PlannedExercise> exercisesSheet;
+
+    private Set<StrengthPlannedExerciseImpl> strengthExs = new HashSet<>();
+    private Set<CardioPlannedExerciseImpl> cardioExs = new HashSet<>();
 
     public WorkoutSheetImpl(final String nameSheet) {
         super(nameSheet);        
-        exercisesSheet = new HashSet<>();
+        // exercisesSheet = new HashSet<>();
+        cardioExs = new HashSet<>();
+        strengthExs = new HashSet<>();
     }
 
     /**
@@ -32,30 +37,43 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
      */
     private double sumAll(ToDoubleFunction<PlannedExercise> plnExe) {
         double sum = 0.0;
-        for (PlannedExercise plannedExercise : exercisesSheet) {
-            sum+=plnExe.applyAsDouble(plannedExercise);
-        }
+        for (PlannedExercise e : strengthExs) sum += plnExe.applyAsDouble(e);
+        for (PlannedExercise e : cardioExs) sum += plnExe.applyAsDouble(e);
         return sum;
     }
 
     @Override
     public Set<PlannedExercise> getWorkoutSheet() {
-        return Set.copyOf(this.exercisesSheet);
+        
+        Set<PlannedExercise> mergeExercise = new HashSet<>();
+        if (this.strengthExs != null) {
+            mergeExercise.addAll(this.strengthExs);
+        }
+        if (this.cardioExs != null) {
+            mergeExercise.addAll(this.cardioExs);
+        }
+        
+        return Set.copyOf(mergeExercise);
     }
 
     @Override
     public Optional<PlannedExercise> getExercise(final String nameExercise) {
-        return this.exercisesSheet.stream().filter(b -> b.getName().equals(nameExercise)).findAny();
+        return this.getWorkoutSheet().stream().filter(b -> b.getName().equals(nameExercise)).findAny();
     }
 
     @Override
     public Boolean addExercise(final PlannedExercise exercise) {
-        return this.exercisesSheet.add(exercise);
+        if (exercise instanceof StrengthPlannedExerciseImpl) {
+            return this.strengthExs.add((StrengthPlannedExerciseImpl) exercise);
+        } else if (exercise instanceof CardioPlannedExerciseImpl) {
+            return this.cardioExs.add((CardioPlannedExerciseImpl) exercise);
+        }
+        return false;
     }
 
     @Override
     public Boolean remouveExercise(final PlannedExercise exercise) {
-        return this.exercisesSheet.remove(exercise);
+        return this.strengthExs.remove(exercise) || this.cardioExs.remove(exercise);
     }
 
     @Override
