@@ -1,14 +1,12 @@
 package it.unibo.workitout.model.food.impl;
 
 import it.unibo.workitout.model.food.api.Food;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Repository for managing food data.
@@ -38,19 +36,15 @@ public final class FoodRepository {
      * @param filePath path to CSV.
      */
     public void loadFromFile(final String filePath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
-            String line = br.readLine();
-            while (line != null) {
-                if (!line.isBlank()) {
-                    final String[] parts = line.split(",");
-                    if (parts.length == CSV_COLUMNS) {
-                        parseLine(parts);
-                    }
+        final List<String> lines = loadSaveData.loadCsvFile(filePath);
+
+        for (final String line : lines) {
+            if (!line.isBlank()) {
+                final String[] parts = line.split(",");
+                if (parts.length == CSV_COLUMNS) {
+                    parseLine(parts);
                 }
-                line = br.readLine();
             }
-        } catch (final IOException e) {
-            throw new IllegalStateException("Failed to load food file", e);
         }
     }
 
