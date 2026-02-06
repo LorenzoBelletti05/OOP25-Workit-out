@@ -145,4 +145,10 @@ public final class UserProfileControllerImpl implements UserProfileController {
     private void showInputDataError(final String errorDescription) {
         JOptionPane.showMessageDialog(null, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    @Override
+    public void updateBurnedCalories(double burnedCalories) {
+        this.userManager.addBurnedCalories(burnedCalories);
+        this.dashboard.showData(this.userManager);
+    }
 }

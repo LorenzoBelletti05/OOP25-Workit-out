@@ -9,6 +9,7 @@ public final class UserManager {
 
     private BMRCalculatorStrategy strategy;
     private final UserProfile currentUser;
+    private double burnedCalories = 0;
 
     /**
      * Creates a new User Manager.
@@ -50,21 +51,26 @@ public final class UserManager {
      * @return the target calories calculated based on the UserGoal
      */
     public double getDailyCalories() {
-        final double tdee = getTDEE();
+        double totalCalories= getTDEE();
         final UserGoal goal = currentUser.getGoal();
         final int calories = 500;
-        final int halfCalories = calories / 2;
+        final double halfCalories = calories / 2;
 
         switch (goal) {
             case LOSE_WEIGHT:
-                return tdee - calories;
+                totalCalories -= calories;
+                break;
             case GAIN_WEIGHT:
-                return tdee + calories;
+                totalCalories += calories;
+                break;
             case BUILD_MUSCLE:
-                return tdee + halfCalories;
+                totalCalories += halfCalories;
+                break;
             default:
-                return tdee;
+                break;
         }
+        totalCalories += this.burnedCalories;
+        return totalCalories;
     }
 
     /**
@@ -80,5 +86,9 @@ public final class UserManager {
         final double fatsGrams = totalCalories * goal.getFatRatio() / 9;
 
         return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
+    }
+
+    public void addBurnedCalories(double calories) {
+        this.burnedCalories += calories;
     }
 }
