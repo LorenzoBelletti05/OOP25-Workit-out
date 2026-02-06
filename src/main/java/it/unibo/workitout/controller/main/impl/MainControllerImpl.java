@@ -32,6 +32,8 @@ public class MainControllerImpl implements MainController {
     private static final String EXERCISE = "EXERCISE";
     private final MainView mainView;
     private UserProfile user;  
+    private UserProfileControllerImpl userController;
+    
     
     public MainControllerImpl(MainView mainView) {
         this.mainView = mainView;
@@ -39,8 +41,8 @@ public class MainControllerImpl implements MainController {
 
     public void communicateBurnedCalories(final double calories) {
         // Il MainController prende il dato e lo passa a Diego
-        if (this.user != null) {
-            this.user.updateBurnedCalories(calories);
+        if (this.userController != null) {
+            this.userController.updateBurnedCalories(calories);
         }
     }
 
@@ -54,7 +56,7 @@ public class MainControllerImpl implements MainController {
 
         Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
 
-        UserProfileControllerImpl userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
+        this.userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
 
         this.user = loadSaveData.loadUserProfile(loadSaveData.createPath("user_profile.json"));
 

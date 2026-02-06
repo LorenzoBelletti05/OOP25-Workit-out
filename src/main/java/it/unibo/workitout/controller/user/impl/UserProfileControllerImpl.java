@@ -40,11 +40,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
-        });
-
-        // this.dashboard.getExerciseButton().addActionListener(al -> {        
-        // UserExerciseControllerImpl.getIstance().refreshTableWorkoutData(runnable);           
-        // });
+        });        
     }
 
     private void editProfile() {
