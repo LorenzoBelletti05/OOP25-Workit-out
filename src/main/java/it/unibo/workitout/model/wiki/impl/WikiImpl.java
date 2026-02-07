@@ -1,6 +1,7 @@
 package it.unibo.workitout.model.wiki.impl;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -37,12 +38,12 @@ public final class WikiImpl implements Wiki {
         if (query == null || query.isBlank()) {
             return getContents();
         }
-        final String lowerQuery = query.toLowerCase(java.util.Locale.ROOT);
+        final String lowerQuery = query.toLowerCase(Locale.ROOT);
         return this.contents.stream()
-            .filter(c -> c.getTitle().toLowerCase(java.util.Locale.ROOT).contains(lowerQuery)
+            .filter(c -> c.getTitle().toLowerCase(Locale.ROOT).contains(lowerQuery)
             || 
             c.getTags().stream()
-            .anyMatch(t -> t.toLowerCase(java.util.Locale.ROOT).contains(lowerQuery)))
+            .anyMatch(t -> t.toLowerCase(Locale.ROOT).contains(lowerQuery)))
             .collect(Collectors.toSet());
     }
 
