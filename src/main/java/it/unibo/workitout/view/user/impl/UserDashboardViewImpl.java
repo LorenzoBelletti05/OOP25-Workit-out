@@ -17,7 +17,26 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
-public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
+/**
+ * This class is the home page of the GUI.
+ */
+public final class UserDashboardViewImpl extends JPanel implements UserDashboardView {
+    private static final String ARIAL_FONT = "Arial";
+    private static final String SEPARATOR = "/";
+    private static final String GRAMS = "g";
+
+    private static final Font TITLE_FONT = new Font(ARIAL_FONT, Font.BOLD, 26);
+    private static final Font TEXT_FONT = new Font(ARIAL_FONT, Font.BOLD, 18);
+    private static final Font MACRO_FONT = new Font(ARIAL_FONT, Font.PLAIN, 18);
+
+    private static final int N_0 = 0;
+    private static final int N_10 = 10;
+    private static final int N_20 = 20;
+    private static final int N_30 = 30;
+    private static final int N_40 = 40;
+    private static final int N_50 = 50;
+    private static final int N_100 = 100;
+
     private final JPanel panel = new JPanel(new BorderLayout());
 
     private JLabel welcomeTitle;
@@ -29,45 +48,46 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
     private JButton bExercise;
 
     private JProgressBar caloriesBar;
-    
+
     private JLabel lCarbs;
     private JLabel lProteins;
     private JLabel lFats;
 
-    private static final Font TITLE_FONT = new Font("Arial", Font.BOLD, 26);
-    private static final Font TEXT_FONT = new Font("Arial", Font.BOLD, 18);
-    private static final Font MACRO_FONT = new Font("Arial", Font.PLAIN , 18); 
-
+    /**
+     * The constructor of the dashboard.
+     */
     public UserDashboardViewImpl() {
         this.setLayout(new BorderLayout());
         dashboardGUI();
     }
 
-
+    /**
+     * This method create the dashboard GUI.
+     */
     private void dashboardGUI() {
-        JPanel topPanel = new JPanel(new BorderLayout());
-        JPanel centerPanel = new JPanel(new GridLayout(3,1,0,0));
-        JPanel bottomPanel = new JPanel(new GridLayout(1,3,10,0));
+        final JPanel topPanel = new JPanel(new BorderLayout());
+        final JPanel centerPanel = new JPanel(new GridLayout(3, 1, 0, 0));
+        final JPanel bottomPanel = new JPanel(new GridLayout(1, 3, 10, 0));
 
         welcomeTitle = new JLabel("Hello!");
         welcomeTitle.setFont(TITLE_FONT);
 
-        bProfile = new JButton ("Profile");
-        Dimension bSize = new Dimension(100, 30);
+        bProfile = new JButton("Profile");
+        final Dimension bSize = new Dimension(N_100, N_30);
         bProfile.setPreferredSize(bSize);
 
         topPanel.add(welcomeTitle, BorderLayout.CENTER);
         topPanel.add(bProfile, BorderLayout.EAST);
-        topPanel.setBorder(new EmptyBorder(0,0,20,0));
+        topPanel.setBorder(new EmptyBorder(N_0, N_0, N_20, N_0));
         panel.add(topPanel, BorderLayout.NORTH);
-        panel.setBorder(new EmptyBorder(10,10,10,10));
+        panel.setBorder(new EmptyBorder(N_10, N_10, N_10, N_10));
 
-        JPanel progressBarPanel = new JPanel(new BorderLayout());
-        JPanel caloriesPanel = new JPanel(new BorderLayout());
+        final JPanel progressBarPanel = new JPanel(new BorderLayout());
+        final JPanel caloriesPanel = new JPanel(new BorderLayout());
 
-        progressBarPanel.setBorder(new EmptyBorder(0,50,0,50));
+        progressBarPanel.setBorder(new EmptyBorder(N_0, N_50, N_0, N_50));
         caloriesBar = new JProgressBar();
-        caloriesBar.setPreferredSize(new Dimension(100,40));
+        caloriesBar.setPreferredSize(new Dimension(N_100, N_40));
         caloriesBar.setFont(TEXT_FONT);
         caloriesBar.setStringPainted(true);
 
@@ -77,7 +97,7 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
 
-        JPanel macroPanel = new JPanel(new GridLayout(1,3,0,0));
+        final JPanel macroPanel = new JPanel(new GridLayout(1, 3, 0, 0));
         lCarbs = new JLabel("Carbs: 0 / 0 g", SwingConstants.CENTER);
         lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
         lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
@@ -86,20 +106,19 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         lProteins.setFont(MACRO_FONT);
         lFats.setFont(MACRO_FONT);
 
-        showCalories.setBorder(new EmptyBorder(10,0,20,0));
+        showCalories.setBorder(new EmptyBorder(N_10, N_0, N_20, N_0));
 
         macroPanel.add(lCarbs);
         macroPanel.add(lProteins);
         macroPanel.add(lFats);
-        
-        
+
         progressBarPanel.add(caloriesPanel, BorderLayout.NORTH);
         progressBarPanel.add(macroPanel, BorderLayout.SOUTH);
 
         centerPanel.add(new JLabel());
         centerPanel.add(progressBarPanel);
         centerPanel.add(new JLabel());
-        
+
         panel.add(centerPanel, BorderLayout.CENTER);
 
         bFood = new JButton("Food");
@@ -113,56 +132,54 @@ public class UserDashboardViewImpl extends JPanel implements UserDashboardView {
         bottomPanel.add(bFood);
         bottomPanel.add(bInfo);
         bottomPanel.add(bExercise);
-        
-        bottomPanel.setBorder(new EmptyBorder(20,0,0,0));
+
+        bottomPanel.setBorder(new EmptyBorder(N_20, N_0, N_0, N_0));
         panel.add(bottomPanel, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
     }
 
     @Override
-    public void showData(UserManager userManager) {
-        if(userManager == null){
+    public void showData(final UserManager userManager) {
+        if (userManager == null) {
             JOptionPane.showMessageDialog(this, "The user manager is not linked", "Error!", JOptionPane.ERROR_MESSAGE);
         }
-        String name = userManager.getUserProfile().getName();
+        final String name = userManager.getUserProfile().getName();
         welcomeTitle.setText("Hello " + name + "!");
-        int dailyCal = (int) userManager.getDailyCalories();
-        int consumedCal = 1000;
+        final int dailyCal = (int) userManager.getDailyCalories();
+        final int consumedCal = 1000;
         caloriesBar.setMaximum(dailyCal);
         caloriesBar.setMinimum(0);
         caloriesBar.setValue(consumedCal);
-        
-        showCalories.setText(consumedCal + " / " + dailyCal + " kcal");
 
-        NutritionalTarget macroTarget = userManager.getMacronutrients();
-        int consumedCarbs = 0;
-        int consumedProteins = 0;
-        int consumedFats = 0;
+        showCalories.setText(consumedCal + SEPARATOR + dailyCal + " kcal");
 
-        lCarbs.setText("Carbs: " + consumedCarbs + " / " + (int) macroTarget.getCarbsG() + " g");
-        lProteins.setText("Proteins: " + consumedProteins + " / " + (int) macroTarget.getProteinsG() + " g" );
-        lFats.setText("Fats: " + consumedFats +" / " + (int) macroTarget.getFatsG() + " g");
+        final NutritionalTarget macroTarget = userManager.getMacronutrients();
+        final int consumedCarbs = 0;
+        final int consumedProteins = 0;
+        final int consumedFats = 0;
+
+        lCarbs.setText("Carbs: " + consumedCarbs + SEPARATOR + (int) macroTarget.getCarbsG() + " " + GRAMS);
+        lProteins.setText("Proteins: " + consumedProteins + SEPARATOR + (int) macroTarget.getProteinsG() + " " + GRAMS);
+        lFats.setText("Fats: " + consumedFats + SEPARATOR + (int) macroTarget.getFatsG() + " " + GRAMS);
     }
-
 
     @Override
-    public void setVisible(boolean status) {
-        super.setVisible(status);
-    }
-
     public JButton getProfileButton() {
         return bProfile;
     }
 
+    @Override
     public JButton getFoodButton() {
         return bFood;
     }
 
+    @Override
     public JButton getInfoButton() {
         return bInfo;
     }
 
+    @Override
     public JButton getExerciseButton() {
         return bExercise;
     }
