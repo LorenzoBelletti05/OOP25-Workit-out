@@ -5,15 +5,15 @@ import it.unibo.workitout.model.food.api.Food;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Manager for the daily food logs history.
@@ -41,16 +41,14 @@ public final class DailyLogManager {
      * @param filePath the path where to save history.
      */
     public void saveHistory(final String filePath) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath, StandardCharsets.UTF_8))) {
-            for (final DailyLog log : history.values()) {
-                final LocalDate date = log.getDate();
-                for (final Map.Entry<Food, Integer> entry : log.getFoodsConsumed().entrySet()) {
-                    writer.println(date + "," + entry.getKey().getName() + "," + entry.getValue());
-                }
+        final List<String> lines = new ArrayList<>();
+        for (final DailyLog log : history.values()) {
+            final LocalDate date = log.getDate();
+            for (final Map.Entry<Food, Integer> entry : log.getFoodsConsumed().entrySet()) {
+                lines.add(date + "," + entry.getKey().getName() + "," + entry.getValue());
             }
-        } catch (final IOException e) {
-            throw new IllegalStateException("Failed to save history", e);
         }
+        it.unibo.workitout.model.main.dataManipulation.loadSaveData.saveCsvFile(filePath, lines);
     }
 
     /**

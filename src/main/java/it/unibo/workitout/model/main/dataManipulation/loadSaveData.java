@@ -165,6 +165,7 @@ public class loadSaveData {
                 bw.write(line);
                 bw.newLine();
             }
+            bw.flush();
         } catch (IOException e) {
             System.err.println("Errore durante il salvataggio del file CSV: " + e.getMessage());
         }
