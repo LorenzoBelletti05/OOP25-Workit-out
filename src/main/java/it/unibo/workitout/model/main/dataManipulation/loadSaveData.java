@@ -3,6 +3,9 @@ package it.unibo.workitout.model.main.dataManipulation;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,7 +62,6 @@ public class loadSaveData {
         }
     }
 
-
     //method that load and save the entire workout from the json
     public static WorkoutPlan loadWorkoutPlan(String pathData) {
         checkFolderPresence(pathData);
@@ -78,7 +80,6 @@ public class loadSaveData {
             System.out.println(" " + e.getMessage());
         }
     }
-
 
     //two methods that save and get the workoutUserData
     public static void saveWorkoutuserDataIn(String pathData, WorkoutUserData workoutUserData) {
@@ -116,6 +117,47 @@ public class loadSaveData {
             return null;
         }
     }
+   
+    /**
+     * method to read the data from the inside jar.
+     * 
+     * @param <T> geneal method.
+     * 
+     * @param resourcePath the path of the file.
+     * 
+     * @param typeClass the type of the class.
+     * 
+     * @return the general list.
+     * 
+     */
+    public static <T> List<T> loadFromResources(String resourcePath, Class<T[]> typeClass) {
+
+        try (InputStream is = loadSaveData.class.getResourceAsStream(resourcePath);
+        
+        InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+
+            //if the stream is null, show error
+            if (is == null) {
+                System.err.println("Resource not found: " + resourcePath);
+                return new ArrayList<>();
+            }
+
+            //load from the json the data
+            T[] arrayData = gsonFile.fromJson(reader, typeClass);
+
+            //if data load are not null return the copy of the data modifible, empty othervise
+            if (arrayData != null ) {
+                return new ArrayList<>(Arrays.asList(arrayData));
+            } else {
+                return new ArrayList<>();
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading resource: " + e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
     /** Public constant for foods file name. */
     public static final String FOODS_FILE = "foods.csv";
 

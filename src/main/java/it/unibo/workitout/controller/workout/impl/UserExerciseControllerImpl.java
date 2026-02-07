@@ -38,9 +38,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private double dailyCalories;
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
-    private String path_To_Manage_Workout_Plan = loadSaveData.createPath("workoutPlan.json");
-    private String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
-    private final static  String pathToRawExercise = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
+    private final String pathToManageWorkoutPlan = loadSaveData.createPath("workoutPlan.json");
+    private final String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
+    private final String pathToRawExercise = "/data/workout/exercise.json";
     private WorkoutUserData workoutUserData;
     private LocalDate localDate; 
     private WorkoutPlan generatedWorkoutPlan;
@@ -48,15 +48,21 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     private PlanViewerImpl planView;
     private Runnable navigationTask;
     private final Integer DAYS_IN_WEEK = 7;
-    private MainController mainController = null;
+    private MainController mainController;
 
     /**
      * Costructor empty.
      */
     public UserExerciseControllerImpl() {
 
-    }    
+    }
 
+    /**
+     * Used to take and istance of the mainController.
+     * 
+     * @param mainController istance of the main controller.
+     * 
+     */
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
@@ -116,7 +122,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         //Try to load from json the plan, otherwise, set it null.
         WorkoutPlan workoutPlan = null;
         try {
-            workoutPlan = loadSaveData.loadWorkoutPlan(path_To_Manage_Workout_Plan);
+            workoutPlan = loadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
         } catch (final NullPointerException e) {
             workoutPlan = null;
         }
@@ -150,7 +156,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         try {
             final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
             if (plan != null) {
-                loadSaveData.saveWorkoutPlan(path_To_Manage_Workout_Plan, plan);
+                loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
                 callSaveUserData();
 
                 return plan;
@@ -172,19 +178,14 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         Collections.sort(sortedExercise);
     
         List<WorkoutSheet> listSheets = new ArrayList<>();
-        for (var element : generatedWorkoutPlan.getWorkoutPlan().values()) {
-            listSheets.add(element);
+        for (var element : sortedExercise) {
+            listSheets.add(generatedWorkoutPlan.getWorkoutPlan().get(element));
         }
         return listSheets;
     }
 
-    public List<Exercise> getRawExercise(){
-        try {
-            return List.copyOf(loadSaveData.loadSavedDataFrom(pathToRawExercise, Exercise[].class));
-        }catch (IOException e) {
-            e.getMessage();
-            return null;
-        }
+    public List<Exercise> getRawExercise() {
+        return loadSaveData.loadFromResources(pathToRawExercise, Exercise[].class);
     }
 
     public List<Exercise> orderListBasedOn(String conditionSort, List<Exercise> rawExercise, Optional<String> data) {
@@ -300,7 +301,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
 
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
-            loadSaveData.saveWorkoutPlan(path_To_Manage_Workout_Plan, this.generatedWorkoutPlan);
+            loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
             System.out.println("LOG: Piano salvato su disco dopo la modifica.");
         }
     }
@@ -337,7 +338,11 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     }
 
    public void setProfile(final double totKcal) {
-        this.mainController.communicateBurnedCalories(totKcal);
+        if (this.mainController != null) {
+            this.mainController.communicateBurnedCalories(totKcal);
+        } else {
+            System.out.println("ERROR: mainController non impostato in UserExerciseControllerImpl");
+        }
     }
 
 }
