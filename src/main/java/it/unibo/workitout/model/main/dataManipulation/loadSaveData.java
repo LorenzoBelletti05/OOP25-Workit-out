@@ -16,7 +16,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 import java.io.File;
 
-public class LoadSaveData { 
+public class loadSaveData { 
 
     //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
 
@@ -207,7 +207,7 @@ public class LoadSaveData {
      */
     public static <T> List<T> loadFromResources(String resourcePath, Class<T[]> typeClass) {
 
-        try (InputStream is = LoadSaveData.class.getResourceAsStream(resourcePath);
+        try (InputStream is = loadSaveData.class.getResourceAsStream(resourcePath);
         
         InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 
