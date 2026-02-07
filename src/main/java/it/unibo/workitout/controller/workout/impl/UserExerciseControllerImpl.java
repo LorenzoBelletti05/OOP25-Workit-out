@@ -3,6 +3,7 @@ package it.unibo.workitout.controller.workout.impl;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -167,6 +168,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
     }
 
     public List<WorkoutSheet> getWorkoutSheets() {
+        List<String> sortedExercise = new ArrayList<>(generatedWorkoutPlan.getWorkoutPlan().keySet());
+        Collections.sort(sortedExercise);
+    
         List<WorkoutSheet> listSheets = new ArrayList<>();
         for (var element : generatedWorkoutPlan.getWorkoutPlan().values()) {
             listSheets.add(element);
