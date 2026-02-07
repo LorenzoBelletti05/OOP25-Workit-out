@@ -41,8 +41,7 @@ public final class WikiImpl implements Wiki {
         final String lowerQuery = query.toLowerCase(Locale.ROOT);
         return this.contents.stream()
             .filter(c -> c.getTitle().toLowerCase(Locale.ROOT).contains(lowerQuery)
-            || 
-            c.getTags().stream()
+            || c.getTags().stream()
             .anyMatch(t -> t.toLowerCase(Locale.ROOT).contains(lowerQuery)))
             .collect(Collectors.toSet());
     }

@@ -105,4 +105,11 @@ public interface WikiView {
      * @param url of the video.
      */
     void showVideoPlayer(String url) throws URISyntaxException;
+
+    /**
+     * Update the label.
+     * 
+     * @param message the message.
+     */
+    void updateLabel(String message);
 }

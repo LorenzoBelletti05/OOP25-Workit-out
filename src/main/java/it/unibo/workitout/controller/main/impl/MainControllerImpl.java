@@ -104,10 +104,6 @@ public class MainControllerImpl implements MainController {
         wikiView.addMainBackListener(view -> mainView.showView(DASHBOARD));
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
         wikiController.start();
-        
-        if (this.user != null) {
-            wikiController.showSmartSuggestions(this.user, null, null);
-        }
 
         final PlanViewerImpl exerciseView = new PlanViewerImpl();
 
@@ -124,6 +120,9 @@ public class MainControllerImpl implements MainController {
         });
 
         dashboardView.getInfoButton().addActionListener(al -> {
+            if (this.user != null) {
+                wikiController.updateWithCurrentData(this.user);
+            }
             mainView.showView(WIKI);
         });
 

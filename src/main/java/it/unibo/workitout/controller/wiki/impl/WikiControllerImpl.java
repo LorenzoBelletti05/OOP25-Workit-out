@@ -12,9 +12,16 @@ import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
+import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.workout.contracts.PlannedExercise;
+import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
+import it.unibo.workitout.model.food.api.Food;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -142,5 +149,120 @@ public class WikiControllerImpl implements WikiController {
                 this.meal
             ));
         }
+    }
+
+    /**
+     * Update the wiki with the current user data.
+     * 
+     * @param user the current user.
+     */
+    public void updateWithCurrentData(final UserProfile user) {
+        if (user == null) {
+            return;
+        }
+        final List<Exercise> exercises = loadExercisesFromPlan();
+        final Meal meal = loadTodayMealFromHistory();
+        // Update label
+        final StringBuilder feedback = new StringBuilder();
+        if (exercises != null && !exercises.isEmpty()) {
+            feedback.append("Esercizi trovati: ");
+            feedback.append(exercises.stream()
+                .map(Exercise::getName)
+                .distinct()
+                .limit(3)
+                .collect(Collectors.joining(", ")));
+            if (exercises.size() > 3) {
+                feedback.append("...");
+            }
+        } else {
+            feedback.append("Nessun esercizio nel piano.");
+        }
+        feedback.append(" | ");
+        if (meal != null && meal.getFood() != null && !meal.getFood().isEmpty()) {
+            feedback.append("Cibi oggi: ");
+            feedback.append(meal.getFood().stream()
+                .map(Food::getName)
+                .distinct()
+                .limit(3)
+                .collect(Collectors.joining(", ")));
+            if (meal.getFood().size() > 3) {
+                feedback.append("...");
+            }
+        } else {
+            feedback.append("Nessun cibo registrato oggi.");
+        }
+
+        this.view.updateLabel(feedback.toString());
+        showSmartSuggestions(user, exercises, meal);
+    }
+
+    /**
+     * Load exercises from the workout plan.
+     * 
+     * @return list of exercises.
+     */
+    private List<Exercise> loadExercisesFromPlan() {
+        final WorkoutPlan plan = UserExerciseControllerImpl.getIstance().getGeneratedWorkoutPlan();
+        if (plan != null && plan.getAllExercise() != null) {
+            return plan.getAllExercise().stream()
+                .map(PlannedExercise::getExercise)
+                .collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    /**
+     * Load today meal from history.csv.
+     * 
+     * @return a Meal with today's foods.
+     */
+    private Meal loadTodayMealFromHistory() {
+        final List<String> history = loadSaveData.loadCsvFile(
+            loadSaveData.createPath(loadSaveData.HISTORY_FILE));
+        final String today = LocalDate.now().toString();
+        final List<String> foodNames = history.stream()
+            .filter(line -> line.startsWith(today) && line.split(",").length > 1)
+            .map(line -> line.split(",")[1])
+            .distinct()
+            .collect(Collectors.toList());
+        if (foodNames.isEmpty()) {
+            return null;
+        }
+        final List<Food> foods = new ArrayList<>();
+        for (final String name : foodNames) {
+            foods.add(new Food() {
+                @Override
+                public String getName() { 
+                    return name; 
+                }
+                @Override
+                public double getKcalPer100g() { 
+                    return 0; 
+                }
+                @Override
+                public double getProteins() { 
+                    return 0; 
+                }
+                @Override
+                public double getCarbs() { 
+                    return 0; 
+                }
+                @Override
+                public double getFats() { 
+                    return 0; 
+                }
+            });
+        }
+
+        return new Meal() {
+            @Override
+            public String getTime() { 
+                return today; 
+            }
+            @Override
+            public List<Food> getFood() { 
+                return List.copyOf(foods); 
+            }
+        };
     }
 }

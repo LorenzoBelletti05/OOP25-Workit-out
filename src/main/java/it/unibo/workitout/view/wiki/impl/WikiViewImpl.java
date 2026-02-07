@@ -59,6 +59,7 @@ public final class WikiViewImpl extends JPanel implements WikiView {
     private final JButton bPrioFood = new JButton("Cibo");
     private final JButton bPrioEx = new JButton("Esercizi");
     private final JButton backButtonView = new JButton("Back");
+    private final JLabel feedbackLabel = new JLabel("");
 
     /**
      * Builds a new wiki interactive view.
@@ -96,8 +97,13 @@ public final class WikiViewImpl extends JPanel implements WikiView {
         row2.add(bPrioFood);
         row2.add(bPrioEx);
 
+        feedbackLabel.setFont(new Font("Serif", Font.BOLD, BODY_SIZE));
+        final JPanel row3 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        row3.add(feedbackLabel);
+
         northPanel.add(row1);
         northPanel.add(row2);
+        northPanel.add(row3);
 
         contentList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
@@ -296,5 +302,15 @@ public final class WikiViewImpl extends JPanel implements WikiView {
     @Override
     public void addMainBackListener(final ActionListener listener) {
         this.backButtonView.addActionListener(listener);
+    }
+
+    /**
+     * Update the label with filter info.
+     * 
+     * @param message the message.
+     */
+    @Override
+    public void updateLabel(final String message) {
+        this.feedbackLabel.setText(message);
     }
 }

@@ -31,7 +31,7 @@ public class WikiRepositoryImpl implements WikiRepository {
     /**
      * Load all the videos from the json.
      * 
-     * @param model ...
+     * @param model of the wiki.
      */
     private void loadArticles(final Wiki model) {
         try (Reader reader = new InputStreamReader(
@@ -50,7 +50,7 @@ public class WikiRepositoryImpl implements WikiRepository {
     /**
      * Load all the videos from the json.
      * 
-     * @param model ...
+     * @param model of the wiki.
      */
     private void loadVideos(final Wiki model) {
         try (Reader reader = new InputStreamReader(
@@ -77,3 +77,4 @@ public class WikiRepositoryImpl implements WikiRepository {
         System.err.println(message + e.getMessage());
     }
 }
+

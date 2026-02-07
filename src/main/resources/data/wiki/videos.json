@@ -3,60 +3,186 @@
     "title": "Tutorial: Lo Squat Perfetto",
     "text": "Analisi tecnica e biomeccanica dello squat.",
     "url": "https://www.youtube.com/watch?v=xfyxEaUWo3M",
-    "tags": ["Gambe", "Technique", "BUILD_MUSCLE", "Squat"]
+    "tags": [
+      "Gambe",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Squat"
+    ]
   },
   {
     "title": "Panca Piana: Guida al Setup",
     "text": "Setup corretto per una panca piana sicura e potente.",
     "url": "https://www.youtube.com/watch?v=vthMCtgVtFw",
-    "tags": ["Petto", "Technique", "BUILD_MUSCLE", "Panca"]
+    "tags": [
+      "Petto",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Panca"
+    ]
   },
   {
     "title": "Stacco da Terra: Esecuzione Corretta",
     "text": "Come eseguire lo stacco da terra evitando errori comuni.",
     "url": "https://www.youtube.com/watch?v=op9kVnSso6Q",
-    "tags": ["Strength", "Technique", "BUILD_MUSCLE", "Stacco"]
+    "tags": [
+      "Strength",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Stacco"
+    ]
   },
   {
     "title": "Meal Prep per la Settimana",
     "text": "Organizzazione dei pasti per risparmiare tempo e macro.",
     "url": "https://www.youtube.com/watch?v=8Vz_itG7z9Y",
-    "tags": ["Nutrition", "Alimentazione", "MAINTAIN_WEIGHT", "LOSE_WEIGHT"]
+    "tags": [
+      "Nutrition",
+      "Alimentazione",
+      "MAINTAIN_WEIGHT",
+      "LOSE_WEIGHT",
+      "Pollo",
+      "Riso"
+    ]
   },
   {
     "title": "Allenamento HIIT Brucia Grassi",
     "text": "Routine cardio intensa di 20 minuti per dimagrire.",
     "url": "https://www.youtube.com/watch?v=ml6cT4AZdqI",
-    "tags": ["Cardio", "Intensity", "LOSE_WEIGHT"]
+    "tags": [
+      "Cardio",
+      "Intensity",
+      "LOSE_WEIGHT"
+    ]
   },
   {
     "title": "Military Press: Spalle d'Acciaio",
     "text": "Tecnica corretta per la spinta verticale e stabilità del core.",
     "url": "https://www.youtube.com/watch?v=2yjwXTZQDDI",
-    "tags": ["Spalle", "Strength", "Technique", "BUILD_MUSCLE"]
+    "tags": [
+      "Spalle",
+      "Strength",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Military Press"
+    ]
   },
   {
     "title": "10 Minuti Mobilità Mattutina",
     "text": "Routine rapida per migliorare la mobilità articolare.",
     "url": "https://www.youtube.com/watch?v=L_xrDAtykMI",
-    "tags": ["Recovery", "Mobility", "Health", "MAINTAIN_WEIGHT"]
+    "tags": [
+      "Recovery",
+      "Mobility",
+      "Health",
+      "MAINTAIN_WEIGHT"
+    ]
   },
   {
     "title": "Trazioni alla Sbarra per Principianti",
     "text": "Propedeutiche fondamentali per la tua prima trazione.",
     "url": "https://www.youtube.com/watch?v=3YvfRx31xDE",
-    "tags": ["Dorso", "Strength", "Technique", "BUILD_MUSCLE"]
+    "tags": [
+      "Dorso",
+      "Strength",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Trazioni"
+    ]
   },
   {
     "title": "Colazioni Proteiche Veloci",
     "text": "Idee rapide per colazioni nutrienti e ricche di proteine.",
     "url": "https://www.youtube.com/watch?v=J_rlxfghbZ4",
-    "tags": ["Nutrition", "BUILD_MUSCLE", "Alimentazione"]
+    "tags": [
+      "Nutrition",
+      "BUILD_MUSCLE",
+      "Alimentazione",
+      "Uova",
+      "Avena"
+    ]
   },
   {
     "title": "Addominali: 10 Minuti No-Stop",
     "text": "Circuito intenso per la stabilità e definizione del core.",
     "url": "https://www.youtube.com/watch?v=AnYl6Nk9GOA",
-    "tags": ["Addominali", "Technique", "LOSE_WEIGHT"]
+    "tags": [
+      "Addominali",
+      "Technique",
+      "LOSE_WEIGHT",
+      "Crunch",
+      "Plank"
+    ]
+  },
+  {
+    "title": "Curl con Bilanciere: Tecnica Completa",
+    "text": "Come eseguire il curl bicipiti con bilanciere perfettamente.",
+    "url": "https://www.youtube.com/watch?v=kwG2ipFRgfo",
+    "tags": [
+      "Braccia",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Curl"
+    ]
+  },
+  {
+    "title": "Push-up: 10 Varianti Progressive",
+    "text": "Dalle flessioni base alle varianti avanzate.",
+    "url": "https://www.youtube.com/watch?v=IODxDxX7oi4",
+    "tags": [
+      "Petto",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Push-up",
+      "Calisthenics"
+    ]
+  },
+  {
+    "title": "Affondi: Tecnica e Varianti",
+    "text": "Come eseguire gli affondi per gambe e glutei tonici.",
+    "url": "https://www.youtube.com/watch?v=QOVaHwm-Q6U",
+    "tags": [
+      "Gambe",
+      "Glutei",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Affondi"
+    ]
+  },
+  {
+    "title": "Ricette Proteiche: Pollo e Riso",
+    "text": "Preparazione veloce del classico pasto da bodybuilder.",
+    "url": "https://www.youtube.com/watch?v=hJ9PwoQEbJ4",
+    "tags": [
+      "Nutrition",
+      "BUILD_MUSCLE",
+      "Alimentazione",
+      "Pollo",
+      "Riso"
+    ]
+  },
+  {
+    "title": "Rematore con Bilanciere",
+    "text": "Tecnica corretta per sviluppare un dorso massiccio.",
+    "url": "https://www.youtube.com/watch?v=vT2GjY_Umpw",
+    "tags": [
+      "Dorso",
+      "Technique",
+      "BUILD_MUSCLE",
+      "Rematore"
+    ]
+  },
+  {
+    "title": "La Dieta Mediterranea per lo Sport",
+    "text": "Come adattare la dieta mediterranea per chi si allena.",
+    "url": "https://www.youtube.com/watch?v=0hNfRR8nYcs",
+    "tags": [
+      "Nutrition",
+      "Alimentazione",
+      "MAINTAIN_WEIGHT",
+      "Pasta",
+      "Pesce",
+      "Verdure"
+    ]
   }
 ]
