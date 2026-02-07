@@ -5,7 +5,7 @@ import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 /**
  * Specific exercise type class, which extends the abstract class PlannedExercise with his behavior.
  */
-public final class StrengthPlannedExerciseImpl extends PlannedExerciseImpl implements StrengthPlannedExercise {
+public final class StrengthPlannedExerciseImpl extends AbstractPlannedExerciseImpl implements StrengthPlannedExercise {
 
     private final int sets;
     private final int reps;

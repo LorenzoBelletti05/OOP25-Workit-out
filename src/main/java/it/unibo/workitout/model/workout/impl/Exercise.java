@@ -15,10 +15,10 @@ public class Exercise {
 
     private final String name;
     private final double caloriesBurned;
-    
+
     @SerializedName("goals")
     private final String exerciseMission;
-    
+
     @SerializedName("type")
     private final ExerciseType typeExercise;
 
@@ -30,8 +30,11 @@ public class Exercise {
      * @param caloriesBurned the ammount of calories that the exerc. will let the user burn.
      * 
      * @param exerciseMission a set of {@link UserGoal}, the value associeted to each exercise.
+     * 
+     * @param typeExercise the typology Strenght or Cardio.
+     * 
      */
-    public Exercise(final String name, final double caloriesBurned, final String exerciseMission, ExerciseType typeExercise) {
+    public Exercise(final String name, final double caloriesBurned, final String exerciseMission, final ExerciseType typeExercise) {
         this.name = name;
         this.caloriesBurned = caloriesBurned;
         this.exerciseMission = exerciseMission; //creating a copy of the set

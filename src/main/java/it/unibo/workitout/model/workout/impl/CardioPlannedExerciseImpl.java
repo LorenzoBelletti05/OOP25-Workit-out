@@ -5,13 +5,20 @@ import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
 /**
  * Specific exercise type class, which extends the abstract class PlannedExercise with his behavior.
  */
-public final class CardioPlannedExerciseImpl extends PlannedExerciseImpl implements CardioPlannedExercise {
+public final class CardioPlannedExerciseImpl extends AbstractPlannedExerciseImpl implements CardioPlannedExercise {
 
     /**
      * Private final field which indicate the distance in km.
      */
     private final double distance;
 
+    /**
+     * Contructor to set the data when a exercise is create.
+     * 
+     * @param exercise the raw exercise.
+     * @param minutes the minutes of workout.
+     * @param distance the distance.
+     */
     public CardioPlannedExerciseImpl(
         final Exercise exercise,
         final Integer minutes,

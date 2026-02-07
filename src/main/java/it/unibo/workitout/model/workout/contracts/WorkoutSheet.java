@@ -9,7 +9,7 @@ import java.util.Set;
 public interface WorkoutSheet extends WorkoutFunction {
 
     /**
-     * Return the specified exercise
+     * Return the specified exercise.
      * 
      * @param nameExercise the name of the exercise required.
      * 

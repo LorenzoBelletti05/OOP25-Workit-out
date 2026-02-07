@@ -3,7 +3,7 @@ package it.unibo.workitout.model.workout.impl;
 /**
  * General abstract class for manage names.
  */
-public abstract class NameFunction {
+public abstract class AbstractNameFunction {
 
     private final String name;
 
@@ -12,7 +12,7 @@ public abstract class NameFunction {
      * 
      * @param name name of the exercise saved in the field.
      */
-    public NameFunction(final String name) {
+    public AbstractNameFunction(final String name) {
         this.name = name;
     }
 

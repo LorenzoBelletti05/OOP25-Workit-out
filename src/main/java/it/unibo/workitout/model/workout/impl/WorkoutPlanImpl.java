@@ -19,10 +19,10 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * This class aggregates multiples {@link WorkoutSheetImpl} istence to represent the training program.
  * </p>
  */
-public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
+public final class WorkoutPlanImpl extends AbstractNameFunction implements WorkoutPlan {
 
     //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
-    private Map<String, WorkoutSheetImpl> workoutPlan; 
+    private final Map<String, WorkoutSheetImpl> workoutPlan; 
 
     /**
      * Costructor that gived the nema of the plan give it to the NameFunction and than create a new plan.
@@ -36,7 +36,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     private double sumAll(final ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
-        for (WorkoutSheet sheet : workoutPlan.values()) {
+        for (final WorkoutSheet sheet : workoutPlan.values()) {
             sum += sheetPlan.applyAsDouble(sheet);
         }
         return sum;
@@ -44,8 +44,8 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     private <T extends PlannedExercise> Set<T> getExerciseSubdivision(final Class<T> exerciseClass) {
         final Set<T> allExercise = new HashSet<>();
-        for (WorkoutSheet sheet : workoutPlan.values()) {
-            for (PlannedExercise plannExercise : sheet.getWorkoutSheet()) {
+        for (final WorkoutSheet sheet : workoutPlan.values()) {
+            for (final PlannedExercise plannExercise : sheet.getWorkoutSheet()) {
                 if (exerciseClass.isInstance(plannExercise)) {
                     allExercise.add(exerciseClass.cast(plannExercise));
                 }
@@ -56,7 +56,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     @Override
     public Map<String, WorkoutSheet> getWorkoutPlan() {
-        return Collections.unmodifiableMap(new TreeMap<String, WorkoutSheet>(this.workoutPlan));
+        return Collections.unmodifiableMap(new TreeMap<>(this.workoutPlan));
     }
 
     //Following two methods return the sum of: volume and burned calories
@@ -79,7 +79,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     @Override
     public Set<PlannedExercise> getAllExercise() {
         final Set<PlannedExercise> allExercise = new HashSet<>();
-        for (WorkoutSheet sheet : workoutPlan.values()) {
+        for (final WorkoutSheet sheet : workoutPlan.values()) {
             allExercise.addAll(sheet.getWorkoutSheet());
         }
         return Set.copyOf(allExercise);
@@ -97,7 +97,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     }
 
     @Override
-    public void addWorkSheet(String dateNext, WorkoutSheet workoutSheet) {
+    public void addWorkSheet(final String dateNext, final WorkoutSheet workoutSheet) {
         this.workoutPlan.put(dateNext, (WorkoutSheetImpl) workoutSheet);
     }
 

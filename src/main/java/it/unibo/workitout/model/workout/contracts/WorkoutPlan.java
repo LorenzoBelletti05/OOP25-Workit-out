@@ -4,8 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Interface that representing the entire workout for the user
- * based on his preferencies.
+ * Interface that representing the entire workout for the user based on his preferencies.
  * 
  * <p>
  * Is a container for all training "daily" session, each one
@@ -15,10 +14,11 @@ import java.util.Set;
 public interface WorkoutPlan extends WorkoutFunction {
 
     /**
-     * Method that add the sheet to the plan.
+     * Method that add the sheet to the plan. 
      * 
-     * @param sheet the sheet to add.
-     *  
+     * @param dateNext the date in string.
+     * @param workoutSheet the workoutSheet of the week.
+     * 
      */
     void addWorkSheet(String dateNext, WorkoutSheet workoutSheet);
 

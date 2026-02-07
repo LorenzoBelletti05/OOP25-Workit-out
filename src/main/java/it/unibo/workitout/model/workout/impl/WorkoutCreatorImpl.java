@@ -13,59 +13,87 @@ import it.unibo.workitout.model.workout.contracts.WorkoutCreator;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 
+/**
+ * Creator class, with the logic for generate the workout plan.
+ */
 public class WorkoutCreatorImpl implements WorkoutCreator {
 
     private Boolean userCheckSafety = false;
     private final String pathRawExerciwse = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
-    List<Exercise> lista; 
+    private final List<Exercise> lista;
 
+    /**
+     * Costructor that when called it load the exercise.json.
+     * 
+     * @throws IOException exception.
+     */
     public WorkoutCreatorImpl() throws IOException {
         lista = loadSaveData.loadSavedDataFrom(pathRawExerciwse, Exercise[].class);
     }
 
-    private double getCardioMultiplierPerExercise(Exercise exercise) {
-        String nameExercise = exercise.getName();        
+    /**
+     * Method multiplier that moify the variable for the cardio exercise.
+     * 
+     * @param exercise the row exercise.
+     * 
+     * @return the multiplier.
+     */
+    private double getCardioMultiplierPerExercise(final Exercise exercise) {
+        final String nameExercise = exercise.getName();        
         if (nameExercise.contains("piscina") || nameExercise.contains("nuoto")) {
             return 0.2; //low distance
         }
-        if(nameExercise.contains("ciclismo") || nameExercise.contains("bici")) {
+        if (nameExercise.contains("ciclismo") || nameExercise.contains("bici")) {
             return 2.5; //high distance
         }
-        if(nameExercise.contains("corsa") || nameExercise.contains("running")) {
+        if (nameExercise.contains("corsa") || nameExercise.contains("running")) {
             return 1.0; //mid distance
         }
-        if(nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
+        if (nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
             return 0.5;
         }
 
         return 1.0; //default
     }
 
-    private double getStrenghtMultiplierPerExercise(Exercise exercise) {
-        String nameExercise = exercise.getName();        
+    /**
+     * Method multiplier that moify the variable for the strenght exercise.
+     * 
+     * @param exercise the raw exercise.
+     * 
+     * @return the multiplier.
+    */
+    private double getStrenghtMultiplierPerExercise(final Exercise exercise) {
+        final String nameExercise = exercise.getName();        
         if (nameExercise.contains("bicipiti") || nameExercise.contains("tricipiti") || nameExercise.contains("spalle")) {
             return 0.8; //low weight
         }
-        if(nameExercise.contains("gambe") || nameExercise.contains("squat") || nameExercise.contains("pressa")) {
+        if (nameExercise.contains("gambe") || nameExercise.contains("squat") || nameExercise.contains("pressa")) {
             return 2.5; //high weight
         }
-        if(nameExercise.contains("panca") || nameExercise.contains("dorso") || nameExercise.contains("rematore")) {
+        if (nameExercise.contains("panca") || nameExercise.contains("dorso") || nameExercise.contains("rematore")) {
             return 1.8; //mid weight
         }
-        if(nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
+        if (nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
             return 0.5;
         }
         return 1.0; //default
     }
 
-    public WorkoutPlan generatePlan(double bmr, double tdee, double dailyCalories, ActivityLevel activityLevel, UserGoal userGoal) {
+    public WorkoutPlan generatePlan(
+        final double bmr,
+        final double tdee,
+        final double dailyCalories,
+        final ActivityLevel activityLevel,
+        final UserGoal userGoal
+    ) {
         userCheckSafety = dailyCalories < bmr;
-        List<Exercise> filteredRawExercise = new ArrayList<>();
+        final List<Exercise> filteredRawExercise = new ArrayList<>();
         int sets = 0;
         int reps = 0;
         double intensityExercise = 1;
-        double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
-        double tdeeMultiplier = calculatedTdee / 2100.0;
+        final double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
+        final double tdeeMultiplier = calculatedTdee / 2100.0;
 
         double weight = 5;
         int distance = 5;
@@ -73,17 +101,17 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         double goalWeightMul = 1.0;
         double goalDistanceMul = 1.0;
 
-        for (Exercise exercise : lista) {
+        for (final Exercise exercise : lista) {
 
-            String goals = exercise.getExerciseAttitude(); //get the hole string of goals
+            final String goals = exercise.getExerciseAttitude(); //get the hole string of goals
 
             //if the exercise match at least one of the goals then add it
-            if(goals.contains(userGoal.name())) {
+            if (goals.contains(userGoal.name())) {
                 filteredRawExercise.add(exercise);
             }
         }
         
-        Random random = new Random();
+        final Random random = new Random();
         switch (userGoal) {
             case BUILD_MUSCLE :
 
@@ -125,31 +153,31 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 break;
         }
 
-        int currentInsity = (int) (intensityExercise);
-        int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
+        final int currentInsity = (int) (intensityExercise);
+        final int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
         // //calculate the final sets based on the intensdity of the type of exercise previously setted.
-        LocalDate startDate = LocalDate.now();
+        final LocalDate startDate = LocalDate.now();
 
         //creating the workoutplan with his custom name.
-        WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
+        final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
 
         for(int j = 0; j < 1 + activityLevel.ordinal(); j++) {
-            String dateNext = startDate.plusDays(j).toString();
+            final String dateNext = startDate.plusDays(j).toString();
 
             //create the planned exercises with custom name
-            WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));
+            final WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));
 
             //here because the next day an exercise can be done again
-            List<Exercise> alreadyUsed = new ArrayList<>(); 
+            final List<Exercise> alreadyUsed = new ArrayList<>(); 
 
             for(int i = 0; i < random.nextInt(5, 10) + currentInsity; i++) {
 
                 Exercise rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
 
                 //checking if the exercise has been already selected
-                if(alreadyUsed.isEmpty()) {
+                if (alreadyUsed.isEmpty()) {
                     alreadyUsed.add(rawExercise);
-                }else if(alreadyUsed.contains(rawExercise)) {
+                }else if (alreadyUsed.contains(rawExercise)) {
                     while(alreadyUsed.contains(rawExercise)) {
                         rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
                     }
@@ -157,7 +185,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 }
 
                 //Create the plan then check which type is: CARDIO or STRENGHT
-                PlannedExercise plannedExercise;
+                final PlannedExercise plannedExercise;
 
                 if (rawExercise.getExerciseType().equals(ExerciseType.STRENGTH)) {
 

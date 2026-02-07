@@ -14,13 +14,18 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * His purpose is to act as contaienr for a group of {@link PlannedExercise} for a specific train.
  * </p>
  */
-public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
+public final class WorkoutSheetImpl extends AbstractNameFunction implements WorkoutSheet {
 
     // private Set<PlannedExercise> exercisesSheet;
 
-    private Set<StrengthPlannedExerciseImpl> strengthExs = new HashSet<>();
-    private Set<CardioPlannedExerciseImpl> cardioExs = new HashSet<>();
+    private final Set<StrengthPlannedExerciseImpl> strengthExs;
+    private final Set<CardioPlannedExerciseImpl> cardioExs;
 
+    /**
+     * Costructor that taken the name of the sheet it inizialize the two type of set exercise.
+     * 
+     * @param nameSheet name of the sheet.
+     */
     public WorkoutSheetImpl(final String nameSheet) {
         super(nameSheet);
         // exercisesSheet = new HashSet<>();
@@ -32,19 +37,20 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
      * Private method to avoid code duplication.
      * 
      * @param plnExe that is used to call the right method when the interested one is pressed.
+     * 
      * @return the sum in double.
      */
-    private double sumAll(ToDoubleFunction<PlannedExercise> plnExe) {
+    private double sumAll(final ToDoubleFunction<PlannedExercise> plnExe) {
         double sum = 0.0;
-        for (PlannedExercise e : strengthExs) sum += plnExe.applyAsDouble(e);
-        for (PlannedExercise e : cardioExs) sum += plnExe.applyAsDouble(e);
+        for (final PlannedExercise e : strengthExs) sum += plnExe.applyAsDouble(e);
+        for (final PlannedExercise e : cardioExs) sum += plnExe.applyAsDouble(e);
         return sum;
     }
 
     @Override
     public Set<PlannedExercise> getWorkoutSheet() {
-        
-        Set<PlannedExercise> mergeExercise = new HashSet<>();
+
+        final Set<PlannedExercise> mergeExercise = new HashSet<>();
         if (this.strengthExs != null) {
             mergeExercise.addAll(this.strengthExs);
         }
