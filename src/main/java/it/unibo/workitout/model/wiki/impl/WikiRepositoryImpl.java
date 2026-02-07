@@ -55,7 +55,7 @@ public class WikiRepositoryImpl implements WikiRepository {
     private void loadVideos(final Wiki model) {
         try (Reader reader = new InputStreamReader(
             WikiRepositoryImpl.class.getResourceAsStream(VIDEOS_PATH), StandardCharsets.UTF_8)) {
-           final VideoImpl[] videos = gson.fromJson(reader, VideoImpl[].class);
+            final VideoImpl[] videos = gson.fromJson(reader, VideoImpl[].class);
             if (videos != null) {
                 for (final VideoImpl vid : videos) {
                     model.addContent(vid);
