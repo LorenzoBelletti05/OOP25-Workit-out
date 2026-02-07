@@ -37,7 +37,7 @@ public final class ArticleImpl implements Article {
 
     @Override
     public Set<String> getTags() {
-        return this.tags;
+        return Set.copyOf(this.tags);
     }
 
     @Override

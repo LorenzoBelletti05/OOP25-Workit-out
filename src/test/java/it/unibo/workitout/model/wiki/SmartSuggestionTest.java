@@ -24,7 +24,7 @@ import it.unibo.workitout.model.workout.impl.ExerciseType;
  * New class for test the SmartSuggestion system.
  */
 class SmartSuggestionTest {
-
+    //constants
     private static final String PASTA = "pasta";
     private static final String SQUAT = "Squat";
     private static final double KCAL_PASTA = 350;
@@ -36,10 +36,11 @@ class SmartSuggestionTest {
     private static final double USER_WEIGHT = 68;
     private static final double EXERCISE_METS = 5.0;
     private static final String TESTO = "testo";
-
+    //models
     private Wiki wiki;
     private UserProfile user;
     private SmartSuggestionImpl smartSuggestion;
+    //tags
     private String goalTag;
 
     /**

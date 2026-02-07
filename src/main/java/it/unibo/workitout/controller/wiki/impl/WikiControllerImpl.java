@@ -10,13 +10,12 @@ import it.unibo.workitout.model.wiki.contracts.WikiContent;
 import it.unibo.workitout.model.wiki.impl.SmartSuggestionImpl;
 import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
-
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
@@ -29,9 +28,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Implementation of WikiController.
  */
 public class WikiControllerImpl implements WikiController {
+    private static final int MAX_DISPLAY_ITEMS = 3;
+
     private final Wiki model;
-    private final WikiView view;
     private final SmartSuggestionImpl smartSuggestion = new SmartSuggestionImpl();
+    private final WikiView view;
     private final System.Logger logger = System.getLogger(WikiControllerImpl.class.getName());
 
     private UserProfile user;
@@ -39,7 +40,7 @@ public class WikiControllerImpl implements WikiController {
     private Meal meal;
 
     /**
-     * Constructor.
+     * Builder.
      * 
      * @param model wiki model.
      * @param view wiki view.
@@ -120,7 +121,7 @@ public class WikiControllerImpl implements WikiController {
         final UserProfile userProfile, 
         final List<Exercise> currentExercises, 
         final Meal currentMeal) {
-
+        //user
         if (userProfile != null) {
             this.user = new UserProfile(
                 userProfile.getId(),
@@ -134,14 +135,15 @@ public class WikiControllerImpl implements WikiController {
                 userProfile.getUserGoal(),
                 userProfile.getStrategy()
             );
-
+            //exercises
             if (currentExercises != null) {
                 this.exercises = new ArrayList<>(currentExercises);
             } else {
                 this.exercises = null;
             }
-
+            //meal
             this.meal = currentMeal;
+            //update the view
             this.view.updateContents(this.smartSuggestion.suggest(
                 this.model, 
                 this.user, 
@@ -154,46 +156,47 @@ public class WikiControllerImpl implements WikiController {
     /**
      * Update the wiki with the current user data.
      * 
-     * @param user the current user.
+     * @param currentUser the current user.
      */
-    public void updateWithCurrentData(final UserProfile user) {
-        if (user == null) {
+    public void updateWithCurrentData(final UserProfile currentUser) {
+        if (currentUser == null) {
             return;
         }
-        final List<Exercise> exercises = loadExercisesFromPlan();
-        final Meal meal = loadTodayMealFromHistory();
-        // Update label
-        final StringBuilder feedback = new StringBuilder();
-        if (exercises != null && !exercises.isEmpty()) {
-            feedback.append("Esercizi trovati: ");
-            feedback.append(exercises.stream()
+        final List<Exercise> currentExercises = loadExercisesFromPlan();
+        final Meal currentMeal = loadTodayMealFromHistory();
+        final StringBuilder feedback = new StringBuilder(100);
+        //exercises
+        if (currentExercises != null && !currentExercises.isEmpty()) {
+            feedback.append("Esercizi trovati: ")
+                .append(currentExercises.stream()
                 .map(Exercise::getName)
                 .distinct()
-                .limit(3)
+                .limit(MAX_DISPLAY_ITEMS)
                 .collect(Collectors.joining(", ")));
-            if (exercises.size() > 3) {
+            if (currentExercises.size() > MAX_DISPLAY_ITEMS) {
                 feedback.append("...");
             }
         } else {
             feedback.append("Nessun esercizio nel piano.");
         }
         feedback.append(" | ");
-        if (meal != null && meal.getFood() != null && !meal.getFood().isEmpty()) {
-            feedback.append("Cibi oggi: ");
-            feedback.append(meal.getFood().stream()
+        //meal
+        if (currentMeal != null && currentMeal.getFood() != null && !currentMeal.getFood().isEmpty()) {
+            feedback.append("Cibi oggi: ")
+                .append(currentMeal.getFood().stream()
                 .map(Food::getName)
                 .distinct()
-                .limit(3)
+                .limit(MAX_DISPLAY_ITEMS)
                 .collect(Collectors.joining(", ")));
-            if (meal.getFood().size() > 3) {
+            if (currentMeal.getFood().size() > MAX_DISPLAY_ITEMS) {
                 feedback.append("...");
             }
         } else {
             feedback.append("Nessun cibo registrato oggi.");
         }
-
+        //update label
         this.view.updateLabel(feedback.toString());
-        showSmartSuggestions(user, exercises, meal);
+        showSmartSuggestions(currentUser, currentExercises, currentMeal);
     }
 
     /**
@@ -208,26 +211,31 @@ public class WikiControllerImpl implements WikiController {
                 .map(PlannedExercise::getExercise)
                 .collect(Collectors.toList());
         }
-        return null;
+        return Collections.emptyList();
     }
 
     /**
      * Load today meal from history.csv.
      * 
-     * @return a Meal with today's foods.
+     * @return a meal with today's foods.
      */
     private Meal loadTodayMealFromHistory() {
+        //load history
         final List<String> history = loadSaveData.loadCsvFile(
             loadSaveData.createPath(loadSaveData.HISTORY_FILE));
         final String today = LocalDate.now().toString();
+        //get food names
         final List<String> foodNames = history.stream()
             .filter(line -> line.startsWith(today) && line.split(",").length > 1)
             .map(line -> line.split(",")[1])
             .distinct()
             .collect(Collectors.toList());
+
         if (foodNames.isEmpty()) {
             return null;
         }
+
+        //create foods
         final List<Food> foods = new ArrayList<>();
         for (final String name : foodNames) {
             foods.add(new Food() {
@@ -235,18 +243,22 @@ public class WikiControllerImpl implements WikiController {
                 public String getName() { 
                     return name; 
                 }
+
                 @Override
                 public double getKcalPer100g() { 
                     return 0; 
                 }
+
                 @Override
                 public double getProteins() { 
                     return 0; 
                 }
+
                 @Override
                 public double getCarbs() { 
                     return 0; 
                 }
+
                 @Override
                 public double getFats() { 
                     return 0; 
@@ -259,6 +271,7 @@ public class WikiControllerImpl implements WikiController {
             public String getTime() { 
                 return today; 
             }
+
             @Override
             public List<Food> getFood() { 
                 return List.copyOf(foods); 

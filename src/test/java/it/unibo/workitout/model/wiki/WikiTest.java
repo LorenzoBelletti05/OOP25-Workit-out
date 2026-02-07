@@ -36,7 +36,7 @@ class WikiTest {
             "the wiki contents should not be null");
         assertFalse(
             wiki.getContents().isEmpty(), 
-            "the wiki contents should contains artciles and videos");
+            "the wiki contents should contains articles and videos");
     }
 
     /**
@@ -59,6 +59,6 @@ class WikiTest {
         assertEquals(
             totalContents, 
             this.wiki.search("").size(), 
-            "An empty search should reaturn all the contents");
+            "An empty search should return all the contents");
     }
 }

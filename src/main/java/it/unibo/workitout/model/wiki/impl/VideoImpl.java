@@ -2,7 +2,6 @@ package it.unibo.workitout.model.wiki.impl;
 
 import java.net.URL;
 import java.util.Set;
-
 import it.unibo.workitout.model.wiki.contracts.Video;
 
 /**
@@ -46,7 +45,7 @@ public final class VideoImpl implements Video {
 
     @Override
     public Set<String> getTags() {
-        return this.tags;
+        return Set.copyOf(this.tags);
     }
 
     @Override

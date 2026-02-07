@@ -32,21 +32,21 @@ public interface WikiView {
     /**
      * Back to the main view.
      * 
-     * @param listener ...
+     * @param listener the action listener for back navigation.
      */
     void addMainBackListener(ActionListener listener);
 
     /**
      * Listener for the item in the list.
      * 
-     * @param listener ...
+     * @param listener the consumer for selected content.
      */
     void addSelectionListener(java.util.function.Consumer<WikiContent> listener);
 
     /**
      * Listener for back button.
      * 
-     * @param listener ...
+     * @param listener the action to run on back.
      */
     void addBackListener(Runnable listener);
 
@@ -60,42 +60,42 @@ public interface WikiView {
     /**
      * Listener for search.
      * 
-     * @param action ...
+     * @param action the action to run on search.
      */
     void addSearchListener(Runnable action);
 
     /**
      * Listener for Show all filters.
      * 
-     * @param action ...
+     * @param action the action to run for showing all.
      */
     void addAllFilterListener(Runnable action);
 
     /**
      * Listener for articles.
      * 
-     * @param action ...
+     * @param action the action to run for filtering articles.
      */
     void addArticlesFilterListener(Runnable action);
 
     /**
      * Listener for videos.
      * 
-     * @param action ...
+     * @param action the action to run for filtering videos.
      */
     void addVideosFilterListener(Runnable action);
 
     /**
      * Listener for food priority.
      * 
-     * @param action ...
+     * @param action the action to run for food priority.
      */
     void addPrioFoodListener(Runnable action);
 
     /**
      * Listener for exercise priority.
      * 
-     * @param action ...
+     * @param action the action to run for exercise priority.
      */
     void addPrioExerciseListener(Runnable action);
 

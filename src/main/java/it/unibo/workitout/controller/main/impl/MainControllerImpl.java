@@ -25,12 +25,15 @@ import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 public class MainControllerImpl implements MainController {
+    //constants
     private static final String LOGIN = "LOGIN";
     private static final String DASHBOARD = "DASHBOARD";
     private static final String WIKI = "WIKI";
     private static final String FOOD = "FOOD";
     private static final String EXERCISE = "EXERCISE";
+    //view
     private final MainView mainView;
+    //user
     private UserProfile user;  
     private UserProfileControllerImpl userController;
     
@@ -40,7 +43,7 @@ public class MainControllerImpl implements MainController {
     }
 
     public void communicateBurnedCalories(final double calories) {
-        // Il MainController prende il dato e lo passa a Diego
+        // the MainController takes the data and passes it to userController
         if (this.userController != null) {
             this.userController.updateBurnedCalories(calories);
         }

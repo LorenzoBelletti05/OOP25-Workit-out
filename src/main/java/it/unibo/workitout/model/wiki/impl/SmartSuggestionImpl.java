@@ -32,13 +32,17 @@ public class SmartSuggestionImpl implements SmartSuggestion {
         final String goal = user.getUserGoal().name();
         final Stream<WikiContent> stream = wiki.getContents().stream();
         final Set<String> tags = new HashSet<>();
+
         tags.add(goal);
+
         if (exercises != null) {
             exercises.forEach(e -> tags.add(e.getName()));
         }
+
         if (meal != null) {
             tags.add("Nutrition");
             tags.add("Alimentazione");
+
             switch (user.getUserGoal()) {
                 case LOSE_WEIGHT:
                     tags.add("Dieta");
@@ -53,13 +57,16 @@ public class SmartSuggestionImpl implements SmartSuggestion {
                 default:
                     break;
             }
-            meal.getFood().forEach(f -> tags.add(f.getName()));
+
+            if (meal.getFood() != null) {
+                meal.getFood().forEach(f -> tags.add(f.getName()));
+            }
         }
 
         return stream
             .filter(content -> content.getTags().stream()
                 .anyMatch(tag -> tags.stream()
-                    .anyMatch(interest -> interest.equalsIgnoreCase(tag))))
+                .anyMatch(interest -> interest.equalsIgnoreCase(tag))))
             .collect(Collectors.toSet());
     }
 }
