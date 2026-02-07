@@ -35,14 +35,12 @@
   {
     "title": "Meal Prep per la Settimana",
     "text": "Organizzazione dei pasti per risparmiare tempo e macro.",
-    "url": "https://www.youtube.com/watch?v=8Vz_itG7z9Y",
+    "url": "https://www.youtube.com/watch?v=ESP0SS_bDKA",
     "tags": [
       "Nutrition",
       "Alimentazione",
       "MAINTAIN_WEIGHT",
-      "LOSE_WEIGHT",
-      "Pollo",
-      "Riso"
+      "LOSE_WEIGHT"
     ]
   },
   {
@@ -63,8 +61,7 @@
       "Spalle",
       "Strength",
       "Technique",
-      "BUILD_MUSCLE",
-      "Military Press"
+      "BUILD_MUSCLE"
     ]
   },
   {
@@ -86,20 +83,17 @@
       "Dorso",
       "Strength",
       "Technique",
-      "BUILD_MUSCLE",
-      "Trazioni"
+      "BUILD_MUSCLE"
     ]
   },
   {
     "title": "Colazioni Proteiche Veloci",
     "text": "Idee rapide per colazioni nutrienti e ricche di proteine.",
-    "url": "https://www.youtube.com/watch?v=J_rlxfghbZ4",
+    "url": "https://www.youtube.com/watch?v=oDfk6xjR97w",
     "tags": [
       "Nutrition",
       "BUILD_MUSCLE",
-      "Alimentazione",
-      "Uova",
-      "Avena"
+      "Alimentazione"
     ]
   },
   {
@@ -109,80 +103,282 @@
     "tags": [
       "Addominali",
       "Technique",
-      "LOSE_WEIGHT",
-      "Crunch",
-      "Plank"
+      "LOSE_WEIGHT"
     ]
   },
   {
-    "title": "Curl con Bilanciere: Tecnica Completa",
-    "text": "Come eseguire il curl bicipiti con bilanciere perfettamente.",
-    "url": "https://www.youtube.com/watch?v=kwG2ipFRgfo",
+    "title": "Lat Machine: Tecnica per Dorso Largo",
+    "text": "Come eseguire la lat machine correttamente per massimizzare l'ampiezza del dorso.",
+    "url": "https://www.youtube.com/watch?v=CAwf7n6Luuc",
     "tags": [
-      "Braccia",
+      "Dorso",
       "Technique",
       "BUILD_MUSCLE",
-      "Curl"
+      "Lat Machine"
     ]
   },
   {
-    "title": "Push-up: 10 Varianti Progressive",
-    "text": "Dalle flessioni base alle varianti avanzate.",
-    "url": "https://www.youtube.com/watch?v=IODxDxX7oi4",
-    "tags": [
-      "Petto",
-      "Technique",
-      "BUILD_MUSCLE",
-      "Push-up",
-      "Calisthenics"
-    ]
-  },
-  {
-    "title": "Affondi: Tecnica e Varianti",
-    "text": "Come eseguire gli affondi per gambe e glutei tonici.",
-    "url": "https://www.youtube.com/watch?v=QOVaHwm-Q6U",
+    "title": "Leg Extension: Quadricipiti Isolati",
+    "text": "Tecnica corretta per leg extension e quando usarla nel tuo programma.",
+    "url": "https://www.youtube.com/watch?v=Z2S2ft0ya8g&t=48s",
     "tags": [
       "Gambe",
-      "Glutei",
+      "Quadricipiti",
       "Technique",
-      "BUILD_MUSCLE",
-      "Affondi"
+      "BUILD_MUSCLE"
     ]
   },
   {
-    "title": "Ricette Proteiche: Pollo e Riso",
-    "text": "Preparazione veloce del classico pasto da bodybuilder.",
-    "url": "https://www.youtube.com/watch?v=hJ9PwoQEbJ4",
+    "title": "Leg Curl: Femorali Forti",
+    "text": "Come allenare i femorali con leg curl per gambe complete.",
+    "url": "https://www.youtube.com/watch?v=1Tq3QdYUuHs",
+    "tags": [
+      "Gambe",
+      "Femorali",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Rematore Manubrio: Dorso Spesso",
+    "text": "Tecnica rematore con manubrio per costruire spessore dorsale.",
+    "url": "https://www.youtube.com/watch?v=roCP6wCXPqo",
+    "tags": [
+      "Dorso",
+      "Rematore",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Alzate Laterali: Spalle Larghe",
+    "text": "Come eseguire le alzate laterali per deltoidi 3D.",
+    "url": "https://www.youtube.com/watch?v=3VcKaXpzqRo",
+    "tags": [
+      "Spalle",
+      "Alzate Laterali",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "French Press: Tricipiti Massicci",
+    "text": "Esecuzione corretta del french press per tricipiti.",
+    "url": "https://www.youtube.com/watch?v=d_KZxkY_0cM",
+    "tags": [
+      "Braccia",
+      "Tricipiti",
+      "French Press",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Calf Raise: Polpacci Definiti",
+    "text": "Come allenare i polpacci con calf raise in piedi e seduto.",
+    "url": "https://www.youtube.com/watch?v=gwLzBJYoWlI",
+    "tags": [
+      "Polpacci",
+      "Calf Raise",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Crunch: Addominali Scolpiti",
+    "text": "Tecnica corretta per il crunch addominale classico.",
+    "url": "https://www.youtube.com/watch?v=Xyd_fa5zoEU",
+    "tags": [
+      "Addominali",
+      "Crunch",
+      "Technique",
+      "LOSE_WEIGHT"
+    ]
+  },
+  {
+    "title": "Russian Twist: Obliqui Definiti",
+    "text": "Come fare il russian twist per addominali obliqui forti.",
+    "url": "https://www.youtube.com/watch?v=wkD8rjkodUI",
+    "tags": [
+      "Addominali",
+      "Russian Twist",
+      "Core",
+      "Technique"
+    ]
+  },
+  {
+    "title": "Panca Inclinata Manubri",
+    "text": "Sviluppo pettorale alto con panca inclinata e manubri.",
+    "url": "https://www.youtube.com/watch?v=8iPEnn-ltC8",
+    "tags": [
+      "Petto",
+      "Panca Inclinata",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Pulley Basso: Rematore Seduto",
+    "text": "Come eseguire il pulley basso per lo spessore del dorso.",
+    "url": "https://www.youtube.com/watch?v=UCXxvVItLoM",
+    "tags": [
+      "Dorso",
+      "Pulley",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Chest Press: Alternative alla Panca",
+    "text": "Come usare la chest press machine per il petto.",
+    "url": "https://www.youtube.com/watch?v=sqNwDkUU_Ps",
+    "tags": [
+      "Petto",
+      "Chest Press",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Face Pull: Spalle Posteriori",
+    "text": "Esercizio essenziale per deltoidi posteriori e postura.",
+    "url": "https://www.youtube.com/watch?v=rep-qVOkqgk",
+    "tags": [
+      "Spalle",
+      "Face Pull",
+      "Technique",
+      "Health"
+    ]
+  },
+  {
+    "title": "Hammer Curl: Brachiale e Avambracci",
+    "text": "Curl a martello per braccia complete.",
+    "url": "https://www.youtube.com/watch?v=zC3nLlEvin4",
+    "tags": [
+      "Braccia",
+      "Curl Martello",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Shoulder Press Manubri",
+    "text": "Spinta verticale con manubri per spalle massicce.",
+    "url": "https://www.youtube.com/watch?v=qEwKCR5JCog",
+    "tags": [
+      "Spalle",
+      "Shoulder Press",
+      "Technique",
+      "BUILD_MUSCLE"
+    ]
+  },
+  {
+    "title": "Ricette Proteiche: Pancake Fitness",
+    "text": "Come preparare pancake proteici per colazione.",
+    "url": "https://www.youtube.com/watch?v=kkc9KeghXM8",
     "tags": [
       "Nutrition",
-      "BUILD_MUSCLE",
+      "Ricette",
       "Alimentazione",
+      "Proteine"
+    ]
+  },
+  {
+    "title": "Smoothie Proteico Post-Workout",
+    "text": "Ricetta frullato proteico perfetto dopo allenamento.",
+    "url": "https://www.youtube.com/watch?v=ec_UOrz_ufI",
+    "tags": [
+      "Nutrition",
+      "Smoothie",
+      "Post-Workout",
+      "Proteine"
+    ]
+  },
+  {
+    "title": "Meal Prep Pollo e Riso",
+    "text": "Come preparare pollo e riso per tutta la settimana.",
+    "url": "https://www.youtube.com/watch?v=vab-NAVxaKQ",
+    "tags": [
+      "Nutrition",
+      "Meal Prep",
       "Pollo",
       "Riso"
     ]
   },
   {
-    "title": "Rematore con Bilanciere",
-    "text": "Tecnica corretta per sviluppare un dorso massiccio.",
-    "url": "https://www.youtube.com/watch?v=vT2GjY_Umpw",
+    "title": "Colazione Proteica: Uova e Avena",
+    "text": "Idee per colazioni ricche di proteine e nutrienti.",
+    "url": "https://www.youtube.com/watch?v=q8sgv-bnHZI",
     "tags": [
-      "Dorso",
-      "Technique",
-      "BUILD_MUSCLE",
-      "Rematore"
+      "Nutrition",
+      "Colazione",
+      "Uova",
+      "Avena"
     ]
   },
   {
-    "title": "La Dieta Mediterranea per lo Sport",
-    "text": "Come adattare la dieta mediterranea per chi si allena.",
-    "url": "https://www.youtube.com/watch?v=0hNfRR8nYcs",
+    "title": "Foam Rolling: Routine Completa",
+    "text": "Come usare il foam roller per recupero muscolare.",
+    "url": "https://www.youtube.com/watch?v=Oz4xHEgMaLY",
     "tags": [
-      "Nutrition",
-      "Alimentazione",
-      "MAINTAIN_WEIGHT",
-      "Pasta",
-      "Pesce",
-      "Verdure"
+      "Recovery",
+      "Foam Rolling",
+      "Mobility",
+      "Health"
+    ]
+  },
+  {
+    "title": "Stretching Gambe Post-Workout",
+    "text": "Routine di stretching dopo allenamento gambe.",
+    "url": "https://www.youtube.com/watch?v=BGBXZHu7jBY",
+    "tags": [
+      "Recovery",
+      "Stretching",
+      "Gambe",
+      "Flexibility"
+    ]
+  },
+  {
+    "title": "Mobilità Spalle: 10 Minuti",
+    "text": "Esercizi mobilità per spalle sane e forti.",
+    "url": "https://www.youtube.com/watch?v=efFXb5hZILk",
+    "tags": [
+      "Mobility",
+      "Spalle",
+      "Health",
+      "Recovery"
+    ]
+  },
+  {
+    "title": "Core Workout: 15 Minuti",
+    "text": "Allenamento core intenso senza attrezzi.",
+    "url": "https://www.youtube.com/watch?v=DHD1-2P94DI",
+    "tags": [
+      "Core",
+      "Addominali",
+      "Technique",
+      "Bodyweight"
+    ]
+  },
+  {
+    "title": "Riscaldamento Upper Body",
+    "text": "Come riscaldarsi prima di allenare parte alta.",
+    "url": "https://www.youtube.com/watch?v=rVDdDzTFzjM",
+    "tags": [
+      "Warm-up",
+      "Riscaldamento",
+      "Upper Body",
+      "Health"
+    ]
+  },
+  {
+    "title": "Full Body Home Workout",
+    "text": "Allenamento total body a casa senza attrezzi.",
+    "url": "https://www.youtube.com/watch?v=UBMk30rjy0o",
+    "tags": [
+      "Full Body",
+      "Home Workout",
+      "Calisthenics",
+      "BUILD_MUSCLE"
     ]
   }
 ]
