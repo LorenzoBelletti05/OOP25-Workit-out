@@ -15,6 +15,8 @@ import it.unibo.workitout.model.wiki.contracts.WikiRepository;
 public class WikiRepositoryImpl implements WikiRepository {
     private static final String ARTICLES_PATH = "/data/wiki/articles.json";
     private static final String VIDEOS_PATH = "/data/wiki/videos.json";
+    private static final System.Logger LOGGER = System.getLogger(WikiRepositoryImpl.class.getName());
+
     private final Gson gson = new Gson();
 
     /**
@@ -29,9 +31,9 @@ public class WikiRepositoryImpl implements WikiRepository {
     }
 
     /**
-     * Load all the videos from the json.
+     * Load all the articles from the json.
      * 
-     * @param model ...
+     * @param model of the wiki.
      */
     private void loadArticles(final Wiki model) {
         try (Reader reader = new InputStreamReader(
@@ -43,37 +45,34 @@ public class WikiRepositoryImpl implements WikiRepository {
                 }
             }
         } catch (final IOException e) {
-            logError("Error loading articles.json: ", e);
+            LOGGER.log(
+                System.Logger.Level.ERROR, 
+                "Error loading articles.json: " + e.getMessage(), 
+                e
+            );
         }
     }
 
     /**
      * Load all the videos from the json.
      * 
-     * @param model ...
+     * @param model of the wiki.
      */
     private void loadVideos(final Wiki model) {
         try (Reader reader = new InputStreamReader(
             WikiRepositoryImpl.class.getResourceAsStream(VIDEOS_PATH), StandardCharsets.UTF_8)) {
-           final VideoImpl[] videos = gson.fromJson(reader, VideoImpl[].class);
+            final VideoImpl[] videos = gson.fromJson(reader, VideoImpl[].class);
             if (videos != null) {
                 for (final VideoImpl vid : videos) {
                     model.addContent(vid);
                 }
             }
         } catch (final IOException e) {
-            logError("Error loading videos.json: ", e);
+            LOGGER.log(
+                System.Logger.Level.ERROR, 
+                "Error loading videos.json: " + e.getMessage(), 
+                e
+            );
         }
-    }
-
-    /**
-     * Log error details.
-     * 
-     * @param message custom message.
-     * @param e error.
-     */
-    @SuppressWarnings("PMD.SystemPrintln")
-    private void logError(final String message, final Exception e) {
-        System.err.println(message + e.getMessage());
     }
 }

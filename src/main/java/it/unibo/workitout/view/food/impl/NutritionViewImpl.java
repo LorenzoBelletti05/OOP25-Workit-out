@@ -46,6 +46,8 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
 
         //Ricerca
         final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JButton homeButton = new JButton("Home");
+        homeButton.setBackground(java.awt.Color.LIGHT_GRAY);
         this.searchField = new JTextField(SEARCH_FIELD_COLUMNS);
         final JButton searchButton = new JButton("Cerca");
         final JButton highProteinButton = new JButton("Proteici");
@@ -53,6 +55,8 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         final JButton lowFatButton = new JButton("Magri");
         final JButton resetButton = new JButton("Tutti");
 
+        northPanel.add(homeButton);
+        northPanel.add(new JSeparator(SwingConstants.VERTICAL));
         northPanel.add(new JLabel("Cerca:"));
         northPanel.add(searchField);
         northPanel.add(searchButton);
@@ -124,6 +128,12 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
                 updateTable(this.controller.getAllFoods());
             }
         });
+
+        //homeButton.addActionListener(e -> {
+            //if (this.controller != null) {
+                //this.controller.returnToHome();
+            //}
+        //});
     }
 
     /**

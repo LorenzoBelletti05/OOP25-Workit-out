@@ -16,13 +16,22 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 import java.io.File;
 
-public class loadSaveData { 
+public class LoadSaveData { 
 
     //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
 
     private static final Gson gsonFile = new Gson();
 
     private static final String APP_DIR = ".workitout";
+
+    /** Public constant for foods file name. */
+    public static final String FOODS_FILE = "foods.csv";
+
+    /** Public constant for history file name. */
+    public static final String HISTORY_FILE = "history.csv";
+
+    /** Public constant for stats file name. */
+    public static final String STATS_FILE = "daily_stats.csv";
 
     //General method to create the path
     public static String getWorkspacePath() {
@@ -117,7 +126,73 @@ public class loadSaveData {
             return null;
         }
     }
-   
+
+    /**
+     * Loads a CSV or text file as a list of strings.
+     * 
+     * @param pathData the path to the file.
+     * @return a list of lines.
+     */
+    public static List<String> loadCsvFile(final String pathData) {
+        checkFolderPresence(pathData);
+        final List<String> lines = new ArrayList<>();
+        final File file = new File(pathData);
+
+        if (!file.exists()) {
+            return lines;
+        }
+
+        try (java.io.BufferedReader br = new java.io.BufferedReader(
+                new FileReader(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+            String line = br.readLine();
+            while (line != null) {
+                lines.add(line);
+                line = br.readLine();
+            }
+        } catch (final IOException e) {
+            return new ArrayList<>();
+        }
+        return lines;
+    }
+
+    /**
+     * Saves a list of string into a CSV or text file.
+     * 
+     * @param pathData the path to the file.
+     * @param lines the lines to save.
+     */
+    public static void saveCsvFile(final String pathData, final List<String> lines) {
+        checkFolderPresence(pathData);
+        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
+                new FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+            for (final String line : lines) {
+                bw.write(line);
+                bw.newLine();
+            }
+            bw.flush();
+        } catch (final IOException e) {
+            throw new IllegalStateException("Failed to save data in history", e);
+        }
+    }
+
+    /**
+     * Saves daily totals for nutrition.
+     * 
+     * @param pathData the path to the file.
+     * @param stats a string in format "date,kcal,proteins,carbs,fats".
+     */
+    public static void saveDailyStats(final String pathData, final String stats) {
+        checkFolderPresence(pathData);
+        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
+                new FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8, true))) {
+            bw.write(stats);
+            bw.newLine();
+        } catch (final IOException e) {
+            throw new IllegalStateException("Failed to save data in daily stats", e);
+        }
+    }
+
+
     /**
      * method to read the data from the inside jar.
      * 
@@ -132,7 +207,7 @@ public class loadSaveData {
      */
     public static <T> List<T> loadFromResources(String resourcePath, Class<T[]> typeClass) {
 
-        try (InputStream is = loadSaveData.class.getResourceAsStream(resourcePath);
+        try (InputStream is = LoadSaveData.class.getResourceAsStream(resourcePath);
         
         InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 
@@ -155,76 +230,6 @@ public class loadSaveData {
         } catch (IOException e) {
             System.err.println("Error reading resource: " + e.getMessage());
             return new ArrayList<>();
-        }
-    }
-
-    /** Public constant for foods file name. */
-    public static final String FOODS_FILE = "foods.csv";
-
-    /** Public constant for history file name. */
-    public static final String HISTORY_FILE = "history.csv";
-
-    /** Public constant for stats file name. */
-    public static final String STATS_FILE = "daily_stats.csv";
-
-    //
-    /**
-     * Loads a CSV or text file as a list of strings.
-     * @param pathData the path to the file.
-     * @return a list of lines.
-     */
-    public static List<String> loadCsvFile(final String pathData) {
-        checkFolderPresence(pathData);
-        final List<String> lines = new ArrayList<>();
-        final File file = new File(pathData);
-
-        if (!file.exists()) {
-            return lines;
-        }
-
-        try (java.io.BufferedReader br = new java.io.BufferedReader(
-                new java.io.FileReader(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                lines.add(line);
-            }
-        } catch (IOException e) {
-            return new ArrayList<>();
-        }
-        return lines;
-    }
-
-    /**
-     * Saves a list of string into a CSV or text file.
-     * @param pathData the path to the file.
-     * @param lines the lines to save.
-     */
-    public static void saveCsvFile(final String pathData, final List<String> lines) {
-        checkFolderPresence(pathData);
-        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
-                new java.io.FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
-            for (final String line : lines) {
-                bw.write(line);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            System.err.println("Errore durante il salvataggio del file CSV: " + e.getMessage());
-        }
-    }
-
-    /**
-     * Saves daily totals for nutrition.
-     * @param pathData the path to the file.
-     * @param stats a string in format "date,kcal,proteins,carbs,fats".
-     */
-    public static void saveDailyStats(final String pathData, final String stats) {
-        checkFolderPresence(pathData);
-        try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
-                new java.io.FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8, true))) {
-            bw.write(stats);
-            bw.newLine();
-        } catch (java.io.IOException e) {
-            System.err.println("Error saving stats: " + e.getMessage());
         }
     }
 }

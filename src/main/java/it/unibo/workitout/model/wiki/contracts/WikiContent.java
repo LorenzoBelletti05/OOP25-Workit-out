@@ -7,7 +7,7 @@ import java.util.Set;
  */
 public interface WikiContent {
     /**
-     * @return the title of the cotent.
+     * @return the title of the content.
      */
     String getTitle();
 

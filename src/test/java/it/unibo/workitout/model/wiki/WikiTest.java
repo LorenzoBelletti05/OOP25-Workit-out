@@ -1,32 +1,64 @@
 package it.unibo.workitout.model.wiki;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.Set;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import it.unibo.workitout.model.wiki.contracts.Article;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
-import it.unibo.workitout.model.wiki.impl.ArticleImpl;
 import it.unibo.workitout.model.wiki.impl.WikiImpl;
+import it.unibo.workitout.model.wiki.impl.WikiRepositoryImpl;
 
+/**
+ * New class for test the Wiki system.
+ */
 class WikiTest {
+    private Wiki wiki;
 
+    /**
+     * Set up the test.
+     */
+    @BeforeEach
+    void setUp() {
+        this.wiki = new WikiImpl();
+        final WikiRepositoryImpl repository = new WikiRepositoryImpl();
+        //load all wiki contents
+        repository.loadAll(this.wiki);
+    }
+
+    /**
+     * Testing the loaded contents.
+     */
     @Test
-    void testWikiContent() {
-        final Wiki wiki = new WikiImpl();
-        final Set<String> tags = Set.of("Spalle", "Petto", "Forza");
-        final Article art = new ArticleImpl("Allenmaneto Petto", "Test", tags);
-        wiki.addContent(art);
+    void testDataLoading() {
+        assertNotNull(
+            wiki.getContents(), 
+            "the wiki contents should not be null");
+        assertFalse(
+            wiki.getContents().isEmpty(), 
+            "the wiki contents should contains articles and videos");
+    }
 
-        assertNotNull(wiki.getContents());
-        assertEquals(1, wiki.getContents().size());
-        assertEquals("Allenmaneto Petto", wiki.getContents().iterator().next().getTitle());
-        assertEquals(1, wiki.search("Petto").size());
-        assertEquals(1, wiki.search("forza").size());
-        assertEquals(1, wiki.search("").size());
+    /**
+     * Testing the search function.
+     */
+    @Test
+    void testSearchWithRealData() {
+        assertFalse(this.wiki.search("Dieta").isEmpty(), 
+            "searching for 'Dieta' should return a content");
+        assertFalse(this.wiki.search("squat").isEmpty(), 
+            "Searching for 'squat' (lowercase) should return a content");
+    }
+
+    /**
+     * Testing the empty search function.
+     */
+    @Test
+    void testEmptySearch() {
+        final int totalContents = this.wiki.getContents().size();
+        assertEquals(
+            totalContents, 
+            this.wiki.search("").size(), 
+            "An empty search should return all the contents");
     }
 }
