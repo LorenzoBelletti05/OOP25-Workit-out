@@ -17,8 +17,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * Creator class, with the logic for generate the workout plan.
  */
 public class WorkoutCreatorImpl implements WorkoutCreator {
-
-    private Boolean userCheckSafety = false;
+    
     private final String pathRawExerciwse = "/data/workout/exercise.json";
     private final List<Exercise> lista;
 
@@ -87,6 +86,45 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         return 1.0; //default
     }
 
+    /**
+     * Method that based on the activity return the ammount of workout day and exercise a day.
+     * 
+     * @param activityLevel the preference of the user.
+     * @return the list of the two data calculated.
+     */
+    private List<Integer> calculateLoopExercise(final ActivityLevel activityLevel) {
+        Integer daysToGenerate = 0;
+        Integer avgExercises = 0;
+
+        switch (activityLevel) {
+            case VERY_LOW:
+                daysToGenerate = 0;
+                avgExercises = 0;
+                break;
+            case LOW:
+                daysToGenerate = 2; 
+                avgExercises = 3;
+                break;
+            case MODERATE:
+                daysToGenerate = 4;
+                avgExercises = 5;
+                break;
+            case HIGH:
+                daysToGenerate = 6;
+                avgExercises = 7;
+                break;
+            case VERY_HIGH:
+                daysToGenerate = 7;
+                avgExercises = 9;
+                break;
+            }
+            
+        List<Integer> dataGeneration = new ArrayList<>();
+        dataGeneration.add(daysToGenerate);
+        dataGeneration.add(avgExercises);
+        return dataGeneration;        
+    }
+
     public WorkoutPlan generatePlan(
         final double bmr,
         final double tdee,
@@ -94,31 +132,52 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         final ActivityLevel activityLevel,
         final UserGoal userGoal
     ) {
-        userCheckSafety = dailyCalories < bmr;
+        //variable for healty of the user
+        final Boolean userCheckSafety = dailyCalories < bmr;
+
+        //list of exercise based on the filter
         final List<Exercise> filteredRawExercise = new ArrayList<>();
-        int sets = 0;
-        int reps = 0;
-        double intensityExercise = 1;
+
+        //variable multiplier
         final double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
         final double tdeeMultiplier = calculatedTdee / 2100.0;
-
-        double weight = 5;
-        int distance = 5;
-        int minutes = 10;
+        double intensityExercise = 1;
         double goalWeightMul = 1.0;
         double goalDistanceMul = 1.0;
+        
+        //variable for number of day and exercise a day.
+        final List<Integer> dataGenerationExercise = calculateLoopExercise(activityLevel);
+        final Integer daysExercise = dataGenerationExercise.get(0);
+        final Integer avgExerciseDay = dataGenerationExercise.get(1);
+        
+        //variable for data calculation
+        int sets = 0;
+        int reps = 0;
+        int distance = 5;
+        int minutes = 10;
+        double weight = 5;
+        
+        //Random variable for fiversity
+        final Random random = new Random();
+        
+        
+        final int currentInsity = (int) (intensityExercise);
+        final int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
+        
+        //calculate the final sets based on the intensdity of the type of exercise previously setted.
+        final LocalDate startDate = LocalDate.now();
 
+        //creating the workoutplan with his custom name.
+        final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
+
+        //for to filter the exercise based on the goal.
         for (final Exercise exercise : lista) {
-
-            final String goals = exercise.getExerciseAttitude(); //get the hole string of goals
-
-            //if the exercise match at least one of the goals then add it
+            final String goals = exercise.getExerciseAttitude();            
             if (goals.contains(userGoal.name())) {
                 filteredRawExercise.add(exercise);
             }
-        }
-        
-        final Random random = new Random();
+        }       
+
         switch (userGoal) {
             case BUILD_MUSCLE :
 
@@ -160,15 +219,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 break;
         }
 
-        final int currentInsity = (int) (intensityExercise);
-        final int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
-        // //calculate the final sets based on the intensdity of the type of exercise previously setted.
-        final LocalDate startDate = LocalDate.now();
-
-        //creating the workoutplan with his custom name.
-        final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
-
-        for(int j = 0; j < 1 + activityLevel.ordinal(); j++) {
+        for(int j = 0; j < daysExercise; j++) {
             final String dateNext = startDate.plusDays(j).toString();
 
             //create the planned exercises with custom name
@@ -177,7 +228,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
             //here because the next day an exercise can be done again
             final List<Exercise> alreadyUsed = new ArrayList<>(); 
 
-            for(int i = 0; i < random.nextInt(5, 10) + currentInsity; i++) {
+            for(int i = 0; i < avgExerciseDay + random.nextInt(0, 2) + currentInsity; i++) {
 
                 Exercise rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
 
@@ -239,8 +290,10 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 //adding the exercise to the sheet
                 workoutSheet.addExercise(plannedExercise);
             }
-            //adding the sheet to the plan
-            workoutPlan.addWorkSheet(dateNext, workoutSheet);
+            //adding the sheet to the plan only if ther's a sheet
+            if (!workoutSheet.getWorkoutSheet().isEmpty()) {
+                workoutPlan.addWorkSheet(dateNext, workoutSheet);
+            }
         }
         return workoutPlan;
     }
