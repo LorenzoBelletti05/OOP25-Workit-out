@@ -10,12 +10,12 @@ public enum Sex {
 
     private final String sex;
 
-    private Sex(String sex) {
+    Sex(final String sex) {
         this.sex = sex;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return sex;
     }
 }

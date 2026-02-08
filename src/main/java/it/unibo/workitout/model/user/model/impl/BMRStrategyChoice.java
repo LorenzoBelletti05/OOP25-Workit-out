@@ -11,10 +11,10 @@ public enum BMRStrategyChoice {
 
     private BMRStrategyChoice(final String description, final BMRCalculatorStrategy strategy) {
         this.description = description;
-        this.strategy=strategy;
+        this.strategy = strategy;
     }
 
-    public BMRCalculatorStrategy getStrategy(){
+    public BMRCalculatorStrategy getStrategy() {
         return strategy;
     }
 

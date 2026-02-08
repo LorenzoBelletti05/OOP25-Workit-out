@@ -40,7 +40,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
-        });        
+      });        
     }
 
     private void editProfile() {
@@ -143,15 +143,15 @@ public final class UserProfileControllerImpl implements UserProfileController {
     }
 
     @Override
-    public void updateBurnedCalories(double burnedCalories) {
+    public void updateBurnedCalories(final double burnedCalories) {
         this.userManager.addBurnedCalories(burnedCalories);
 
         try {
             loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
-        } catch (Exception expt) {
+        } catch (final Exception expt) {
             showInputDataError("The insert data is not saved \n " + expt.getMessage());
         }
-        
+
         this.dashboard.showData(this.userManager);
     }
 }

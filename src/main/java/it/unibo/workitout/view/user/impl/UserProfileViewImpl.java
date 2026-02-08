@@ -15,14 +15,13 @@ import it.unibo.workitout.model.user.model.impl.Sex;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.view.user.contracts.UserProfileView;
 
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 /**
  * The constructor for first log-in GUI.
  */
-public class UserProfileViewImpl extends JPanel implements UserProfileView {
+public final class UserProfileViewImpl extends JPanel implements UserProfileView {
     private final JPanel panel = new JPanel();
     private final JTextField nameField = new JTextField();
     private final JTextField surnameField = new JTextField();
@@ -36,7 +35,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     private final JButton calculateButton = new JButton("Save");
     private final JButton backButton = new JButton("Back");
 
-    private UserProfileController controller = null;
+    private UserProfileController controller;
 
     public UserProfileViewImpl() {
         this.setLayout(new BorderLayout());
@@ -46,7 +45,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
 
     private void profileGUI() {
         panel.setLayout(new BorderLayout());
-        JPanel secondPanel = new JPanel(new GridLayout(0, 2, 10, 10));
+        final JPanel secondPanel = new JPanel(new GridLayout(0, 2, 10, 10));
 
         secondPanel.setBorder(BorderFactory.createEmptyBorder(10, 90, 30, 90));
         secondPanel.add(new JLabel("Name:"));
@@ -71,13 +70,13 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
 
         panel.add(secondPanel, BorderLayout.NORTH);
 
-        JPanel calculatePanel = new JPanel();
+        final JPanel calculatePanel = new JPanel();
         calculatePanel.add(calculateButton);
         backButton.setEnabled(false);
         calculatePanel.add(backButton);
         panel.add(calculatePanel, BorderLayout.SOUTH);
 
-        calculateButton.addActionListener (al -> {
+        calculateButton.addActionListener(al -> {
             if (controller != null) {
                 controller.calculateProfile();
             } else {
@@ -86,7 +85,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
         });
     }
 
-    private void showErrorController(String errorDescription) {
+    private void showErrorController(final String errorDescription) {
         JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
@@ -141,7 +140,7 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     }
 
     @Override
-    public void setController(UserProfileController controller) {
+    public void setController(final UserProfileController controller) {
         this.controller = controller;
     }
 
@@ -151,53 +150,53 @@ public class UserProfileViewImpl extends JPanel implements UserProfileView {
     }
 
     @Override
-    public void setBackButton(boolean visible) {
+    public void setBackButton(final boolean visible) {
         this.backButton.setEnabled(visible);
     }
 
     @Override
-    public void setNameInput(String name) {
+    public void setNameInput(final String name) {
         this.nameField.setText(name);
     }
 
     @Override
-    public void setSurnameInput(String surname) {
+    public void setSurnameInput(final String surname) {
         this.surnameField.setText(surname);
     }
 
     @Override
-    public void setAgeInput(int age) {
+    public void setAgeInput(final int age) {
         this.ageField.setText(String.valueOf(age));
     }
 
     @Override
-    public void setHeightInput(double height) {
+    public void setHeightInput(final double height) {
         this.heightField.setText(String.valueOf(height));
     }
 
     @Override
-    public void setWeightInput(double weight) {
+    public void setWeightInput(final double weight) {
         this.weightField.setText(String.valueOf(weight));
     }
 
     @Override
-    public void setSexInput(Sex sex) {
+    public void setSexInput(final Sex sex) {
         this.sexCombo.setSelectedItem(sex);
     }
 
     @Override
-    public void setActivityInput(ActivityLevel activityLevel) {
+    public void setActivityInput(final ActivityLevel activityLevel) {
         this.activityLevelCombo.setSelectedItem(activityLevel);
     }
 
     @Override
-    public void setUserGoalInput(UserGoal userGoal) {
+    public void setUserGoalInput(final UserGoal userGoal) {
         this.userGoalCombo.setSelectedItem(userGoal);
     }
 
     @Override
-    public void setBMRStrategyInput(String strategy) {
-        if(strategy.equals("MifflinStJeorStrategy")) {
+    public void setBMRStrategyInput(final String strategy) {
+        if (strategy.equals("MifflinStJeorStrategy")) {
         this.strategyCombo.setSelectedIndex(0);
         } else if (strategy.equals("HarrisBenedictStrategy")) {
             this.strategyCombo.setSelectedIndex(1);
