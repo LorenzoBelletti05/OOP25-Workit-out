@@ -164,7 +164,7 @@ public class WikiControllerImpl implements WikiController {
         }
         final List<Exercise> currentExercises = loadExercisesFromPlan();
         final Meal currentMeal = loadTodayMealFromHistory();
-        final StringBuilder feedback = new StringBuilder(100);
+        final StringBuilder feedback = new StringBuilder("<html>");
         //exercises
         if (currentExercises != null && !currentExercises.isEmpty()) {
             feedback.append("Esercizi trovati: ")
@@ -179,7 +179,7 @@ public class WikiControllerImpl implements WikiController {
         } else {
             feedback.append("Nessun esercizio nel piano.");
         }
-        feedback.append(" | ");
+        feedback.append("<br>");
         //meal
         if (currentMeal != null && currentMeal.getFood() != null && !currentMeal.getFood().isEmpty()) {
             feedback.append("Cibi oggi: ")
@@ -194,6 +194,7 @@ public class WikiControllerImpl implements WikiController {
         } else {
             feedback.append("Nessun cibo registrato oggi.");
         }
+        feedback.append("</html>");
         //update label
         this.view.updateLabel(feedback.toString());
         showSmartSuggestions(currentUser, currentExercises, currentMeal);

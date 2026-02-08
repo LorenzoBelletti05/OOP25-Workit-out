@@ -241,5 +241,74 @@ class SmartSuggestionTest {
             suggestions.size() >= 4, 
             "It should show suggestions for boths");
     }
-}
 
+    /**
+     * Testing words extraction from exercise names.
+     */
+    @Test
+    void testWordsExtraction() {
+        //add article with gambe tag
+        this.wiki.addContent(new ArticleImpl(
+            "Allenamento Gambe", 
+            TESTO, 
+            Set.of("Gambe", "Technique")
+        ));
+        //exercise with complex name
+        final Exercise deadlift = new Exercise(
+            "Deadlift [Gambe] (Stacco da terra)",
+            EXERCISE_METS, 
+            goalTag, 
+            ExerciseType.STRENGTH
+        );
+        //suggestions
+        final Set<WikiContent> suggestions = smartSuggestion.suggest(
+            wiki, 
+            user, 
+            List.of(deadlift), 
+            null
+        );
+        //test
+        assertTrue(
+            suggestions.stream().anyMatch(c -> c.getTitle().contains("Gambe")), 
+            "It should extract gambe from exercise name"
+        );
+    }
+
+    /**
+     * Testing fallback when no match.
+     */
+    @Test
+    void testFallbackWhenNoMatch() {
+        //user with different goal
+        final UserProfile otherUser = new UserProfile(
+            "Test", 
+            "User", 
+            USER_AGE, 
+            USER_HEIGHT, 
+            USER_WEIGHT, 
+            Sex.MALE, 
+            ActivityLevel.LOW, 
+            UserGoal.MAINTAIN_WEIGHT, 
+            "MifflinStJeorStrategy"
+        );
+        //empty wiki
+        final Wiki emptyWiki = new WikiImpl();
+        emptyWiki.addContent(new ArticleImpl(
+            "Random Article", 
+            TESTO, 
+            Set.of("Random")
+        ));
+        //suggestions with no matching tags
+        final Set<WikiContent> suggestions = smartSuggestion.suggest(
+            emptyWiki, 
+            otherUser, 
+            null, 
+            null
+        );
+        //test fallback
+        assertFalse(
+            suggestions.isEmpty(), 
+            "It should return all content as fallback"
+        );
+    }
+}
