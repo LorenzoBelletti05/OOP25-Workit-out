@@ -14,7 +14,7 @@ public enum UserGoal {
     private final double fatRatio;
     private final String description;
 
-    private UserGoal(final double carbRatio, final double proteinRatio, final double fatRatio, final String description) {
+    UserGoal(final double carbRatio, final double proteinRatio, final double fatRatio, final String description) {
         this.carbRatio = carbRatio;
         this.proteinRatio = proteinRatio;
         this.fatRatio = fatRatio;

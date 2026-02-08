@@ -18,7 +18,7 @@ public enum ActivityLevel {
      * 
      * @param multiplier is the multiplier for Activity Level.
      */
-    private ActivityLevel(final double multiplier, final String description) {
+    ActivityLevel(final double multiplier, final String description) {
         this.multiplier = multiplier;
         this.description = description;
     }
@@ -31,7 +31,7 @@ public enum ActivityLevel {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return description;
     }
 }

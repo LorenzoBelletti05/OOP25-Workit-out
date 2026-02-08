@@ -78,9 +78,9 @@ class UserManagerTest {
         final double carboRatio = UserGoal.MAINTAIN_WEIGHT.getCarbRatio();
         final double proteinRatio = UserGoal.MAINTAIN_WEIGHT.getProteinRatio();
         final double fatRatio = UserGoal.MAINTAIN_WEIGHT.getFatRatio();
-        final double exprectedCarbG = (expectedCalories * carboRatio) / CARBO_PROTEIN_TO_CAL;
-        final double exprectedProteinG = (expectedCalories * proteinRatio) / CARBO_PROTEIN_TO_CAL;
-        final double exprectedFatG = (expectedCalories * fatRatio) / FAT_TO_CAL;
+        final double exprectedCarbG = expectedCalories * carboRatio / CARBO_PROTEIN_TO_CAL;
+        final double exprectedProteinG = expectedCalories * proteinRatio / CARBO_PROTEIN_TO_CAL;
+        final double exprectedFatG = expectedCalories * fatRatio / FAT_TO_CAL;
 
         assertEquals(exprectedCarbG, resultManager.getCarbsG());
         assertEquals(exprectedProteinG, resultManager.getProteinsG());
