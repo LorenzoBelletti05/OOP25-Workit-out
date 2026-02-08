@@ -19,7 +19,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 public class WorkoutCreatorImpl implements WorkoutCreator {
 
     private Boolean userCheckSafety = false;
-    private final String pathRawExerciwse = "Workit-out\\src\\main\\resources\\data\\workout\\exercise.json";
+    private final String pathRawExerciwse = "/data/workout/exercise.json";
     private final List<Exercise> lista;
 
     /**
@@ -28,7 +28,14 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
      * @throws IOException exception.
      */
     public WorkoutCreatorImpl() throws IOException {
-        lista = loadSaveData.loadSavedDataFrom(pathRawExerciwse, Exercise[].class);
+        lista = loadSaveData.loadFromResources(pathRawExerciwse, Exercise[].class);
+
+        //DEBUG
+        if (this.lista.isEmpty()) {
+            System.out.println("DEBUG:WorkoutCreator Lista esercizi vuota. Controlla il percorso delle risorse.");
+        } else {
+            System.out.println("DEBUG:WorkoutCreator " + this.lista.size() + " esercizi caricati correttamente.");
+        }
     }
 
     /**
