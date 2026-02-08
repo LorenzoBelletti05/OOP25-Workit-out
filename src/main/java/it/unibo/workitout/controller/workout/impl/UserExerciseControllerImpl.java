@@ -127,19 +127,21 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             workoutPlan = null;
         }
 
-        //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
+        /**
+         * Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
+         * 
+         * If full check if the datee is between the week (7 days), if true return the full plan, otherwise generate it.
+         * 
+         */
         if (workoutPlan != null && workoutUserData != null) {
 
             final LocalDate date = LocalDate.parse(workoutUserData.getLocalDate());
 
-            //from the data of the json check the data if they are the same from the one given in the costructor.
             if(java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= DAYS_IN_WEEK) {
                 return workoutPlan;
             }
         }
-
-        //If jsons are empty (because both have to return the same result) 
-        //generate the plan and save it on the json with the workout suer data.
+        
         return generateAfterAll();
     }
 
@@ -156,7 +158,9 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         try {
             final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
             if (plan != null) {
+                //save the generated workoutplan
                 loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+                //call the method to save the new user data
                 callSaveUserData();
 
                 return plan;
@@ -221,6 +225,13 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return currentRawExercise;
     }
 
+    /**
+     * After setting the data from the User module.
+     * It call the setter and every time this method must generate a new plan because,
+     * user data are changed.
+     * 
+     * Calling generateAfterAll insted of checkAndCreate because in the last one condition are to strict.
+     */
     public void setDataUser(
         final double bmr,
         final double tdee,
@@ -235,7 +246,8 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
 
-        generatedWorkoutPlan = checkAndCreate();
+        this.generatedWorkoutPlan = generateAfterAll();
+
     }
 
     //creating a single istance to avoid creating unnecessary istance with different behaviour
@@ -341,6 +353,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         if (this.mainController != null) {
             this.mainController.communicateBurnedCalories(totKcal);
         } else {
+            //DEBUG
             System.out.println("ERROR: mainController non impostato in UserExerciseControllerImpl");
         }
     }
