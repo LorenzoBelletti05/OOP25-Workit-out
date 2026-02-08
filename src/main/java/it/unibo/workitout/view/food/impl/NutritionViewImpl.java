@@ -37,6 +37,7 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
     private final FoodTableModel tableModel;
     private final JLabel summaryLabel;
     private final JTextField searchField;
+    private final JButton backButton;
 
     /**
      * Constructor for NutritionViewImpl.
@@ -52,8 +53,8 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         final JButton lowCarbsButton = new JButton("Pochi Carbo");
         final JButton lowFatButton = new JButton("Magri");
         final JButton resetButton = new JButton("Tutti");
-        final JButton backButton = new JButton("Home");
-;
+        this.backButton = new JButton("Home");
+
         northPanel.add(new JSeparator(SwingConstants.VERTICAL));
         northPanel.add(new JLabel("Cerca:"));
         northPanel.add(searchField);
@@ -135,6 +136,7 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
      * @param controller the nutrition controller to be used.
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Controller must be shared")
+    @Override
     public void setController(final NutritionController controller) {
         this.controller = Objects.requireNonNull(controller);
     }
@@ -165,8 +167,9 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
     }
 
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP", justification = "The button must be accessed by controller")
     public JButton getBackButton() {
-        return this.getBackButton();
+        return this.backButton;
     }
 
     @Override

@@ -28,6 +28,7 @@ public final class NutritionControllerImpl implements NutritionController {
      * @param repository the food database.
      * @param logManager the manager for daily logs.
      * @param view the user interface.
+     * @param goToDashboard the back button.
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Repository is shared and managed externally")
     public NutritionControllerImpl(final FoodRepository repository,
