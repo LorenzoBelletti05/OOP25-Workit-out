@@ -87,6 +87,29 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
     }
 
     /**
+     * Method multiplier that moify the variable for the minutes cardio exercise.
+     * 
+     * @param exercise the raw exercise.
+     * 
+     * @return the multiplier.
+    */
+    private double getMinutesMultiplier(final Exercise exercise) {
+        double minPerKm = 6.0;                    
+
+        String name = exercise.getName().toLowerCase();
+
+        if (name.contains("ciclismo") || name.contains("bici")) {
+            minPerKm = 1.5;
+        } else if (name.contains("nuoto") || name.contains("piscina")) {
+            minPerKm = 15.0;
+        } else if (name.contains("camminata")) {
+            minPerKm = 6.0;
+        }
+
+        return minPerKm;
+    }
+
+    /**
      * Method that based on the activity return the ammount of workout day and exercise a day.
      * 
      * @param activityLevel the preference of the user.
@@ -247,8 +270,10 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                 if (rawExercise.getExerciseType().equals(ExerciseType.STRENGTH)) {
 
+                    final double baseWeight = weight + random.nextInt(0, 11);
+
                     //creating a weight based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalWeight = weight * tdeeMultiplier * goalWeightMul * this.getStrenghtMultiplierPerExercise(rawExercise) * intensityExercise;
+                    double finalWeight = baseWeight * tdeeMultiplier * goalWeightMul * this.getStrenghtMultiplierPerExercise(rawExercise) * intensityExercise;
 
                     finalWeight = Math.min(finalWeight, 120.0);
 
@@ -261,10 +286,16 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                         finalWeight *= 0.5;
                     }
 
+                    //Delete the decimal
+                    finalWeight = Math.round(finalWeight * 2) / 2.0;
+
+                    //Security check for the weight
+                    finalWeight = Math.min(finalWeight, 120.0);
+
                     //the effective inizializzation of the exercise
                     plannedExercise = new StrengthPlannedExerciseImpl(
                         rawExercise, 
-                        (int) (minutes * intensityExercise), 
+                        (int) (localSets * 3), //indicative time based on sets * 3 (minutes)
                         Math.max(1, localSets + currentInsity + activityBonus),
                         Math.max(1, localReps + (currentInsity * 2)),
                         finalWeight
@@ -272,17 +303,32 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                 } else {
 
-                    //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalDistance = distance * tdeeMultiplier * goalDistanceMul * this.getCardioMultiplierPerExercise(rawExercise) * intensityExercise;
+                    final double baseDistance = distance + (random.nextDouble() * 3 - 1);
 
-                    finalDistance = Math.min(finalDistance, 20);
+                    //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
+                    double finalDistance = baseDistance * tdeeMultiplier * goalDistanceMul * this.getCardioMultiplierPerExercise(rawExercise) * intensityExercise;
+
+                    //Remove deciamel
+                    finalDistance = Math.round(finalDistance * 100.0) / 100.0;
+
+                    //Security check
+                    finalDistance = Math.min(finalDistance, 20.0);
+
+                    //the dinamic minutes based on distance
+                    double minPerKm = getMinutesMultiplier(rawExercise);                    
+
+                    int finalMinutes = (int) Math.round((finalDistance * minPerKm) + random.nextInt(-2, 2));
+    
+                    //Security check
+                    finalMinutes = Math.max(5, finalMinutes);
+                    
                     if(userCheckSafety) {
                         finalDistance *= 0.5;
                     }
 
                     plannedExercise = new CardioPlannedExerciseImpl(
                         rawExercise, 
-                        (int) (minutes + 5 * intensityExercise),
+                        finalMinutes,
                         finalDistance
                     );
 

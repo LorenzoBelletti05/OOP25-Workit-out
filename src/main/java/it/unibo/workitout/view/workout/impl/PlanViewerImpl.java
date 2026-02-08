@@ -160,9 +160,8 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                         finalReps,
                         finalWeight
                     );
-
-                    final double AVGMin = finalSets * 3.0;
-                    final double finalKcal = newEx.getExercise().calorieBurned(AVGMin);
+                    
+                    final double finalKcal = newEx.getExercise().calorieBurned(plannedExercise.getMinutes());
 
                     //set the exercise as completed
                     newEx.setCompletedExercise(true);
