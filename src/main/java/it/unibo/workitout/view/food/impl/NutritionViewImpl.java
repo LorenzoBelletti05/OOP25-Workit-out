@@ -46,16 +46,14 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
 
         //Ricerca
         final JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        final JButton homeButton = new JButton("Home");
-        homeButton.setBackground(java.awt.Color.LIGHT_GRAY);
         this.searchField = new JTextField(SEARCH_FIELD_COLUMNS);
         final JButton searchButton = new JButton("Cerca");
         final JButton highProteinButton = new JButton("Proteici");
         final JButton lowCarbsButton = new JButton("Pochi Carbo");
         final JButton lowFatButton = new JButton("Magri");
         final JButton resetButton = new JButton("Tutti");
-
-        northPanel.add(homeButton);
+        final JButton backButton = new JButton("Home");
+;
         northPanel.add(new JSeparator(SwingConstants.VERTICAL));
         northPanel.add(new JLabel("Cerca:"));
         northPanel.add(searchField);
@@ -65,6 +63,7 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         northPanel.add(lowCarbsButton);
         northPanel.add(lowFatButton);
         northPanel.add(resetButton);
+        northPanel.add(backButton);
 
         //Tabella
         this.tableModel = new FoodTableModel();
@@ -128,12 +127,6 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
                 updateTable(this.controller.getAllFoods());
             }
         });
-
-        //homeButton.addActionListener(e -> {
-            //if (this.controller != null) {
-                //this.controller.returnToHome();
-            //}
-        //});
     }
 
     /**
@@ -169,6 +162,11 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
                  "Errore", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    @Override
+    public JButton getBackButton() {
+        return this.getBackButton();
     }
 
     @Override

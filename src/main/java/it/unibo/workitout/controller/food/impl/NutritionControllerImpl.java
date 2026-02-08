@@ -22,6 +22,7 @@ public final class NutritionControllerImpl implements NutritionController {
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
+    private final Runnable goToDashboard;
 
     /**
      * @param repository the food database.
@@ -29,10 +30,17 @@ public final class NutritionControllerImpl implements NutritionController {
      * @param view the user interface.
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Repository is shared and managed externally")
-    public NutritionControllerImpl(final FoodRepository repository, final DailyLogManager logManager, final NutritionView view) {
+    public NutritionControllerImpl(final FoodRepository repository,
+                                   final DailyLogManager logManager,
+                                   final NutritionView view,
+                                   final Runnable goToDashboard) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
         this.view = Objects.requireNonNull(view);
+        this.goToDashboard = Objects.requireNonNull(goToDashboard);
+        this.view.getBackButton().addActionListener(al -> {
+            this.goToDashboard.run();
+        });
     }
 
     @Override
