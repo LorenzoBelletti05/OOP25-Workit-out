@@ -99,7 +99,7 @@ public class MainControllerImpl implements MainController {
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(
-        new FoodRepository(), new DailyLogManager(), nutritionView);
+        new FoodRepository(), new DailyLogManager(), nutritionView, goToDashboard);
         nutritionView.setController(nutritionController);
         nutritionController.start();
 

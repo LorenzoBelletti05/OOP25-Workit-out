@@ -6,7 +6,7 @@ import it.unibo.workitout.controller.main.impl.MainControllerImpl;
 /**
  * Main entry point for the application.
  */
-public final class WorkitoutLauncher {  
+public final class WorkitoutLauncher {
 
     /**
      * Main method.
