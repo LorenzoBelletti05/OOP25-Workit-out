@@ -2,6 +2,9 @@ package it.unibo.workitout.model.user.model.impl;
 
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 
+/**
+ * Represents the user strategy choice.
+ */
 public enum BMRStrategyChoice {
     MIFFLIN("Mifflin-St Jeor (More precise formula)", new MifflinStJeorStrategy()),
     HARRIS("Harris Benedict (Classic formula)", new HarrisBenedictStrategy());
@@ -9,11 +12,16 @@ public enum BMRStrategyChoice {
     private final String description;
     private final BMRCalculatorStrategy strategy;
 
-    private BMRStrategyChoice(final String description, final BMRCalculatorStrategy strategy) {
+    BMRStrategyChoice(final String description, final BMRCalculatorStrategy strategy) {
         this.description = description;
         this.strategy = strategy;
     }
 
+    /**
+     * Return the strategy used for BMR calculation.
+     * 
+     * @return the BMR strategy calculator
+     */
     public BMRCalculatorStrategy getStrategy() {
         return strategy;
     }

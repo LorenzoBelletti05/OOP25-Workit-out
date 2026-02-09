@@ -87,6 +87,11 @@ public final class UserManager {
         return new NutritionalTarget(carbsGrams, proteinsGrams, fatsGrams);
     }
 
+    /**
+     * Add calories to the total burned.
+     * 
+     * @param burnedCalories the total calories to add
+     */
     public void addBurnedCalories(final double burnedCalories) {
        final double totalCalories = this.currentUser.getBurnedCalories();
         this.currentUser.setBurnedCalories(totalCalories + burnedCalories);

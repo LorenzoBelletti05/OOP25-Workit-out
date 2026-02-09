@@ -16,7 +16,8 @@ public enum ActivityLevel {
     /**
      * Constructor of the class Activitylevel.
      * 
-     * @param multiplier is the multiplier for Activity Level.
+     * @param multiplier is the multiplier for Activity Level
+     * @param description is the description of the current level
      */
     ActivityLevel(final double multiplier, final String description) {
         this.multiplier = multiplier;

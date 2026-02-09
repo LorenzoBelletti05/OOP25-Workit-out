@@ -18,7 +18,7 @@ public interface UserProfileController {
      * @param isFirstAccess true if it is first access.
      */
     void isFirstAccess(boolean isFirstAccess);
-    
+
     /**
      * Sets the UserManager.
      * 
@@ -26,5 +26,10 @@ public interface UserProfileController {
      */
     void setUserManager(UserManager userManager);
 
+    /**
+     * Updates the total calories burned with exercise.
+     * 
+     * @param burnedCalories the total of burned calories
+     */
     void updateBurnedCalories(double burnedCalories);
 }
