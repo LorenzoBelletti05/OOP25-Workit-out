@@ -331,7 +331,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     /** {@inheritDoc} */
     @Override
     public void replaceExercise(final String date, final PlannedExercise oldEx, final PlannedExercise newEx) {
-        if (this.generatedWorkoutPlan != null) {
+        if (this.generatedWorkoutPlan == null) {
             return;
         }
 
