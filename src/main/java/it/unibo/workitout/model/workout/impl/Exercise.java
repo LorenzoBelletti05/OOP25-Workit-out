@@ -34,7 +34,12 @@ public class Exercise {
      * @param typeExercise the typology Strenght or Cardio.
      * 
      */
-    public Exercise(final String name, final double caloriesBurned, final String exerciseMission, final ExerciseType typeExercise) {
+    public Exercise(
+        final String name,
+        final double caloriesBurned,
+        final String exerciseMission,
+        final ExerciseType typeExercise
+    ) {
         this.name = name;
         this.caloriesBurned = caloriesBurned;
         this.exerciseMission = exerciseMission; //creating a copy of the set

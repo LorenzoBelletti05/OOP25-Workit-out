@@ -40,6 +40,6 @@ public interface PlannedExercise extends WorkoutFunction {
      * 
      * @return a boolean state that tell if the exercise is completed.
      */
-    boolean isComplited();   
+    boolean isComplited();
 
 }

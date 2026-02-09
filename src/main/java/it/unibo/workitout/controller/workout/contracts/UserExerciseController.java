@@ -112,4 +112,13 @@ public interface UserExerciseController {
      */
     void setProfile(double totKcal);
 
+    /**
+     *  It show a pop-up to auto certificate the user.
+     *  Based on his responde the view will generate or not the plan, 
+     *  and then show the view, empty or not.
+     * 
+     * @param navigationTask the runnable.
+     */
+    void refreshTableWorkoutData(Runnable navigationTask);
+
 }

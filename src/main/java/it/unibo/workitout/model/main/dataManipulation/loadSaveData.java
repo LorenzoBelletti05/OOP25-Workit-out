@@ -91,7 +91,7 @@ public class loadSaveData {
     }
 
     //two methods that save and get the workoutUserData
-    public static void saveWorkoutuserDataIn(String pathData, WorkoutUserData workoutUserData) {
+    public static void saveWorkoutuserDataIn(final String pathData, final WorkoutUserData workoutUserData) {
         checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData)) {
             gsonFile.toJson(workoutUserData, writer );

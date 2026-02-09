@@ -20,7 +20,7 @@ public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
     private boolean completed;
 
     /**
-     * Costructor that gived the exercise and the minutes save it in the filed
+     * Costructor that gived the exercise and the minutes save it in the filed.
      * 
      * @param exercise the raw exercise.
      * 
@@ -56,7 +56,8 @@ public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
      */
     @Override
     public double getBurnedCalories() {
-        final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes); //used this variable for debug, could have just return from this.get....
+        //used this variable for debug, could have just return from this.get....
+        final double burnedCaloriesForTime = this.getExercise().calorieBurned(minutes);
         return burnedCaloriesForTime;
     }
 
