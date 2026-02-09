@@ -40,18 +40,22 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
-      });        
+      });
     }
 
+    /**
+     * Insert in the view an existing profile.
+     */
     private void editProfile() {
         if (this.userManager.getUserProfile() != null) {
             fillProfileButton();
             isFirstAccess(false);
         }
-        dashboard.setVisible(false);
-        view.setVisible(true);
     }
 
+    /**
+     * Fills the input field and select the combo box with data of current user.
+     */
     private void fillProfileButton() {
         final UserProfile userProfile = this.userManager.getUserProfile();
         view.setNameInput(userProfile.getName());
@@ -66,23 +70,24 @@ public final class UserProfileControllerImpl implements UserProfileController {
     }
 
     /**
-     * Sets the button based on if is the first access of user or not.
-     * 
-     * @param isFirstAccess true if it is the first access
+     * {@inheritDoc}
      */
+    @Override
     public void isFirstAccess(final boolean isFirstAccess) {
         this.view.setBackButton(!isFirstAccess);
     }
 
     /**
-     * Sets the UserManager for this controller.
-     * 
-     * @param userManager the UserManager
+     * {@inheritDoc}
      */
+    @Override
     public void setUserManager(final UserManager userManager) {
         this.userManager = userManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void calculateProfile() {
 
@@ -94,7 +99,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
             final double weight = Double.parseDouble(view.getWeightInput());
             final Sex sex = view.getSexInput();
             final ActivityLevel activityLevel = view.getActivityInput();
-            final UserGoal userGoal = view.UserGoalInput();
+            final UserGoal userGoal = view.getUserGoalInput();
             final BMRStrategyChoice selectedStrategy = view.getBMRStrategyInput();
             final BMRCalculatorStrategy strategy = selectedStrategy.getStrategy();
             final UserProfile userProfile = new UserProfile(
@@ -138,10 +143,18 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
     }
 
+    /**
+     * Method for display an error message.
+     * 
+     * @param errorDescription the text description of the error
+     */
     private void showInputDataError(final String errorDescription) {
         JOptionPane.showMessageDialog(null, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateBurnedCalories(final double burnedCalories) {
         this.userManager.addBurnedCalories(burnedCalories);

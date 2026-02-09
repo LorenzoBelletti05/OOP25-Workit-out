@@ -21,6 +21,8 @@ import java.awt.GridLayout;
  * This class is the home page of the GUI.
  */
 public final class UserDashboardViewImpl extends JPanel implements UserDashboardView {
+    private static final long serialVersionUID = 1L;
+
     private static final String ARIAL_FONT = "Arial";
     private static final String SEPARATOR = "/";
     private static final String GRAMS = "g";
@@ -139,6 +141,9 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         this.add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void showData(final UserManager userManager) {
         if (userManager == null) {
@@ -164,21 +169,33 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         lFats.setText("Fats: " + consumedFats + SEPARATOR + (int) macroTarget.getFatsG() + " " + GRAMS);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JButton getProfileButton() {
         return bProfile;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JButton getFoodButton() {
         return bFood;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JButton getInfoButton() {
         return bInfo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JButton getExerciseButton() {
         return bExercise;

@@ -19,9 +19,11 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 
 /**
- * The constructor for first log-in GUI.
+ * The class is the first log-in and profile GUI.
  */
 public final class UserProfileViewImpl extends JPanel implements UserProfileView {
+    private static final long serialVersionUID = 1L;
+
     private final JPanel panel = new JPanel();
     private final JTextField nameField = new JTextField();
     private final JTextField surnameField = new JTextField();
@@ -37,12 +39,18 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
 
     private UserProfileController controller;
 
+    /**
+     * Constructs the UserProfileViewImpl GUI.
+     */
     public UserProfileViewImpl() {
         this.setLayout(new BorderLayout());
         profileGUI();
         this.add(panel, BorderLayout.CENTER);
     }
 
+    /**
+     * Create the GUI with components and layout.
+     */
     private void profileGUI() {
         panel.setLayout(new BorderLayout());
         final JPanel secondPanel = new JPanel(new GridLayout(0, 2, 10, 10));
@@ -85,115 +93,178 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
         });
     }
 
+    /**
+     * Method for display an error message.
+     * 
+     * @param errorDescription the text description of the error
+     */
     private void showErrorController(final String errorDescription) {
         JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JButton getBackButton() {
         return backButton;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNameInput() {
         return nameField.getText();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getSurnameInput() {
         return surnameField.getText();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getAgeInput() {
         return ageField.getText();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getHeightInput() {
         return heightField.getText();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getWeightInput() {
         return weightField.getText();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Sex getSexInput() {
         return (Sex) sexCombo.getSelectedItem();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ActivityLevel getActivityInput() {
         return (ActivityLevel) activityLevelCombo.getSelectedItem();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public UserGoal UserGoalInput() {
+    public UserGoal getUserGoalInput() {
         return (UserGoal) userGoalCombo.getSelectedItem();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public BMRStrategyChoice getBMRStrategyInput() {
         return (BMRStrategyChoice) strategyCombo.getSelectedItem();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setController(final UserProfileController controller) {
         this.controller = controller;
     }
 
-    @Override
-    public void close() {
-        this.setVisible(false);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBackButton(final boolean visible) {
         this.backButton.setEnabled(visible);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setNameInput(final String name) {
         this.nameField.setText(name);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSurnameInput(final String surname) {
         this.surnameField.setText(surname);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAgeInput(final int age) {
         this.ageField.setText(String.valueOf(age));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHeightInput(final double height) {
         this.heightField.setText(String.valueOf(height));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setWeightInput(final double weight) {
         this.weightField.setText(String.valueOf(weight));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setSexInput(final Sex sex) {
         this.sexCombo.setSelectedItem(sex);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setActivityInput(final ActivityLevel activityLevel) {
         this.activityLevelCombo.setSelectedItem(activityLevel);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setUserGoalInput(final UserGoal userGoal) {
         this.userGoalCombo.setSelectedItem(userGoal);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setBMRStrategyInput(final String strategy) {
         if (strategy.equals("MifflinStJeorStrategy")) {
