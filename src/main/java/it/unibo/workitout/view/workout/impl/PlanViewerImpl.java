@@ -13,7 +13,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -29,22 +28,27 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
-    
+    private static final long serialVersionUID = 1L;
+    private static final int SEARCH_FIELD_COLUMNS = 15;
+    private static final int GRID_HGAP = 10;
+    private static final int GRID_VGAP = 10;
+    private static final int STRENGTH_TIME_MULT = 3;
+    private static final int TABLE_COLUMNS_COUNT = 7;
+
     private final List<PlannedExercise> currentExercises = new ArrayList<>();
     private final List<String> rawDates = new ArrayList<>(); 
 
     private final String[] indexColumnName = {"Date", "Exercise", "Sets/Reps", "Time", "Weight/Distance", "Kcal", "State"};
 
     private  JTable table;
-    private  DefaultTableModel tableModel;     
-
-    final JButton searchButton = new JButton("Find sheet");
-    final JButton planButton = new JButton("Vis. plan");
-    final JButton checkMarkButton = new JButton("Check as completed +");
-    final JButton backButton = new JButton("Back");
+    private  DefaultTableModel tableModel;
+    
+    private final JButton planButton = new JButton("Vis. plan");
+    private final JButton checkMarkButton = new JButton("Check as completed +");
+    private final JButton backButton = new JButton("Back");
     private int currentDayIndex;
 
-    private final JTextField searchInTable = new JTextField(15);
+    private final JTextField searchInTable = new JTextField(SEARCH_FIELD_COLUMNS);
 
     final MainViewImpl mainView = new MainViewImpl();
 
@@ -75,19 +79,19 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
         checkMarkButton.addActionListener(e -> {
             final int selectedRow = table.getSelectedRow();
-            if(selectedRow != -1) {
+            if (selectedRow != -1) {
                 final String rawFinalDate = rawDates.get(selectedRow);
                 final PlannedExercise selectedExercise = currentExercises.get(selectedRow);
 
                 if (selectedExercise.isComplited()) {
                     JOptionPane.showMessageDialog(this, 
                         "This exercise has already been completed. Good job! Keep going!",
-                        "Exercise already done", 
+                         "Exercise already done", 
                         JOptionPane.INFORMATION_MESSAGE);
                     return;
                 }
 
-                privatePageEdit(selectedExercise, rawFinalDate);               
+                privatePageEdit(selectedExercise, rawFinalDate);
             }
         });
 
@@ -129,7 +133,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         final JDialog pageDialog = new JDialog();
         pageDialog.setTitle("Modifica: " + plannedExercise.getExercise().getName());
         pageDialog.setModal(true);
-        pageDialog.setLayout(new GridLayout(0,2,10,10));
+        pageDialog.setLayout(new GridLayout(0,2,GRID_HGAP, GRID_VGAP));
 
         if (plannedExercise instanceof StrengthPlannedExerciseImpl) {
             final var strenghtExercise = (StrengthPlannedExerciseImpl) plannedExercise;
@@ -160,7 +164,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                         finalReps,
                         finalWeight
                     );
-                    
+
                     final double finalKcal = newEx.getExercise().calorieBurned(plannedExercise.getMinutes());
 
                     //set the exercise as completed
@@ -202,7 +206,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                         finalDistance
                     );
 
-                    double finalKcal = newEx.getExercise().calorieBurned(finalMin);
+                    final double finalKcal = newEx.getExercise().calorieBurned(finalMin);
 
                     newEx.setCompletedExercise(true);
                     UserExerciseControllerImpl.getIstance().replaceExercise(dateExercise, plannedExercise, newEx);
@@ -220,10 +224,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         pageDialog.pack();
         pageDialog.setLocationRelativeTo(this);
         pageDialog.setVisible(true);
-    } 
+    }
 
     @Override
-    public void setVisible(boolean visible) {
+    public void setVisible(final boolean visible) {
         super.setVisible(visible);
     }
 
@@ -254,7 +258,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         this.rawDates.clear();
 
         //order the date because the date showed are been already sorted.
-        List<String> sortedRawDates = new ArrayList<>(plan.getWorkoutPlan().keySet());
+        final List<String> sortedRawDates = new ArrayList<>(plan.getWorkoutPlan().keySet());
         Collections.sort(sortedRawDates);
 
         //take all the sheet, from the sheet take the size (menas the day) and then set a start day and an end.
@@ -262,24 +266,20 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         final int totalDays = allSheets.size();
         final int start = (currentDayIndex == 0) ? 0 : currentDayIndex - 1;
         final int end = (currentDayIndex == 0) ? totalDays : currentDayIndex;
-        
+
         //set the button text
         planButton.setText(currentDayIndex == 0 ? "Vis: All Plan" : "Vis: Day " + currentDayIndex);
 
-        final Map<String, WorkoutSheet> planExtended = plan.getWorkoutPlan();
-        //DEBUG
-        System.out.println("LOG: Giorni trovati nel piano: " + planExtended.size());
-
-        final Object[] row = new Object[7];
+        final Object[] row = new Object[TABLE_COLUMNS_COUNT];
 
         //For that from start to end (the sheets present) get from allSheet the i-n sheet and set his day based on his order.
         for (int i = start; i < end; i++) {
 
             //take the i-n sheet
-            final WorkoutSheet workoutSheet = allSheets.get(i);        
+            final WorkoutSheet workoutSheet = allSheets.get(i);
             final String dayLabel = "Day " + (i + 1);
             final String rawFinalDate = sortedRawDates.get(i);
-            
+
             //From the i-n sheet take all his planned exercise and set his data to show.
             for (final PlannedExercise exercisePlanned : workoutSheet.getWorkoutSheet()) {
 
@@ -290,13 +290,13 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
                 double min = 0;
 
-                if(exercisePlanned instanceof StrengthPlannedExerciseImpl) {
+                if (exercisePlanned instanceof StrengthPlannedExerciseImpl) {
                     final var exerStrenght = (StrengthPlannedExerciseImpl) exercisePlanned;
-                    min = exerStrenght.getSets() * 3;
+                    min = exerStrenght.getSets() * STRENGTH_TIME_MULT;
                     row[2] = exerStrenght.getSets() + " x " + exerStrenght.getReps();
                     row[3] = "/";
                     row[4] =  exerStrenght.getWeight();
-                } else if(exercisePlanned instanceof CardioPlannedExerciseImpl) {
+                } else if (exercisePlanned instanceof CardioPlannedExerciseImpl) {
                     final var exerCardio = (CardioPlannedExerciseImpl) exercisePlanned;
                     min = exerCardio.getMinutes();
                     row[2] = "/";

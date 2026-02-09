@@ -18,44 +18,43 @@ import it.unibo.workitout.view.workout.contracts.ExerciseViewer;
 
 public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
+    private static final long serialVersionUID = 1L;
+    private static final String All_FILTER = "All";
+    private static final int FIELD_SIZE = 15;
+    
     private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
     private final DefaultTableModel modelRawExercise;
     final JButton searchButton = new JButton("Find");    
+    private final JTable tableRawExercise;    
+    private final JTextField searchField = new JTextField(FIELD_SIZE);
 
     private final JComboBox<String> typeComboBox = new JComboBox<>(new String[] {
-        "All",
+        All_FILTER,
         "CARDIO",
         "STRENGTH"
     });
 
     private final JComboBox<String> targetComboBox = new JComboBox<>(new String[] {
-        "All",
+        All_FILTER,
         "LOSE_WEIGHT",
         "BUILD_MUSCLE",
         "MAINTAIN_WEIGHT",
         "GAIN_WEIGHT"
     });
 
-    private final JLabel infoInsertionLable = new JLabel("Name exercise");
-    private final JTextField searchField = new JTextField(15);
-
-    private JTable tableRawExercise; //the table for the exercise
-    private JPanel btnPanel; //the panel of the button
-
     public ExerciseViewerImpl() {
+        super(new BorderLayout());
 
-        this.setLayout(new BorderLayout());
-        btnPanel = new JPanel();
-        btnPanel.add(infoInsertionLable);
+        final JPanel btnPanel = new JPanel();
         btnPanel.add(searchField);
         btnPanel.add(searchButton);
-
         btnPanel.add(targetComboBox);
         btnPanel.add(typeComboBox);
 
         this.modelRawExercise = new DefaultTableModel(indexColumnName, 0) {
+            private static final long serialVersionUID = 1L;
             @Override
-            public boolean isCellEditable(int row, int column) {
+            public boolean isCellEditable(final int row, final int column) {
                 return false;
             }
         };
@@ -69,11 +68,16 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         this.setExercises(rawExercise);
 
         searchButton.addActionListener(e -> {
-            String dataInserted = searchField.getText().trim();
+            final String dataInserted = searchField.getText().trim();
 
             if(!dataInserted.isEmpty()) {
 
-                this.setExercises(UserExerciseControllerImpl.getIstance().orderListBasedOn("Name", rawExercise, Optional.of(dataInserted)));
+                this.setExercises(UserExerciseControllerImpl.getIstance()
+                    .orderListBasedOn(
+                        "Name", 
+                        rawExercise, 
+                        Optional.of(dataInserted)
+                    ));
             }else {
                 this.setExercises(rawExercise);
             }
@@ -81,21 +85,32 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         });
 
         typeComboBox.addActionListener(e -> {
-            if(typeComboBox.getSelectedItem().toString().equals("All")) {
+            if(typeComboBox.getSelectedItem().toString().equals(All_FILTER)) {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises(UserExerciseControllerImpl.getIstance().orderListBasedOn("type", rawExercise, Optional.of(typeComboBox.getSelectedItem().toString())));
+            this.setExercises(UserExerciseControllerImpl.getIstance()
+                .orderListBasedOn(
+                    "type", 
+                    rawExercise, 
+                    Optional.of(typeComboBox.getSelectedItem().toString())
+                )
+            );
         });
 
         targetComboBox.addActionListener(e -> {
-            if(targetComboBox.getSelectedItem().toString().equals("All")) {
+            if(targetComboBox.getSelectedItem().toString().equals(All_FILTER)) {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises(UserExerciseControllerImpl.getIstance().orderListBasedOn("target", rawExercise, Optional.of(targetComboBox.getSelectedItem().toString())));
+            this.setExercises(UserExerciseControllerImpl.getIstance()
+                .orderListBasedOn(
+                    "target", 
+                    rawExercise, 
+                    Optional.of(targetComboBox.getSelectedItem().toString())
+                )
+            );
         });
-
     }
 
     @Override

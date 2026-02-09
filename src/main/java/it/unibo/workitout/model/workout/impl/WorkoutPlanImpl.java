@@ -19,7 +19,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  * This class aggregates multiples {@link WorkoutSheetImpl} istence to represent the training program.
  * </p>
  */
-public final class WorkoutPlanImpl extends AbstractNameFunction implements WorkoutPlan {
+public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
     private final Map<String, WorkoutSheetImpl> workoutPlan; 
@@ -54,28 +54,31 @@ public final class WorkoutPlanImpl extends AbstractNameFunction implements Worko
         return Set.copyOf(allExercise);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Map<String, WorkoutSheet> getWorkoutPlan() {
         return Collections.unmodifiableMap(new TreeMap<>(this.workoutPlan));
     }
 
-    //Following two methods return the sum of: volume and burned calories
+    /** {@inheritDoc} */
     @Override
     public double getVolume() {
-        return sumAll(WorkoutSheet::getVolume);
+        return sumAll(e -> e.getVolume());
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getBurnedCalories() {
-        return sumAll(WorkoutSheet::getBurnedCalories);
+        return sumAll(e -> e.getBurnedCalories());
     }
 
-    //Following two methods return the set of: workoutSheets and of all exercise
+    /** {@inheritDoc} */
     @Override
     public Set<WorkoutSheet> getSheets() {
         return Set.copyOf(workoutPlan.values()); //give an unmodifiable set of workoutSheet
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<PlannedExercise> getAllExercise() {
         final Set<PlannedExercise> allExercise = new HashSet<>();
@@ -85,17 +88,19 @@ public final class WorkoutPlanImpl extends AbstractNameFunction implements Worko
         return Set.copyOf(allExercise);
     }
 
-    //Following two methods return the set of each type of the exercise: strenght or cardio
+    /** {@inheritDoc} */
     @Override
     public Set<StrengthPlannedExercise> getStrenghtExercise() {
         return getExerciseSubdivision(StrengthPlannedExercise.class);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Set<CardioPlannedExercise> getCardiotExercise() {
         return getExerciseSubdivision(CardioPlannedExercise.class);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addWorkSheet(final String dateNext, final WorkoutSheet workoutSheet) {
         this.workoutPlan.put(dateNext, (WorkoutSheetImpl) workoutSheet);

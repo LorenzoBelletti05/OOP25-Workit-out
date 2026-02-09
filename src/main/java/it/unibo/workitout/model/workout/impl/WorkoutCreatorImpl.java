@@ -16,10 +16,55 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 /**
  * Creator class, with the logic for generate the workout plan.
  */
-public class WorkoutCreatorImpl implements WorkoutCreator {
+public final class WorkoutCreatorImpl implements WorkoutCreator {
 
-    private final String pathRawExerciwse = "/data/workout/exercise.json";
+    private static final String PATH_RAW_EXERCISE = "/data/workout/exercise.json";
+
+    //Const for distance and cardio
+    private static final double CARDIO_LOW_DIST = 0.2;
+    private static final double CARDIO_HIGH_DIST = 2.5;
+    private static final double CARDIO_MID_DIST = 1.0;
+
+    //Const for weight and strenght
+    private static final double STRETCHING_MUL = 0.5;
+    private static final double STRENGTH_LOW_W = 0.8;
+    private static final double STRENGTH_HIGH_W = 2.5;
+    private static final double STRENGTH_MID_W = 1.8;
+
+    //Const for minutes
+    private static final double MIN_PER_KM_DEFAULT = 6.0;
+    private static final double MIN_PER_KM_BIKE = 1.5;
+    private static final double MIN_PER_KM_SWIM = 15.0;
+    private static final double MIN_PER_KM_WALK = 15.0;
+
+    //Costants for calcs and limits
+    private static final double TDEE_NORMALIZER = 2100.0;
+    private static final double SAFETY_FACTOR = 0.5;
+    private static final double MAX_WEIGHT_LIMIT = 120.0;
+    private static final double MAX_DISTANCE_LIMIT = 20.0;
+
+    //Const for random and base misure
+    private static final int BASE_SETS_STRENGTH = 3;
+    private static final int BASE_REPS_STRENGTH = 10;
+    private static final int WEIGHT_VARIATION_RANGE = 11;
+    private static final int DISTANCE_VARIATION_RANGE = 3;
+    private static final double WEIGHT_ROUND_FACTOR = 2.0;
+    private static final double DISTANCE_ROUND_FACTOR = 100.0;
+    private static final int MIN_WORKOUT_MINUTES = 5;
+
+    //Switch constant
+    private static final double INTENSITY_HIGH = 1.5;
+    private static final double INTENSITY_LOW = 0.4;
+    private static final double INTENSITY_MID_LOW = 0.7;
+    private static final double INTENSITY_MID_HIGH = 1;
+
+    private static final double MUL_HIGH = 2.0;
+    private static final double MUL_VERY_HIGH = 2.2;
+    private static final double MUL_LOW = 0.3;
+    private static final double MUL_MID = 0.3;
+
     private final List<Exercise> lista;
+    private final Random random = new Random();
 
     /**
      * Costructor that when called it load the exercise.json.
@@ -27,14 +72,7 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
      * @throws IOException exception.
      */
     public WorkoutCreatorImpl() throws IOException {
-        lista = loadSaveData.loadFromResources(pathRawExerciwse, Exercise[].class);
-
-        //DEBUG
-        if (this.lista.isEmpty()) {
-            System.out.println("DEBUG:WorkoutCreator Lista esercizi vuota. Controlla il percorso delle risorse.");
-        } else {
-            System.out.println("DEBUG:WorkoutCreator " + this.lista.size() + " esercizi caricati correttamente.");
-        }
+        lista = loadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
     /**
@@ -48,16 +86,16 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
         final String nameExercise = exercise.getName();
         if (nameExercise.contains("piscina") || nameExercise.contains("nuoto")) {
-            return 0.2; //low distance
+            return CARDIO_LOW_DIST; //low distance
         }
         if (nameExercise.contains("ciclismo") || nameExercise.contains("bici")) {
-            return 2.5; //high distance
+            return CARDIO_HIGH_DIST; //high distance
         }
         if (nameExercise.contains("corsa") || nameExercise.contains("running")) {
-            return 1.0; //mid distance
+            return CARDIO_MID_DIST; //mid distance
         }
         if (nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
-            return 0.5;
+            return STRETCHING_MUL;
         }
 
         return 1.0; //default
@@ -71,19 +109,17 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
      * @return the multiplier.
      */
     private double getStrenghtMultiplierPerExercise(final Exercise exercise) {
-        final String nameExercise = exercise.getName();        
+        final String nameExercise = exercise.getName();
         if (nameExercise.contains("bicipiti") || nameExercise.contains("tricipiti") || nameExercise.contains("spalle")) {
-            return 0.8; //low weight
+            return STRENGTH_LOW_W; //low weight
         }
         if (nameExercise.contains("gambe") || nameExercise.contains("squat") || nameExercise.contains("pressa")) {
-            return 2.5; //high weight
+            return STRENGTH_HIGH_W; //high weight
         }
         if (nameExercise.contains("panca") || nameExercise.contains("dorso") || nameExercise.contains("rematore")) {
-            return 1.8; //mid weight
+            return STRENGTH_MID_W; //mid weight
         }
-        if (nameExercise.contains("mobilità") || nameExercise.contains("stretching")) {
-            return 0.5;
-        }
+        
         return 1.0; //default
     }
 
@@ -96,18 +132,17 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
      */
     private double getMinutesMultiplier(final Exercise exercise) {
 
-        double minPerKm = 6.0;
         final String name = exercise.getName().toLowerCase();
 
         if (name.contains("ciclismo") || name.contains("bici")) {
-            minPerKm = 1.5;
+            return MIN_PER_KM_BIKE;
         } else if (name.contains("nuoto") || name.contains("piscina")) {
-            minPerKm = 15.0;
+            return MIN_PER_KM_SWIM;
         } else if (name.contains("camminata")) {
-            minPerKm = 6.0;
+            return MIN_PER_KM_WALK;
         }
 
-        return minPerKm;
+        return MIN_PER_KM_DEFAULT;
     }
 
     /**
@@ -149,8 +184,8 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         return dataGeneration;
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public WorkoutPlan generatePlan(
         final double bmr,
         final double tdee,
@@ -165,8 +200,8 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         final List<Exercise> filteredRawExercise = new ArrayList<>();
 
         //variable multiplier
-        final double calculatedTdee = (tdee <= 0) ? 2000.0 : tdee;
-        final double tdeeMultiplier = calculatedTdee / 2100.0;
+        final double calculatedTdee = (tdee <= 0) ? TDEE_NORMALIZER : tdee;
+        final double tdeeMultiplier = calculatedTdee / TDEE_NORMALIZER;
         double intensityExercise = 1;
         double goalWeightMul = 1.0;
         double goalDistanceMul = 1.0;
@@ -177,11 +212,10 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
         final Integer avgExerciseDay = dataGenerationExercise.get(1);
 
         //variable for data calculation
-        int sets = 0;
-        int reps = 0;
+        int sets = BASE_SETS_STRENGTH;
+        int reps = BASE_REPS_STRENGTH;
         final int distance = 5;
-        int minutes = 10;
-        double weight = 5;
+        final double weight = 5;
 
         //Random variable for fiversity
         final Random random = new Random();
@@ -208,39 +242,36 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                 sets = random.nextInt(4, 5);
                 reps = random.nextInt(8, 10);
-                intensityExercise = 1.5;
-                goalWeightMul = 2.0;
-                goalDistanceMul = 0.5;
+                intensityExercise = INTENSITY_HIGH;
+                goalWeightMul = MUL_HIGH;
+                goalDistanceMul = SAFETY_FACTOR;
                 break;
 
             case MAINTAIN_WEIGHT:
 
                 sets = random.nextInt(3, 4);
                 reps = random.nextInt(10, 12);
-                intensityExercise = 1;
-                goalWeightMul = 1.0;
-                goalDistanceMul = 1.0;
+                intensityExercise = INTENSITY_MID_HIGH;
+                goalWeightMul = MUL_MID;
+                goalDistanceMul = MUL_MID;
                 break;
 
             case GAIN_WEIGHT:
 
                 sets = random.nextInt(1, 2);
                 reps = random.nextInt(6, 8);
-                intensityExercise = 0.4;
-                goalWeightMul = 0.3;
-                goalDistanceMul = 0.3;
+                intensityExercise = INTENSITY_LOW; 
+                goalWeightMul = MUL_LOW; 
+                goalDistanceMul = MUL_LOW;
                 break;
 
             case LOSE_WEIGHT:
 
                 sets = random.nextInt(3, 4);
                 reps = random.nextInt(10, 15);
-                intensityExercise = 0.7;
-                goalWeightMul = 0.7;
-                goalDistanceMul = 2.2; 
-                break;
-
-            default:
+                intensityExercise = INTENSITY_MID_LOW; 
+                goalWeightMul = INTENSITY_MID_LOW; 
+                goalDistanceMul = MUL_VERY_HIGH;
                 break;
         }
 
@@ -270,38 +301,34 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                 //Create the plan then check which type is: CARDIO or STRENGHT
                 final PlannedExercise plannedExercise;
 
-                if (rawExercise.getExerciseType().equals(ExerciseType.STRENGTH)) {
-
-                    final double baseWeight = weight + random.nextInt(0, 11);
+                if (rawExercise.getExerciseType() == ExerciseType.STRENGTH) {
 
                     //creating a weight based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalWeight = baseWeight
+                    double finalWeight = 5 + this.random.nextInt(WEIGHT_VARIATION_RANGE)
                         * tdeeMultiplier 
                         * goalWeightMul 
                         * this.getStrenghtMultiplierPerExercise(rawExercise) 
-                        * intensityExercise;
-
-                    finalWeight = Math.min(finalWeight, 120.0);
+                        * intensityExercise;                    
 
                     //regenerate sets and reps for diversity
-                    int localSets = sets + random.nextInt(-1, 2); 
-                    int localReps = reps + random.nextInt(-2, 3);
+                    final int localSets = sets + random.nextInt(-1, 2); 
+                    final int localReps = reps + random.nextInt(-2, 3);
 
                     //if the user is under is daily-need it divide the fatique.
                     if (userCheckSafety) {
-                        finalWeight *= 0.5;
+                        finalWeight *= SAFETY_FACTOR;
                     }
 
                     //Delete the decimal
-                    finalWeight = Math.round(finalWeight * 2) / 2.0;
+                    finalWeight = Math.round(finalWeight * WEIGHT_ROUND_FACTOR) / WEIGHT_ROUND_FACTOR;
 
                     //Security check for the weight
-                    finalWeight = Math.min(finalWeight, 120.0);
+                    finalWeight = Math.min(finalWeight, MAX_WEIGHT_LIMIT);
 
                     //the effective inizializzation of the exercise
                     plannedExercise = new StrengthPlannedExerciseImpl(
                         rawExercise, 
-                        (int) (localSets * 3), //indicative time based on sets * 3 (minutes)
+                        localSets * 3, //indicative time based on sets * 3 (minutes)
                         Math.max(1, localSets + currentInsity + activityBonus),
                         Math.max(1, localReps + (currentInsity * 2)),
                         finalWeight
@@ -309,20 +336,18 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
 
                 } else {
 
-                    final double baseDistance = distance + (random.nextDouble() * 3 - 1);
-
                     //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalDistance = baseDistance
+                    double finalDistance = 5 + (this.random.nextDouble() * DISTANCE_VARIATION_RANGE - 1)
                         * tdeeMultiplier
                         * goalDistanceMul
                         * this.getCardioMultiplierPerExercise(rawExercise)
                         * intensityExercise;
 
                     //Remove deciamel
-                    finalDistance = Math.round(finalDistance * 100.0) / 100.0;
+                    finalDistance = Math.round(finalDistance * DISTANCE_ROUND_FACTOR) / DISTANCE_ROUND_FACTOR;
 
                     //Security check
-                    finalDistance = Math.min(finalDistance, 20.0);
+                    finalDistance = Math.min(finalDistance, MAX_DISTANCE_LIMIT);
 
                     //the dinamic minutes based on distance
                     final double minPerKm = getMinutesMultiplier(rawExercise);
@@ -330,10 +355,10 @@ public class WorkoutCreatorImpl implements WorkoutCreator {
                     int finalMinutes = (int) Math.round((finalDistance * minPerKm) + random.nextInt(-2, 2));
 
                     //Security check
-                    finalMinutes = Math.max(5, finalMinutes);
+                    finalMinutes = Math.max(MIN_WORKOUT_MINUTES, finalMinutes);
 
                     if (userCheckSafety) {
-                        finalDistance *= 0.5;
+                        finalDistance *= SAFETY_FACTOR;
                     }
 
                     plannedExercise = new CardioPlannedExerciseImpl(

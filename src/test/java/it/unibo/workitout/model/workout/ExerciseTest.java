@@ -9,13 +9,31 @@ import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.ExerciseType;
 
-public class ExerciseTest {
+/**
+ * Test class for Exercise implementation.
+ */
+class ExerciseTest {
 
     /**
-     * Creating field for testing
+     * Constant for calories per minute.
      */
-    final static double caloriesPerMinute = 10.0;
-    private Exercise exercise = new Exercise("Affondi", caloriesPerMinute, UserGoal.BUILD_MUSCLE.toString(), ExerciseType.CARDIO);
+    private static final double CALORIES_PER_MINUTE = 10.0;
+
+    /**
+     * Constant for testing duration.
+     */
+    private static final int MINUTES = 10;
+
+    /**
+     * Constant for expected burned calories.
+     */
+    private static final double EXPECTED_CALORIES = 100.0;
+    private final Exercise exercise = new Exercise(
+        "Affondi", 
+        CALORIES_PER_MINUTE, 
+        UserGoal.BUILD_MUSCLE.toString(), 
+        ExerciseType.CARDIO
+    );
 
     @Test
     void testGetName() {
@@ -26,17 +44,20 @@ public class ExerciseTest {
     @Test
     void testcalorieBurned() {
         assertNotNull(exercise);
-        assertEquals(exercise.calorieBurned(10), 100);
+        assertEquals(exercise.calorieBurned(MINUTES), EXPECTED_CALORIES);
     }
 
     @Test
-    void getExerciseAttitude() {
+    void testGetExerciseAttitude() {
         assertNotNull(exercise);
-        assertEquals(exercise.getExerciseAttitude(), EnumSet.of(UserGoal.BUILD_MUSCLE).toString());
+        assertEquals(
+            exercise.getExerciseAttitude(), 
+            EnumSet.of(UserGoal.BUILD_MUSCLE).toString()
+        );
     }
 
     @Test 
-    void getExerciseTypeTest(){
+    void testGetExerciseType() {
         assertNotNull(exercise);
         assertEquals(exercise.getExerciseType(), ExerciseType.CARDIO);
     }

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -31,30 +32,42 @@ import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 /**
  * Controller class that manage the view and the model of the workout part and comunicate with the other controllers.
  */
-public class UserExerciseControllerImpl implements UserExerciseController {
+public final class UserExerciseControllerImpl implements UserExerciseController {
+
+    private static final String PATH_RAW_EXERCISE = "/data/workout/exercise.json";
+    private static final int DAYS_IN_WEEK = 7;
+
+    private final String pathToManageWorkoutPlan = loadSaveData.createPath("workoutPlan.json");
+    private final String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
 
     private double bmr;
     private double tdee;
     private double dailyCalories;
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
-    private final String pathToManageWorkoutPlan = loadSaveData.createPath("workoutPlan.json");
-    private final String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
-    private final String pathToRawExercise = "/data/workout/exercise.json";
-    private WorkoutUserData workoutUserData;
-    private LocalDate localDate; 
     private WorkoutPlan generatedWorkoutPlan;
-    private static UserExerciseControllerImpl instance;
     private PlanViewerImpl planView;
-    private Runnable navigationTask;
-    private final Integer daysInWeek = 7;
     private MainController mainController;
 
     /**
-     * Costructor empty.
+     * Inner class to avoid security problem with singleton.
      */
-    public UserExerciseControllerImpl() {
+    private static final class Holder {
+        private static final UserExerciseControllerImpl INSTANCE = new UserExerciseControllerImpl();
+    }
 
+    private UserExerciseControllerImpl() {
+        // Private constructor for Singleton
+    }
+
+    /**
+     * Get instance of the controller.
+     * 
+     * @return the instance.
+     * 
+     */
+    public static UserExerciseControllerImpl getIstance() {
+        return Holder.INSTANCE;
     }
 
     /**
@@ -63,7 +76,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
      * @param mainController istance of the main controller.
      * 
      */
-    public void setMainController(MainController mainController) {
+    public void setMainController(final MainController mainController) {
         this.mainController = mainController;
     }
 
@@ -71,18 +84,11 @@ public class UserExerciseControllerImpl implements UserExerciseController {
      * method that from the data given from the user save it (with the current date) in a JSON.
      */
     private void callSaveUserData() {
-        this.localDate = LocalDate.now();
-
-        workoutUserData = new WorkoutUserData(
-            bmr, 
-            tdee,
-            dailyCalories, 
-            activityLevel, 
-            userGoal, 
-            localDate.toString()
+        final WorkoutUserData data = new WorkoutUserData(
+            this.bmr, this.tdee, this.dailyCalories, 
+            this.activityLevel, this.userGoal, LocalDate.now().toString()
         );
-
-        loadSaveData.saveWorkoutuserDataIn(pathToWorkoutUserData, workoutUserData);
+        loadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
 
     }
 
@@ -93,6 +99,7 @@ public class UserExerciseControllerImpl implements UserExerciseController {
      */
     private WorkoutPlan checkAndCreate() {
 
+        WorkoutUserData workoutUserData;
         //try to load the dataUser from the json.
         try {
             workoutUserData = loadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData); 
@@ -100,22 +107,23 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             workoutUserData = null; //means that the json is empty and a new plan must be generated.
         }
 
-        //Check if the dataUser are present then get it and put in the local var, otherwise take the data from the user module.
+        //Check if the dataUser are present then get it and put in the local var, 
+        // otherwise take the data from the user module.
         if (workoutUserData != null) { 
             this.bmr = workoutUserData.getBmr();
             this.tdee = workoutUserData.getTdee();
             this.dailyCalories = workoutUserData.getdailyCalories();
             this.activityLevel = workoutUserData.getActivityLevel();
             this.userGoal = workoutUserData.getUserGoal();
-            //DEBUG
-            System.out.println("LOG: Dati caricati con successo per " + userGoal);
         } else {
-            final UserProfile mainProfile = loadSaveData.loadUserProfile(loadSaveData.createPath("user_profile.json"));
+            final UserProfile mainProfile = loadSaveData.loadUserProfile(
+                loadSaveData.createPath("user_profile.json")
+            );
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
                 this.userGoal = mainProfile.getUserGoal();
             } else {
-                return null; 
+                return null;
             }
         }
 
@@ -128,12 +136,13 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         }
 
         //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
-        //If full check if the datee is between the week (7 days), if true return the full plan, otherwise generate it.
+        //If full check if the datee is between the week (7 days),
+        // if true return the full plan, otherwise generate it.
         if (workoutPlan != null && workoutUserData != null) {
 
             final LocalDate date = LocalDate.parse(workoutUserData.getLocalDate());
 
-            if (java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= daysInWeek) {
+            if (java.time.temporal.ChronoUnit.DAYS.between(date, LocalDate.now()) <= DAYS_IN_WEEK) {
                 return workoutPlan;
             }
         }
@@ -147,12 +156,15 @@ public class UserExerciseControllerImpl implements UserExerciseController {
      * @return the workoutPlan.
      */
     private WorkoutPlan generateAfterAll() {
-        //DEBUG
-        System.out.println("Generazione per: " + userGoal + " con BMR: " + bmr);
 
         //Try generate the plan with the datam save the plan and the data in the json.
         try {
-            final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, tdee, dailyCalories, activityLevel, userGoal);
+            final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, 
+                tdee, 
+                dailyCalories, 
+                activityLevel, 
+                userGoal
+            );
             if (plan != null) {
                 //save the generated workoutplan
                 loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
@@ -163,20 +175,19 @@ public class UserExerciseControllerImpl implements UserExerciseController {
             }
 
         } catch (final IOException e) {
-            //DEGUB
-            System.out.println("" + e.getMessage());
+            //Internaly manage error
         }
         return null;
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public Map<String, WorkoutSheet> getWorkoutPlan() {
-        return this.generatedWorkoutPlan.getWorkoutPlan();
+        return Collections.unmodifiableMap(this.generatedWorkoutPlan.getWorkoutPlan());
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public List<WorkoutSheet> getWorkoutSheets() {
         final List<String> sortedExercise = new ArrayList<>(generatedWorkoutPlan.getWorkoutPlan().keySet());
         Collections.sort(sortedExercise);
@@ -188,49 +199,46 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         return listSheets;
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public List<Exercise> getRawExercise() {
-        return loadSaveData.loadFromResources(pathToRawExercise, Exercise[].class);
+        return loadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
-    @Override
     /** {@inheritDoc} */
-    public List<Exercise> orderListBasedOn(final String conditionSort, final List<Exercise> rawExercise, final Optional<String> data) {
-        List<Exercise> currentRawExercise = new ArrayList<>();
-        switch (conditionSort) {
-            case "Name":
-                for (final var element : rawExercise) {
-                    if (element.getName().toUpperCase().contains(data.get().toUpperCase())) {
-                        currentRawExercise.add(element);
-                    }
-                }
-                break;
+    @Override
+    public List<Exercise> orderListBasedOn(
+        final String conditionSort, 
+        final List<Exercise> rawExercise, 
+        final Optional<String> data
+    ) {
+        final List<Exercise> currentRawExercise = new ArrayList<>();
+        final String query = data.orElse("").toUpperCase(Locale.ROOT);
 
-            case "type":
-                for (final var element : rawExercise) {
-                    if (element.getExerciseType().name().toString().toUpperCase().contains(data.get().toUpperCase())) {
-                        currentRawExercise.add(element);
-                    }
-                }
-                break;
-
-            case "target":
-                for (final var element : rawExercise) {
-                    if (element.getExerciseAttitude().toString().toUpperCase().contains(data.get().toUpperCase())) {
-                        currentRawExercise.add(element);
-                    }
-                }
-                break;
-
-            default:
-                break;
+        for (final Exercise ex : rawExercise) {
+            String target = "";
+            switch (conditionSort) {
+                case "Name":
+                    target = ex.getName();
+                    break;
+                case "type":
+                    target = ex.getExerciseType().name();
+                    break;
+                case "target":
+                    target = ex.getExerciseAttitude();
+                    break;
+                default:
+                    break;
+            }
+            if (target.toUpperCase(Locale.ROOT).contains(query)) {
+                currentRawExercise.add(ex);
+            }
         }
         return currentRawExercise;
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public void setDataUser(
         final double bmr,
         final double tdee,
@@ -249,38 +257,32 @@ public class UserExerciseControllerImpl implements UserExerciseController {
 
     }
 
-    //creating a single istance to avoid creating unnecessary istance with different behaviour
-    public static UserExerciseControllerImpl getIstance() {
-        if (instance == null) {
-            instance = new UserExerciseControllerImpl();
-        }
-        return instance;
-    }
-
-    @Override
     /** {@inheritDoc} */
+    @Override
     public WorkoutPlan getGeneratedWorkoutPlan() {
-        if ( this.generatedWorkoutPlan == null) {
-            this.generatedWorkoutPlan = loadSaveData.loadWorkoutPlan(loadSaveData.createPath("workoutPlan.json"));
+        if (this.generatedWorkoutPlan == null) {
+            this.generatedWorkoutPlan = loadSaveData.loadWorkoutPlan(
+                loadSaveData.createPath("workoutPlan.json")
+            );
         }
         return this.generatedWorkoutPlan;
     }
 
-    @Override
     /** {@inheritDoc} */
-    public void setNavigationTask(Runnable navigationTask) {
-        this.navigationTask = navigationTask;
+    @Override
+    public void setNavigationTask(final Runnable navigationTask) {
+        // this.navigationTask = navigationTask;
     }
 
-    @Override
     /** {@inheritDoc} */
-    public void refreshTableWorkoutData(Runnable navigationTask) {
+    @Override
+    public void refreshTableWorkoutData(final Runnable navigationTask) {
 
         if (this.generatedWorkoutPlan == null) {
 
-            int response = JOptionPane.showConfirmDialog(
+            final int response = JOptionPane.showConfirmDialog(
                 null, 
-                "As a person of sound mind, do you declare and self-certify your motor skills" +  
+                "As a person of sound mind, do you declare and self-certify your motor skills" +
                 " and guarantee \nthat your physical health allows you to perform physical activities?",
                 "integrity", 
                 JOptionPane.YES_NO_OPTION, 
@@ -292,14 +294,13 @@ public class UserExerciseControllerImpl implements UserExerciseController {
                 this.generatedWorkoutPlan = checkAndCreate();
 
                 if (this.generatedWorkoutPlan == null) {
-                    JOptionPane.showMessageDialog(null, "Impossibile generare: mancano i dati del profilo!");
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Impossibile generare: mancano i dati del profilo!"
+                    );
                 }
 
-                // if(this.planView != null) {
-                //     this.planView.setTable();
-                // }
             } else {
-
                 return;
             }
         }
@@ -313,62 +314,57 @@ public class UserExerciseControllerImpl implements UserExerciseController {
         }
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public void setView(final PlanViewerImpl view) {
         this.planView = view;
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
             loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
-            System.out.println("LOG: Piano salvato su disco dopo la modifica.");
         }
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public void replaceExercise(final String date, final PlannedExercise oldEx, final PlannedExercise newEx) {
-        if (this.generatedWorkoutPlan != null) {            
-            final Map<String, WorkoutSheet> planMap = new HashMap<>(this.generatedWorkoutPlan.getWorkoutPlan());
-            final WorkoutSheet oldSheet = planMap.get(date);            
-            
-            if (oldSheet != null) {                                
-                final Set<PlannedExercise> list = new HashSet<>(oldSheet.getWorkoutSheet());                
-                if (list.remove(oldEx)) {
-                    list.add(newEx);
-                    final WorkoutSheet newSheet = new WorkoutSheetImpl(oldSheet.getName());
-                    for (PlannedExercise p : list) {
-                        newSheet.addExercise(p);
-                    }
-                    planMap.put(date, newSheet);
+        if (this.generatedWorkoutPlan != null) {
+            return;
+        }
 
-                    final WorkoutPlan newPlan = new WorkoutPlanImpl(this.generatedWorkoutPlan.getName());
-                                    
-                    for (Map.Entry<String, WorkoutSheet> entry : planMap.entrySet()) {
-                        newPlan.addWorkSheet(entry.getKey(), entry.getValue());
-                    }
-                    
-                    this.generatedWorkoutPlan = newPlan;
-                        saveCurrentPlan();
-                        System.out.println("LOG: Piano aggiornato con successo nel JSON.");
-                    } else {
-                        System.out.println("LOG: Esercizio vecchio non trovato nel set.");
-                    }
+        final Map<String, WorkoutSheet> planMap = new HashMap<>(this.generatedWorkoutPlan.getWorkoutPlan());
+        final WorkoutSheet oldSheet = planMap.get(date);
+
+        if (oldSheet != null) {
+            final Set<PlannedExercise> list = new HashSet<>(oldSheet.getWorkoutSheet());
+            if (list.remove(oldEx)) {
+                list.add(newEx);
+                final WorkoutSheet newSheet = new WorkoutSheetImpl(oldSheet.getName());
+                for (final PlannedExercise p : list) {
+                    newSheet.addExercise(p);
+                }
+                planMap.put(date, newSheet);
+
+                final WorkoutPlan newPlan = new WorkoutPlanImpl(this.generatedWorkoutPlan.getName());
+
+                for (final Map.Entry<String, WorkoutSheet> entry : planMap.entrySet()) {
+                    newPlan.addWorkSheet(entry.getKey(), entry.getValue());
+                }
+
+                this.generatedWorkoutPlan = newPlan;
+                saveCurrentPlan();
             }
         }
     }
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     public void setProfile(final double totKcal) {
         if (this.mainController != null) {
             this.mainController.communicateBurnedCalories(totKcal);
-        } else {
-            //DEBUG
-            System.out.println("ERROR: mainController non impostato in UserExerciseControllerImpl");
         }
     }
 
