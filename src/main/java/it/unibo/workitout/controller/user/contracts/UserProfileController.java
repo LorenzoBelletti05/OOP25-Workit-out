@@ -32,4 +32,14 @@ public interface UserProfileController {
      * @param burnedCalories the total of burned calories
      */
     void updateBurnedCalories(double burnedCalories);
+
+    /**
+     * Updates the user's daily nutrients intake.
+     * 
+     * @param kcal calories consumed
+     * @param proteins proteins consumed
+     * @param carbs carbs consumed
+     * @param fats fats consumed
+     */
+    void updateNutrients(double kcal, double proteins, double carbs, double fats);
 }

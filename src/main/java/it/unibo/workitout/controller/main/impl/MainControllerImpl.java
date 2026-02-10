@@ -58,6 +58,13 @@ public final class MainControllerImpl implements MainController {
         }
     }
 
+    @Override
+    public void communicateNutrients(final double kcal, final double prot, final double carb, final double fat) {
+        if (this.userController != null) {
+            this.userController.updateNutrients(kcal, prot, carb, fat);
+        }
+    }
+
     /**
      * Starts all the module controllers.
      */
@@ -111,7 +118,17 @@ public final class MainControllerImpl implements MainController {
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(
-            new FoodRepository(), new DailyLogManager(), nutritionView, goToDashboard);
+            new FoodRepository(),
+            new DailyLogManager(),
+            nutritionView,
+            goToDashboard,
+            nutrientsMap -> this.communicateNutrients(
+                nutrientsMap.get("kcal"),
+                nutrientsMap.get("proteins"),
+                nutrientsMap.get("carbs"),
+                nutrientsMap.get("fats")
+            )
+        );
         nutritionView.setController(nutritionController);
         nutritionController.start();
 

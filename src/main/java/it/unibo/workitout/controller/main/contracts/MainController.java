@@ -15,4 +15,14 @@ public interface MainController {
      * @param calories burned calories.
      */
     void communicateBurnedCalories(double calories);
+
+    /**
+     * Communicates the nutrients consumed to the user controller.
+     * 
+     * @param kcal calories.
+     * @param prot proteins.
+     * @param carb carbs.
+     * @param fat fats.
+     */
+    void communicateNutrients(double kcal, double prot, double carb, double fat);
 }

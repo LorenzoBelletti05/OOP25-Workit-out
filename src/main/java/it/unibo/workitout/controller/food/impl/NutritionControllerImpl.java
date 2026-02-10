@@ -13,16 +13,21 @@ import java.util.List;
 import java.util.Collections;
 import java.util.Objects;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.function.Consumer;
 
 /**
  * Implementation of NutritionController.
  */
 public final class NutritionControllerImpl implements NutritionController {
     private static final int MAX_GRAMS = 2000;
+    private static final double HUNDRED = 100.0;
+    private static final double KCAL_PER_PROT_CARB = 4.0;
+    private static final double KCAL_PER_FAT = 9.0;
     private final FoodRepository repository;
     private final DailyLogManager logManager;
     private final NutritionView view;
     private final Runnable goToDashboard;
+    private final Consumer<Map<String, Double>> onNutrientsUpdate;
 
     /**
      * @param repository the food database.
@@ -34,11 +39,13 @@ public final class NutritionControllerImpl implements NutritionController {
     public NutritionControllerImpl(final FoodRepository repository,
                                    final DailyLogManager logManager,
                                    final NutritionView view,
-                                   final Runnable goToDashboard) {
+                                   final Runnable goToDashboard,
+                                   final Consumer <Map<String, Double>> onNutrientsUpdate) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
         this.view = Objects.requireNonNull(view);
         this.goToDashboard = Objects.requireNonNull(goToDashboard);
+        this.onNutrientsUpdate = Objects.requireNonNull(onNutrientsUpdate);
         this.view.getBackButton().addActionListener(al -> {
             this.goToDashboard.run();
         });
@@ -74,45 +81,17 @@ public final class NutritionControllerImpl implements NutritionController {
         logManager.getCurrentLog().addFoodEntry(food, grams);
         final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
         logManager.saveHistory(historyPath);
-        saveTotalsForUser();
-        refreshViewSummary();
-    }
-
-    /**
-     * Helper to export data for the User module.
-     */
-    private void saveTotalsForUser() {
-        final DailyLog today = logManager.getCurrentLog();
-        final String date = java.time.LocalDate.now().toString();
-        final String statsRow = String.format("%s,%d,%d,%d,%d",
-            date,
-            (int) today.getTotalKcal(),
-            (int) today.getTotalProteins(),
-            (int) today.getTotalCarbs(),
-            (int) today.getTotalFats()
+        final double kcalValue = (food.getKcalPer100g() * grams) / HUNDRED;
+        final double protGrams = (food.getProteins() * kcalValue) / KCAL_PER_PROT_CARB;
+        final double carbGrams = (food.getCarbs() * kcalValue) / KCAL_PER_PROT_CARB;
+        final double fatGrams = (food.getFats() * kcalValue) / KCAL_PER_FAT;
+        Map<String, Double> nutrients = Map.of(
+            "kcal", kcalValue,
+            "proteins", protGrams,
+            "carbs", carbGrams,
+            "fats", fatGrams
         );
-
-        final String statsPath = LoadSaveData.createPath(LoadSaveData.STATS_FILE);
-        updateDailyStatsFile(statsPath, statsRow, date);
-    }
-
-    private void updateDailyStatsFile(final String path, final String newRow, final String date) {
-        final List<String> allLines = LoadSaveData.loadCsvFile(path);
-        boolean found = false;
-
-        for (int i = 0; i < allLines.size(); i++) {
-            if (allLines.get(i).startsWith(date)) {
-                allLines.set(i, newRow);
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            allLines.add(newRow);
-        }
-
-        LoadSaveData.saveCsvFile(path, allLines);
+        refreshViewSummary();
     }
 
     @Override
