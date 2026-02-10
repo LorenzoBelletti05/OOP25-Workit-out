@@ -67,9 +67,12 @@ public final class MainControllerImpl implements MainController {
 
     /**
      * Starts all the module controllers.
+     * 
+     * @throws IOException error save.
+     * 
      */
     @Override
-    public void start() {
+    public void start() throws IOException {
         final UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
         UserExerciseControllerImpl.getInstance().setMainController(this);
@@ -87,7 +90,7 @@ public final class MainControllerImpl implements MainController {
                 try {
                     LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
                 } catch (final IOException e) {
-                    // Ignored
+                    throw new IllegalStateException("Errore fatale nel salvataggio del profilo", e);
                 }
             }
 
