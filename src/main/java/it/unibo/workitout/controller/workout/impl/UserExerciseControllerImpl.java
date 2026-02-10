@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
@@ -37,8 +37,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     private static final String PATH_RAW_EXERCISE = "/data/workout/exercise.json";
     private static final int DAYS_IN_WEEK = 7;
 
-    private final String pathToManageWorkoutPlan = loadSaveData.createPath("workoutPlan.json");
-    private final String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
+    private final String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
+    private final String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
 
     private double bmr;
     private double tdee;
@@ -48,13 +48,6 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     private WorkoutPlan generatedWorkoutPlan;
     private PlanViewerImpl planView;
     private MainController mainController;
-
-    /**
-     * Inner class to avoid security problem with singleton.
-     */
-    private static final class Holder {
-        private static final UserExerciseControllerImpl INSTANCE = new UserExerciseControllerImpl();
-    }
 
     private UserExerciseControllerImpl() {
         // Private constructor for Singleton
@@ -66,7 +59,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
      * @return the instance.
      * 
      */
-    public static UserExerciseControllerImpl getIstance() {
+    public static UserExerciseControllerImpl getInstance() {
         return Holder.INSTANCE;
     }
 
@@ -88,7 +81,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.bmr, this.tdee, this.dailyCalories, 
             this.activityLevel, this.userGoal, LocalDate.now().toString()
         );
-        loadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
+        LoadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
 
     }
 
@@ -99,13 +92,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
      */
     private WorkoutPlan checkAndCreate() {
 
-        WorkoutUserData workoutUserData;
         //try to load the dataUser from the json.
-        try {
-            workoutUserData = loadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData); 
-        } catch (final NullPointerException e) {
-            workoutUserData = null; //means that the json is empty and a new plan must be generated.
-        }
+        final WorkoutUserData workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData);
 
         //Check if the dataUser are present then get it and put in the local var, 
         // otherwise take the data from the user module.
@@ -116,8 +104,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.activityLevel = workoutUserData.getActivityLevel();
             this.userGoal = workoutUserData.getUserGoal();
         } else {
-            final UserProfile mainProfile = loadSaveData.loadUserProfile(
-                loadSaveData.createPath("user_profile.json")
+            final UserProfile mainProfile = LoadSaveData.loadUserProfile(
+                LoadSaveData.createPath("user_profile.json")
             );
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
@@ -128,12 +116,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
         }
 
         //Try to load from json the plan, otherwise, set it null.
-        WorkoutPlan workoutPlan = null;
-        try {
-            workoutPlan = loadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
-        } catch (final NullPointerException e) {
-            workoutPlan = null;
-        }
+        final WorkoutPlan workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
 
         //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
         //If full check if the datee is between the week (7 days),
@@ -159,20 +142,20 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
         //Try generate the plan with the datam save the plan and the data in the json.
         try {
-            final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(bmr, 
+            final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(
+                bmr, 
                 tdee, 
                 dailyCalories, 
                 activityLevel, 
                 userGoal
             );
-            if (plan != null) {
-                //save the generated workoutplan
-                loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
-                //call the method to save the new user data
-                callSaveUserData();
 
-                return plan;
-            }
+            //save the generated workoutplan
+            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+            //call the method to save the new user data
+            callSaveUserData();
+
+            return plan;
 
         } catch (final IOException e) {
             //Internaly manage error
@@ -202,7 +185,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     /** {@inheritDoc} */
     @Override
     public List<Exercise> getRawExercise() {
-        return loadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
+        return LoadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
     /** {@inheritDoc} */
@@ -240,18 +223,18 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     /** {@inheritDoc} */
     @Override
     public void setDataUser(
-        final double bmr,
-        final double tdee,
-        final double dailyCalories,
-        final ActivityLevel activityLevel,
-        final UserGoal userGoal
+        final double bmrValue,
+        final double tdeeValue,
+        final double dailyCaloriesValue,
+        final ActivityLevel activityLevelValue,
+        final UserGoal userGoalValue
     ) {
 
-        this.bmr = bmr;
-        this.tdee = tdee;
-        this.dailyCalories = dailyCalories;
-        this.activityLevel = activityLevel;
-        this.userGoal = userGoal;
+        this.bmr = bmrValue;
+        this.tdee = tdeeValue;
+        this.dailyCalories = dailyCaloriesValue;
+        this.activityLevel = activityLevelValue;
+        this.userGoal = userGoalValue;
 
         this.generatedWorkoutPlan = generateAfterAll();
 
@@ -261,8 +244,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public WorkoutPlan getGeneratedWorkoutPlan() {
         if (this.generatedWorkoutPlan == null) {
-            this.generatedWorkoutPlan = loadSaveData.loadWorkoutPlan(
-                loadSaveData.createPath("workoutPlan.json")
+            this.generatedWorkoutPlan = LoadSaveData.loadWorkoutPlan(
+                LoadSaveData.createPath("workoutPlan.json")
             );
         }
         return this.generatedWorkoutPlan;
@@ -282,8 +265,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
             final int response = JOptionPane.showConfirmDialog(
                 null, 
-                "As a person of sound mind, do you declare and self-certify your motor skills" +
-                " and guarantee \nthat your physical health allows you to perform physical activities?",
+                "As a person of sound mind, do you declare and self-certify your motor skills" 
+                + " and guarantee \nthat your physical health allows you to perform physical activities?",
                 "integrity", 
                 JOptionPane.YES_NO_OPTION, 
                 JOptionPane.QUESTION_MESSAGE
@@ -324,7 +307,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
-            loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
         }
     }
 
@@ -366,6 +349,13 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
         if (this.mainController != null) {
             this.mainController.communicateBurnedCalories(totKcal);
         }
+    }
+
+    /**
+     * Inner class to avoid security problem with singleton.
+     */
+    private static final class Holder {
+        private static final UserExerciseControllerImpl INSTANCE = new UserExerciseControllerImpl();
     }
 
 }

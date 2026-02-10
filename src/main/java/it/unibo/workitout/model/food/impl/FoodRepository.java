@@ -1,7 +1,7 @@
 package it.unibo.workitout.model.food.impl;
 
 import it.unibo.workitout.model.food.api.Food;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ public final class FoodRepository {
      * @param filePath path to CSV.
      */
     public void loadFromFile(final String filePath) {
-        List<String> lines = loadSaveData.loadCsvFile(filePath);
+        List<String> lines = LoadSaveData.loadCsvFile(filePath);
 
         if (lines.isEmpty()) {
             try (InputStream is = getClass().getResourceAsStream("/data/food/foods.csv");
@@ -54,7 +54,7 @@ public final class FoodRepository {
                         defaultLines.add(line);
                         line = reader.readLine();
                     }
-                    loadSaveData.saveCsvFile(filePath, defaultLines);
+                    LoadSaveData.saveCsvFile(filePath, defaultLines);
                     lines = defaultLines;
                 }
             } catch (final IOException e) {

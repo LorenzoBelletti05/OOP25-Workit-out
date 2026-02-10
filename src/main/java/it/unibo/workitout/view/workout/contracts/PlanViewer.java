@@ -2,6 +2,9 @@ package it.unibo.workitout.view.workout.contracts;
 
 import javax.swing.JButton;
 
+/**
+ * Interface to the plan view.
+ */
 public interface PlanViewer {
 
     /**

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
@@ -117,8 +117,8 @@ public final class UserProfileControllerImpl implements UserProfileController {
             );
 
             try {
-                loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), userProfile);
-            } catch (final IOException expt) {
+                LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
+            } catch (final Exception expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }
 
@@ -133,7 +133,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
             }
             dashboard.showData(this.userManager);
 
-           UserExerciseControllerImpl.getIstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
+           UserExerciseControllerImpl.getInstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
             if (goToDashboard != null) {
                 goToDashboard.run();
@@ -162,8 +162,8 @@ public final class UserProfileControllerImpl implements UserProfileController {
         this.userManager.addBurnedCalories(burnedCalories);
 
         try {
-            loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
-        } catch (final IOException expt) {
+            LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
+        } catch (final Exception expt) {
             showInputDataError("The insert data is not saved \n " + expt.getMessage());
         }
 

@@ -17,7 +17,7 @@ import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 /**
  * Test class for the sheet.
  */
-public class WorkoutSheetTest {
+class WorkoutSheetTest {
 
     private static final double CALORIES_PER_MINUTE = 10.0;
     private static final String SHEET_NAME = "Scheda pre-Natale";
@@ -45,19 +45,19 @@ public class WorkoutSheetTest {
     private final Exercise exercise2 = new Exercise(
         EXE_NAME_2, 
         CALORIES_PER_MINUTE, 
-        UserGoal.MAINTAIN_WEIGHT.toString() +  ", " + UserGoal.LOSE_WEIGHT.toString(), 
+        UserGoal.MAINTAIN_WEIGHT.toString() + ", " + UserGoal.LOSE_WEIGHT.toString(), 
         ExerciseType.STRENGTH
     );
 
-    private PlannedExercise planExe = new StrengthPlannedExerciseImpl(
+    private final PlannedExercise planExe = new StrengthPlannedExerciseImpl(
         exercise, 
         MINUTES_1, 
         SETS_1, 
         REPS_1, 
         WEIGHT_1
     );
-    
-    private PlannedExercise planExe2 = new StrengthPlannedExerciseImpl(
+
+    private final PlannedExercise planExe2 = new StrengthPlannedExerciseImpl(
         exercise2, 
         MINUTES_2, 
         SETS_2, 

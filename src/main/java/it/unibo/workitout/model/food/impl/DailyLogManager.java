@@ -48,7 +48,7 @@ public final class DailyLogManager {
                 lines.add(date + "," + entry.getKey().getName() + "," + entry.getValue());
             }
         }
-        it.unibo.workitout.model.main.dataManipulation.loadSaveData.saveCsvFile(filePath, lines);
+        it.unibo.workitout.model.main.dataManipulation.LoadSaveData.saveCsvFile(filePath, lines);
     }
 
     /**

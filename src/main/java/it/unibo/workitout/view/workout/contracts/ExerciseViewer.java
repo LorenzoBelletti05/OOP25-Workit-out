@@ -4,6 +4,9 @@ import java.util.List;
 
 import it.unibo.workitout.model.workout.impl.Exercise;
 
+/**
+ * Interface of exercise viewr with two method.
+ */
 public interface ExerciseViewer {
 
     /**
@@ -17,7 +20,8 @@ public interface ExerciseViewer {
     /**
      * Take a specific exercise based on where and which the user click.
      * 
-     * @param rowExercise the row of the exercise.
+     * @return the int value of the selected row.
+     * 
      */
     int getExercise();
 
