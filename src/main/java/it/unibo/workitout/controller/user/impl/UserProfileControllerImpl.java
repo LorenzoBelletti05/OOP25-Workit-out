@@ -2,6 +2,8 @@ package it.unibo.workitout.controller.user.impl;
 
 import javax.swing.JOptionPane;
 
+import java.io.IOException;
+
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
@@ -137,7 +139,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
                 goToDashboard.run();
             }
 
-        } catch (final Exception expt) {
+        } catch (final IllegalStateException | IllegalArgumentException expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());
         }
 

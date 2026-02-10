@@ -109,7 +109,7 @@ public class LoadSaveData {
         }
     }
 
-    public static void saveUserProfile(String pathData, UserProfile userProfile) {
+    public static void saveUserProfile(String pathData, UserProfile userProfile) throws IOException {
         checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData)) {
             gsonFile.toJson(userProfile, writer);
@@ -122,7 +122,7 @@ public class LoadSaveData {
         checkFolderPresence(pathData);
         try (FileReader reader = new FileReader(pathData)) {
             return gsonFile.fromJson(reader, UserProfile.class);
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
     }

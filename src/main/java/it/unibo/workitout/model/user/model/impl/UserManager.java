@@ -13,8 +13,8 @@ public final class UserManager {
     /**
      * Creates a new User Manager.
      * 
-     * @param strategy the strategy for calculate the BMR.
-     * @param currentUser the user profile to manage.
+     * @param strategy      the strategy for calculate the BMR
+     * @param currentUser   the user profile to manage
      */
     public UserManager(final BMRCalculatorStrategy strategy, final UserProfile currentUser) {
         this.strategy = strategy;
@@ -22,31 +22,44 @@ public final class UserManager {
     }
 
     /**
-     * @param strategy set the strategy of the BMR calculator.
+     * Sets the strategy for the BMR calculator.
+     * 
+     * @param strategy set the strategy of the BMR calculator
      */
     public void setStrategy(final BMRCalculatorStrategy strategy) {
         this.strategy = strategy;
     }
 
     /**
-     * @return the BMR.
+     * Calculates the BMR.
+     * 
+     * @return the calculate value of BMR.
      */
     public double getBMR() {
         return strategy.calculateBMR(currentUser);
     }
 
     /**
+     * Calculates the TDEE.
+     * 
      * @return the TDEE, Total Daily Energy Expenditure.
      */
     public double getTDEE() {
         return getBMR() * currentUser.getActivityLevel().getMultiplier();
     }
 
+    /**
+     * Retieves the current user profile.
+     * 
+     * @return the user profile managed by this class
+     */
     public UserProfile getUserProfile() {
         return this.currentUser;
     }
 
     /**
+     * Calculates the daily calories target.
+     * 
      * @return the target calories calculated based on the UserGoal
      */
     public double getDailyCalories() {
