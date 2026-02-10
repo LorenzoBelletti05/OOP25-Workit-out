@@ -178,10 +178,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
         if (this.userManager == null) {
             return;
         }
-        this.userManager.addConsumedCalories(kcal);
-        this.userManager.addConsumedProteins(proteins);
-        this.userManager.addConsumedCarbs(carbs);
-        this.userManager.addConsumedFats(fats);
+        this.userManager.addConsumedFood(kcal, carbs, proteins, fats);
         try {
             LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"),
                 this.userManager.getUserProfile());
