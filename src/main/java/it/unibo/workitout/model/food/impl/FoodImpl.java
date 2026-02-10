@@ -55,4 +55,17 @@ public final class FoodImpl implements Food {
     public double getFats() {
         return pFats;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FoodImpl food = (FoodImpl) o;
+        return java.util.Objects.equals(name, food.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name);
+    }
 }
