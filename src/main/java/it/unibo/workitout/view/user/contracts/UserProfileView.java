@@ -26,6 +26,7 @@ public interface UserProfileView {
      * @return the user's surname
      */
     String getSurnameInput();
+
     /**
      * Returns the age insert by the user.
      * 

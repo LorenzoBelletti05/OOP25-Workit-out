@@ -9,7 +9,7 @@ import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 import it.unibo.workitout.model.workout.impl.Exercise;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
+import it.unibo.workitout.view.workout.contracts.PlanViewer;
 import java.io.IOException;
 
 /**
@@ -88,7 +88,7 @@ public interface UserExerciseController {
      * @param view passed to save it on the class.
      * 
      */
-    void setView(PlanViewerImpl view);
+    void setView(PlanViewer view);
 
     /**
      * Save the plan calling the LoadSaveData method to save the hole workout.

@@ -2,9 +2,7 @@ package it.unibo.workitout.model.workout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import java.util.EnumSet;
 import org.junit.jupiter.api.Test;
-
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.ExerciseType;
@@ -50,10 +48,7 @@ class ExerciseTest {
     @Test
     void testGetExerciseAttitude() {
         assertNotNull(exercise);
-        assertEquals(
-            exercise.getExerciseAttitude(), 
-            EnumSet.of(UserGoal.BUILD_MUSCLE).toString()
-        );
+        assertEquals(UserGoal.BUILD_MUSCLE.toString(), exercise.getExerciseAttitude());
     }
 
     @Test 

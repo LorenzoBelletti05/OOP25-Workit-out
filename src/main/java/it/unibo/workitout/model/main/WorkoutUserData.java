@@ -28,15 +28,15 @@ public class WorkoutUserData {
         this.localDate = localDate;
     }
 
-    public double getBmr() {
+    public double getBMR() {
         return this.bmr;
     }
 
-    public double getTdee() {
+    public double getTDEE() {
         return this.tdee;
     }
 
-    public double getdailyCalories() {
+    public double getDailyCalories() {
         return this.dailyCalories;
     }    
 
