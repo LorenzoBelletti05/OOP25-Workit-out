@@ -15,6 +15,10 @@ public final class UserProfile {
     private static final String ERR_MESS_HEIGHT = "The height must be positive and less of 210";
     private static final String ERR_MESS_WEIGHT = "The weight must be positive and less of 310";
     private static final String ERR_BURNED_CALORIES = "The burned calories must be positive";
+    private static final String ERR_CONSUMED_CALORIES = "The consumed calories must be positive";
+    private static final String ERR_CONSUMED_CARBS = "The consumed carbs must be positive";
+     private static final String ERR_CONSUMED_PROTEINS = "The consumed proteins must be positive";
+      private static final String ERR_CONSUMED_FATS = "The consumed fats must be positive";
     private static final String MIFFLIN_STRATEGY = "MifflinStJeorStrategy";
     private static final String HARRIS_STRATEGY = "HarrisBenedictStrategy";
 
@@ -30,6 +34,10 @@ public final class UserProfile {
     private String strategy;
     private String lastAccess;
     private double burnedCalories;
+    private double consumedCalories;
+    private double consumedCarbs;
+    private double consumedProteins;
+    private double consumedFats;
 
     /**
      * Constructor for a new user.
@@ -74,7 +82,7 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
-        if (this.strategy == null) {
+        if (strategy == null) {
             this.strategy = MIFFLIN_STRATEGY;
         } else {
             this.strategy = strategy;
@@ -223,6 +231,36 @@ public final class UserProfile {
     }
 
     /**
+     * @return the total of consumed calories
+     */
+    public double getConsumedCalories() {
+        return consumedCalories;
+    }
+
+    /**
+     * @return the total of consumed carbs
+     */
+     public double getConsumedCarbs() {
+        return consumedCarbs;
+    }
+
+    /**
+     * @return the total of consumed proteins
+     */
+    public double getConsumedProteins() {
+        return consumedProteins;
+    }
+
+    /**
+     * @return the total of consumed fats
+     */
+    public double getConsumedFats() {
+        return consumedFats;
+    }
+
+    /**
+     * Set a new user's name
+     * 
      * @param name sets the new user's name
      */
     public void setName(final String name) {
@@ -230,6 +268,8 @@ public final class UserProfile {
     }
 
     /**
+     * Set a new user's surname
+     * 
      * @param surname sets the new user's name
      */
     public void setSurname(final String surname) {
@@ -327,5 +367,45 @@ public final class UserProfile {
             throw new IllegalArgumentException(ERR_BURNED_CALORIES);
         }
         this.burnedCalories = burnedCalories;
+    }
+
+    /**
+     * @param consumedCalories Update the user's consumed calories
+     */
+    public void setConsumedCalories(final double consumedCalories) {
+        if (consumedCalories < 0) {
+            throw new IllegalArgumentException(ERR_CONSUMED_CALORIES);
+        }
+        this.consumedCalories = consumedCalories;
+    }
+
+    /**
+     * @param consumedCarbs Update the user's consumed carbs
+     */
+    public void setConsumedCarbs(final double consumedCarbs) {
+        if (consumedCarbs < 0) {
+            throw new IllegalArgumentException(ERR_CONSUMED_CARBS);
+        }
+        this.consumedCarbs = consumedCarbs;
+    }
+
+    /**
+     * @param consumedCalories Update the user's consumed proteins
+     */
+    public void setConsumedProteins(final double consumedProteins) {
+        if (consumedProteins < 0) {
+            throw new IllegalArgumentException(ERR_CONSUMED_PROTEINS);
+        }
+        this.consumedProteins = consumedProteins;
+    }
+
+    /**
+     * @param consumedCalories Update the user's consumed fats
+     */
+    public void setConsumedFats(final double consumedFats) {
+        if (consumedFats < 0) {
+            throw new IllegalArgumentException(ERR_CONSUMED_FATS);
+        }
+        this.consumedFats = consumedFats;
     }
 }

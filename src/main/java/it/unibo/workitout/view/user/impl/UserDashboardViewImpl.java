@@ -153,7 +153,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         final String name = userManager.getUserProfile().getName();
         welcomeTitle.setText("Hello " + name + "!");
         final int dailyCal = (int) userManager.getDailyCalories();
-        final int consumedCal = 1000;
+        final int consumedCal = (int) userManager.getUserProfile().getConsumedCalories();
         caloriesBar.setMaximum(dailyCal);
         caloriesBar.setMinimum(0);
         caloriesBar.setValue(consumedCal);
@@ -161,9 +161,9 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         showCalories.setText(consumedCal + SEPARATOR + dailyCal + " kcal");
 
         final NutritionalTarget macroTarget = userManager.getMacronutrients();
-        final int consumedCarbs = 0;
-        final int consumedProteins = 0;
-        final int consumedFats = 0;
+        final int consumedCarbs = (int) userManager.getUserProfile().getConsumedCarbs();
+        final int consumedProteins = (int) userManager.getUserProfile().getConsumedProteins();
+        final int consumedFats = (int) userManager.getUserProfile().getConsumedFats();
 
         lCarbs.setText("Carbs: " + consumedCarbs + SEPARATOR + (int) macroTarget.getCarbsG() + " " + GRAMS);
         lProteins.setText("Proteins: " + consumedProteins + SEPARATOR + (int) macroTarget.getProteinsG() + " " + GRAMS);

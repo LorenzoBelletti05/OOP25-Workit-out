@@ -109,4 +109,18 @@ public final class UserManager {
        final double totalCalories = this.currentUser.getBurnedCalories();
         this.currentUser.setBurnedCalories(totalCalories + burnedCalories);
     }
+
+    public void addConsumedFood(double calories, double carbs, double proteins, double fats) {
+        final double currentCalories = this.currentUser.getConsumedCalories();
+        this.currentUser.setConsumedCalories(currentCalories + calories);
+
+        final double currentCarbs = this.currentUser.getConsumedCarbs();
+        this.currentUser.setConsumedCarbs(currentCarbs + carbs);
+
+        final double currentProteins = this.currentUser.getConsumedProteins();
+        this.currentUser.setConsumedProteins(currentProteins + proteins);
+
+        final double currentFats = this.currentUser.getConsumedFats();
+        this.currentUser.setConsumedFats(currentFats + fats);
+    }
 }
