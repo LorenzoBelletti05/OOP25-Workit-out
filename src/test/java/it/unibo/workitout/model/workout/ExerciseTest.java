@@ -2,11 +2,7 @@ package it.unibo.workitout.model.workout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import java.util.EnumSet;
-import java.util.Set;
-
 import org.junit.jupiter.api.Test;
-
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.ExerciseType;

@@ -99,9 +99,9 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
         //Check if the dataUser are present then get it and put in the local var, 
         // otherwise take the data from the user module.
         if (workoutUserData != null) { 
-            this.bmr = workoutUserData.getBmr();
-            this.tdee = workoutUserData.getTdee();
-            this.dailyCalories = workoutUserData.getdailyCalories();
+            this.bmr = workoutUserData.getBMR();
+            this.tdee = workoutUserData.getTDEE();
+            this.dailyCalories = workoutUserData.getDailyCalories();
             this.activityLevel = workoutUserData.getActivityLevel();
             this.userGoal = workoutUserData.getUserGoal();
         } else {
