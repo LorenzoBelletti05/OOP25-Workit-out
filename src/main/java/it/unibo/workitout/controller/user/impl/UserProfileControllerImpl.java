@@ -118,20 +118,21 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
             try {
                 LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
-            } catch (final Exception expt) {
+            } catch (final IOException expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }
 
             this.userManager = new UserManager(strategy, userProfile);
 
-            final double bmr = userManager.getBMR();
-            final double tdee = userManager.getTDEE();
             final double dailyCalories = userManager.getDailyCalories();
 
             if (dailyCalories <= 0) {
-                throw new IllegalStateException("The total calories are negative, please check your input data.");
+                showInputDataError("The total calories are negative, please check your input data");
             }
             dashboard.showData(this.userManager);
+
+            final double bmr = userManager.getBMR();
+            final double tdee = userManager.getTDEE();
 
            UserExerciseControllerImpl.getInstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
@@ -159,11 +160,14 @@ public final class UserProfileControllerImpl implements UserProfileController {
      */
     @Override
     public void updateBurnedCalories(final double burnedCalories) {
+        if (this.userManager == null) {
+            return;
+        }
         this.userManager.addBurnedCalories(burnedCalories);
 
         try {
             LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
-        } catch (final Exception expt) {
+        } catch (final IOException expt) {
             showInputDataError("The insert data is not saved \n " + expt.getMessage());
         }
 
