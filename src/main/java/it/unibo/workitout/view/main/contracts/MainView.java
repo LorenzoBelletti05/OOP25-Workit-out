@@ -19,5 +19,10 @@ public interface MainView {
      */
     void addModule(String title, JPanel panel);
 
+    /**
+     * Show a specific view.
+     * 
+     * @param string name of the view.
+     */
     void showView(String string);
 }

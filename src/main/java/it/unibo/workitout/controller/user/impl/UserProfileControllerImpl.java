@@ -1,12 +1,11 @@
 package it.unibo.workitout.controller.user.impl;
 
-import javax.swing.JOptionPane;
-
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
@@ -42,7 +41,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
-      });
+        });
     }
 
     /**
@@ -118,7 +117,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
             try {
                 LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
-            } catch (final Exception expt) {
+            } catch (final IOException expt) {
                 showInputDataError("The insert data is not saved \n " + expt.getMessage());
             }
 
@@ -131,15 +130,15 @@ public final class UserProfileControllerImpl implements UserProfileController {
             if (dailyCalories <= 0) {
                 throw new IllegalStateException("The total calories are negative, please check your input data.");
             }
-            dashboard.showData(this.userManager);
+                dashboard.showData(this.userManager);
 
-           UserExerciseControllerImpl.getInstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
+            UserExerciseControllerImpl.getInstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
             if (goToDashboard != null) {
                 goToDashboard.run();
             }
 
-        } catch (final IllegalStateException | IllegalArgumentException expt) {
+        } catch (final IllegalArgumentException expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());
         }
 
@@ -163,7 +162,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         try {
             LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
-        } catch (final Exception expt) {
+        } catch (final IOException expt) {
             showInputDataError("The insert data is not saved \n " + expt.getMessage());
         }
 

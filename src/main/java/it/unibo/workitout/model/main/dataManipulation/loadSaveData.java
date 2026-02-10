@@ -1,5 +1,6 @@
-package it.unibo.workitout.model.main.dataManipulation;
+package it.unibo.workitout.model.main.datamanipulation;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,19 +11,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import it.unibo.workitout.model.main.WorkoutUserData;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
-import java.io.File;
 
-public class LoadSaveData { 
-
-    //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
-
-    private static final Gson gsonFile = new Gson();
-
-    private static final String APP_DIR = ".workitout";
+/**
+ * Class for loading and saving data.
+ */
+public final class LoadSaveData { 
 
     /** Public constant for foods file name. */
     public static final String FOODS_FILE = "foods.csv";
@@ -33,96 +31,169 @@ public class LoadSaveData {
     /** Public constant for stats file name. */
     public static final String STATS_FILE = "daily_stats.csv";
 
-    //General method to create the path
+    /** Base path of the application. */
+    private static final String APP_DIR = ".workitout";
+
+    private static final Gson GSON = new Gson();
+
+    private LoadSaveData() {
+    }
+
+    /**
+     * Gets the workspace path.
+     * 
+     * @return the path string
+     */
     public static String getWorkspacePath() {
         return System.getProperty("user.home") + File.separator + APP_DIR;
     }
 
-    //dinamic method that will be called in the specific class
-    public static String createPath(final String nameFile) {
-        return getWorkspacePath() + File.separator + nameFile;
+    /**
+     * Create full path for a file in the workspace.
+     * 
+     * @param fileName name of the file
+     * @return path string
+     */
+    public static String createPath(final String fileName) {
+        return getWorkspacePath() + File.separator + fileName;
     }
 
-    //provate method that check the presence of the folder, if not create it
-    private static void checkFolderPresence(String pathData) {
-        File file = new File(pathData);
-        File parDir = file.getParentFile();
-        if(parDir != null && !parDir.exists()) {
+    private static void checkFolderPresence(final String pathData) {
+        final File file = new File(pathData);
+        final File parDir = file.getParentFile();
+        if (parDir != null && !parDir.exists()) {
             parDir.mkdirs();
         }
     }
 
-    public static <T> List<T> loadSavedDataFrom(String pathData, Class<T[]> typeClass) throws IOException {
+    /**
+     * Load list of objects from a JSON.
+     * 
+     * @param <T> Objects.
+     * @param pathData path.
+     * @param typeClass class of arrays.
+     * @return list of objects/null.
+     * @throws IOException IO error.
+     */
+    public static <T> List<T> loadSavedDataFrom(final String pathData, final Class<T[]> typeClass) throws IOException {
         checkFolderPresence(pathData);
-        try (FileReader read = new FileReader(pathData)) {
-            T[] arrayData = gsonFile.fromJson(read, typeClass);
-            return arrayData != null ? new ArrayList<>(Arrays.asList(arrayData)) : new ArrayList<>();
-        } catch (IOException e) {
-            throw new IOException(e.getMessage());
+        try (FileReader read = new FileReader(pathData, StandardCharsets.UTF_8)) {
+            final T[] arrayData = GSON.fromJson(read, typeClass);
+            if (arrayData != null) {
+                return new ArrayList<>(Arrays.asList(arrayData));
+            }
+            return new ArrayList<>();
+        } catch (final JsonSyntaxException e) {
+            throw new IOException("Error JSON from " + pathData, e);
         }
     }
 
-    public static <T> void saveDataIn(String pathData, Class<T[]> dataClass) throws IOException {
+    /**
+     * Save list of objects to a JSON.
+     * 
+     * @param <T> Objects.
+     * @param pathData path.
+     * @param dataClass objects.
+     * @throws IOException IO error.
+     */
+    public static <T> void saveDataIn(final String pathData, final Class<T[]> dataClass) throws IOException {
         checkFolderPresence(pathData);
-        try(FileWriter writer = new FileWriter(pathData)) {
-            gsonFile.toJson(dataClass, writer);
-        } catch (Exception e) {
-            throw new IOException(e.getMessage());
+        try (FileWriter writer = new FileWriter(pathData, StandardCharsets.UTF_8)) {
+            GSON.toJson(dataClass, writer);
+        } catch (final IOException e) {
+            throw new IOException("Error saving data to " + pathData, e);
         }
     }
 
-    //method that load and save the entire workout from the json
-    public static WorkoutPlan loadWorkoutPlan(String pathData) {
+    /**
+     * Load WorkoutPlan from JSON.
+     * 
+     * @param pathData path.
+     * @return plan/null.
+     */
+    public static WorkoutPlan loadWorkoutPlan(final String pathData) {
         checkFolderPresence(pathData);
-        try (FileReader read = new FileReader(pathData)) {            
-            return gsonFile.fromJson(read, WorkoutPlanImpl.class);
-        } catch (IOException e) {
+        try (FileReader read = new FileReader(pathData, StandardCharsets.UTF_8)) {
+            return GSON.fromJson(read, WorkoutPlanImpl.class);
+        } catch (final IOException | JsonSyntaxException e) {
             return null;
         }
     }
 
-    public static void saveWorkoutPlan(String pathData, WorkoutPlan dataPlan) {
+    /**
+     * Save WorkoutPlan to JSON.
+     * 
+     * @param pathData path.
+     * @param dataPlan plan for workout.
+     * @throws IOException IO error.
+     */
+    public static void saveWorkoutPlan(final String pathData, final WorkoutPlan dataPlan) throws IOException {
         checkFolderPresence(pathData);
-        try (FileWriter writer = new FileWriter(pathData)) {
-             gsonFile.toJson(dataPlan, writer);
-        } catch (IOException e) {
-            System.out.println(" " + e.getMessage());
+        try (FileWriter writer = new FileWriter(pathData, StandardCharsets.UTF_8)) {
+             GSON.toJson(dataPlan, writer);
+        } catch (final IOException e) {
+            throw new IOException("Error saving workout plan: " + e.getMessage(), e);
         }
     }
 
-    //two methods that save and get the workoutUserData
-    public static void saveWorkoutuserDataIn(final String pathData, final WorkoutUserData workoutUserData) {
+    /**
+     * Save workout user data.
+     * 
+     * @param pathData path.
+     * @param workoutUserData data.
+     * @throws IOException IO error.
+     */
+    public static void saveWorkoutuserDataIn(final String pathData, final WorkoutUserData workoutUserData) throws IOException {
         checkFolderPresence(pathData);
-        try (FileWriter writer = new FileWriter(pathData)) {
-            gsonFile.toJson(workoutUserData, writer );
-        } catch (IOException e) {
-            System.out.println(" " + e.getMessage());
+        try (FileWriter writer = new FileWriter(pathData, StandardCharsets.UTF_8)) {
+            GSON.toJson(workoutUserData, writer);
+        } catch (final IOException e) {
+            throw new IOException("Error saving workout user data: " + e.getMessage(), e);
         }
     }
 
-    public static WorkoutUserData loadWorkoutuserDataIn(String pathData) {
+    /**
+     * Load workout user data.
+     * 
+     * @param pathData path.
+     * @return data/null.
+     */
+    public static WorkoutUserData loadWorkoutuserDataIn(final String pathData) {
         checkFolderPresence(pathData);
-        try (FileReader reader = new FileReader(pathData)) {
-            return gsonFile.fromJson(reader, WorkoutUserData.class);
-        } catch (IOException e) {
+        try (FileReader reader = new FileReader(pathData, StandardCharsets.UTF_8)) {
+            return GSON.fromJson(reader, WorkoutUserData.class);
+        } catch (final IOException | JsonSyntaxException e) {
             return null;
         }
     }
 
-    public static void saveUserProfile(String pathData, UserProfile userProfile) throws IOException {
+    /**
+     * Save user profile.
+     * 
+     * @param pathData path.
+     * @param userProfile profile.
+     * @throws IOException IO error.
+     */
+    public static void saveUserProfile(final String pathData, final UserProfile userProfile) throws IOException {
         checkFolderPresence(pathData);
-        try (FileWriter writer = new FileWriter(pathData)) {
-            gsonFile.toJson(userProfile, writer);
-        } catch (Exception e) {
-            return ;
+        try (FileWriter writer = new FileWriter(pathData, StandardCharsets.UTF_8)) {
+            GSON.toJson(userProfile, writer);
+        } catch (final IOException e) {
+            throw new IOException("Error saving user profile: " + e.getMessage(), e);
         }
     }
 
-    public static UserProfile loadUserProfile(String pathData) {
+    /**
+     * Load user profile.
+     * 
+     * @param pathData path.
+     * @return profile/null.
+     */
+    public static UserProfile loadUserProfile(final String pathData) {
         checkFolderPresence(pathData);
-        try (FileReader reader = new FileReader(pathData)) {
-            return gsonFile.fromJson(reader, UserProfile.class);
-        } catch (IOException e) {
+        try (FileReader reader = new FileReader(pathData, StandardCharsets.UTF_8)) {
+            return GSON.fromJson(reader, UserProfile.class);
+        } catch (final IOException | JsonSyntaxException e) {
             return null;
         }
     }
@@ -143,7 +214,7 @@ public class LoadSaveData {
         }
 
         try (java.io.BufferedReader br = new java.io.BufferedReader(
-                new FileReader(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+                new FileReader(pathData, StandardCharsets.UTF_8))) {
             String line = br.readLine();
             while (line != null) {
                 lines.add(line);
@@ -164,7 +235,7 @@ public class LoadSaveData {
     public static void saveCsvFile(final String pathData, final List<String> lines) {
         checkFolderPresence(pathData);
         try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
-                new FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8))) {
+                new FileWriter(pathData, StandardCharsets.UTF_8))) {
             for (final String line : lines) {
                 bw.write(line);
                 bw.newLine();
@@ -184,7 +255,7 @@ public class LoadSaveData {
     public static void saveDailyStats(final String pathData, final String stats) {
         checkFolderPresence(pathData);
         try (java.io.BufferedWriter bw = new java.io.BufferedWriter(
-                new FileWriter(pathData, java.nio.charset.StandardCharsets.UTF_8, true))) {
+                new FileWriter(pathData, StandardCharsets.UTF_8, true))) {
             bw.write(stats);
             bw.newLine();
         } catch (final IOException e) {
@@ -192,44 +263,36 @@ public class LoadSaveData {
         }
     }
 
-
     /**
-     * method to read the data from the inside jar.
+     * Load data from resources.
      * 
-     * @param <T> geneal method.
-     * 
-     * @param resourcePath the path of the file.
-     * 
-     * @param typeClass the type of the class.
-     * 
-     * @return the general list.
-     * 
+     * @param <T> type of data.
+     * @param resourcePath path of the file.
+     * @param typeClass class of the array.
+     * @return list of loaded data.
      */
-    public static <T> List<T> loadFromResources(String resourcePath, Class<T[]> typeClass) {
+    public static <T> List<T> loadFromResources(final String resourcePath, final Class<T[]> typeClass) {
 
         try (InputStream is = LoadSaveData.class.getResourceAsStream(resourcePath);
-        
-        InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 
             //if the stream is null, show error
-            if (is == null) {
-                System.err.println("Resource not found: " + resourcePath);
-                return new ArrayList<>();
+            if (is == null || reader == null) {
+                throw new IllegalStateException("Resource not found: " + resourcePath);
             }
 
             //load from the json the data
-            T[] arrayData = gsonFile.fromJson(reader, typeClass);
+            final T[] arrayData = GSON.fromJson(reader, typeClass);
 
             //if data load are not null return the copy of the data modifible, empty othervise
-            if (arrayData != null ) {
+            if (arrayData != null) {
                 return new ArrayList<>(Arrays.asList(arrayData));
             } else {
                 return new ArrayList<>();
             }
 
-        } catch (IOException e) {
-            System.err.println("Error reading resource: " + e.getMessage());
-            return new ArrayList<>();
+        } catch (final IOException | JsonSyntaxException e) {
+            throw new IllegalStateException("Error reading resource: " + e.getMessage(), e);
         }
     }
 }

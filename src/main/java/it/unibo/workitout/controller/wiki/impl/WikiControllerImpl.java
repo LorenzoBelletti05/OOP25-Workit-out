@@ -3,6 +3,7 @@ package it.unibo.workitout.controller.wiki.impl;
 import it.unibo.workitout.controller.wiki.contracts.WikiController; 
 import it.unibo.workitout.view.wiki.contracts.WikiView;
 import it.unibo.workitout.model.food.api.Meal;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
 import it.unibo.workitout.model.wiki.contracts.Video;
 import it.unibo.workitout.model.wiki.contracts.Wiki;
@@ -16,8 +17,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.JOptionPane;
+
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.food.api.Food;
@@ -33,7 +36,6 @@ public class WikiControllerImpl implements WikiController {
     private final Wiki model;
     private final SmartSuggestionImpl smartSuggestion = new SmartSuggestionImpl();
     private final WikiView view;
-    private final System.Logger logger = System.getLogger(WikiControllerImpl.class.getName());
 
     private UserProfile user;
     private List<Exercise> exercises;
@@ -67,7 +69,11 @@ public class WikiControllerImpl implements WikiController {
                 try {
                     this.view.showVideoPlayer(video.getUrl().toString());
                 } catch (final URISyntaxException e) {
-                    logger.log(System.Logger.Level.ERROR, "Errore nell'apertura del video: " + video.getUrl(), e);
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Errore nell'apertura del video: " + video.getUrl(), 
+                        "Errore", JOptionPane.ERROR_MESSAGE
+                    );
                 }
             } else {
                 this.view.showDetail(content.getTitle(), content.getText());
@@ -164,7 +170,8 @@ public class WikiControllerImpl implements WikiController {
         }
         final List<Exercise> currentExercises = loadExercisesFromPlan();
         final Meal currentMeal = loadTodayMealFromHistory();
-        final StringBuilder feedback = new StringBuilder("<html>");
+        final StringBuilder feedback = new StringBuilder(100);
+        feedback.append("<html>");
         //exercises
         if (currentExercises != null && !currentExercises.isEmpty()) {
             feedback.append("Esercizi trovati: ")

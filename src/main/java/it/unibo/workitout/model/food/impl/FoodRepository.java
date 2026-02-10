@@ -1,7 +1,7 @@
 package it.unibo.workitout.model.food.impl;
 
 import it.unibo.workitout.model.food.api.Food;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import it.unibo.workitout.controller.wiki.impl.WikiControllerImpl;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.model.food.impl.FoodRepository;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.HarrisBenedictStrategy;
 import it.unibo.workitout.model.user.model.impl.MifflinStJeorStrategy;
@@ -25,24 +25,32 @@ import it.unibo.workitout.view.user.impl.UserProfileViewImpl;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
-public class MainControllerImpl implements MainController {
-    //constants
+/**
+ * Implementation of the Main Controller.
+ */
+public final class MainControllerImpl implements MainController {
+    // constants
     private static final String LOGIN = "LOGIN";
     private static final String DASHBOARD = "DASHBOARD";
     private static final String WIKI = "WIKI";
     private static final String FOOD = "FOOD";
     private static final String EXERCISE = "EXERCISE";
-    //view
+    // view
     private final MainView mainView;
-    //user
-    private UserProfile user;  
+    // user
+    private UserProfile user;
     private UserProfileControllerImpl userController;
-    
-    
-    public MainControllerImpl(MainView mainView) {
+
+    /**
+     * Builder Main Controller.
+     * 
+     * @param mainView the main view
+     */
+    public MainControllerImpl(final MainView mainView) {
         this.mainView = mainView;
     }
 
+    @Override
     public void communicateBurnedCalories(final double calories) {
         // the MainController takes the data and passes it to userController
         if (this.userController != null) {
@@ -59,25 +67,25 @@ public class MainControllerImpl implements MainController {
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
         UserExerciseControllerImpl.getInstance().setMainController(this);
 
-        Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
+        final Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
 
         this.userController = new UserProfileControllerImpl(profileView, dashboardView, goToDashboard);
 
         this.user = LoadSaveData.loadUserProfile(LoadSaveData.createPath("user_profile.json"));
 
-        if(this.user != null) {
-            LocalDate now = LocalDate.now();
-            if(!this.user.getLastAccess().equals(now)) {
+        if (this.user != null) {
+            final LocalDate now = LocalDate.now();
+            if (!this.user.getLastAccess().equals(now)) {
                 this.user.setLastAccess();
                 try {
                     LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (final IOException e) {
+                    // Ignored
                 }
             }
 
-            BMRCalculatorStrategy strategy;
-            if(user.getStrategy().equals("MifflinStJeorStrategy")) {
+            final BMRCalculatorStrategy strategy;
+            if ("MifflinStJeorStrategy".equals(user.getStrategy())) {
                 strategy = new MifflinStJeorStrategy();
             } else {
                 strategy = new HarrisBenedictStrategy();
@@ -97,14 +105,13 @@ public class MainControllerImpl implements MainController {
             mainView.showView(LOGIN);
         }
 
-
         profileView.getBackButton().addActionListener(al -> {
             mainView.showView(DASHBOARD);
         });
 
         final NutritionViewImpl nutritionView = new NutritionViewImpl();
         final NutritionController nutritionController = new NutritionControllerImpl(
-        new FoodRepository(), new DailyLogManager(), nutritionView, goToDashboard);
+            new FoodRepository(), new DailyLogManager(), nutritionView, goToDashboard);
         nutritionView.setController(nutritionController);
         nutritionController.start();
 
@@ -134,7 +141,7 @@ public class MainControllerImpl implements MainController {
             mainView.showView(WIKI);
         });
 
-        dashboardView.getExerciseButton().addActionListener(al -> {            
+        dashboardView.getExerciseButton().addActionListener(al -> {
             UserExerciseControllerImpl.getInstance().refreshTableWorkoutData(() -> {
                 mainView.showView(EXERCISE);
             });
@@ -144,7 +151,7 @@ public class MainControllerImpl implements MainController {
             mainView.showView(DASHBOARD);
         });
 
-        mainView.start();        
+        mainView.start();
     }
-    
+
 }

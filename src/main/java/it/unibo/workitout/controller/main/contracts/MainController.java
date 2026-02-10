@@ -14,5 +14,5 @@ public interface MainController {
      * 
      * @param calories burned calories.
      */
-    void communicateBurnedCalories(final double calories);
-}   
+    void communicateBurnedCalories(double calories);
+}

@@ -2,7 +2,7 @@ package it.unibo.workitout.controller.food.impl;
 
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.model.food.impl.FoodRepository;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.model.food.api.DailyLog;

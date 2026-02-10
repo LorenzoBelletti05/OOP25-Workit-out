@@ -10,6 +10,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
+import java.io.IOException;
 
 /**
  * Interface that contains the definition of the methot to manage all the data from and for the view, from the model.
@@ -91,6 +92,8 @@ public interface UserExerciseController {
 
     /**
      * Save the plan calling the LoadSaveData method to save the hole workout.
+     * 
+     * @throws IOException IO error.
      */
     void saveCurrentPlan();
 
@@ -100,7 +103,6 @@ public interface UserExerciseController {
      * @param date the date of the exercise.
      * @param oldEx the oldExercise need to take the data.
      * @param newEx the new exercise to replace the old with.
-     * 
      */
     void replaceExercise(String date, PlannedExercise oldEx, PlannedExercise newEx);
 

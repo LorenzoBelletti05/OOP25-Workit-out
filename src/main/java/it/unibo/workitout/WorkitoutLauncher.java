@@ -8,8 +8,12 @@ import it.unibo.workitout.controller.main.impl.MainControllerImpl;
  */
 public final class WorkitoutLauncher {
 
+    private WorkitoutLauncher() {
+    }
+
     /**
      * Main method.
+     * 
      * @param args ...
      */
     public static void main(final String[] args) {
@@ -17,4 +21,5 @@ public final class WorkitoutLauncher {
         final MainControllerImpl mainController = new MainControllerImpl(mainView);
         mainController.start();
     }
-}   
+}
+
