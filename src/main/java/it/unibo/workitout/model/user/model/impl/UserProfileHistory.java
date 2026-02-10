@@ -13,7 +13,7 @@ public class UserProfileHistory {
      * 
      * @param date the current date
      */
-    UserProfileHistory(LocalDate date) {
+    UserProfileHistory(final LocalDate date) {
         this.date = LocalDate.now();
     }
 

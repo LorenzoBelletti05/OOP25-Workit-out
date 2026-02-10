@@ -1,5 +1,6 @@
 package it.unibo.workitout.controller.main.impl;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 import it.unibo.workitout.controller.food.contracts.NutritionController;
@@ -68,7 +69,11 @@ public class MainControllerImpl implements MainController {
             LocalDate now = LocalDate.now();
             if(!this.user.getLastAccess().equals(now)) {
                 this.user.setLastAccess();
-                loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), this.user);
+                try {
+                    loadSaveData.saveUserProfile(loadSaveData.createPath("user_profile.json"), this.user);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             BMRCalculatorStrategy strategy;
@@ -78,7 +83,7 @@ public class MainControllerImpl implements MainController {
                 strategy = new HarrisBenedictStrategy();
             }
 
-            UserManager userManager = new UserManager(strategy, this.user);
+            final UserManager userManager = new UserManager(strategy, this.user);
             userController.setUserManager(userManager);
             dashboardView.showData(userManager);
             userController.isFirstAccess(false);
