@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.food.api.Food;
@@ -222,8 +222,8 @@ public class WikiControllerImpl implements WikiController {
      */
     private Meal loadTodayMealFromHistory() {
         //load history
-        final List<String> history = loadSaveData.loadCsvFile(
-            loadSaveData.createPath(loadSaveData.HISTORY_FILE));
+        final List<String> history = LoadSaveData.loadCsvFile(
+            LoadSaveData.createPath(LoadSaveData.HISTORY_FILE));
         final String today = LocalDate.now().toString();
         //get food names
         final List<String> foodNames = history.stream()

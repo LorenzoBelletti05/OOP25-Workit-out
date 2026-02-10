@@ -2,7 +2,7 @@ package it.unibo.workitout.controller.food.impl;
 
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.model.food.impl.FoodRepository;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.food.impl.DailyLogManager;
 import it.unibo.workitout.view.food.contracts.NutritionView;
 import it.unibo.workitout.model.food.api.DailyLog;
@@ -46,8 +46,8 @@ public final class NutritionControllerImpl implements NutritionController {
 
     @Override
     public void start() {
-        final String foodsPath = loadSaveData.createPath(loadSaveData.FOODS_FILE);
-        final String historyPath = loadSaveData.createPath(loadSaveData.HISTORY_FILE);
+        final String foodsPath = LoadSaveData.createPath(LoadSaveData.FOODS_FILE);
+        final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
         repository.loadFromFile(foodsPath);
         logManager.loadHistory(historyPath, repository);
 
@@ -72,7 +72,7 @@ public final class NutritionControllerImpl implements NutritionController {
         }
 
         logManager.getCurrentLog().addFoodEntry(food, grams);
-        final String historyPath = loadSaveData.createPath(loadSaveData.HISTORY_FILE);
+        final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
         logManager.saveHistory(historyPath);
         saveTotalsForUser();
         refreshViewSummary();
@@ -92,12 +92,12 @@ public final class NutritionControllerImpl implements NutritionController {
             (int) today.getTotalFats()
         );
 
-        final String statsPath = loadSaveData.createPath(loadSaveData.STATS_FILE);
+        final String statsPath = LoadSaveData.createPath(LoadSaveData.STATS_FILE);
         updateDailyStatsFile(statsPath, statsRow, date);
     }
 
     private void updateDailyStatsFile(final String path, final String newRow, final String date) {
-        final List<String> allLines = loadSaveData.loadCsvFile(path);
+        final List<String> allLines = LoadSaveData.loadCsvFile(path);
         boolean found = false;
 
         for (int i = 0; i < allLines.size(); i++) {
@@ -112,7 +112,7 @@ public final class NutritionControllerImpl implements NutritionController {
             allLines.add(newRow);
         }
 
-        loadSaveData.saveCsvFile(path, allLines);
+        LoadSaveData.saveCsvFile(path, allLines);
     }
 
     @Override

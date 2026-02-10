@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
@@ -124,7 +124,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
      * @throws IOException exception.
      */
     public WorkoutCreatorImpl() throws IOException {
-        lista = loadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
+        lista = LoadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
     /**

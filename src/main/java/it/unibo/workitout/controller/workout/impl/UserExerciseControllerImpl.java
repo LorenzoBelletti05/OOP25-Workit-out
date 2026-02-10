@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
-import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
+import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
@@ -37,8 +37,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     private static final String PATH_RAW_EXERCISE = "/data/workout/exercise.json";
     private static final int DAYS_IN_WEEK = 7;
 
-    private final String pathToManageWorkoutPlan = loadSaveData.createPath("workoutPlan.json");
-    private final String pathToWorkoutUserData = loadSaveData.createPath("workoutDataUser.json");
+    private final String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
+    private final String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
 
     private double bmr;
     private double tdee;
@@ -81,7 +81,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.bmr, this.tdee, this.dailyCalories, 
             this.activityLevel, this.userGoal, LocalDate.now().toString()
         );
-        loadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
+        LoadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
 
     }
 
@@ -93,7 +93,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     private WorkoutPlan checkAndCreate() {
 
         //try to load the dataUser from the json.
-        final WorkoutUserData workoutUserData = loadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData);
+        final WorkoutUserData workoutUserData = LoadSaveData.loadWorkoutuserDataIn(pathToWorkoutUserData);
 
         //Check if the dataUser are present then get it and put in the local var, 
         // otherwise take the data from the user module.
@@ -104,8 +104,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.activityLevel = workoutUserData.getActivityLevel();
             this.userGoal = workoutUserData.getUserGoal();
         } else {
-            final UserProfile mainProfile = loadSaveData.loadUserProfile(
-                loadSaveData.createPath("user_profile.json")
+            final UserProfile mainProfile = LoadSaveData.loadUserProfile(
+                LoadSaveData.createPath("user_profile.json")
             );
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
@@ -116,7 +116,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
         }
 
         //Try to load from json the plan, otherwise, set it null.
-        final WorkoutPlan workoutPlan = loadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
+        final WorkoutPlan workoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
 
         //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
         //If full check if the datee is between the week (7 days),
@@ -151,7 +151,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             );
 
             //save the generated workoutplan
-            loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
             //call the method to save the new user data
             callSaveUserData();
 
@@ -185,7 +185,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     /** {@inheritDoc} */
     @Override
     public List<Exercise> getRawExercise() {
-        return loadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
+        return LoadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
     /** {@inheritDoc} */
@@ -244,8 +244,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public WorkoutPlan getGeneratedWorkoutPlan() {
         if (this.generatedWorkoutPlan == null) {
-            this.generatedWorkoutPlan = loadSaveData.loadWorkoutPlan(
-                loadSaveData.createPath("workoutPlan.json")
+            this.generatedWorkoutPlan = LoadSaveData.loadWorkoutPlan(
+                LoadSaveData.createPath("workoutPlan.json")
             );
         }
         return this.generatedWorkoutPlan;
@@ -307,7 +307,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
-            loadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
         }
     }
 
