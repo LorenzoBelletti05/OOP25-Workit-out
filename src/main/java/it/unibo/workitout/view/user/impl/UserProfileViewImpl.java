@@ -23,6 +23,12 @@ import java.awt.GridLayout;
  */
 public final class UserProfileViewImpl extends JPanel implements UserProfileView {
     private static final long serialVersionUID = 1L;
+    private static final int N_0 = 0;
+    private static final int N_1 = 1;
+    private static final int N_2 = 2;
+    private static final int N_10 = 10;
+    private static final int N_30 = 30;
+    private static final int N_90 = 90;
 
     private final JPanel panel = new JPanel();
     private final JTextField nameField = new JTextField();
@@ -37,7 +43,7 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
     private final JButton calculateButton = new JButton("Save");
     private final JButton backButton = new JButton("Back");
 
-    private UserProfileController controller;
+    private transient UserProfileController controller;
 
     /**
      * Constructs the UserProfileViewImpl GUI.
@@ -53,9 +59,9 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
      */
     private void profileGUI() {
         panel.setLayout(new BorderLayout());
-        final JPanel secondPanel = new JPanel(new GridLayout(0, 2, 10, 10));
+        final JPanel secondPanel = new JPanel(new GridLayout(N_0, N_2, N_10, N_10));
 
-        secondPanel.setBorder(BorderFactory.createEmptyBorder(10, 90, 30, 90));
+        secondPanel.setBorder(BorderFactory.createEmptyBorder(N_10, N_90, N_30, N_90));
         secondPanel.add(new JLabel("Name:"));
         secondPanel.add(nameField);
         secondPanel.add(new JLabel("Surname:"));
@@ -267,10 +273,10 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
      */
     @Override
     public void setBMRStrategyInput(final String strategy) {
-        if (strategy.equals("MifflinStJeorStrategy")) {
-        this.strategyCombo.setSelectedIndex(0);
-        } else if (strategy.equals("HarrisBenedictStrategy")) {
-            this.strategyCombo.setSelectedIndex(1);
+        if ("MifflinStJeorStrategy".equals(strategy)) {
+        this.strategyCombo.setSelectedIndex(N_0);
+        } else if ("HarrisBenedictStrategy".equals(strategy)) {
+            this.strategyCombo.setSelectedIndex(N_1);
         }
     }
 }

@@ -127,7 +127,7 @@ public final class UserProfile {
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.userGoal = userGoal;
-        if (this.strategy == null) {
+        if (strategy == null) {
             this.strategy = MIFFLIN_STRATEGY;
         } else {
             this.strategy = strategy;

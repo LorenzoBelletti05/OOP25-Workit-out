@@ -148,6 +148,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
     public void showData(final UserManager userManager) {
         if (userManager == null) {
             JOptionPane.showMessageDialog(this, "The user manager is not linked", "Error!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         final String name = userManager.getUserProfile().getName();
         welcomeTitle.setText("Hello " + name + "!");
