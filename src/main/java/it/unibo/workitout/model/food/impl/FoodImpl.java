@@ -57,10 +57,14 @@ public final class FoodImpl implements Food {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FoodImpl food = (FoodImpl) o;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        } 
+        final FoodImpl food = (FoodImpl) o;
         return java.util.Objects.equals(name, food.name);
     }
 
