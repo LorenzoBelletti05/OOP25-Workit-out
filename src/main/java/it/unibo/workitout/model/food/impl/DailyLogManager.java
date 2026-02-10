@@ -2,6 +2,8 @@ package it.unibo.workitout.model.food.impl;
 
 import it.unibo.workitout.model.food.api.DailyLog;
 import it.unibo.workitout.model.food.api.Food;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -48,7 +50,7 @@ public final class DailyLogManager {
                 lines.add(date + "," + entry.getKey().getName() + "," + entry.getValue());
             }
         }
-        it.unibo.workitout.model.main.dataManipulation.LoadSaveData.saveCsvFile(filePath, lines);
+        LoadSaveData.saveCsvFile(filePath, lines);
     }
 
     /**

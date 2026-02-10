@@ -14,7 +14,9 @@ import it.unibo.workitout.view.main.contracts.MainView;
 /**
  * Implementation of Main View interface.
  */
-public class MainViewImpl extends JFrame implements MainView {
+public final class MainViewImpl extends JFrame implements MainView {
+
+    private static final long serialVersionUID = 1L;
     private static final String WIKI = "WIKI";
 
     private final JTabbedPane tabbedPane = new JTabbedPane();
@@ -27,7 +29,7 @@ public class MainViewImpl extends JFrame implements MainView {
      */
     public MainViewImpl() {
         super("Workit-out");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         final Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         final int width = (int) (screen.getWidth() * 0.6);
         final int height = (int) (screen.getHeight() * 0.7);
@@ -46,20 +48,34 @@ public class MainViewImpl extends JFrame implements MainView {
     public void start() {
         this.setVisible(true);
     }
-    
+
     /**
      * Add a module in the Main Frame.
      */
     @Override
     public void addModule(final String title, final JPanel panel) {
-        if(title.equals(WIKI)){
+        if (WIKI.equals(title)) {
             tabbedPane.addTab(title, panel);
         } else {
             mainPanel.add(panel, title);
         }
     }
 
-    public void showView(String name) {
+    /**
+     * Add a module as a tab in the Main Frame.
+     */
+    @Override
+    public void addTab(final String title, final JPanel panel) {
+        tabbedPane.addTab(title, panel);
+    }
+
+    /**
+     * Show a specific view.
+     * 
+     * @param name the name of the view to show
+     */
+    @Override
+    public void showView(final String name) {
         cardLayout.show(mainPanel, name);
     }
 }

@@ -15,7 +15,6 @@ import it.unibo.workitout.model.wiki.contracts.WikiRepository;
 public class WikiRepositoryImpl implements WikiRepository {
     private static final String ARTICLES_PATH = "/data/wiki/articles.json";
     private static final String VIDEOS_PATH = "/data/wiki/videos.json";
-    private static final System.Logger LOGGER = System.getLogger(WikiRepositoryImpl.class.getName());
 
     private final Gson gson = new Gson();
 
@@ -45,11 +44,7 @@ public class WikiRepositoryImpl implements WikiRepository {
                 }
             }
         } catch (final IOException e) {
-            LOGGER.log(
-                System.Logger.Level.ERROR, 
-                "Error loading articles.json: " + e.getMessage(), 
-                e
-            );
+            throw new IllegalStateException("Error loading articles.json: " + e.getMessage(), e);
         }
     }
 
@@ -68,11 +63,7 @@ public class WikiRepositoryImpl implements WikiRepository {
                 }
             }
         } catch (final IOException e) {
-            LOGGER.log(
-                System.Logger.Level.ERROR, 
-                "Error loading videos.json: " + e.getMessage(), 
-                e
-            );
+            throw new IllegalStateException("Error loading videos.json: " + e.getMessage(), e);
         }
     }
 }

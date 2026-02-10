@@ -77,7 +77,14 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         chearchPanel.add(searchInTable);
         chearchPanel.add(planButton);
 
-        tableModel = new DefaultTableModel(indexColumnName, 0);
+        tableModel = new DefaultTableModel(indexColumnName, 0) {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(final int row, final int column) {
+                return false;
+            }
+        };
+
         table = new JTable(tableModel);
 
         final JPanel bottomPanel = new JPanel();

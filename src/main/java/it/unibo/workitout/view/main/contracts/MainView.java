@@ -19,5 +19,18 @@ public interface MainView {
      */
     void addModule(String title, JPanel panel);
 
+    /**
+     * Add a module as a tab in the Main Frame.
+     * 
+     * @param title name of the tab.
+     * @param panel JPanel of the module.
+     */
+    void addTab(String title, JPanel panel);
+
+    /**
+     * Show a specific view.
+     * 
+     * @param string name of the view.
+     */
     void showView(String string);
 }

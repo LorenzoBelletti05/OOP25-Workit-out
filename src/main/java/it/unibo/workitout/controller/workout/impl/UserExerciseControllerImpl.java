@@ -17,7 +17,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.user.model.impl.UserProfile;
@@ -76,8 +76,10 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
     /**
      * method that from the data given from the user save it (with the current date) in a JSON.
+     * 
+     * @throws IOException IO.
      */
-    private void callSaveUserData() {
+    private void callSaveUserData() throws IOException {
         final WorkoutUserData data = new WorkoutUserData(
             this.bmr, this.tdee, this.dailyCalories, 
             this.activityLevel, this.userGoal, LocalDate.now().toString()
@@ -313,7 +315,12 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
-            LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+            try {
+                LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+            } catch (final IOException e) {
+                JOptionPane.showMessageDialog(null, "Error saving current plan: " + e.getMessage(), 
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 

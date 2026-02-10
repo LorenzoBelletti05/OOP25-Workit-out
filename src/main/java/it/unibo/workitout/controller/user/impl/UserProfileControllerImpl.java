@@ -1,12 +1,11 @@
 package it.unibo.workitout.controller.user.impl;
 
-import javax.swing.JOptionPane;
-
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
-import it.unibo.workitout.model.main.dataManipulation.LoadSaveData;
+import it.unibo.workitout.model.main.datamanipulation.LoadSaveData;
 import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
@@ -42,7 +41,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.getProfileButton().addActionListener(al -> {
             editProfile();
-      });
+        });
     }
 
     /**
@@ -129,7 +128,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
             if (dailyCalories <= 0) {
                 showInputDataError("The total calories are negative, please check your input data");
             }
-            dashboard.showData(this.userManager);
+                dashboard.showData(this.userManager);
 
             final double bmr = userManager.getBMR();
             final double tdee = userManager.getTDEE();
@@ -140,7 +139,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
                 goToDashboard.run();
             }
 
-        } catch (final IllegalStateException | IllegalArgumentException expt) {
+        } catch (final IllegalArgumentException expt) {
             showInputDataError("The insert data is not correct \n " + expt.getMessage());
         }
 
@@ -171,6 +170,24 @@ public final class UserProfileControllerImpl implements UserProfileController {
             showInputDataError("The insert data is not saved \n " + expt.getMessage());
         }
 
+        this.dashboard.showData(this.userManager);
+    }
+
+    @Override
+    public void updateNutrients(final double kcal, final double proteins, final double carbs, final double fats) {
+        if (this.userManager == null) {
+            return;
+        }
+        this.userManager.addConsumedCalories(kcal);
+        this.userManager.addConsumedProteins(proteins);
+        this.userManager.addConsumedCarbs(carbs);
+        this.userManager.addConsumedFats(fats);
+        try {
+            LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"),
+                this.userManager.getUserProfile());
+        } catch (final IOException expt) {
+            showInputDataError("The insert data is not saved \n " + expt.getMessage());
+        }
         this.dashboard.showData(this.userManager);
     }
 }
