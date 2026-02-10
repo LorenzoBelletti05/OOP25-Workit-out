@@ -61,8 +61,8 @@ public final class LoadSaveData {
     private static void checkFolderPresence(final String pathData) {
         final File file = new File(pathData);
         final File parDir = file.getParentFile();
-        if (parDir != null && !parDir.exists()) {
-            parDir.mkdirs();
+        if (parDir != null && !parDir.exists() && !parDir.mkdirs()) {
+            throw new IllegalStateException("Could not create directory: " + parDir.getAbsolutePath());
         }
     }
 
