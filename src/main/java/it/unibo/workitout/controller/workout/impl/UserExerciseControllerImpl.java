@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.swing.JOptionPane;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.workitout.controller.main.contracts.MainController;
 import it.unibo.workitout.controller.workout.contracts.UserExerciseController;
 import it.unibo.workitout.model.main.WorkoutUserData;
@@ -27,7 +28,7 @@ import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.model.workout.impl.WorkoutCreatorImpl;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
-import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
+import it.unibo.workitout.view.workout.contracts.PlanViewer;
 
 /**
  * Controller class that manage the view and the model of the workout part and comunicate with the other controllers.
@@ -46,7 +47,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     private ActivityLevel activityLevel;
     private UserGoal userGoal;
     private WorkoutPlan generatedWorkoutPlan;
-    private PlanViewerImpl planView;
+    private PlanViewer planView;
     private MainController mainController;
 
     private UserExerciseControllerImpl() {
@@ -159,8 +160,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
         } catch (final IOException e) {
             //Internaly manage error
+            return null;
         }
-        return null;
     }
 
     /** {@inheritDoc} */
@@ -248,7 +249,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
                 LoadSaveData.createPath("workoutPlan.json")
             );
         }
-        return this.generatedWorkoutPlan;
+        //return a copy for security
+        return new WorkoutPlanImpl(this.generatedWorkoutPlan);
     }
 
     /** {@inheritDoc} */
@@ -299,7 +301,11 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
     /** {@inheritDoc} */
     @Override
-    public void setView(final PlanViewerImpl view) {
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP2", 
+        justification = "Storing a reference to the View is essential for the MVC pattern implementation."
+    )
+    public void setView(final PlanViewer view) {
         this.planView = view;
     }
 

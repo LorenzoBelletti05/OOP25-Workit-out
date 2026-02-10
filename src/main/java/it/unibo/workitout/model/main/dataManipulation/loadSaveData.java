@@ -16,7 +16,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutPlan;
 import it.unibo.workitout.model.workout.impl.WorkoutPlanImpl;
 import java.io.File;
 
-public class LoadSaveData { 
+public class LoadSaveData {
 
     //General comment to try save the name og the class, because error. !!MUST BE DALATED THIS COMMENT
 

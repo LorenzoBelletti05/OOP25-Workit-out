@@ -90,12 +90,14 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("PMD.LambdaCanBeMethodReference")
     public double getVolume() {
         return sumAll(e -> e.getVolume());
     }
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("PMD.LambdaCanBeMethodReference")
     public double getBurnedCalories() {
         return sumAll(e -> e.getBurnedCalories());
     }
