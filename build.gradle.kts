@@ -19,9 +19,6 @@ repositories { // Where to search for dependencies
     mavenCentral()
 }
 
-val javaFXModules = listOf("base", "controls", "fxml", "swing", "graphics", "web", "media")
-val supportedPlatforms = listOf("linux", "mac", "win")
-val javaFxVersion = "23.0.2"
 
 dependencies {
     // Suppressions for SpotBugs
@@ -30,14 +27,6 @@ dependencies {
     // Maven dependencies are composed by a group name, a name and a version, separated by colons
     implementation("com.google.code.gson:gson:2.13.2")
     implementation("com.omertron:API-OMDB:1.5")
-
-    implementation("org.openjfx:javafx:$javaFxVersion")
-
-    for (platform in supportedPlatforms) {
-        for (module in javaFXModules) {
-            implementation("org.openjfx:javafx-$module:$javaFxVersion:$platform")
-        }
-    }
 
     /*
      * Simple Logging Facade for Java (SLF4J)
