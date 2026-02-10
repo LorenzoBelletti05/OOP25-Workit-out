@@ -35,14 +35,18 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     private static final int STRENGTH_TIME_MULT = 3;
     private static final int TABLE_COLUMNS_COUNT = 7;
 
+    //Const for magic number
+    private static final int KCAL_COL_INDEX = 5;
+    private static final int STATE_COL_INDEX = 6;
+
     private final List<PlannedExercise> currentExercises = new ArrayList<>();
     private final List<String> rawDates = new ArrayList<>(); 
 
     private final String[] indexColumnName = {"Date", "Exercise", "Sets/Reps", "Time", "Weight/Distance", "Kcal", "State"};
 
-    private  JTable table;
-    private  DefaultTableModel tableModel;
-    
+    private JTable table;
+    private DefaultTableModel tableModel;
+
     private final JButton planButton = new JButton("Vis. plan");
     private final JButton checkMarkButton = new JButton("Check as completed +");
     private final JButton backButton = new JButton("Back");
@@ -50,10 +54,13 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
     private final JTextField searchInTable = new JTextField(SEARCH_FIELD_COLUMNS);
 
-    final MainViewImpl mainView = new MainViewImpl();
+    private final MainViewImpl mainView = new MainViewImpl();
 
+    /**
+     * Costructor that set the visibility and call all the set for the view.
+     */
     public PlanViewerImpl() { 
-        UserExerciseControllerImpl.getIstance().setView(this);
+        UserExerciseControllerImpl.getInstance().setView(this);
         createView();
         setTable();
     }
@@ -96,7 +103,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         });
 
         planButton.addActionListener(e -> {
-            final int totalDays = UserExerciseControllerImpl.getIstance().getWorkoutSheets().size();
+            final int totalDays = UserExerciseControllerImpl.getInstance().getWorkoutSheets().size();
 
             if (currentDayIndex > 0 && currentDayIndex < totalDays) {
                 currentDayIndex++;
@@ -133,7 +140,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         final JDialog pageDialog = new JDialog();
         pageDialog.setTitle("Modifica: " + plannedExercise.getExercise().getName());
         pageDialog.setModal(true);
-        pageDialog.setLayout(new GridLayout(0,2,GRID_HGAP, GRID_VGAP));
+        pageDialog.setLayout(new GridLayout(0, 2, GRID_HGAP, GRID_VGAP));
 
         if (plannedExercise instanceof StrengthPlannedExerciseImpl) {
             final var strenghtExercise = (StrengthPlannedExerciseImpl) plannedExercise;
@@ -141,16 +148,18 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
             final JTextField repsField = new JTextField(String.valueOf(strenghtExercise.getReps()));
             final JTextField weightField = new JTextField(String.valueOf(strenghtExercise.getWeight()));
 
-            pageDialog.add(new JLabel("Sets:")); pageDialog.add(setsField);
-            pageDialog.add(new JLabel("Reps:")); pageDialog.add(repsField);
-            pageDialog.add(new JLabel("Weight (kg):")); pageDialog.add(weightField);
+            pageDialog.add(new JLabel("Sets:")); 
+            pageDialog.add(setsField);
+            pageDialog.add(new JLabel("Reps:")); 
+            pageDialog.add(repsField);
+            pageDialog.add(new JLabel("Weight (kg):")); 
+            pageDialog.add(weightField);
 
             final JButton saveBtn = new JButton("Save-Done");
             saveBtn.addActionListener(al -> {
 
                 //recreate the exercise from 0
                 try {
-
                     //take the sets (modify or not) from the pop up page after save.
                     final Integer finalSets = Integer.parseInt(setsField.getText());
                     final Integer finalReps = Integer.parseInt(repsField.getText());
@@ -171,10 +180,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     newEx.setCompletedExercise(true);
 
                     //replace in the generated workout the old planned exercise with the new
-                    UserExerciseControllerImpl.getIstance().replaceExercise(dateExercise, plannedExercise, newEx);
+                    UserExerciseControllerImpl.getInstance().replaceExercise(dateExercise, plannedExercise, newEx);
 
                     //call the methot to giva data to User modul
-                    UserExerciseControllerImpl.getIstance().setProfile(finalKcal);
+                    UserExerciseControllerImpl.getInstance().setProfile(finalKcal);
 
                     setTable();
                     pageDialog.dispose();
@@ -189,8 +198,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
             final JTextField distField = new JTextField(String.valueOf(cardioExercise.getDistance()));
             final JTextField minField = new JTextField(String.valueOf(cardioExercise.getMinutes()));
 
-            pageDialog.add(new JLabel("Distance (km):")); pageDialog.add(distField);
-            pageDialog.add(new JLabel("Time (min):")); pageDialog.add(minField);
+            pageDialog.add(new JLabel("Distance (km):"));
+            pageDialog.add(distField);
+            pageDialog.add(new JLabel("Time (min):"));
+            pageDialog.add(minField);
 
             final JButton saveBtn = new JButton("Save & Done");
             saveBtn.addActionListener(al -> {
@@ -209,12 +220,12 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     final double finalKcal = newEx.getExercise().calorieBurned(finalMin);
 
                     newEx.setCompletedExercise(true);
-                    UserExerciseControllerImpl.getIstance().replaceExercise(dateExercise, plannedExercise, newEx);
+                    UserExerciseControllerImpl.getInstance().replaceExercise(dateExercise, plannedExercise, newEx);
 
-                    UserExerciseControllerImpl.getIstance().setProfile(finalKcal);
+                    UserExerciseControllerImpl.getInstance().setProfile(finalKcal);
                     setTable();
                     pageDialog.dispose();
-                }catch (final NumberFormatException e) {
+                } catch (final NumberFormatException e) {
                     JOptionPane.showMessageDialog(pageDialog, "Insert valid numbers!");
                 }
             });
@@ -224,11 +235,6 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         pageDialog.pack();
         pageDialog.setLocationRelativeTo(this);
         pageDialog.setVisible(true);
-    }
-
-    @Override
-    public void setVisible(final boolean visible) {
-        super.setVisible(visible);
     }
 
     @Override
@@ -244,12 +250,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     @Override
     public void setTable() {
 
-        final WorkoutPlan plan = UserExerciseControllerImpl.getIstance().getGeneratedWorkoutPlan();
+        final WorkoutPlan plan = UserExerciseControllerImpl.getInstance().getGeneratedWorkoutPlan();
 
         if (plan == null || plan.getWorkoutPlan() == null) {
-            //DEBUG
-            System.out.println("In attesa di dati...");
-            tableModel.setRowCount(0); 
+            tableModel.setRowCount(0);
             return;
         }
 
@@ -262,7 +266,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         Collections.sort(sortedRawDates);
 
         //take all the sheet, from the sheet take the size (menas the day) and then set a start day and an end.
-        final List<WorkoutSheet> allSheets = UserExerciseControllerImpl.getIstance().getWorkoutSheets();
+        final List<WorkoutSheet> allSheets = UserExerciseControllerImpl.getInstance().getWorkoutSheets();
         final int totalDays = allSheets.size();
         final int start = (currentDayIndex == 0) ? 0 : currentDayIndex - 1;
         final int end = (currentDayIndex == 0) ? totalDays : currentDayIndex;
@@ -285,7 +289,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
                 this.currentExercises.add(exercisePlanned);
                 this.rawDates.add(rawFinalDate);
-                row[0] = dayLabel.toString();
+                row[0] = dayLabel;
                 row[1] = exercisePlanned.getExercise().getName();
 
                 double min = 0;
@@ -295,7 +299,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     min = exerStrenght.getSets() * STRENGTH_TIME_MULT;
                     row[2] = exerStrenght.getSets() + " x " + exerStrenght.getReps();
                     row[3] = "/";
-                    row[4] =  exerStrenght.getWeight();
+                    row[4] = exerStrenght.getWeight();
                 } else if (exercisePlanned instanceof CardioPlannedExerciseImpl) {
                     final var exerCardio = (CardioPlannedExerciseImpl) exercisePlanned;
                     min = exerCardio.getMinutes();
@@ -303,8 +307,8 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     row[3] = min;
                     row[4] = exerCardio.getDistance();
                 }
-                row[5] = String.format("%.0f", exercisePlanned.getExercise().calorieBurned(min));
-                row[6] = exercisePlanned.isComplited() ? "Done" : "N.C.";
+                row[KCAL_COL_INDEX] = String.format("%.0f", exercisePlanned.getExercise().calorieBurned(min));
+                row[STATE_COL_INDEX] = exercisePlanned.isComplited() ? "Done" : "N.C.";
                 tableModel.addRow(row);
             }
         }

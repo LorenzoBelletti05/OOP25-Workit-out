@@ -5,43 +5,50 @@ import java.util.Optional;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.contracts.ExerciseViewer;
 
-public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
+/**
+ * Class view for show raw exercise.
+ */
+public final class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
 
     private static final long serialVersionUID = 1L;
-    private static final String All_FILTER = "All";
+    private static final String ALL_FILTER = "All";
     private static final int FIELD_SIZE = 15;
-    
+
+    //Const for based caloris at minutes
+    private static final int BASE_CALORIES = 1;
+
     private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
     private final DefaultTableModel modelRawExercise;
-    final JButton searchButton = new JButton("Find");    
-    private final JTable tableRawExercise;    
+    private final JButton searchButton = new JButton("Find");
+    private final JTable tableRawExercise;
     private final JTextField searchField = new JTextField(FIELD_SIZE);
 
     private final JComboBox<String> typeComboBox = new JComboBox<>(new String[] {
-        All_FILTER,
+        ALL_FILTER,
         "CARDIO",
-        "STRENGTH"
+        "STRENGTH",
     });
 
     private final JComboBox<String> targetComboBox = new JComboBox<>(new String[] {
-        All_FILTER,
+        ALL_FILTER,
         "LOSE_WEIGHT",
         "BUILD_MUSCLE",
         "MAINTAIN_WEIGHT",
-        "GAIN_WEIGHT"
+        "GAIN_WEIGHT",
     });
 
+    /**
+     * Costructor that set all the view.
+     */
     public ExerciseViewerImpl() {
         super(new BorderLayout());
 
@@ -58,38 +65,38 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
                 return false;
             }
         };
-        this.tableRawExercise  = new JTable(modelRawExercise);
+        this.tableRawExercise = new JTable(modelRawExercise);
         final JScrollPane scrollPane = new JScrollPane(tableRawExercise);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(btnPanel, BorderLayout.NORTH);
 
         //call the static method to take the 
-        final List<Exercise> rawExercise = UserExerciseControllerImpl.getIstance().getRawExercise();
+        final List<Exercise> rawExercise = UserExerciseControllerImpl.getInstance().getRawExercise();
         this.setExercises(rawExercise);
 
         searchButton.addActionListener(e -> {
             final String dataInserted = searchField.getText().trim();
 
-            if(!dataInserted.isEmpty()) {
+            if (!dataInserted.isEmpty()) {
 
-                this.setExercises(UserExerciseControllerImpl.getIstance()
+                this.setExercises(UserExerciseControllerImpl.getInstance()
                     .orderListBasedOn(
                         "Name", 
                         rawExercise, 
                         Optional.of(dataInserted)
                     ));
-            }else {
+            } else {
                 this.setExercises(rawExercise);
             }
 
         });
 
         typeComboBox.addActionListener(e -> {
-            if(typeComboBox.getSelectedItem().toString().equals(All_FILTER)) {
+            if (ALL_FILTER.equals(typeComboBox.getSelectedItem().toString())) {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises(UserExerciseControllerImpl.getIstance()
+            this.setExercises(UserExerciseControllerImpl.getInstance()
                 .orderListBasedOn(
                     "type", 
                     rawExercise, 
@@ -99,11 +106,11 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         });
 
         targetComboBox.addActionListener(e -> {
-            if(targetComboBox.getSelectedItem().toString().equals(All_FILTER)) {
+            if (ALL_FILTER.equals(targetComboBox.getSelectedItem().toString())) {
                 this.setExercises(rawExercise);
                 return;
             }
-            this.setExercises(UserExerciseControllerImpl.getIstance()
+            this.setExercises(UserExerciseControllerImpl.getInstance()
                 .orderListBasedOn(
                     "target", 
                     rawExercise, 
@@ -113,24 +120,26 @@ public class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         });
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setExercises(final List<Exercise> exercises) {
         modelRawExercise.setRowCount(0);
-        if(exercises == null) {
+        if (exercises == null) {
             return;
         }
         for (final Exercise exercise : exercises) {
-            if(exercise != null) {
+            if (exercise != null) {
                 modelRawExercise.addRow(new Object[] {
                     exercise.getName(),
-                    exercise.calorieBurned(1),
+                    exercise.calorieBurned(BASE_CALORIES),
                     exercise.getExerciseAttitude(),
-                    exercise.getExerciseType()
+                    exercise.getExerciseType(),
                 });
             }
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getExercise() {
         return tableRawExercise.getSelectedRow();

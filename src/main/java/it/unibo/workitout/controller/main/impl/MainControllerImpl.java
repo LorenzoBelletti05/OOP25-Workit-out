@@ -56,7 +56,7 @@ public class MainControllerImpl implements MainController {
     public void start() {
         final UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
-        UserExerciseControllerImpl.getIstance().setMainController(this);
+        UserExerciseControllerImpl.getInstance().setMainController(this);
 
         Runnable goToDashboard = () -> mainView.showView(DASHBOARD);
 
@@ -130,7 +130,7 @@ public class MainControllerImpl implements MainController {
         });
 
         dashboardView.getExerciseButton().addActionListener(al -> {            
-            UserExerciseControllerImpl.getIstance().refreshTableWorkoutData(() -> {
+            UserExerciseControllerImpl.getInstance().refreshTableWorkoutData(() -> {
                 mainView.showView(EXERCISE);
             });
         });

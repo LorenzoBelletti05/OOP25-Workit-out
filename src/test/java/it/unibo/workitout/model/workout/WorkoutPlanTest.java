@@ -18,7 +18,7 @@ import it.unibo.workitout.model.workout.impl.WorkoutSheetImpl;
 /**
  * Test class for a specific plannedExercise.
  */
-public class WorkoutPlanTest {
+class WorkoutPlanTest {
 
     private static final double CALORIES_PER_MINUTE = 10.0;
     private static final String DATE_1 = "2025-12-24";

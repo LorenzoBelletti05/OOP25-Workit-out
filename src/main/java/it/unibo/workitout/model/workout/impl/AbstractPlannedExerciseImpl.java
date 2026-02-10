@@ -36,6 +36,15 @@ public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
     }
 
     /**
+     * Abstract method that must be implementes.
+     * 
+     * @return the volume.
+     * 
+     */
+    @Override
+    public abstract double getVolume();
+
+    /**
      * Give the name passed and saved before.
      */
     @Override

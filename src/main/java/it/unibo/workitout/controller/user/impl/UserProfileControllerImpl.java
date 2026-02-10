@@ -131,7 +131,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
             }
             dashboard.showData(this.userManager);
 
-           UserExerciseControllerImpl.getIstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
+           UserExerciseControllerImpl.getInstance().setDataUser(bmr, tdee, dailyCalories, activityLevel, userGoal);
 
             if (goToDashboard != null) {
                 goToDashboard.run();

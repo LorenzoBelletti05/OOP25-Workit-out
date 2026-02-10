@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import it.unibo.workitout.model.main.dataManipulation.loadSaveData;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
@@ -63,6 +64,57 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     private static final double MUL_LOW = 0.3;
     private static final double MUL_MID = 0.3;
 
+    //Switch loop const
+    //Const VERY_LOW
+    private static final int DAYS_VERY_LOW = 0;
+    private static final int EXERCISES_VERY_LOW = 0;
+
+    //Const LOW
+    private static final int DAYS_LOW = 2;
+    private static final int EXERCISES_LOW = 3;
+
+    //Const MODERATE
+    private static final int DAYS_MODERATE = 4;
+    private static final int EXERCISES_MODERATE = 5;
+
+    //Const HIGH
+    private static final int DAYS_HIGH = 6;
+    private static final int EXERCISES_HIGH = 7;
+
+    //Const VERY_HIGH
+    private static final int DAYS_VERY_HIGH = 7;
+    private static final int EXERCISES_VERY_HIGH = 9;
+
+    //CONST for RANDOM
+    //Const BUILD_MUSCLE
+    private static final int MUSCLE_MIN_SETS = 4;
+    private static final int MUSCLE_MAX_SETS = 5;
+    private static final int MUSCLE_MIN_REPS = 8;
+    private static final int MUSCLE_MAX_REPS = 10;
+
+    //Const MAINTAIN_WEIGHT
+    private static final int MAINTAIN_MIN_SETS = 3;
+    private static final int MAINTAIN_MAX_SETS = 4;
+    private static final int MAINTAIN_MIN_REPS = 10;
+    private static final int MAINTAIN_MAX_REPS = 12;
+
+    //Const GAIN_WEIGHT
+    private static final int GAIN_MIN_SETS = 1;
+    private static final int GAIN_MAX_SETS = 2;
+    private static final int GAIN_MIN_REPS = 6;
+    private static final int GAIN_MAX_REPS = 8;
+
+    //Const LOSE_WEIGHT
+    private static final int LOSE_MIN_SETS = 3;
+    private static final int LOSE_MAX_SETS = 4;
+    private static final int LOSE_MIN_REPS = 10;
+    private static final int LOSE_MAX_REPS = 15;
+
+    //Const
+    private static final int REPS_REDUCTION_OFFSET = -2;
+    private static final int DEFAULT_WEIGHT = 5;
+    private static final int DEFAULT_DISTANCE = 5;
+
     private final List<Exercise> lista;
     private final Random random = new Random();
 
@@ -119,7 +171,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
         if (nameExercise.contains("panca") || nameExercise.contains("dorso") || nameExercise.contains("rematore")) {
             return STRENGTH_MID_W; //mid weight
         }
-        
+
         return 1.0; //default
     }
 
@@ -132,7 +184,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
      */
     private double getMinutesMultiplier(final Exercise exercise) {
 
-        final String name = exercise.getName().toLowerCase();
+        final String name = exercise.getName().toLowerCase(Locale.ROOT);
 
         if (name.contains("ciclismo") || name.contains("bici")) {
             return MIN_PER_KM_BIKE;
@@ -157,26 +209,26 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
 
         switch (activityLevel) {
             case VERY_LOW:
-                daysToGenerate = 0;
-                avgExercises = 0;
+                daysToGenerate = DAYS_VERY_LOW;
+                avgExercises = EXERCISES_VERY_LOW;
                 break;
             case LOW:
-                daysToGenerate = 2; 
-                avgExercises = 3;
+                daysToGenerate = DAYS_LOW; 
+                avgExercises = EXERCISES_LOW;
                 break;
             case MODERATE:
-                daysToGenerate = 4;
-                avgExercises = 5;
+                daysToGenerate = DAYS_MODERATE;
+                avgExercises = EXERCISES_MODERATE;
                 break;
             case HIGH:
-                daysToGenerate = 6;
-                avgExercises = 7;
+                daysToGenerate = DAYS_HIGH;
+                avgExercises = EXERCISES_HIGH;
                 break;
             case VERY_HIGH:
-                daysToGenerate = 7;
-                avgExercises = 9;
+                daysToGenerate = DAYS_VERY_HIGH;
+                avgExercises = EXERCISES_VERY_HIGH;
                 break;
-            }
+        }
 
         final List<Integer> dataGeneration = new ArrayList<>();
         dataGeneration.add(daysToGenerate);
@@ -214,11 +266,6 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
         //variable for data calculation
         int sets = BASE_SETS_STRENGTH;
         int reps = BASE_REPS_STRENGTH;
-        final int distance = 5;
-        final double weight = 5;
-
-        //Random variable for fiversity
-        final Random random = new Random();
 
         final int currentInsity = (int) intensityExercise;
         final int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
@@ -239,47 +286,44 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
 
         switch (userGoal) {
             case BUILD_MUSCLE:
-
-                sets = random.nextInt(4, 5);
-                reps = random.nextInt(8, 10);
+                sets = random.nextInt(MUSCLE_MIN_SETS, MUSCLE_MAX_SETS);
+                reps = random.nextInt(MUSCLE_MIN_REPS, MUSCLE_MAX_REPS);
                 intensityExercise = INTENSITY_HIGH;
                 goalWeightMul = MUL_HIGH;
                 goalDistanceMul = SAFETY_FACTOR;
                 break;
 
             case MAINTAIN_WEIGHT:
-
-                sets = random.nextInt(3, 4);
-                reps = random.nextInt(10, 12);
+                sets = random.nextInt(MAINTAIN_MIN_SETS, MAINTAIN_MAX_SETS);
+                reps = random.nextInt(MAINTAIN_MIN_REPS, MAINTAIN_MAX_REPS);
                 intensityExercise = INTENSITY_MID_HIGH;
                 goalWeightMul = MUL_MID;
                 goalDistanceMul = MUL_MID;
                 break;
 
             case GAIN_WEIGHT:
-
-                sets = random.nextInt(1, 2);
-                reps = random.nextInt(6, 8);
+                sets = random.nextInt(GAIN_MIN_SETS, GAIN_MAX_SETS);
+                reps = random.nextInt(GAIN_MIN_REPS, GAIN_MAX_REPS);
                 intensityExercise = INTENSITY_LOW; 
                 goalWeightMul = MUL_LOW; 
                 goalDistanceMul = MUL_LOW;
                 break;
 
             case LOSE_WEIGHT:
-
-                sets = random.nextInt(3, 4);
-                reps = random.nextInt(10, 15);
+                sets = random.nextInt(LOSE_MIN_SETS, LOSE_MAX_SETS);
+                reps = random.nextInt(LOSE_MIN_REPS, LOSE_MAX_REPS);
                 intensityExercise = INTENSITY_MID_LOW; 
                 goalWeightMul = INTENSITY_MID_LOW; 
                 goalDistanceMul = MUL_VERY_HIGH;
                 break;
+
         }
 
         for (int j = 0; j < daysExercise; j++) {
             final String dateNext = startDate.plusDays(j).toString();
 
             //create the planned exercises with custom name
-            final WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j+1));
+            final WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j + 1));
 
             //here because the next day an exercise can be done again
             final List<Exercise> alreadyUsed = new ArrayList<>(); 
@@ -304,15 +348,15 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                 if (rawExercise.getExerciseType() == ExerciseType.STRENGTH) {
 
                     //creating a weight based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalWeight = 5 + this.random.nextInt(WEIGHT_VARIATION_RANGE)
+                    double finalWeight = DEFAULT_WEIGHT + this.random.nextInt(WEIGHT_VARIATION_RANGE)
                         * tdeeMultiplier 
                         * goalWeightMul 
                         * this.getStrenghtMultiplierPerExercise(rawExercise) 
-                        * intensityExercise;                    
+                        * intensityExercise;
 
                     //regenerate sets and reps for diversity
                     final int localSets = sets + random.nextInt(-1, 2); 
-                    final int localReps = reps + random.nextInt(-2, 3);
+                    final int localReps = reps + random.nextInt(REPS_REDUCTION_OFFSET, 3);
 
                     //if the user is under is daily-need it divide the fatique.
                     if (userCheckSafety) {
@@ -337,7 +381,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                 } else {
 
                     //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
-                    double finalDistance = 5 + (this.random.nextDouble() * DISTANCE_VARIATION_RANGE - 1)
+                    double finalDistance = DEFAULT_DISTANCE + (this.random.nextDouble() * DISTANCE_VARIATION_RANGE - 1)
                         * tdeeMultiplier
                         * goalDistanceMul
                         * this.getCardioMultiplierPerExercise(rawExercise)
@@ -352,7 +396,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                     //the dinamic minutes based on distance
                     final double minPerKm = getMinutesMultiplier(rawExercise);
 
-                    int finalMinutes = (int) Math.round((finalDistance * minPerKm) + random.nextInt(-2, 2));
+                    int finalMinutes = (int) Math.round((finalDistance * minPerKm) + random.nextInt(REPS_REDUCTION_OFFSET, 2));
 
                     //Security check
                     finalMinutes = Math.max(MIN_WORKOUT_MINUTES, finalMinutes);

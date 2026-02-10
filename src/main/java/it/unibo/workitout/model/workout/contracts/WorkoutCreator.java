@@ -6,6 +6,7 @@ import it.unibo.workitout.model.user.model.impl.UserGoal;
 /**
  * Creator interface to create the workout plan.
  */
+@FunctionalInterface
 public interface WorkoutCreator {
 
     /**
