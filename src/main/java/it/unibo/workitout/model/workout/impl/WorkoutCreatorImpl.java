@@ -115,7 +115,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     private static final int DEFAULT_WEIGHT = 5;
     private static final int DEFAULT_DISTANCE = 5;
 
-    private final List<Exercise> lista;
+    private final List<Exercise> listExercise;
     private final Random random = new Random();
 
     /**
@@ -124,7 +124,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
      * @throws IOException exception.
      */
     public WorkoutCreatorImpl() throws IOException {
-        lista = LoadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
+        listExercise = LoadSaveData.loadFromResources(PATH_RAW_EXERCISE, Exercise[].class);
     }
 
     /**
@@ -277,7 +277,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
         final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
 
         //for to filter the exercise based on the goal.
-        for (final Exercise exercise : lista) {
+        for (final Exercise exercise : listExercise) {
             final String goals = exercise.getExerciseAttitude();
             if (goals.contains(userGoal.name())) {
                 filteredRawExercise.add(exercise);

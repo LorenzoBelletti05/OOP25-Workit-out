@@ -34,6 +34,18 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         workoutPlan = new TreeMap<>(); //used treemap to have key value ordered
     }
 
+    /**
+     * Copy costructor per WorkoutPlanImpl.
+     * Used for encapsulation problem.
+     * 
+     * @param otherPlan the plan to copy.
+     * 
+     */
+    public WorkoutPlanImpl(final WorkoutPlan otherPlan) {
+        this(otherPlan.getName());
+        otherPlan.getWorkoutPlan().forEach(this::addWorkSheet);
+    }
+
     private double sumAll(final ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
         for (final WorkoutSheet sheet : workoutPlan.values()) {
@@ -62,12 +74,14 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("PMD.LambdaCanBeMethodReference")
     public double getVolume() {
         return sumAll(e -> e.getVolume());
     }
 
     /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("PMD.LambdaCanBeMethodReference")
     public double getBurnedCalories() {
         return sumAll(e -> e.getBurnedCalories());
     }

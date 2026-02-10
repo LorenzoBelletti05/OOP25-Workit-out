@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import it.unibo.workitout.model.user.model.impl.UserGoal;
 import it.unibo.workitout.model.workout.contracts.CardioPlannedExercise;
+import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 import it.unibo.workitout.model.workout.contracts.StrengthPlannedExercise;
 import it.unibo.workitout.model.workout.impl.CardioPlannedExerciseImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
@@ -49,6 +50,9 @@ abstract class AbstractPlannedExerciseTest {
         REPS, 
         WEIGHT
     );
+
+    //Abstract method.
+    protected abstract PlannedExercise getExerciseImplementation();
 
     @Test
     void testGetExercise() {

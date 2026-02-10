@@ -10,6 +10,8 @@ import it.unibo.workitout.view.main.impl.MainViewImpl;
 import it.unibo.workitout.view.workout.contracts.PlanViewer;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Graphical {@link DrawNumberView} implementation.
@@ -39,8 +43,8 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     private static final int KCAL_COL_INDEX = 5;
     private static final int STATE_COL_INDEX = 6;
 
-    private final List<PlannedExercise> currentExercises = new ArrayList<>();
-    private final List<String> rawDates = new ArrayList<>(); 
+    private transient List<PlannedExercise> currentExercises = new ArrayList<>();
+    private transient List<String> rawDates = new ArrayList<>(); 
 
     private final String[] indexColumnName = {"Date", "Exercise", "Sets/Reps", "Time", "Weight/Distance", "Kcal", "State"};
 
@@ -54,7 +58,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
     private final JTextField searchInTable = new JTextField(SEARCH_FIELD_COLUMNS);
 
-    private final MainViewImpl mainView = new MainViewImpl();
+    private transient MainViewImpl mainView = new MainViewImpl();
 
     /**
      * Costructor that set the visibility and call all the set for the view.
@@ -126,6 +130,20 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         } else {
             planButton.setText("Vis: Week " + currentDayIndex);
         }
+    }
+
+    /**
+     * Method to resolve SpotBugs, serializable-deserializable.
+     * 
+     * @param oisData the InputStream
+     * @throws ClassNotFoundException the error may be throw.
+     * @throws IOException the error may be throw.
+     */
+    private void readObject(final ObjectInputStream oisData) throws ClassNotFoundException, IOException {
+        oisData.defaultReadObject();
+        this.currentExercises = new ArrayList<>();
+        this.rawDates = new ArrayList<>();
+        this.mainView = new MainViewImpl();
     }
 
     /**
@@ -238,11 +256,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     }
 
     @Override
-    public void close() {
-        this.setVisible(false);
-    }
-
-    @Override
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP", 
+        justification = "Exposing the button is necessary for the Controller to attach listeners."
+    )
     public JButton getBackButton() {
         return backButton;
     }
@@ -252,7 +269,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
         final WorkoutPlan plan = UserExerciseControllerImpl.getInstance().getGeneratedWorkoutPlan();
 
-        if (plan == null || plan.getWorkoutPlan() == null) {
+        if (plan.getWorkoutPlan() == null) {
             tableModel.setRowCount(0);
             return;
         }
