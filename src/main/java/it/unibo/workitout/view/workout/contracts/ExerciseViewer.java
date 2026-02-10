@@ -3,6 +3,7 @@ package it.unibo.workitout.view.workout.contracts;
 import java.util.List;
 
 import it.unibo.workitout.model.workout.impl.Exercise;
+import java.awt.event.ActionListener;
 
 /**
  * Interface of exercise viewr with two method.
@@ -25,4 +26,10 @@ public interface ExerciseViewer {
      */
     int getExercise();
 
+     /**
+     * Back to the main view.
+     * 
+     * @param listener the action listener for back navigation.
+     */
+    void addMainBackListener(ActionListener listener);
 }

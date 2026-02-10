@@ -3,6 +3,8 @@ package it.unibo.workitout.view.workout.impl;
 import java.util.List;
 import java.util.Optional;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -10,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
 import it.unibo.workitout.controller.workout.impl.UserExerciseControllerImpl;
 import it.unibo.workitout.model.workout.impl.Exercise;
 import it.unibo.workitout.view.workout.contracts.ExerciseViewer;
@@ -31,6 +34,7 @@ public final class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
     private final JButton searchButton = new JButton("Find");
     private final JTable tableRawExercise;
     private final JTextField searchField = new JTextField(FIELD_SIZE);
+    private final JButton backButtonView = new JButton("Back");
 
     private final JComboBox<String> typeComboBox = new JComboBox<>(new String[] {
         ALL_FILTER,
@@ -69,6 +73,9 @@ public final class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
         final JScrollPane scrollPane = new JScrollPane(tableRawExercise);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(btnPanel, BorderLayout.NORTH);
+        final JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        southPanel.add(backButtonView);
+        this.add(southPanel, BorderLayout.SOUTH);
 
         //call the static method to take the 
         final List<Exercise> rawExercise = UserExerciseControllerImpl.getInstance().getRawExercise();
@@ -143,6 +150,14 @@ public final class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
     @Override
     public int getExercise() {
         return tableRawExercise.getSelectedRow();
+    }
+
+    /**
+     * Open the main view.
+     */
+    @Override
+    public void addMainBackListener(final ActionListener listener) {
+        this.backButtonView.addActionListener(listener);
     }
 
 }

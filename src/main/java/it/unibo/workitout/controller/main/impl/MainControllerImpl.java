@@ -23,6 +23,7 @@ import it.unibo.workitout.view.main.contracts.MainView;
 import it.unibo.workitout.view.user.impl.UserDashboardViewImpl;
 import it.unibo.workitout.view.user.impl.UserProfileViewImpl;
 import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
+import it.unibo.workitout.view.workout.impl.ExerciseViewerImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
 /**
@@ -60,12 +61,10 @@ public final class MainControllerImpl implements MainController {
 
     /**
      * Starts all the module controllers.
-     * 
-     * @throws IOException error save.
-     * 
+     * @throws IOException 
      */
     @Override
-    public void start() throws IOException {
+    public void start() {
         final UserDashboardViewImpl dashboardView = new UserDashboardViewImpl();
         final UserProfileViewImpl profileView = new UserProfileViewImpl();
         UserExerciseControllerImpl.getInstance().setMainController(this);
@@ -83,7 +82,6 @@ public final class MainControllerImpl implements MainController {
                 try {
                     LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
                 } catch (final IOException e) {
-                    throw new IllegalStateException("Errore fatale nel salvataggio del profilo", e);
                 }
             }
 
@@ -119,16 +117,22 @@ public final class MainControllerImpl implements MainController {
         nutritionController.start();
 
         final WikiViewImpl wikiView = new WikiViewImpl();
+        final ExerciseViewerImpl exerciseViewerImpl = new ExerciseViewerImpl();
+        final PlanViewerImpl exerciseView = new PlanViewerImpl();
+
         wikiView.addMainBackListener(view -> mainView.showView(DASHBOARD));
+        exerciseViewerImpl.addMainBackListener(view -> mainView.showView(DASHBOARD));
+        exerciseView.getBackButton().addActionListener(al -> mainView.showView(DASHBOARD));
+
+        mainView.addTab("Wiki", wikiView);             
+        mainView.addTab("Lista Esercizi", exerciseViewerImpl); 
+
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
         wikiController.start();
 
-        final PlanViewerImpl exerciseView = new PlanViewerImpl();
-
-        mainView.addModule(WIKI, wikiView);
         mainView.addModule(FOOD, nutritionView);
         mainView.addModule(EXERCISE, exerciseView);
-
+    
         dashboardView.getProfileButton().addActionListener(al -> {
             mainView.showView(LOGIN);
         });

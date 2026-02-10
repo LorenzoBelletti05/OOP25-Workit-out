@@ -62,6 +62,14 @@ public final class MainViewImpl extends JFrame implements MainView {
     }
 
     /**
+     * Add a module as a tab in the Main Frame.
+     */
+    @Override
+    public void addTab(final String title, final JPanel panel) {
+        tabbedPane.addTab(title, panel);
+    }
+
+    /**
      * Show a specific view.
      * 
      * @param name the name of the view to show
