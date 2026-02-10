@@ -172,4 +172,22 @@ public final class UserProfileControllerImpl implements UserProfileController {
 
         this.dashboard.showData(this.userManager);
     }
+
+    @Override
+    public void updateNutrients(final double kcal, final double proteins, final double carbs, final double fats) {
+        if (this.userManager == null) {
+            return;
+        }
+        this.userManager.addConsumedCalories(kcal);
+        this.userManager.addConsumedProteins(proteins);
+        this.userManager.addConsumedCarbs(carbs);
+        this.userManager.addConsumedFats(fats);
+        try {
+            LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"),
+                this.userManager.getUserProfile());
+        } catch (final IOException expt) {
+            showInputDataError("The insert data is not saved \n " + expt.getMessage());
+        }
+        this.dashboard.showData(this.userManager);
+    }
 }
