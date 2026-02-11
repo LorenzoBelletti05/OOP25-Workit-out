@@ -123,4 +123,32 @@ public final class UserManager {
         final double currentFats = this.currentUser.getConsumedFats();
         this.currentUser.setConsumedFats(currentFats + fats);
     }
+
+    /**
+     * @return the total consumed calories from the profile.
+     */
+    public double getConsumedCalories() {
+        return this.currentUser.getConsumedCalories();
+    }
+
+    /**
+     * @return the total consumed carbs from the profile.
+     */
+    public double getConsumedCarbs() {
+        return this.currentUser.getConsumedCarbs();
+    }
+
+    /**
+     * @return the total consumed proteins from the profile.
+     */
+    public double getConsumedProteins() {
+        return this.currentUser.getConsumedProteins();
+    }
+
+    /**
+     * @return the total consumed fats from the profile.
+     */
+    public double getConsumedFats() {
+        return this.currentUser.getConsumedFats();
+    }
 }
