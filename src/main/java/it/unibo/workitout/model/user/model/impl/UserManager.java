@@ -110,7 +110,7 @@ public final class UserManager {
         this.currentUser.setBurnedCalories(totalCalories + burnedCalories);
     }
 
-    public void addConsumedFood(double calories, double carbs, double proteins, double fats) {
+    public void addConsumedFood(final double calories, final double carbs, final double proteins, final double fats) {
         final double currentCalories = this.currentUser.getConsumedCalories();
         this.currentUser.setConsumedCalories(currentCalories + calories);
 

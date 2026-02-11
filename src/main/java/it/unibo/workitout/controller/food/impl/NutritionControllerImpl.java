@@ -34,13 +34,14 @@ public final class NutritionControllerImpl implements NutritionController {
      * @param logManager the manager for daily logs.
      * @param view the user interface.
      * @param goToDashboard the back button.
+     * @param onNutrientsUpdate tracks data to send MainController.
      */
     @SuppressFBWarnings(value = "EI_EXPOSE_REP2", justification = "Repository is shared and managed externally")
     public NutritionControllerImpl(final FoodRepository repository,
                                    final DailyLogManager logManager,
                                    final NutritionView view,
                                    final Runnable goToDashboard,
-                                   final Consumer <Map<String, Double>> onNutrientsUpdate) {
+                                   final Consumer<Map<String, Double>> onNutrientsUpdate) {
         this.repository = Objects.requireNonNull(repository);
         this.logManager = Objects.requireNonNull(logManager);
         this.view = Objects.requireNonNull(view);
@@ -81,16 +82,18 @@ public final class NutritionControllerImpl implements NutritionController {
         logManager.getCurrentLog().addFoodEntry(food, grams);
         final String historyPath = LoadSaveData.createPath(LoadSaveData.HISTORY_FILE);
         logManager.saveHistory(historyPath);
-        final double kcalValue = (food.getKcalPer100g() * grams) / HUNDRED;
-        final double protGrams = (food.getProteins() * kcalValue) / KCAL_PER_PROT_CARB;
-        final double carbGrams = (food.getCarbs() * kcalValue) / KCAL_PER_PROT_CARB;
-        final double fatGrams = (food.getFats() * kcalValue) / KCAL_PER_FAT;
-        Map<String, Double> nutrients = Map.of(
+
+        final double kcalValue = food.getKcalPer100g() * grams / HUNDRED;
+        final double protGrams = food.getProteins() * kcalValue / KCAL_PER_PROT_CARB;
+        final double carbGrams = food.getCarbs() * kcalValue / KCAL_PER_PROT_CARB;
+        final double fatGrams = food.getFats() * kcalValue / KCAL_PER_FAT;
+        final Map<String, Double> nutrients = Map.of(
             "kcal", kcalValue,
             "proteins", protGrams,
             "carbs", carbGrams,
             "fats", fatGrams
         );
+        this.onNutrientsUpdate.accept(nutrients);
         refreshViewSummary();
     }
 
