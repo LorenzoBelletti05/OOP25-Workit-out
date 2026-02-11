@@ -240,7 +240,7 @@ public final class UserProfile {
     /**
      * @return the total of consumed carbs
      */
-     public double getConsumedCarbs() {
+    public double getConsumedCarbs() {
         return consumedCarbs;
     }
 
@@ -259,7 +259,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's name
+     * Set a new user's name.
      * 
      * @param name sets the new user's name
      */
@@ -268,7 +268,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's surname
+     * Set a new user's surname.
      * 
      * @param surname sets the new user's name
      */
@@ -390,7 +390,7 @@ public final class UserProfile {
     }
 
     /**
-     * @param consumedCalories Update the user's consumed proteins
+     * @param consumedProteins Update the user's consumed proteins
      */
     public void setConsumedProteins(final double consumedProteins) {
         if (consumedProteins < 0) {
@@ -400,7 +400,7 @@ public final class UserProfile {
     }
 
     /**
-     * @param consumedCalories Update the user's consumed fats
+     * @param consumedFats Update the user's consumed fats
      */
     public void setConsumedFats(final double consumedFats) {
         if (consumedFats < 0) {

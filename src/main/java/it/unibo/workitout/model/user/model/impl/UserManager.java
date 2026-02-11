@@ -110,6 +110,14 @@ public final class UserManager {
         this.currentUser.setBurnedCalories(totalCalories + burnedCalories);
     }
 
+    /**
+     * Adds the nutritional values of food consumed by the user.
+     * 
+     * @param calories  the amount of calories to add
+     * @param carbs     the amount of carbs to add
+     * @param proteins  the amount of proteins to add
+     * @param fats      the amount of fats to add
+     */
     public void addConsumedFood(final double calories, final double carbs, final double proteins, final double fats) {
         final double currentCalories = this.currentUser.getConsumedCalories();
         this.currentUser.setConsumedCalories(currentCalories + calories);

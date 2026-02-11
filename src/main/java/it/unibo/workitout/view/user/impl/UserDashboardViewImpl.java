@@ -161,9 +161,9 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         showCalories.setText(consumedCal + SEPARATOR + dailyCal + " kcal");
 
         final NutritionalTarget macroTarget = userManager.getMacronutrients();
-        final int consumedCarbs = (int) userManager.getUserProfile().getConsumedCarbs();
-        final int consumedProteins = (int) userManager.getUserProfile().getConsumedProteins();
-        final int consumedFats = (int) userManager.getUserProfile().getConsumedFats();
+        final int consumedCarbs = (int) userManager.getConsumedCarbs();
+        final int consumedProteins = (int) userManager.getConsumedProteins();
+        final int consumedFats = (int) userManager.getConsumedFats();
 
         lCarbs.setText("Carbs: " + consumedCarbs + SEPARATOR + (int) macroTarget.getCarbsG() + " " + GRAMS);
         lProteins.setText("Proteins: " + consumedProteins + SEPARATOR + (int) macroTarget.getProteinsG() + " " + GRAMS);

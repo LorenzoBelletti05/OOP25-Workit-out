@@ -20,6 +20,8 @@ import it.unibo.workitout.view.user.contracts.UserProfileView;
  * Implementation of the UserProfile controller.
  */
 public final class UserProfileControllerImpl implements UserProfileController {
+    private static final String FILE_NAME = "user_profile.json";
+    private static final String ERR_MESS = "The insert data is not saved \n ";
 
     private final UserProfileView view;
     private final UserDashboardView dashboard;
@@ -48,6 +50,9 @@ public final class UserProfileControllerImpl implements UserProfileController {
      * Insert in the view an existing profile.
      */
     private void editProfile() {
+        if (this.userManager == null) {
+            return;
+        }
         if (this.userManager.getUserProfile() != null) {
             fillProfileButton();
             isFirstAccess(false);
@@ -91,7 +96,6 @@ public final class UserProfileControllerImpl implements UserProfileController {
      */
     @Override
     public void calculateProfile() {
-
         try {
             final String name = view.getNameInput();
             final String surname = view.getSurnameInput();
@@ -116,9 +120,9 @@ public final class UserProfileControllerImpl implements UserProfileController {
             );
 
             try {
-                LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), userProfile);
+                LoadSaveData.saveUserProfile(LoadSaveData.createPath(FILE_NAME), userProfile);
             } catch (final IOException expt) {
-                showInputDataError("The insert data is not saved \n " + expt.getMessage());
+                showInputDataError(ERR_MESS + expt.getMessage());
             }
 
             this.userManager = new UserManager(strategy, userProfile);
@@ -165,9 +169,9 @@ public final class UserProfileControllerImpl implements UserProfileController {
         this.userManager.addBurnedCalories(burnedCalories);
 
         try {
-            LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.userManager.getUserProfile());
+            LoadSaveData.saveUserProfile(LoadSaveData.createPath(FILE_NAME), this.userManager.getUserProfile());
         } catch (final IOException expt) {
-            showInputDataError("The insert data is not saved \n " + expt.getMessage());
+            showInputDataError(ERR_MESS + expt.getMessage());
         }
 
         this.dashboard.showData(this.userManager);
@@ -180,10 +184,10 @@ public final class UserProfileControllerImpl implements UserProfileController {
         }
         this.userManager.addConsumedFood(kcal, carbs, proteins, fats);
         try {
-            LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"),
+            LoadSaveData.saveUserProfile(LoadSaveData.createPath(FILE_NAME),
                 this.userManager.getUserProfile());
         } catch (final IOException expt) {
-            showInputDataError("The insert data is not saved \n " + expt.getMessage());
+            showInputDataError(ERR_MESS + expt.getMessage());
         }
         this.dashboard.showData(this.userManager);
     }
