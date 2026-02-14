@@ -26,7 +26,7 @@ public interface ExerciseViewer {
      */
     int getExercise();
 
-     /**
+    /**
      * Back to the main view.
      * 
      * @param listener the action listener for back navigation.

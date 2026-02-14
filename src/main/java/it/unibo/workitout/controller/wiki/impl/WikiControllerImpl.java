@@ -214,7 +214,7 @@ public class WikiControllerImpl implements WikiController {
      */
     private List<Exercise> loadExercisesFromPlan() {
         final WorkoutPlan plan = UserExerciseControllerImpl.getInstance().getGeneratedWorkoutPlan();
-        if (plan != null && plan.getAllExercise() != null) {
+        if (plan.getAllExercise() != null) {
             return plan.getAllExercise().stream()
                 .map(PlannedExercise::getExercise)
                 .collect(Collectors.toList());

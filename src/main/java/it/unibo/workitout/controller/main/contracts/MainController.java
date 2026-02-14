@@ -21,7 +21,6 @@ public interface MainController {
      */
     void communicateBurnedCalories(double calories);
 
-
     /**
      * Communicates the nutrients consumed to the user controller.
      * 

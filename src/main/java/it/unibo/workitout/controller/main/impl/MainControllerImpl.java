@@ -2,6 +2,8 @@ package it.unibo.workitout.controller.main.impl;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import it.unibo.workitout.controller.food.contracts.NutritionController;
 import it.unibo.workitout.controller.food.impl.NutritionControllerImpl;
@@ -26,6 +28,7 @@ import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
 import it.unibo.workitout.view.workout.impl.ExerciseViewerImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
+
 /**
  * Implementation of the Main Controller.
  */
@@ -47,6 +50,8 @@ public final class MainControllerImpl implements MainController {
      * 
      * @param mainView the main view
      */
+    @SuppressFBWarnings(value = "EI2",
+        justification = "The view must be shared with the Maincontroller")
     public MainControllerImpl(final MainView mainView) {
         this.mainView = mainView;
     }
@@ -68,7 +73,8 @@ public final class MainControllerImpl implements MainController {
 
     /**
      * Starts all the module controllers.
-     * @throws IOException 
+     * 
+     * @throws IOException IO error during savings.
      */
     @Override
     public void start() {
@@ -90,7 +96,11 @@ public final class MainControllerImpl implements MainController {
                 try {
                     LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
                 } catch (final IOException e) {
-                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(
+                        null, 
+                        "Errore nel salvataggio del profilo utente" + e.getMessage(), 
+                        "Errore", JOptionPane.ERROR_MESSAGE
+                    );
                 }
             }
 
@@ -143,7 +153,7 @@ public final class MainControllerImpl implements MainController {
         exerciseViewerImpl.addMainBackListener(view -> mainView.showView(DASHBOARD));
         exerciseView.getBackButton().addActionListener(al -> mainView.showView(DASHBOARD));
 
-        mainView.addTab("Wiki", wikiView);             
+        mainView.addTab("Wiki", wikiView);
         mainView.addTab("Lista Esercizi", exerciseViewerImpl); 
 
         final WikiControllerImpl wikiController = new WikiControllerImpl(new WikiImpl(), wikiView);
@@ -151,7 +161,6 @@ public final class MainControllerImpl implements MainController {
 
         mainView.addModule(FOOD, nutritionView);
         mainView.addModule(EXERCISE, exerciseView);
-    
         dashboardView.getProfileButton().addActionListener(al -> {
             mainView.showView(LOGIN);
         });
