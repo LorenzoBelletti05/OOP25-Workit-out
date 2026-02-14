@@ -18,6 +18,8 @@ public final class MainViewImpl extends JFrame implements MainView {
 
     private static final long serialVersionUID = 1L;
     private static final String WIKI = "WIKI";
+    private static final int MIN_WIDTH = 800;
+    private static final int MIN_HEIGHT = 600;
 
     private final JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -34,6 +36,7 @@ public final class MainViewImpl extends JFrame implements MainView {
         final int width = (int) (screen.getWidth() * 0.6);
         final int height = (int) (screen.getHeight() * 0.7);
         this.setSize(width, height);
+        this.setMinimumSize(new Dimension(MIN_WIDTH, MIN_HEIGHT));
         this.setLocationRelativeTo(null);
 
         mainPanel.setLayout(cardLayout);
