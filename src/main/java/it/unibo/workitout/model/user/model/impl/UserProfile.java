@@ -143,6 +143,17 @@ public final class UserProfile {
     }
 
     /**
+     * Reset all the data, this is called every new day.
+     */
+    public void dailyReset() {
+        this.burnedCalories = 0;
+        this.consumedCalories = 0;
+        this.consumedCarbs = 0;
+        this.consumedProteins = 0;
+        this.consumedFats = 0;
+    }
+
+    /**
      * @return the identifier of the user
      */
     public UUID getId() {

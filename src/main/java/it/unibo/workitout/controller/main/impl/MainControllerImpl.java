@@ -85,10 +85,12 @@ public final class MainControllerImpl implements MainController {
         if (this.user != null) {
             final LocalDate now = LocalDate.now();
             if (!this.user.getLastAccess().equals(now)) {
+                this.user.dailyReset();
                 this.user.setLastAccess();
                 try {
                     LoadSaveData.saveUserProfile(LoadSaveData.createPath("user_profile.json"), this.user);
                 } catch (final IOException e) {
+                    e.printStackTrace();
                 }
             }
 
