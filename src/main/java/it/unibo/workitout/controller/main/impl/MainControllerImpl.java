@@ -28,7 +28,6 @@ import it.unibo.workitout.view.wiki.impl.WikiViewImpl;
 import it.unibo.workitout.view.workout.impl.ExerciseViewerImpl;
 import it.unibo.workitout.view.workout.impl.PlanViewerImpl;
 
-
 /**
  * Implementation of the Main Controller.
  */
