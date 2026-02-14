@@ -34,7 +34,7 @@ public class DailyLogTest {
     @Test
     void testAddMultipleFoods() {
         log.addFoodEntry(new FoodImpl(PASTA_NAME, PASTA_KCAL, PASTA_PROT, PASTA_CARBS, PASTA_FATS), PASTA_AMOUNT);
-        log.addFoodEntry(new FoodImpl(POLLO_NAME, POLLO_KCAL, POLLO_PROT, POLLO_CARBS, POLLO_FATS), PASTA_AMOUNT);
+        log.addFoodEntry(new FoodImpl(POLLO_NAME, POLLO_KCAL, POLLO_PROT, POLLO_CARBS, POLLO_FATS), POLLO_AMOUNT);
         assertEquals(TOTAL_EXPECTED_KCAL, this.log.getTotalKcal(), DELTA);
     }
 }
