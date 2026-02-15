@@ -53,7 +53,7 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         final JButton lowCarbsButton = new JButton("Pochi Carbo");
         final JButton lowFatButton = new JButton("Magri");
         final JButton resetButton = new JButton("Tutti");
-        this.backButton = new JButton("Home");
+        this.backButton = new JButton("Back");
 
         northPanel.add(new JSeparator(SwingConstants.VERTICAL));
         northPanel.add(new JLabel("Cerca:"));
@@ -64,7 +64,6 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         northPanel.add(lowCarbsButton);
         northPanel.add(lowFatButton);
         northPanel.add(resetButton);
-        northPanel.add(backButton);
 
         //Tabella
         this.tableModel = new FoodTableModel();
@@ -76,7 +75,11 @@ public final class NutritionViewImpl extends JPanel implements NutritionView {
         this.summaryLabel = new JLabel("Caricamento dati...", SwingConstants.CENTER);
         this.summaryLabel.setFont(new Font("Arial", Font.BOLD, FONT_SIZE));
         this.summaryLabel.setBorder(BorderFactory.createEmptyBorder(BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
+
+        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(backButton);
         southPanel.add(summaryLabel, BorderLayout.CENTER);
+        southPanel.add(buttonPanel, BorderLayout.SOUTH);
 
         this.add(northPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
