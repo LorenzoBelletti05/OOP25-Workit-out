@@ -275,13 +275,18 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
 
         final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
 
+        final String targetGoalName = userGoal.name().toLowerCase(Locale.ROOT); // es: "lose_weight"
+        final String targetGoalDesc = userGoal.toString().toLowerCase(Locale.ROOT).replace(" ", "");
+
         //filter the exercise, on the goal.
         for (final Exercise exercise : listExercise) {
-            final String goals = exercise.getExerciseAttitude();
-            if (goals.contains(userGoal.name())) {
+            final String goals = exercise.getExerciseAttitude().toLowerCase(Locale.ROOT).trim();
+            if (goals.contains(targetGoalName) || goals.contains(targetGoalDesc)) {
                 filteredRawExercise.add(exercise);
             }
         }
+
+        System.out.println("DEBUG: Sto cercando esercizi per: " + userGoal.name() + " (" + userGoal.toString() + ")");
 
         switch (userGoal) {
             case BUILD_MUSCLE:
