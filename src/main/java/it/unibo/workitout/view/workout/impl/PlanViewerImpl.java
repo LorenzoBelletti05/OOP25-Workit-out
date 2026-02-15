@@ -189,17 +189,18 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     final Integer finalSets = Integer.parseInt(setsField.getText());
                     final Integer finalReps = Integer.parseInt(repsField.getText());
                     final double finalWeight = Double.parseDouble(weightField.getText());
+                    final int finalMinutes = finalSets * STRENGTH_TIME_MULT;
 
                     //recreate the exercise from zero for the strenght type.
                     final PlannedExercise newEx = new StrengthPlannedExerciseImpl(
                         plannedExercise.getExercise(),
-                        plannedExercise.getMinutes(),
+                        finalMinutes,
                         finalSets,
                         finalReps,
                         finalWeight
                     );
 
-                    final double finalKcal = newEx.getExercise().calorieBurned(plannedExercise.getMinutes());
+                    final double finalKcal = newEx.getExercise().calorieBurned(finalMinutes);
 
                     //set the exercise as completed
                     newEx.setCompletedExercise(true);
@@ -207,7 +208,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
                     //replace in the generated workout the old planned exercise with the new
                     UserExerciseControllerImpl.getInstance().replaceExercise(dateExercise, plannedExercise, newEx);
 
-                    //call the methot to giva data to User modul
+                    //call the methot to give data to User module
                     UserExerciseControllerImpl.getInstance().setProfile(finalKcal);
 
                     setTable();
@@ -277,14 +278,13 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
         final WorkoutPlan plan = UserExerciseControllerImpl.getInstance().getGeneratedWorkoutPlan();
 
-        if (plan == null) {
-            tableModel.setRowCount(0);
-            return;
-        }
-
         tableModel.setRowCount(0);
         this.currentExercises.clear();
         this.rawDates.clear();
+
+        if (plan == null) {
+            return;
+        }
 
         //order the date because the date showed are been already sorted.
         final List<String> sortedRawDates = new ArrayList<>(plan.getWorkoutPlan().keySet());
@@ -295,6 +295,10 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
         final int totalDays = allSheets.size();
         final int start = (currentDayIndex == 0) ? 0 : currentDayIndex - 1;
         final int end = (currentDayIndex == 0) ? totalDays : currentDayIndex;
+
+        if (allSheets == null || allSheets.isEmpty()) {
+            return;
+        }
 
         //set the button text
         planButton.setText(currentDayIndex == 0 ? "Vis: All Plan" : "Vis: Day " + currentDayIndex);

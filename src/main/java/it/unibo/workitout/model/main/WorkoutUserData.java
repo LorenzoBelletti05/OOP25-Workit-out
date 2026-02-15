@@ -24,7 +24,6 @@ public class WorkoutUserData {
      * @param activityLevel data.
      * @param userGoal data.
      * @param localDate data.
-     * 
      */
     public WorkoutUserData(
         final double bmr, 
