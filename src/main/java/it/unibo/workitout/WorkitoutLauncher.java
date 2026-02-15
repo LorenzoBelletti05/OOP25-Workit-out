@@ -33,16 +33,16 @@ public final class WorkitoutLauncher {
             } catch (final IOException e) {
                 JOptionPane.showMessageDialog(
                     mainView, 
-                    "Errore durante la lettura dell'icona: " + e.getMessage(), 
-                    "Errore Icona", 
+                    "Error reading the icon: " + e.getMessage(), 
+                    "Icon Error", 
                     JOptionPane.ERROR_MESSAGE
                 );
             }
         } else {
             JOptionPane.showMessageDialog(
                 mainView, 
-                "Icona non trovata nelle risorse!", 
-                "Errore Icona", 
+                "Icon not found in the resources!", 
+                "Icon error", 
                 JOptionPane.ERROR_MESSAGE
             );
         }
