@@ -24,13 +24,8 @@ import java.awt.event.ActionListener;
 public final class UserDashboardViewImpl extends JPanel implements UserDashboardView {
     private static final long serialVersionUID = 1L;
 
-    private static final String ARIAL_FONT = "Arial";
     private static final String SEPARATOR = "/";
     private static final String GRAMS = "g";
-
-    private static final Font TITLE_FONT = new Font(ARIAL_FONT, Font.BOLD, 26);
-    private static final Font TEXT_FONT = new Font(ARIAL_FONT, Font.BOLD, 18);
-    private static final Font MACRO_FONT = new Font(ARIAL_FONT, Font.PLAIN, 18);
 
     private static final int N_0 = 0;
     private static final int N_10 = 10;
@@ -73,7 +68,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         final JPanel bottomPanel = new JPanel(new GridLayout(1, 3, 10, 0));
 
         welcomeTitle = new JLabel("Hello!");
-        welcomeTitle.setFont(TITLE_FONT);
+        welcomeTitle.setFont(welcomeTitle.getFont().deriveFont(Font.BOLD, 26f));
 
         bProfile = new JButton("Profile");
         final Dimension bSize = new Dimension(N_100, N_30);
@@ -91,11 +86,11 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         progressBarPanel.setBorder(new EmptyBorder(N_0, N_50, N_0, N_50));
         caloriesBar = new JProgressBar();
         caloriesBar.setPreferredSize(new Dimension(N_100, N_40));
-        caloriesBar.setFont(TEXT_FONT);
+        caloriesBar.setFont(caloriesBar.getFont().deriveFont(Font.BOLD, 18f));
         caloriesBar.setStringPainted(true);
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
-        showCalories.setFont(TEXT_FONT);
+        showCalories.setFont(showCalories.getFont().deriveFont(Font.BOLD, 18f));
 
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
@@ -105,9 +100,9 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
         lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
 
-        lCarbs.setFont(MACRO_FONT);
-        lProteins.setFont(MACRO_FONT);
-        lFats.setFont(MACRO_FONT);
+        lCarbs.setFont(lCarbs.getFont().deriveFont(Font.PLAIN, 18f));
+        lProteins.setFont(lProteins.getFont().deriveFont(Font.PLAIN, 18f));
+        lFats.setFont(lFats.getFont().deriveFont(Font.PLAIN, 18f));
 
         showCalories.setBorder(new EmptyBorder(N_10, N_0, N_20, N_0));
 
