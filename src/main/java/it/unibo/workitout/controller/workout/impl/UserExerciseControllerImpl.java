@@ -252,7 +252,11 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             );
         }
         //return a copy for security
+        if (this.generatedWorkoutPlan == null) {
+            return null; 
+        }
         return new WorkoutPlanImpl(this.generatedWorkoutPlan);
+
     }
 
     /** {@inheritDoc} */

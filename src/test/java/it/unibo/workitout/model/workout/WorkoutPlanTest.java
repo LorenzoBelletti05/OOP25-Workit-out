@@ -89,7 +89,7 @@ class WorkoutPlanTest {
 
     @Test
     void testGetBurnedCalories() {
-        // Le calorie totali sono la somma delle calorie di planExe e planExe2
+        //Total calories are the sum of the (all exercise of the plan), in this case the two planExercise.
         assertEquals(
             planExe.getBurnedCalories() + planExe2.getBurnedCalories(), 
             plan.getBurnedCalories());

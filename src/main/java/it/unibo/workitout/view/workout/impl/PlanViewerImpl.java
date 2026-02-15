@@ -154,7 +154,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     }
 
     /**
-     * The page that is showed when the user press the check and save button.
+     * The page showed when the user press the check and save button.
      * 
      * @param plannedExercise the planned exercise selected.
      * 
@@ -163,7 +163,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
      */
     private void privatePageEdit(final PlannedExercise plannedExercise, final String dateExercise) {
         final JDialog pageDialog = new JDialog();
-        pageDialog.setTitle("Modifica: " + plannedExercise.getExercise().getName());
+        pageDialog.setTitle("Modify: " + plannedExercise.getExercise().getName());
         pageDialog.setModal(true);
         pageDialog.setLayout(new GridLayout(0, 2, GRID_HGAP, GRID_VGAP));
 
