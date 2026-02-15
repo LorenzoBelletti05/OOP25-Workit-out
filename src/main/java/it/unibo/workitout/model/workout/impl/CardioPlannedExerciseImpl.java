@@ -13,11 +13,11 @@ public final class CardioPlannedExerciseImpl extends AbstractPlannedExerciseImpl
     private final double distance;
 
     /**
-     * Contructor to set the data when a exercise is create.
+     * Contructor to set the data when a new exercise is create.
      * 
-     * @param exercise the raw exercise.
-     * @param minutes the minutes of workout.
-     * @param distance the distance.
+     * @param exercise the raw exercise
+     * @param minutes of workout
+     * @param distance in km
      */
     public CardioPlannedExerciseImpl(
         final Exercise exercise,
@@ -25,15 +25,15 @@ public final class CardioPlannedExerciseImpl extends AbstractPlannedExerciseImpl
         final double distance
     ) {
         super(exercise, minutes);
-
         this.distance = distance;
     }
 
     @Override
     public double getVolume() {
-        return this.distance; //the volume for cardio is 0 because ther's no weight but can be return also the distance.
+        return this.distance;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getDistance() {
         return this.distance;

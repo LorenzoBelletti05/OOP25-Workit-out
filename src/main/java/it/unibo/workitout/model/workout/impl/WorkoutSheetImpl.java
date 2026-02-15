@@ -33,9 +33,9 @@ public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet
     /**
      * Private method to avoid code duplication.
      * 
-     * @param plnExe that is used to call the right method when the interested one is pressed.
+     * @param plnExe that is used to call the right method when the interested one is pressed
      * 
-     * @return the sum in double.
+     * @return the sum in double
      */
     private double sumAll(final ToDoubleFunction<PlannedExercise> plnExe) {
         double sum = 0.0;

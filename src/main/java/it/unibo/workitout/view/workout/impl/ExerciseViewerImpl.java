@@ -26,9 +26,8 @@ public final class ExerciseViewerImpl extends JPanel implements ExerciseViewer {
     private static final String ALL_FILTER = "All";
     private static final int FIELD_SIZE = 15;
 
-    //Const for based caloris at minutes
+    //Const for based caloris at minutes.
     private static final int BASE_CALORIES = 1;
-
     private final String[] indexColumnName = {"Name", "Kcal/Min", "Physical target", "Type Exercise"};
     private final DefaultTableModel modelRawExercise;
     private final JButton searchButton = new JButton("Find");

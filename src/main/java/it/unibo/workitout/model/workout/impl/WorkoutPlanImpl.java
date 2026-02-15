@@ -25,9 +25,9 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     private final Map<String, WorkoutSheetImpl> workoutPlan; 
 
     /**
-     * Costructor that gived the nema of the plan give it to the NameFunction and than create a new plan.
+     * Constructor to set name of the plan using the {@link NameFunction} and than create a new plan.
      * 
-     * @param namePlan the new plan created each time an istance is setted.
+     * @param namePlan created each time an istance is setted.
      */
     public WorkoutPlanImpl(final String namePlan) {
         super(namePlan);
@@ -35,7 +35,7 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
     }
 
     /**
-     * Copy costructor per WorkoutPlanImpl.
+     * Copy constructor for WorkoutPlanImpl.
      * Used for encapsulation problem.
      * 
      * @param otherPlan the plan to copy.
@@ -46,6 +46,12 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         otherPlan.getWorkoutPlan().forEach(this::addWorkSheet);
     }
 
+    /**
+     * Method to sum all the data from the param and to avoid code duplication.
+     * 
+     * @param sheetPlan with all the planned exercise
+     * @return the sum
+     */
     private double sumAll(final ToDoubleFunction<WorkoutSheet> sheetPlan) {
         double sum = 0.0;
         for (final WorkoutSheet sheet : workoutPlan.values()) {
@@ -54,6 +60,13 @@ public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
         return sum;
     }
 
+    /**
+     * Methot with generics to separate the exercise give based on his class type.
+     * 
+     * @param <T> that extends PlannedExercise
+     * @param exerciseClass the class of the exercise
+     * @return the set of the specific type of the exercise class
+     */
     private <T extends PlannedExercise> Set<T> getExerciseSubdivision(final Class<T> exerciseClass) {
         final Set<T> allExercise = new HashSet<>();
         for (final WorkoutSheet sheet : workoutPlan.values()) {

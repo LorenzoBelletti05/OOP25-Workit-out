@@ -3,14 +3,13 @@ package it.unibo.workitout.model.workout.impl;
 import it.unibo.workitout.model.workout.contracts.PlannedExercise;
 
 /**
- * Implementation of planned exercise.
+ * Implementation of {@link PlannedExercise}.
  * 
  * <p>
  * It decorates the {@link Exercise} with specific training parameters.
- * Set, repetitions, and weight/intensity subdivided by the two sub-interface
- * from PlannedExercise.
+ * Set, repetitions, and weight/intensity divided in two interfaces.
  * 
- * The class will be abstract because it can implements or not the sub-interface.
+ * The class will be abstract because it can implements or not the interfaces.
  * </p>
  */
 public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
@@ -20,12 +19,11 @@ public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
     private boolean completed;
 
     /**
-     * Costructor that gived the exercise and the minutes save it in the filed.
+     * Constructor to set the exercise and the minutes.
      * 
-     * @param exercise the raw exercise.
+     * @param exercise raw
      * 
-     * @param minutes the minutes for that exercise.
-     * 
+     * @param minutes the minutes for that exercise
      */
     public AbstractPlannedExerciseImpl(
         final Exercise exercise, 
@@ -36,58 +34,46 @@ public abstract class AbstractPlannedExerciseImpl implements PlannedExercise {
     }
 
     /**
-     * Abstract method that must be implementes.
-     * 
-     * @return the volume.
-     * 
+     * @return the volume
      */
     @Override
     public abstract double getVolume();
 
-    /**
-     * Give the name passed and saved before.
-     */
+    /** {@inheritDoc} */
     @Override
     public Exercise getExercise() {
         return this.exercise;
     }
 
-    /**
-     * Give the minutes passed and saved before.
-     */ 
+    /** {@inheritDoc} */
     @Override
     public Integer getMinutes() {
         return this.minutes;
     }
 
     /**
-     * Give the burned calories calculated on the data.
+     * @return the burned calories based on the minutes.
      */
     @Override
     public double getBurnedCalories() {
-        //used this variable for debug, could have just return from this.get.... 
         return this.getExercise().calorieBurned(minutes);
     }
 
     /**
-     * Give the name of the exe passed and saved before.
+     * @return the name of the exercise
      */
     @Override
     public String getName() {
         return this.exercise.getName();
     }
 
-    /**
-     * It set the boolean variable of the exercise to make it result as complited.
-     */
+    /** {@inheritDoc} */
     @Override
-    public void setCompletedExercise(final boolean compleExerecise) {
-        this.completed = compleExerecise;
+    public void setCompletedExercise(final boolean completedExerecise) {
+        this.completed = completedExerecise;
     }
 
-    /**
-     * It return the status of the boolean variable completed exercise. 
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isComplited() {
         return this.completed;

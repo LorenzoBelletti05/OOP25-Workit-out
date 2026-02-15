@@ -120,7 +120,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     private final Random random = new Random();
 
     /**
-     * Costructor that when called it load the exercise.json.
+     * Constructor that when called it load the exercise.json.
      * 
      * @throws IOException exception.
      */
@@ -129,7 +129,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     }
 
     /**
-     * Method multiplier that moify the variable for the cardio exercise.
+     * Method multiplier that modify the variable for the cardio exercise.
      * 
      * @param exercise the row exercise.
      * 
@@ -155,7 +155,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     }
 
     /**
-     * Method multiplier that moify the variable for the strenght exercise.
+     * Method multiplier that modify the variable for the strenght exercise.
      * 
      * @param exercise the raw exercise.
      * 
@@ -177,7 +177,7 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
     }
 
     /**
-     * Method multiplier that moify the variable for the minutes cardio exercise.
+     * Method multiplier that modify the variable for the minutes cardio exercise.
      * 
      * @param exercise the raw exercise.
      * 
@@ -271,13 +271,11 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
         final int currentInsity = (int) intensityExercise;
         final int activityBonus = activityLevel.ordinal() / 2; //bonus on the activity of the user
 
-        //calculate the final sets based on the intensdity of the type of exercise previously setted.
         final LocalDate startDate = LocalDate.now();
 
-        //creating the workoutplan with his custom name.
         final WorkoutPlan workoutPlan = new WorkoutPlanImpl("Workout plan" + userGoal.toString());
 
-        //for to filter the exercise based on the goal.
+        //filter the exercise, on the goal.
         for (final Exercise exercise : listExercise) {
             final String goals = exercise.getExerciseAttitude();
             if (goals.contains(userGoal.name())) {
@@ -323,7 +321,6 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
         for (int j = 0; j < daysExercise; j++) {
             final String dateNext = startDate.plusDays(j).toString();
 
-            //create the planned exercises with custom name
             final WorkoutSheet workoutSheet = new WorkoutSheetImpl("Workout Sheet: " + userGoal.toString() + " n." + (j + 1));
 
             //here because the next day an exercise can be done again
@@ -343,19 +340,16 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                     alreadyUsed.add(rawExercise);
                 }
 
-                //Create the plan then check which type is: CARDIO or STRENGHT
                 final PlannedExercise plannedExercise;
 
                 if (rawExercise.getExerciseType() == ExerciseType.STRENGTH) {
 
-                    //creating a weight based on the type of the exercise, all is corrected from the intensity modifier
                     double finalWeight = DEFAULT_WEIGHT + this.random.nextInt(WEIGHT_VARIATION_RANGE)
                         * tdeeMultiplier 
                         * goalWeightMul 
                         * this.getStrenghtMultiplierPerExercise(rawExercise) 
                         * intensityExercise;
 
-                    //regenerate sets and reps for diversity
                     final int localSets = sets + random.nextInt(-1, 2); 
                     final int localReps = reps + random.nextInt(REPS_REDUCTION_OFFSET, 3);
 
@@ -364,13 +358,10 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                         finalWeight *= SAFETY_FACTOR;
                     }
 
-                    //Delete the decimal
                     finalWeight = Math.round(finalWeight * WEIGHT_ROUND_FACTOR) / WEIGHT_ROUND_FACTOR;
 
-                    //Security check for the weight
                     finalWeight = Math.min(finalWeight, MAX_WEIGHT_LIMIT);
 
-                    //the effective inizializzation of the exercise
                     plannedExercise = new StrengthPlannedExerciseImpl(
                         rawExercise, 
                         localSets * 3, //indicative time based on sets * 3 (minutes)
@@ -378,23 +369,18 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                         Math.max(1, localReps + (currentInsity * 2)),
                         finalWeight
                     );
-
                 } else {
 
-                    //creating a distance based on the type of the exercise, all is corrected from the intensity modifier
                     double finalDistance = DEFAULT_DISTANCE + (this.random.nextDouble() * DISTANCE_VARIATION_RANGE - 1)
                         * tdeeMultiplier
                         * goalDistanceMul
                         * this.getCardioMultiplierPerExercise(rawExercise)
                         * intensityExercise;
 
-                    //Remove deciamel
                     finalDistance = Math.round(finalDistance * DISTANCE_ROUND_FACTOR) / DISTANCE_ROUND_FACTOR;
 
-                    //Security check
                     finalDistance = Math.min(finalDistance, MAX_DISTANCE_LIMIT);
 
-                    //the dinamic minutes based on distance
                     final double minPerKm = getMinutesMultiplier(rawExercise);
 
                     int finalMinutes = (int) Math.round((finalDistance * minPerKm) + random.nextInt(REPS_REDUCTION_OFFSET, 2));
@@ -413,10 +399,9 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
                     );
 
                 }
-                //adding the exercise to the sheet
                 workoutSheet.addExercise(plannedExercise);
             }
-            //adding the sheet to the plan only if ther's a sheet
+
             if (!workoutSheet.getWorkoutSheet().isEmpty()) {
                 workoutPlan.addWorkSheet(dateNext, workoutSheet);
             }

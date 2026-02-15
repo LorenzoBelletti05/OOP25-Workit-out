@@ -265,8 +265,9 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
     @Override
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP", 
-        justification = "Exposing the button is necessary for the Controller to attach listeners."
-    )
+        justification = "Directly exposing the JButton is a choice to simplify " 
+            + "Controller-View interaction. While it compromises encapsulation"
+        )
     public JButton getBackButton() {
         return backButton;
     }

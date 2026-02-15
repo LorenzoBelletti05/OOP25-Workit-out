@@ -12,18 +12,17 @@ public final class StrengthPlannedExerciseImpl extends AbstractPlannedExerciseIm
     private final double weight;
 
     /**
-     * Costrutctor that save data in field and give to the super class (plannedExercise) the data required from his costrutor.
+     * Construtctor to set data and set the super class {@link PlannedExerciseImpl} data required from his construtor.
      * 
-     * @param exercise the raw exercise.
+     * @param exercise the raw exercise
      * 
-     * @param minutes the minute of the exercise.
+     * @param minutes of the exercise
      * 
-     * @param sets the specific set for Strenght exe.
+     * @param sets for Strenght exercise
      * 
-     * @param reps the specific reps for Strenght exe.
+     * @param reps for Strenght exercise
      * 
-     * @param weight the specific weight for Strenght exe.
-     * 
+     * @param weight Strenght exercise
      */
     public StrengthPlannedExerciseImpl(
         final Exercise exercise, 
@@ -39,21 +38,25 @@ public final class StrengthPlannedExerciseImpl extends AbstractPlannedExerciseIm
         this.weight = weight;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getSets() {
         return this.sets;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getReps() {
         return this.reps;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getWeight() {
         return this.weight;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getVolume() {
         return VolumeCalculator.calculateVolume(sets, reps, weight);
