@@ -130,9 +130,12 @@ public final class LoadSaveData {
     public static void saveWorkoutPlan(final String pathData, final WorkoutPlan dataPlan) throws IOException {
         checkFolderPresence(pathData);
         try (FileWriter writer = new FileWriter(pathData, StandardCharsets.UTF_8)) {
-             GSON.toJson(dataPlan, writer);
-        } catch (final IOException e) {
-            throw new IOException("Error saving workout plan: " + e.getMessage(), e);
+            GSON.toJson(dataPlan, writer);
+            System.out.println("DEBUG: Scrittura completata con successo!");
+        } catch (Throwable t) {
+            System.err.println("ERRORE FATALE DURANTE IL SALVATAGGIO");
+            t.printStackTrace(); 
+            throw new IOException("Errore GSON: " + t.getMessage(), t);
         }
     }
 
