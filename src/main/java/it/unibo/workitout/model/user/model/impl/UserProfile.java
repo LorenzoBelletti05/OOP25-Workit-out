@@ -260,6 +260,13 @@ public final class UserProfile {
     }
 
     /**
+     * Update the last access with current date.
+     */
+    public void setLastAccess() {
+        this.lastAccess = LocalDate.now().toString();
+    }
+
+    /**
      * @return the total of burned calories
      */
     public double getBurnedCalories() {
@@ -386,13 +393,6 @@ public final class UserProfile {
 
             this.strategy = strategy;
         }
-    }
-
-    /**
-     * Update the last access with current date.
-     */
-    public void setLastAccess() {
-        this.lastAccess = LocalDate.now().toString();
     }
 
     /**
