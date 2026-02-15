@@ -147,27 +147,55 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
      */
     private WorkoutPlan generateAfterAll() {
 
-        //Try generate the plan with the datam save the plan and the data in the json.
         try {
+            
+            List<Exercise> exercises = getRawExercise();
+            System.out.println("DEBUG: Esercizi caricati: " + (exercises != null ? exercises.size() : "NULL"));
+            
+            System.out.println("DEBUG: Dati per generazione - BMR: " + bmr + ", Goal: " + userGoal);
+
             final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(
-                bmr, 
-                tdee, 
-                dailyCalories, 
-                activityLevel, 
-                userGoal
+                bmr, tdee, dailyCalories, activityLevel, userGoal
             );
+            
+            if (plan != null && plan.getWorkoutPlan() != null) {
+                System.out.println("DEBUG: Schede nel piano: " + plan.getWorkoutPlan().size());
+            } else {
+                System.out.println("DEBUG: Il piano generato è vuoto o null!");
+            }
 
-            //save the generated workoutplan
             LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
-            //call the method to save the new user data
             callSaveUserData();
-
             return plan;
 
-        } catch (final IOException e) {
-            //Internaly manage error
+        } catch (final Throwable e) {
+            e.printStackTrace();
             return null;
         }
+    
+
+        //Try generate the plan with the datam save the plan and the data in the json.
+        // try {
+        //     final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(
+        //         bmr, 
+        //         tdee, 
+        //         dailyCalories, 
+        //         activityLevel, 
+        //         userGoal
+        //     );
+
+        //     //save the generated workoutplan
+        //     LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+        //     //call the method to save the new user data
+        //     callSaveUserData();
+
+        //     return plan;
+
+        // } catch (final IOException e) {
+        //     e.printStackTrace(); 
+        //     JOptionPane.showMessageDialog(null, "Errore salvataggio piano: " + e.toString());
+        //     return null;
+        // }
     }
 
     /** {@inheritDoc} */
