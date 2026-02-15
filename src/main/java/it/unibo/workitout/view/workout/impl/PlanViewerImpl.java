@@ -277,7 +277,7 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
 
         final WorkoutPlan plan = UserExerciseControllerImpl.getInstance().getGeneratedWorkoutPlan();
 
-        if (plan.getWorkoutPlan() == null) {
+        if (plan == null) {
             tableModel.setRowCount(0);
             return;
         }
