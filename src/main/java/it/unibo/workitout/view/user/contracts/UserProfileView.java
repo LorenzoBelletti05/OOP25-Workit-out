@@ -1,8 +1,7 @@
 package it.unibo.workitout.view.user.contracts;
 
-import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
-import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
@@ -77,18 +76,18 @@ public interface UserProfileView {
     BMRStrategyChoice getBMRStrategyInput();
 
     /**
-     * Returns the back button.
+     * Adds an ActionListener to back button.
      * 
-     * @return the back button
+     * @param al the action listener
      */
-    JButton getBackButton();
+    void addBackActListener(ActionListener al);
 
     /**
-     * Sets the controller for this view.
+     * Adds an ActionListener to the save button.
      * 
-     * @param controller the user profile controller
+     * @param al the action listener
      */
-    void setController(UserProfileController controller);
+    void addSaveActListener(ActionListener al);
 
     /**
      * Sets the visibility of the back button.

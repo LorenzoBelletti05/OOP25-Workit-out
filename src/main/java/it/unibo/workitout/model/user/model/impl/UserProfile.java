@@ -9,16 +9,16 @@ import java.util.UUID;
 public final class UserProfile {
     private static final double ZERO = 0;
     private static final int MAX_AGE = 110;
-    private static final double MAX_HEIGHT = 210;
+    private static final double MAX_HEIGHT = 230;
     private static final double MAX_WEIGHT = 310;
-    private static final String ERR_MESS_AGE = "The age must be positive and less of 110";
-    private static final String ERR_MESS_HEIGHT = "The height must be positive and less of 210";
-    private static final String ERR_MESS_WEIGHT = "The weight must be positive and less of 310";
+    private static final String ERR_MESS_AGE = "The age must be positive and less of " + MAX_AGE;
+    private static final String ERR_MESS_HEIGHT = "The height must be positive and less of " + MAX_HEIGHT;
+    private static final String ERR_MESS_WEIGHT = "The weight must be positive and less of " + MAX_WEIGHT;
     private static final String ERR_BURNED_CALORIES = "The burned calories must be positive";
     private static final String ERR_CONSUMED_CALORIES = "The consumed calories must be positive";
     private static final String ERR_CONSUMED_CARBS = "The consumed carbs must be positive";
-     private static final String ERR_CONSUMED_PROTEINS = "The consumed proteins must be positive";
-      private static final String ERR_CONSUMED_FATS = "The consumed fats must be positive";
+    private static final String ERR_CONSUMED_PROTEINS = "The consumed proteins must be positive";
+    private static final String ERR_CONSUMED_FATS = "The consumed fats must be positive";
     private static final String MIFFLIN_STRATEGY = "MifflinStJeorStrategy";
     private static final String HARRIS_STRATEGY = "HarrisBenedictStrategy";
 
@@ -42,15 +42,15 @@ public final class UserProfile {
     /**
      * Constructor for a new user.
      * 
-     * @param name          the user's name
-     * @param surname       the user's surname
-     * @param age           the user's age
-     * @param height        the user's height in cm
-     * @param weight        the user's weight in kg
-     * @param sex           the user's biological sex
+     * @param name the user's name
+     * @param surname the user's surname
+     * @param age the user's age
+     * @param height the user's height in cm
+     * @param weight the user's weight in kg
+     * @param sex the user's biological sex
      * @param activityLevel the user's activity level
-     * @param userGoal      the user's fitness goal
-     * @param strategy      the user's strategy for calculate the BMR
+     * @param userGoal the user's fitness goal
+     * @param strategy the user's strategy for calculate the BMR
      */
     public UserProfile(
         final String name,
@@ -93,16 +93,16 @@ public final class UserProfile {
     /**
      * Constructor for an existing user.
      * 
-     * @param id            the user's identifier
-     * @param name          the user's name
-     * @param surname       the user's surname
-     * @param age           the user's age
-     * @param height        the user's height in cm
-     * @param weight        the user's weight in kg
-     * @param sex           the user's biological sex
+     * @param id the user's identifier
+     * @param name the user's name
+     * @param surname the user's surname
+     * @param age the user's age
+     * @param height the user's height in cm
+     * @param weight the user's weight in kg
+     * @param sex the user's biological sex
      * @param activityLevel the user's activity level
-     * @param userGoal      the user's fitness goal
-     * @param strategy      the user's strategy for calculate the BMR
+     * @param userGoal the user's fitness goal
+     * @param strategy the user's strategy for calculate the BMR
      */
     public UserProfile(
         final UUID id,
@@ -143,7 +143,32 @@ public final class UserProfile {
     }
 
     /**
-     * Reset all the data, this is called every new day.
+     * Copy of constructor for solve encapsulation problems.
+     * 
+     * @param copyUser the copy of user
+     */
+    public UserProfile(final UserProfile copyUser) {
+        this.id = copyUser.getId();
+        this.name = copyUser.getName();
+        this.surname = copyUser.getSurname();
+        this.age = copyUser.getAge();
+        this.sex = copyUser.getSex();
+        this.height = copyUser.getHeight();
+        this.weight = copyUser.getWeight();
+        this.activityLevel = copyUser.getActivityLevel();
+        this.userGoal = copyUser.getUserGoal();
+        this.strategy = copyUser.getStrategy();
+        this.lastAccess = copyUser.lastAccess;
+        this.burnedCalories = copyUser.getBurnedCalories();
+        this.consumedCalories = copyUser.getConsumedCalories();
+        this.consumedCarbs = copyUser.getConsumedCarbs();
+        this.consumedProteins = copyUser.getConsumedProteins();
+        this.consumedFats = copyUser.getConsumedFats();
+
+    }
+
+    /**
+     * Reset all data, this is called every new day.
      */
     public void dailyReset() {
         this.burnedCalories = 0;
@@ -270,7 +295,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's name.
+     * Update new user's name.
      * 
      * @param name sets the new user's name
      */
@@ -279,7 +304,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's surname.
+     * Update new user's surname.
      * 
      * @param surname sets the new user's name
      */
@@ -288,7 +313,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's age.
+     * Update new user's age.
      * 
      * @param age the new age, must be positive
      */
@@ -300,7 +325,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's sex.
+     * Update new user's sex.
      * 
      * @param sex the new sex
      */
@@ -309,7 +334,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's height.
+     * Update new user's height.
      * 
      * @param height the new height, must be positive
      */
@@ -321,7 +346,7 @@ public final class UserProfile {
     }
 
     /**
-     * Set a new user's height.
+     * Update new user's weight.
      * 
      * @param weight the new weight, must be positive
      */
@@ -364,7 +389,7 @@ public final class UserProfile {
     }
 
     /**
-     * Sets the last access with current date.
+     * Update the last access with current date.
      */
     public void setLastAccess() {
         this.lastAccess = LocalDate.now().toString();

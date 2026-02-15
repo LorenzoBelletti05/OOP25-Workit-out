@@ -8,10 +8,10 @@ import it.unibo.workitout.model.user.model.impl.UserProfile;
 @FunctionalInterface
 public interface BMRCalculatorStrategy {
     /**
-     * Calculate the BMR based on the User Profile.
+     * Calculate the BMR based on the current user profile.
      * 
-     * @param up the User Profile.
-     * @return the calculated BMR.
+     * @param userProfile the current user Profile
+     * @return the calculated BMR
      */
-    double calculateBMR(UserProfile up);
+    double calculateBMR(UserProfile userProfile);
 }

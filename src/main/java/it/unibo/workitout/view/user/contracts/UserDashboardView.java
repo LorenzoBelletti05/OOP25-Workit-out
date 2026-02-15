@@ -1,6 +1,6 @@
 package it.unibo.workitout.view.user.contracts;
 
-import javax.swing.JButton;
+import java.awt.event.ActionListener;
 
 import it.unibo.workitout.model.user.model.impl.UserManager;
 
@@ -17,30 +17,30 @@ public interface UserDashboardView {
     void showData(UserManager userManager);
 
     /**
-     * Returns the profile button.
+     * Adds an ActionListener to profile button.
      * 
-     * @return the profile button.
+     * @param al the action listener
      */
-    JButton getProfileButton();
+    void addProfileActListener(ActionListener al);
 
     /**
-     * Returns the food button.
+     * Adds an ActionListener to food button.
      * 
-     * @return the food button.
+     * @param al the action listener
      */
-    JButton getFoodButton();
+    void addFoodActListener(ActionListener al);
 
     /**
-     * Returns the info button.
+     * Adds an ActionListener to info button.
      * 
-     * @return the info button.
+     * @param al the action listener
      */
-    JButton getInfoButton();
+    void addInfoActListener(ActionListener al);
 
     /**
-     * Returns the exercise button.
+     * Adds an ActionListener to exercise button.
      * 
-     * @return the exercise button.
+     * @param al the action listener
      */
-    JButton getExerciseButton();
+    void addExerciseActListener(ActionListener al);
 }

@@ -30,7 +30,7 @@ class UserProfileTest {
     private static final double NEGATIVE_HEIGHT = -160;
     private static final double NEGATIVE_WEIGHT = -80;
     private static final int OVER_LIMIT_AGE = 120;
-    private static final double OVER_LIMIT_HEIGHT = 220;
+    private static final double OVER_LIMIT_HEIGHT = 240;
     private static final double OVER_LIMIT_WEIGHT = 320;
 
     private final UserProfile us = new UserProfile(

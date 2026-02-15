@@ -4,11 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import it.unibo.workitout.controller.user.contracts.UserProfileController;
 import it.unibo.workitout.model.user.model.impl.ActivityLevel;
 import it.unibo.workitout.model.user.model.impl.BMRStrategyChoice;
 import it.unibo.workitout.model.user.model.impl.Sex;
@@ -17,6 +15,7 @@ import it.unibo.workitout.view.user.contracts.UserProfileView;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 /**
  * The class is the first log-in and profile GUI.
@@ -42,8 +41,6 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
     private final JComboBox<BMRStrategyChoice> strategyCombo = new JComboBox<>(BMRStrategyChoice.values());
     private final JButton calculateButton = new JButton("Save");
     private final JButton backButton = new JButton("Back");
-
-    private transient UserProfileController controller;
 
     /**
      * Constructs the UserProfileViewImpl GUI.
@@ -89,31 +86,6 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
         backButton.setEnabled(false);
         calculatePanel.add(backButton);
         panel.add(calculatePanel, BorderLayout.SOUTH);
-
-        calculateButton.addActionListener(al -> {
-            if (controller != null) {
-                controller.calculateProfile();
-            } else {
-                showErrorController("Controller not linked ");
-            }
-        });
-    }
-
-    /**
-     * Method for display an error message.
-     * 
-     * @param errorDescription the text description of the error
-     */
-    private void showErrorController(final String errorDescription) {
-        JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public JButton getBackButton() {
-        return backButton;
     }
 
     /**
@@ -186,14 +158,6 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
     @Override
     public BMRStrategyChoice getBMRStrategyInput() {
         return (BMRStrategyChoice) strategyCombo.getSelectedItem();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setController(final UserProfileController controller) {
-        this.controller = controller;
     }
 
     /**
@@ -278,5 +242,21 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
         } else if ("HarrisBenedictStrategy".equals(strategy)) {
             this.strategyCombo.setSelectedIndex(N_1);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addBackActListener(final ActionListener al) {
+        this.backButton.addActionListener(al);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSaveActListener(final ActionListener al) {
+        this.calculateButton.addActionListener(al);
     }
 }
