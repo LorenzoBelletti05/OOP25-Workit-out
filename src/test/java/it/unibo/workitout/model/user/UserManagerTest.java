@@ -34,10 +34,10 @@ class UserManagerTest {
     UserGoal.MAINTAIN_WEIGHT,
     null
 );
-    private final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 
     @Test
     void testCaloriesMaintaingWeight() {
+        final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
         final double exp = TDEE;
 
         assertEquals(TDEE, userManager.getTDEE());
@@ -48,6 +48,7 @@ class UserManagerTest {
     void testCaloriesLoseWeight() {
         final double exp = TDEE - FULL_CALORIES;
         userProfile.setUserGoal(UserGoal.LOSE_WEIGHT);
+        final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());
@@ -57,6 +58,7 @@ class UserManagerTest {
     void testCaloriesGainWeight() {
         final double exp = TDEE + FULL_CALORIES;
         userProfile.setUserGoal(UserGoal.GAIN_WEIGHT);
+        final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());
@@ -66,6 +68,7 @@ class UserManagerTest {
     void testCaloriesBuildMuscle() {
         final double exp = TDEE + HALF_CALORIES;
         userProfile.setUserGoal(UserGoal.BUILD_MUSCLE);
+        final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
 
         assertEquals(TDEE, userManager.getTDEE());
         assertEquals(exp, userManager.getDailyCalories());
@@ -73,6 +76,7 @@ class UserManagerTest {
 
     @Test
     void testMacronutrientsCalculation() {
+        final UserManager userManager = new UserManager(new MifflinStJeorStrategy(), userProfile);
         final NutritionalTarget resultManager = userManager.getMacronutrients();
         final double expectedCalories = 2662.125;
         final double carboRatio = UserGoal.MAINTAIN_WEIGHT.getCarbRatio();

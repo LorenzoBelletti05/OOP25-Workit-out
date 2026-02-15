@@ -197,7 +197,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
 
     /**
      * {@inheritDoc}
-     */    
+     */
     @Override
     public void addExerciseActListener(final ActionListener al) {
         this.bExercise.addActionListener(al);
