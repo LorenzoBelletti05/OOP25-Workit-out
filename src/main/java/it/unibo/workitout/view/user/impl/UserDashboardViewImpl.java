@@ -29,6 +29,8 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
 
     private static final int N_0 = 0;
     private static final int N_10 = 10;
+    private static final int FONT_SIZE_N18 = 10;
+    private static final int FONT_SIZE_N26 = 26;
     private static final int N_20 = 20;
     private static final int N_30 = 30;
     private static final int N_40 = 40;
@@ -68,7 +70,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         final JPanel bottomPanel = new JPanel(new GridLayout(1, 3, 10, 0));
 
         welcomeTitle = new JLabel("Hello!");
-        welcomeTitle.setFont(welcomeTitle.getFont().deriveFont(Font.BOLD, 26f));
+        welcomeTitle.setFont(welcomeTitle.getFont().deriveFont(Font.BOLD, FONT_SIZE_N26));
 
         bProfile = new JButton("Profile");
         final Dimension bSize = new Dimension(N_100, N_30);
@@ -86,11 +88,11 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         progressBarPanel.setBorder(new EmptyBorder(N_0, N_50, N_0, N_50));
         caloriesBar = new JProgressBar();
         caloriesBar.setPreferredSize(new Dimension(N_100, N_40));
-        caloriesBar.setFont(caloriesBar.getFont().deriveFont(Font.BOLD, 18f));
+        caloriesBar.setFont(caloriesBar.getFont().deriveFont(Font.BOLD, FONT_SIZE_N18));
         caloriesBar.setStringPainted(true);
 
         showCalories = new JLabel("0 / 0 kcal", SwingConstants.CENTER);
-        showCalories.setFont(showCalories.getFont().deriveFont(Font.BOLD, 18f));
+        showCalories.setFont(showCalories.getFont().deriveFont(Font.BOLD, FONT_SIZE_N18));
 
         caloriesPanel.add(caloriesBar, BorderLayout.CENTER);
         caloriesPanel.add(showCalories, BorderLayout.SOUTH);
@@ -100,9 +102,9 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         lProteins = new JLabel("Proteins: 0 / 0 g", SwingConstants.CENTER);
         lFats = new JLabel("Fats: 0 / 0 g", SwingConstants.CENTER);
 
-        lCarbs.setFont(lCarbs.getFont().deriveFont(Font.PLAIN, 18f));
-        lProteins.setFont(lProteins.getFont().deriveFont(Font.PLAIN, 18f));
-        lFats.setFont(lFats.getFont().deriveFont(Font.PLAIN, 18f));
+        lCarbs.setFont(lCarbs.getFont().deriveFont(Font.PLAIN, FONT_SIZE_N18));
+        lProteins.setFont(lProteins.getFont().deriveFont(Font.PLAIN, FONT_SIZE_N18));
+        lFats.setFont(lFats.getFont().deriveFont(Font.PLAIN, FONT_SIZE_N18));
 
         showCalories.setBorder(new EmptyBorder(N_10, N_0, N_20, N_0));
 
