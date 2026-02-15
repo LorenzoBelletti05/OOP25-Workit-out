@@ -165,7 +165,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             return plan;
 
         } catch (final IOException e) {
-            //Internaly manage error
+            e.printStackTrace(); 
+            JOptionPane.showMessageDialog(null, "Errore salvataggio piano: " + e.toString());
             return null;
         }
     }
@@ -309,11 +310,13 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     @Override
     public void saveCurrentPlan() {
         if (this.generatedWorkoutPlan != null) {
+            System.out.println("DEBUG MAC1: Provo a salvare in: " + pathToManageWorkoutPlan);
             try {
                 LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
+                System.out.println("DEBUG MAC1: Salvataggio riuscito!");
             } catch (final IOException e) {
-                JOptionPane.showMessageDialog(null, "Error saving current plan: " + e.getMessage(), 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                System.err.println("DEBUG MAC1: Salvataggio FALLITO!");
+                e.printStackTrace();
             }
         }
     }
