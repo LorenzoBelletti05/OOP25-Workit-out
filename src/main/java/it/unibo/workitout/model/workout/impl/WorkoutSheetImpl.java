@@ -16,8 +16,8 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
  */
 public final class WorkoutSheetImpl extends NameFunction implements WorkoutSheet {
 
-    public final Set<StrengthPlannedExerciseImpl> strengthExs;
-    public final Set<CardioPlannedExerciseImpl> cardioExs;
+    private final Set<StrengthPlannedExerciseImpl> strengthExs;
+    private final Set<CardioPlannedExerciseImpl> cardioExs;
 
     /**
      * Costructor that taken the name of the sheet it inizialize the two type of set exercise.

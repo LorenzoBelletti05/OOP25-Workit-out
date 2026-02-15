@@ -286,8 +286,6 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
             }
         }
 
-        System.out.println("DEBUG: Sto cercando esercizi per: " + userGoal.name() + " (" + userGoal.toString() + ")");
-
         switch (userGoal) {
             case BUILD_MUSCLE:
                 sets = random.nextInt(MUSCLE_MIN_SETS, MUSCLE_MAX_SETS);

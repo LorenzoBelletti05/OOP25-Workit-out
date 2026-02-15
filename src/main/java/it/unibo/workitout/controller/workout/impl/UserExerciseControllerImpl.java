@@ -11,6 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.swing.JOptionPane;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -67,9 +68,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
     /**
      * Used to take and istance of the mainController.
-     * 
+     *
      * @param mainController istance of the main controller.
-     * 
      */
     public void setMainController(final MainController mainController) {
         this.mainController = mainController;
@@ -109,7 +109,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.tdee = workoutUserData.getTDEE();
             this.dailyCalories = workoutUserData.getDailyCalories();
             this.activityLevel = workoutUserData.getActivityLevel();
-            this.userGoal = workoutUserData.getUserGoal();            
+            this.userGoal = workoutUserData.getUserGoal();
         } else {
             final UserProfile mainProfile = LoadSaveData.loadUserProfile(
                 LoadSaveData.createPath(PROFILE_FILE)
@@ -127,7 +127,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
         //Check if the workoutPlan and the oldData json are full (!= null) or not (== null).
         //If full check if the datee is between the week (7 days),
-        // if true return the full plan, otherwise generate it.
+        //If true return the full plan, otherwise generate it.
         if (workoutPlan != null && workoutUserData != null) {
 
             final LocalDate date = LocalDate.parse(workoutUserData.getLocalDate());
@@ -147,55 +147,32 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
      */
     private WorkoutPlan generateAfterAll() {
 
+        //Try generate the plan with the datam save the plan and the data in the json.
         try {
-            
-            List<Exercise> exercises = getRawExercise();
-            System.out.println("DEBUG: Esercizi caricati: " + (exercises != null ? exercises.size() : "NULL"));
-            
-            System.out.println("DEBUG: Dati per generazione - BMR: " + bmr + ", Goal: " + userGoal);
-
             final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(
-                bmr, tdee, dailyCalories, activityLevel, userGoal
+                bmr, 
+                tdee, 
+                dailyCalories, 
+                activityLevel, 
+                userGoal
             );
-            
-            if (plan != null && plan.getWorkoutPlan() != null) {
-                System.out.println("DEBUG: Schede nel piano: " + plan.getWorkoutPlan().size());
-            } else {
-                System.out.println("DEBUG: Il piano generato è vuoto o null!");
-            }
 
+            //save the generated workoutplan
             LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
+            //call the method to save the new user data
             callSaveUserData();
+
             return plan;
 
-        } catch (final Throwable e) {
-            e.printStackTrace();
+        } catch (final IOException e) {
+            JOptionPane.showMessageDialog(
+                null, 
+                "Error while generating or saving the workout plan:\n" + e.getMessage(), 
+                "Generation Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
             return null;
         }
-    
-
-        //Try generate the plan with the datam save the plan and the data in the json.
-        // try {
-        //     final WorkoutPlan plan = new WorkoutCreatorImpl().generatePlan(
-        //         bmr, 
-        //         tdee, 
-        //         dailyCalories, 
-        //         activityLevel, 
-        //         userGoal
-        //     );
-
-        //     //save the generated workoutplan
-        //     LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, plan);
-        //     //call the method to save the new user data
-        //     callSaveUserData();
-
-        //     return plan;
-
-        // } catch (final IOException e) {
-        //     e.printStackTrace(); 
-        //     JOptionPane.showMessageDialog(null, "Errore salvataggio piano: " + e.toString());
-        //     return null;
-        // }
     }
 
     /** {@inheritDoc} */
@@ -301,12 +278,6 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
     /** {@inheritDoc} */
     @Override
-    public void setNavigationTask(final Runnable navigationTask) {
-        // this.navigationTask = navigationTask;
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void refreshTableWorkoutData(final Runnable navigationTask) {
 
         if (this.generatedWorkoutPlan == null) {
@@ -340,8 +311,12 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             try {
                 LoadSaveData.saveWorkoutPlan(pathToManageWorkoutPlan, this.generatedWorkoutPlan);
             } catch (final IOException e) {
-                JOptionPane.showMessageDialog(null, "Error saving current plan: " + e.getMessage(), 
-                    "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(
+                    null, 
+                    "Failed to save the workout plan:\n" + e.getMessage(), 
+                    "Save Error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
             }
         }
     }

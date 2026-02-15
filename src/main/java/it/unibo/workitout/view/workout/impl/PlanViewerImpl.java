@@ -286,22 +286,23 @@ public final class PlanViewerImpl extends JPanel implements PlanViewer {
             return;
         }
 
-        //order the date because the date showed are been already sorted.
-        final List<String> sortedRawDates = new ArrayList<>(plan.getWorkoutPlan().keySet());
-        Collections.sort(sortedRawDates);
-
-        //take all the sheet, from the sheet take the size (menas the day) and then set a start day and an end.
         final List<WorkoutSheet> allSheets = UserExerciseControllerImpl.getInstance().getWorkoutSheets();
-        final int totalDays = allSheets.size();
-        final int start = (currentDayIndex == 0) ? 0 : currentDayIndex - 1;
-        final int end = (currentDayIndex == 0) ? totalDays : currentDayIndex;
 
         if (allSheets == null || allSheets.isEmpty()) {
             return;
         }
 
+        //order the date because the date showed are been already sorted.
+        final List<String> sortedRawDates = new ArrayList<>(plan.getWorkoutPlan().keySet());
+        Collections.sort(sortedRawDates);
+
         //set the button text
         planButton.setText(currentDayIndex == 0 ? "Vis: All Plan" : "Vis: Day " + currentDayIndex);
+
+        //take all the sheet, from the sheet take the size (menas the day) and then set a start day and an end.
+        final int totalDays = allSheets.size();
+        final int start = (currentDayIndex == 0) ? 0 : currentDayIndex - 1;
+        final int end = (currentDayIndex == 0) ? totalDays : currentDayIndex;
 
         final Object[] row = new Object[TABLE_COLUMNS_COUNT];
 

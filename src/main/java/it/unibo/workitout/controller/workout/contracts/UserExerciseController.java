@@ -76,13 +76,6 @@ public interface UserExerciseController {
     );
 
     /**
-     * Given the runnable of the view and save it on the class.
-     * 
-     * @param navigationTask runnable saved in the class.
-     */
-    void setNavigationTask(Runnable navigationTask);
-
-    /**
      * Save in the class the current view passed as parameter.
      * 
      * @param view passed to save it on the class.
