@@ -328,17 +328,17 @@ public final class WorkoutCreatorImpl implements WorkoutCreator {
 
             for (int i = 0; i < avgExerciseDay + random.nextInt(0, 2) + currentInsity; i++) {
 
-                Exercise rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
-
-                //checking if the exercise has been already selected
-                if (alreadyUsed.isEmpty()) {
-                    alreadyUsed.add(rawExercise);
-                } else if (alreadyUsed.contains(rawExercise)) {
-                    while (alreadyUsed.contains(rawExercise)) {
-                        rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
-                    }
-                    alreadyUsed.add(rawExercise);
+                if (alreadyUsed.size() >= filteredRawExercise.size()) {
+                    break; 
                 }
+
+                Exercise rawExercise;
+
+                do {
+                    rawExercise = filteredRawExercise.get(random.nextInt(filteredRawExercise.size()));
+                } while (alreadyUsed.contains(rawExercise));
+
+                alreadyUsed.add(rawExercise);
 
                 final PlannedExercise plannedExercise;
 
