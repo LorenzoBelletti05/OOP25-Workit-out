@@ -17,6 +17,7 @@ import it.unibo.workitout.view.user.contracts.UserProfileView;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 /**
  * The class is the first log-in and profile GUI.
@@ -106,14 +107,6 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
      */
     private void showErrorController(final String errorDescription) {
         JOptionPane.showMessageDialog(this, errorDescription, "Error", JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public JButton getBackButton() {
-        return backButton;
     }
 
     /**
@@ -278,5 +271,13 @@ public final class UserProfileViewImpl extends JPanel implements UserProfileView
         } else if ("HarrisBenedictStrategy".equals(strategy)) {
             this.strategyCombo.setSelectedIndex(N_1);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addBackActListener(final ActionListener al) {
+        this.backButton.addActionListener(al);
     }
 }

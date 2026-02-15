@@ -124,7 +124,7 @@ public final class MainControllerImpl implements MainController {
             mainView.showView(LOGIN);
         }
 
-        profileView.getBackButton().addActionListener(al -> {
+        profileView.addBackActListener(al -> {
             mainView.showView(DASHBOARD);
         });
 
@@ -160,22 +160,22 @@ public final class MainControllerImpl implements MainController {
 
         mainView.addModule(FOOD, nutritionView);
         mainView.addModule(EXERCISE, exerciseView);
-        dashboardView.getProfileButton().addActionListener(al -> {
+        dashboardView.addProfileActListener(al -> {
             mainView.showView(LOGIN);
         });
 
-        dashboardView.getFoodButton().addActionListener(al -> {
+        dashboardView.addFoodActListener(al -> {
             mainView.showView(FOOD);
         });
 
-        dashboardView.getInfoButton().addActionListener(al -> {
+        dashboardView.addInfoActListener(al -> {
             if (this.user != null) {
                 wikiController.updateWithCurrentData(this.user);
             }
             mainView.showView(WIKI);
         });
 
-        dashboardView.getExerciseButton().addActionListener(al -> {
+        dashboardView.addExerciseActListener(al -> {
             UserExerciseControllerImpl.getInstance().refreshTableWorkoutData(() -> {
                 mainView.showView(EXERCISE);
             });

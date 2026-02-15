@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 /**
  * This class is the home page of the GUI.
@@ -153,7 +154,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
         final String name = userManager.getUserProfile().getName();
         welcomeTitle.setText("Hello " + name + "!");
         final int dailyCal = (int) userManager.getDailyCalories();
-        final int consumedCal = (int) userManager.getUserProfile().getConsumedCalories();
+        final int consumedCal = (int) userManager.getConsumedCalories();
         caloriesBar.setMaximum(dailyCal);
         caloriesBar.setMinimum(0);
         caloriesBar.setValue(consumedCal);
@@ -174,31 +175,31 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
      * {@inheritDoc}
      */
     @Override
-    public JButton getProfileButton() {
-        return bProfile;
+    public void addProfileActListener(final ActionListener al) {
+        this.bProfile.addActionListener(al);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public JButton getFoodButton() {
-        return bFood;
+    public void addFoodActListener(final ActionListener al) {
+        this.bFood.addActionListener(al);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public JButton getInfoButton() {
-        return bInfo;
+    public void addInfoActListener(final ActionListener al) {
+        this.bInfo.addActionListener(al);
     }
 
     /**
      * {@inheritDoc}
-     */
+     */    
     @Override
-    public JButton getExerciseButton() {
-        return bExercise;
+    public void addExerciseActListener(final ActionListener al) {
+        this.bExercise.addActionListener(al);
     }
 }

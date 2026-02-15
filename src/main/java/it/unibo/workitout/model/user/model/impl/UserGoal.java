@@ -1,7 +1,7 @@
 package it.unibo.workitout.model.user.model.impl;
 
 /**
- * Represent the primary objective of the user.
+ * Represent the possible objectives for the user.
  */
 public enum UserGoal {
     LOSE_WEIGHT(0.4, 0.3, 0.3, "Weight Loss"),
@@ -14,6 +14,14 @@ public enum UserGoal {
     private final double fatRatio;
     private final String description;
 
+    /**
+     * Constrcutor of UserGoal enum.
+     * 
+     * @param carbRatio is the ratio of carbs to consume, based on the final goal of the user
+     * @param proteinRatio is the ratio of proteins to consume, based on the final goal of the user
+     * @param fatRatio is the ratio of fats to consume, based on the final goal of the user
+     * @param description is the description of the user goal
+     */
     UserGoal(final double carbRatio, final double proteinRatio, final double fatRatio, final String description) {
         this.carbRatio = carbRatio;
         this.proteinRatio = proteinRatio;
@@ -42,6 +50,9 @@ public enum UserGoal {
         return fatRatio;
     }
 
+    /**
+     * @return the description of the goal
+     */
     @Override
     public String toString() {
         return description;

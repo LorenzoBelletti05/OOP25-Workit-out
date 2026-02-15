@@ -10,10 +10,18 @@ public enum Sex {
 
     private final String sex;
 
+    /**
+     * Constructor of sex enum.
+     * 
+     * @param sex the user biological sex
+     */
     Sex(final String sex) {
         this.sex = sex;
     }
 
+    /**
+     * @return the selected sex
+     */
     @Override
     public String toString() {
         return sex;

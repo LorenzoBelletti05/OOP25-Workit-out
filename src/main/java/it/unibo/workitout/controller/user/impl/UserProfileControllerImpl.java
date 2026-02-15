@@ -41,7 +41,7 @@ public final class UserProfileControllerImpl implements UserProfileController {
         this.goToDashboard = runnable;
         this.view.setController(this); 
 
-        this.dashboard.getProfileButton().addActionListener(al -> {
+        this.dashboard.addProfileActListener(al -> {
             editProfile();
         });
     }
@@ -54,16 +54,17 @@ public final class UserProfileControllerImpl implements UserProfileController {
             return;
         }
         if (this.userManager.getUserProfile() != null) {
-            fillProfileButton();
+            fillProfileButton(this.userManager.getUserProfile());
             isFirstAccess(false);
         }
     }
 
     /**
      * Fills the input field and select the combo box with data of current user.
+     * 
+     * @param userProfile is the current user
      */
-    private void fillProfileButton() {
-        final UserProfile userProfile = this.userManager.getUserProfile();
+    private void fillProfileButton(final UserProfile userProfile) {
         view.setNameInput(userProfile.getName());
         view.setSurnameInput(userProfile.getSurname());
         view.setAgeInput(userProfile.getAge());

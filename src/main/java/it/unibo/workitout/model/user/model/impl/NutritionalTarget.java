@@ -9,11 +9,11 @@ public class NutritionalTarget {
     private final double fatsG;
 
     /**
-     * The constructor for the Nutritional Target of macro-nutrients.
+     * The constructor to set the macro-nutrients.
      * 
-     * @param carbsG        grams of carbs to consume
-     * @param proteinsG     grams of proteins to consume
-     * @param fatG          grams of fats to consume
+     * @param carbsG grams of carbs to consume
+     * @param proteinsG grams of proteins to consume
+     * @param fatG grams of fats to consume
      */
     public NutritionalTarget(final double carbsG, final double proteinsG, final double fatG) {
         this.carbsG = carbsG;
@@ -25,28 +25,28 @@ public class NutritionalTarget {
      * @return the amount of carbs to consume
      */
     public double getCarbsG() {
-        return carbsG;
+        return this.carbsG;
     }
 
     /**
      * @return the amount of proteins to consume
      */
     public double getProteinsG() {
-        return proteinsG;
+        return this.proteinsG;
     }
 
     /**
      * @return the amount of fats to consume
      */
     public double getFatsG() {
-        return fatsG;
+        return this.fatsG;
     }
 
     /**
-     * @return a string with daily target
+     * @return string of daily target
      */
     @Override
     public String toString() {
-        return "Target: " + carbsG + "g carbs, " + proteinsG + "g proteins, " + fatsG + "g fats.";
+        return "Target: " + this.carbsG + "g carbs, " + this.proteinsG + "g proteins, " + this.fatsG + "g fats.";
     } 
 }

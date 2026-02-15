@@ -13,35 +13,37 @@ public final class UserManager {
     /**
      * Creates a new User Manager.
      * 
-     * @param strategy      the strategy for calculate the BMR
-     * @param currentUser   the user profile to manage
+     * @param strategy the strategy for calculate the BMR
+     * @param currentUser the user profile to manage
      */
     public UserManager(final BMRCalculatorStrategy strategy, final UserProfile currentUser) {
         this.strategy = strategy;
-        this.currentUser = currentUser;
+        if (currentUser != null) {
+            this.currentUser = new UserProfile(currentUser);
+        } else {
+            this.currentUser = null;
+        }
     }
 
     /**
      * Sets the strategy for the BMR calculator.
      * 
-     * @param strategy set the strategy of the BMR calculator
+     * @param strategy the strategy of the BMR calculator
      */
     public void setStrategy(final BMRCalculatorStrategy strategy) {
         this.strategy = strategy;
     }
 
     /**
-     * Calculates the BMR.
+     * Calculates the BMR with the selected strategy of the current user.
      * 
-     * @return the calculate value of BMR.
+     * @return the calculate value of BMR, Basal Methabolic Rate
      */
     public double getBMR() {
-        return strategy.calculateBMR(currentUser);
+        return this.strategy.calculateBMR(currentUser);
     }
 
     /**
-     * Calculates the TDEE.
-     * 
      * @return the TDEE, Total Daily Energy Expenditure.
      */
     public double getTDEE() {
@@ -49,18 +51,19 @@ public final class UserManager {
     }
 
     /**
-     * Retieves the current user profile.
-     * 
      * @return the user profile managed by this class
      */
     public UserProfile getUserProfile() {
-        return this.currentUser;
+        if (this.currentUser == null) {
+            return null;
+        }
+        return new UserProfile(this.currentUser);
     }
 
     /**
      * Calculates the daily calories target.
      * 
-     * @return the target calories calculated based on the UserGoal
+     * @return the target calories calculated based on the User Goal
      */
     public double getDailyCalories() {
         double totalCalories = getTDEE();
@@ -86,9 +89,9 @@ public final class UserManager {
     }
 
     /**
-     * Calclate the grams for each macronutrients.
+     * Calculate the grams for each macronutrients.
      * 
-     * @return the toal of nutrients.
+     * @return the total amount of nutrients
      */
     public NutritionalTarget getMacronutrients() {
         final double totalCalories = getDailyCalories();
@@ -113,10 +116,10 @@ public final class UserManager {
     /**
      * Adds the nutritional values of food consumed by the user.
      * 
-     * @param calories  the amount of calories to add
-     * @param carbs     the amount of carbs to add
-     * @param proteins  the amount of proteins to add
-     * @param fats      the amount of fats to add
+     * @param calories the amount of calories to add
+     * @param carbs the amount of carbs to add
+     * @param proteins the amount of proteins to add
+     * @param fats the amount of fats to add
      */
     public void addConsumedFood(final double calories, final double carbs, final double proteins, final double fats) {
         final double currentCalories = this.currentUser.getConsumedCalories();
@@ -133,28 +136,28 @@ public final class UserManager {
     }
 
     /**
-     * @return the total consumed calories from the profile.
+     * @return the total consumed calories from the UserProfile
      */
     public double getConsumedCalories() {
         return this.currentUser.getConsumedCalories();
     }
 
     /**
-     * @return the total consumed carbs from the profile.
+     * @return the total consumed carbs from the UserProfile
      */
     public double getConsumedCarbs() {
         return this.currentUser.getConsumedCarbs();
     }
 
     /**
-     * @return the total consumed proteins from the profile.
+     * @return the total consumed proteins from the UserProfile
      */
     public double getConsumedProteins() {
         return this.currentUser.getConsumedProteins();
     }
 
     /**
-     * @return the total consumed fats from the profile.
+     * @return the total consumed fats from the UserProfile
      */
     public double getConsumedFats() {
         return this.currentUser.getConsumedFats();

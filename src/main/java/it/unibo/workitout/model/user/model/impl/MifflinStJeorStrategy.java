@@ -6,7 +6,11 @@ import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
  * Represent the implemetation of Mifflin St.Jeor equation for BMR.
  */
 public final class MifflinStJeorStrategy implements BMRCalculatorStrategy {
+    private static final String STRATEGY_NAME = "MifflinStJeorStrategy";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double calculateBMR(final UserProfile up) {
         final Sex sex = up.getSex();
@@ -32,8 +36,11 @@ public final class MifflinStJeorStrategy implements BMRCalculatorStrategy {
         }
     }
 
+    /**
+     * @return the name of this strategy
+     */
     @Override
     public String toString() {
-        return "MifflinStJeorStrategy";
+        return STRATEGY_NAME;
     }
 }

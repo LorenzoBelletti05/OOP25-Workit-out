@@ -6,13 +6,17 @@ import it.unibo.workitout.model.user.model.contracts.BMRCalculatorStrategy;
  * Represent the implemetation of Harris Benedict equation for BMR.
  */
 public final class HarrisBenedictStrategy implements BMRCalculatorStrategy {
+    private static final String STRATEGY_NAME = "HarrisBenedictStrategy";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double calculateBMR(final UserProfile up) {
-        final Sex sex = up.getSex();
-        final int age = up.getAge();
-        final double height = up.getHeight();
-        final double weight = up.getWeight();
+    public double calculateBMR(final UserProfile userProfile) {
+        final Sex sex = userProfile.getSex();
+        final int age = userProfile.getAge();
+        final double height = userProfile.getHeight();
+        final double weight = userProfile.getWeight();
         final boolean male = sex == Sex.MALE;
         final boolean female = sex == Sex.FEMALE;
         final boolean nd = sex == Sex.NOT_DEFINED;
@@ -30,8 +34,11 @@ public final class HarrisBenedictStrategy implements BMRCalculatorStrategy {
         }
     }
 
+    /**
+     * @return the name of this strategy
+     */
     @Override
     public String toString() {
-        return "HarrisBenedictStrategy";
+        return STRATEGY_NAME;
     }
 }
