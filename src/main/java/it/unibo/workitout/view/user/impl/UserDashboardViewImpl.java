@@ -29,7 +29,7 @@ public final class UserDashboardViewImpl extends JPanel implements UserDashboard
 
     private static final int N_0 = 0;
     private static final int N_10 = 10;
-    private static final int FONT_SIZE_N18 = 10;
+    private static final int FONT_SIZE_N18 = 18;
     private static final int FONT_SIZE_N26 = 26;
     private static final int N_20 = 20;
     private static final int N_30 = 30;
