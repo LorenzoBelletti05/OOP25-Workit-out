@@ -22,7 +22,7 @@ import it.unibo.workitout.model.workout.contracts.WorkoutSheet;
 public final class WorkoutPlanImpl extends NameFunction implements WorkoutPlan {
 
     //map to store localDate of the workoutsheet and his date (assumed 1 workout a day)
-    private final Map<String, WorkoutSheetImpl> workoutPlan; 
+    public final Map<String, WorkoutSheetImpl> workoutPlan; 
 
     /**
      * Constructor to set name of the plan using the {@link NameFunction} and than create a new plan.
