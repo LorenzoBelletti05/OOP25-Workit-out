@@ -37,6 +37,7 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
 
     private static final String PATH_RAW_EXERCISE = "/data/workout/exercise.json";
     private static final int DAYS_IN_WEEK = 7;
+    private static final String PROFILE_FILE = "user_profile.json";
 
     private final String pathToManageWorkoutPlan = LoadSaveData.createPath("workoutPlan.json");
     private final String pathToWorkoutUserData = LoadSaveData.createPath("workoutDataUser.json");
@@ -81,8 +82,11 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
      */
     private void callSaveUserData() throws IOException {
         final WorkoutUserData data = new WorkoutUserData(
-            this.bmr, this.tdee, this.dailyCalories, 
-            this.activityLevel, this.userGoal, LocalDate.now().toString()
+            this.bmr, this.tdee, 
+            this.dailyCalories, 
+            this.activityLevel, 
+            this.userGoal, 
+            LocalDate.now().toString()
         );
         LoadSaveData.saveWorkoutuserDataIn(this.pathToWorkoutUserData, data);
 
@@ -105,10 +109,10 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
             this.tdee = workoutUserData.getTDEE();
             this.dailyCalories = workoutUserData.getDailyCalories();
             this.activityLevel = workoutUserData.getActivityLevel();
-            this.userGoal = workoutUserData.getUserGoal();
+            this.userGoal = workoutUserData.getUserGoal();            
         } else {
             final UserProfile mainProfile = LoadSaveData.loadUserProfile(
-                LoadSaveData.createPath("user_profile.json")
+                LoadSaveData.createPath(PROFILE_FILE)
             );
             if (mainProfile != null) {
                 this.activityLevel = mainProfile.getActivityLevel();
@@ -169,12 +173,20 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     /** {@inheritDoc} */
     @Override
     public Map<String, WorkoutSheet> getWorkoutPlan() {
+        if (this.generatedWorkoutPlan == null) {
+            return Collections.emptyMap();
+        }
         return Collections.unmodifiableMap(this.generatedWorkoutPlan.getWorkoutPlan());
     }
 
     /** {@inheritDoc} */
     @Override
     public List<WorkoutSheet> getWorkoutSheets() {
+
+        if (this.generatedWorkoutPlan == null) {
+            return Collections.emptyList();
+        }
+
         final List<String> sortedExercise = new ArrayList<>(generatedWorkoutPlan.getWorkoutPlan().keySet());
         Collections.sort(sortedExercise);
 
@@ -270,30 +282,8 @@ public final class UserExerciseControllerImpl implements UserExerciseController 
     public void refreshTableWorkoutData(final Runnable navigationTask) {
 
         if (this.generatedWorkoutPlan == null) {
-
-            final int response = JOptionPane.showConfirmDialog(
-                null, 
-                "As a person of sound mind, do you declare and self-certify your motor skills" 
-                + " and guarantee \nthat your physical health allows you to perform physical activities?",
-                "integrity", 
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE
-            );
-
-            if (response == JOptionPane.YES_OPTION) {
-
-                this.generatedWorkoutPlan = checkAndCreate();
-
-                if (this.generatedWorkoutPlan == null) {
-                    JOptionPane.showMessageDialog(
-                        null, 
-                        "Impossibile generare: mancano i dati del profilo!"
-                    );
-                }
-
-            } else {
-                return;
-            }
+            this.generatedWorkoutPlan = LoadSaveData.loadWorkoutPlan(pathToManageWorkoutPlan);
+            checkAndCreate();
         }
 
         if (this.planView != null) {
